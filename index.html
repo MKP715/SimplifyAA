@@ -26,6 +26,17 @@
     --sa-page: #f4f6f8;
     --sa-border: rgba(0, 0, 0, .1);
     --sa-muted: #5b6770;
+    /* Item-code families. Muted tints, text dark enough to stay readable. */
+    --fam-p-bg: #e0f0e5;   --fam-p-fg: #1c6438;
+    --fam-b-bg: #e5e6f6;   --fam-b-fg: #3a3a86;
+    --fam-f-bg: #e2eef2;   --fam-f-fg: #1f6f8b;
+    --fam-smf-bg: #f6ecda; --fam-smf-fg: #83550f;
+    --fam-mg-bg: #f0e7f7;  --fam-mg-fg: #67378b;
+    --fam-wb-bg: #f9e3e7;  --fam-wb-fg: #8f2c45;
+    --lang-en: #2a6f97;
+    --lang-es: #a9701a;
+    --lang-fr: #7048a0;
+    --sa-fresh: #1c6438;
   }
   :root:not([data-bs-theme="light"]) { }
   [data-bs-theme="dark"] {
@@ -35,6 +46,16 @@
     --sa-page: #12171c;
     --sa-border: rgba(255, 255, 255, .12);
     --sa-muted: #9aa7b1;
+    --fam-p-bg: rgba(46, 160, 90, .18);   --fam-p-fg: #86d9a6;
+    --fam-b-bg: rgba(110, 110, 220, .20); --fam-b-fg: #b0b0f2;
+    --fam-f-bg: rgba(111, 179, 201, .18); --fam-f-fg: #a2d5e6;
+    --fam-smf-bg: rgba(200, 150, 50, .20); --fam-smf-fg: #e3c184;
+    --fam-mg-bg: rgba(160, 110, 200, .20); --fam-mg-fg: #d2b0e8;
+    --fam-wb-bg: rgba(210, 90, 120, .20);  --fam-wb-fg: #f1a8b8;
+    --lang-en: #7fbdd8;
+    --lang-es: #d9a959;
+    --lang-fr: #b393dd;
+    --sa-fresh: #7fd6a0;
   }
   body {
     background: var(--sa-page);
@@ -69,7 +90,33 @@
     font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: .75rem;
     background: var(--sa-accent-soft); color: var(--sa-accent);
     padding: .1rem .35rem; border-radius: .25rem; font-weight: 600;
+    white-space: nowrap;
   }
+  /* Item-code families get a tint so P-47 reads differently from MG-15 at a
+     glance. The code text is always present, so colour is never the only cue. */
+  .sa-code[data-fam="p"]   { background: var(--fam-p-bg);   color: var(--fam-p-fg); }
+  .sa-code[data-fam="b"]   { background: var(--fam-b-bg);   color: var(--fam-b-fg); }
+  .sa-code[data-fam="f"]   { background: var(--fam-f-bg);   color: var(--fam-f-fg); }
+  .sa-code[data-fam="smf"] { background: var(--fam-smf-bg); color: var(--fam-smf-fg); }
+  .sa-code[data-fam="mg"]  { background: var(--fam-mg-bg);  color: var(--fam-mg-fg); }
+  .sa-code[data-fam="wb"]  { background: var(--fam-wb-bg);  color: var(--fam-wb-fg); }
+
+  /* Language chips: hue identifies the language, a filled chip the one you are
+     looking at. */
+  .sa-lang {
+    font-size: .7rem; font-weight: 600; letter-spacing: .02em;
+    padding: .05rem .34rem; border-radius: 999px; text-decoration: none;
+    border: 1px solid transparent;
+  }
+  .sa-lang[data-lang="en"] { color: var(--lang-en); border-color: var(--lang-en); }
+  .sa-lang[data-lang="es"] { color: var(--lang-es); border-color: var(--lang-es); }
+  .sa-lang[data-lang="fr"] { color: var(--lang-fr); border-color: var(--lang-fr); }
+  .sa-lang.sa-lang-on[data-lang="en"] { background: var(--lang-en); color: #fff; }
+  .sa-lang.sa-lang-on[data-lang="es"] { background: var(--lang-es); color: #fff; }
+  .sa-lang.sa-lang-on[data-lang="fr"] { background: var(--lang-fr); color: #fff; }
+
+  /* Quietly marks a file aa.org refreshed in the last 30 days. */
+  .sa-fresh { color: var(--sa-fresh); font-weight: 600; }
   .sa-star { cursor: pointer; color: #d9a406; }
   /* Compact cards: same information, less vertical space for long lists. */
   .sa-compact .sa-card { padding: .6rem .7rem !important; }
@@ -382,18 +429,18 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <p class="small text-body-secondary">A.A. World Services prints a code on nearly every piece of literature.
+        <p class="small text-body-secondary">The colours below are used throughout the page, so a pamphlet number looks different from a guideline number at a glance. A.A. World Services prints a code on nearly every piece of literature.
           Once you know the prefix, the catalog stops being a maze — you can tell at a glance what a document is.</p>
         <table class="table table-sm align-middle">
           <thead><tr><th>Prefix</th><th>Family</th><th>What it is</th></tr></thead>
           <tbody>
-            <tr><td><span class="sa-code">P-</span></td><td>Pamphlets &amp; Booklets</td><td>Conference-approved pamphlets — the core reading handed to newcomers and used in meetings.</td></tr>
-            <tr><td><span class="sa-code">B-</span></td><td>Books &amp; Big Book</td><td>The bound books, including the Big Book, the Twelve and Twelve and Living Sober.</td></tr>
-            <tr><td><span class="sa-code">F-</span></td><td>Forms, Catalogs &amp; Flyers</td><td>Order blanks, the literature catalog, service pieces and printable flyers.</td></tr>
-            <tr><td><span class="sa-code">SMF-</span></td><td>Service Material</td><td>Not conference-approved, but prepared by G.S.O. to help groups and committees do service work.</td></tr>
-            <tr><td><span class="sa-code">M-&hellip;I</span></td><td>Committee Workbooks</td><td>The workbook at the heart of each service kit — Treatment (M-40I), Corrections (M-45I), C.P.C. (M-41I) and so on.</td></tr>
-            <tr><td><span class="sa-code">CF-</span></td><td>Conference &amp; Forum</td><td>Material tied to the General Service Conference and regional forums.</td></tr>
-            <tr><td><span class="sa-code">MG-</span></td><td>A.A. Guidelines</td><td>Shared experience on running a committee, office, or event. Suggestions, never rules.</td></tr>
+            <tr><td><span class="sa-code" data-fam="p">P-</span></td><td>Pamphlets &amp; Booklets</td><td>Conference-approved pamphlets — the core reading handed to newcomers and used in meetings.</td></tr>
+            <tr><td><span class="sa-code" data-fam="b">B-</span></td><td>Books &amp; Big Book</td><td>The bound books, including the Big Book, the Twelve and Twelve and Living Sober.</td></tr>
+            <tr><td><span class="sa-code" data-fam="f">F-</span></td><td>Forms, Catalogs &amp; Flyers</td><td>Order blanks, the literature catalog, service pieces and printable flyers.</td></tr>
+            <tr><td><span class="sa-code" data-fam="smf">SMF-</span></td><td>Service Material</td><td>Not conference-approved, but prepared by G.S.O. to help groups and committees do service work.</td></tr>
+            <tr><td><span class="sa-code" data-fam="wb">M-&hellip;I</span></td><td>Committee Workbooks</td><td>The workbook at the heart of each service kit — Treatment (M-40I), Corrections (M-45I), C.P.C. (M-41I) and so on.</td></tr>
+            <tr><td><span class="sa-code" data-fam="f">CF-</span></td><td>Conference &amp; Forum</td><td>Material tied to the General Service Conference and regional forums.</td></tr>
+            <tr><td><span class="sa-code" data-fam="mg">MG-</span></td><td>A.A. Guidelines</td><td>Shared experience on running a committee, office, or event. Suggestions, never rules.</td></tr>
             <tr><td><span class="sa-code">M-</span></td><td>Displays &amp; Cards</td><td>Wallet cards, posters and display pieces.</td></tr>
             <tr><td><span class="sa-code">BM-</span></td><td>Bulletins</td><td>Box 4-5-9 and other periodic bulletins from G.S.O.</td></tr>
             <tr><td><span class="sa-code">LIM-</span></td><td>Loners &amp; Internationalists</td><td>Material for members without access to a local group — sailors, remote communities, homebound members.</td></tr>
@@ -564,6 +611,46 @@
   const langAttr = (row) => {
     const tag = LANG_TAG[row && row.language];
     return tag && tag !== "en" ? ' lang="' + tag + '"' : "";
+  };
+
+  // Which colour family an item number belongs to. Base codes are already
+  // language-normalized, so SP-47 and P-47 tint the same.
+  function codeFamKey(code) {
+    if (!code) return "";
+    if (/^M-\d+I$/i.test(code)) return "wb";          // committee workbook
+    const prefix = String(code).split("-")[0].toLowerCase();
+    if (prefix === "p") return "p";
+    if (prefix === "b") return "b";
+    if (prefix === "f" || prefix === "cf" || prefix === "fl") return "f";
+    if (prefix === "smf" || prefix === "sm") return "smf";
+    if (prefix === "mg") return "mg";
+    return "";                                        // displays, bulletins, etc.
+  }
+
+  // One place builds every item-code badge, so the colouring cannot drift.
+  function codeBadge(display, base, extraClass) {
+    if (!display) return "";
+    const fam = codeFamKey(base || display);
+    return '<span class="sa-code' + (extraClass ? " " + extraClass : "") + '"' +
+      (fam ? ' data-fam="' + fam + '"' : "") + ">" + esc(display) + "</span>";
+  }
+
+  function langChip(row, isCurrent) {
+    const tag = LANG_TAG[row.language] || "en";
+    const label = LANG_SHORT[row.language] || row.language;
+    if (isCurrent) {
+      return '<span class="sa-lang sa-lang-on" data-lang="' + tag + '" title="' +
+        esc(row.language + " — the edition shown") + '">' + esc(label) + "</span>";
+    }
+    return '<a class="sa-lang" data-lang="' + tag + '" href="' + esc(row.url) +
+      '" target="_blank" rel="noopener" title="' + esc(row.language + ": " + row.title) +
+      '">' + esc(label) + "</a>";
+  }
+
+  // aa.org refreshed this file very recently.
+  const isFresh = (row) => {
+    const age = ageInDays(row.last_modified);
+    return age !== null && age <= 30;
   };
 
   // "p-47", "P47", "smf-121" -> a comparable key
@@ -785,12 +872,12 @@
     if (!doc) {
       // The kit list names it, but aa.org publishes no PDF for it.
       return '<li class="list-group-item bg-transparent d-flex align-items-center gap-2 py-1 px-2">' +
-        '<span class="sa-code opacity-50">' + esc(code) + "</span>" +
+        codeBadge(code, code, "opacity-50") +
         '<span class="small text-body-secondary fst-italic">not published as a PDF ' +
         "&mdash; print item</span></li>";
     }
     return '<li class="list-group-item bg-transparent d-flex align-items-center gap-2 py-1 px-2 flex-wrap">' +
-      '<span class="sa-code">' + esc(doc.item_code || code) + "</span>" +
+      codeBadge(doc.item_code || code, doc.base_code || code) +
       '<a class="small fw-semibold text-decoration-none flex-grow-1" href="' + esc(doc.url) +
         '" target="_blank" rel="noopener"' + langAttr(doc) + ">" + esc(doc.title) + "</a>" +
       (doc.size_human ? '<span class="sa-meta">' + esc(doc.size_human) + "</span>" : "") +
@@ -803,13 +890,8 @@
   function translationLinksInline(row) {
     const editions = editionsOf(row);
     if (editions.length < 2) return "";
-    return '<span class="sa-meta">' + editions.map((r) => r.url === row.url
-      ? '<span class="badge rounded-pill" style="background:var(--sa-accent);color:#fff">' +
-        esc(LANG_SHORT[r.language]) + "</span>"
-      : '<a class="badge rounded-pill text-decoration-none" style="background:var(--sa-border);' +
-        'color:var(--sa-muted)" href="' + esc(r.url) + '" target="_blank" rel="noopener" title="' +
-        esc(r.language + ": " + r.title) + '">' + esc(LANG_SHORT[r.language]) + "</a>"
-    ).join(" ") + "</span>";
+    return '<span class="sa-meta">' +
+      editions.map((r) => langChip(r, r.url === row.url)).join(" ") + "</span>";
   }
 
   function kitMatchesQuery(kit, q) {
@@ -897,7 +979,7 @@
             ' type="button" data-bs-toggle="collapse" data-bs-target="#' + id +
             '" data-kit-key="' + esc(kit.key) + '">' +
             '<span class="d-flex flex-wrap align-items-center gap-2">' +
-              (kit.base_code ? '<span class="sa-code">' + esc(kit.base_code) + "</span>" : "") +
+              (kit.base_code ? codeBadge(kit.base_code, kit.base_code) : "") +
               '<span class="fw-semibold">' + esc(kit.name) + "</span>" +
               '<span class="sa-meta">' + items.length + " items &middot; " + available +
                 " as PDF</span>" +
@@ -1238,16 +1320,7 @@
   function translationLinks(row) {
     const editions = editionsOf(row);
     if (editions.length < 2) return "";
-    const chips = editions.map((r) => {
-      const isCurrent = r.url === row.url;
-      return isCurrent
-        ? '<span class="badge rounded-pill" style="background:var(--sa-accent);color:#fff">' +
-            esc(LANG_SHORT[r.language] || r.language) + "</span>"
-        : '<a class="badge rounded-pill text-decoration-none" ' +
-            'style="background:var(--sa-border);color:var(--sa-muted)" href="' + esc(r.url) +
-            '" target="_blank" rel="noopener" title="' + esc(r.language + ": " + r.title) +
-            '">' + esc(LANG_SHORT[r.language] || r.language) + "</a>";
-    });
+    const chips = editions.map((r) => langChip(r, r.url === row.url));
     return '<div class="sa-meta mb-2"><i class="bi bi-translate me-1"></i>' +
       chips.join(" ") + "</div>";
   }
@@ -1257,7 +1330,11 @@
     const faved = favorites.has(row.url);
     const bits = [];
     if (row.size_human) bits.push('<i class="bi bi-file-earmark-pdf"></i> ' + esc(row.size_human));
-    if (row.last_modified) bits.push('<i class="bi bi-calendar3"></i> ' + esc(row.last_modified));
+    if (row.last_modified) {
+      bits.push('<i class="bi bi-calendar3"></i> ' +
+        (isFresh(row) ? '<span class="sa-fresh" title="Refreshed on aa.org in the last 30 days">' +
+          esc(row.last_modified) + "</span>" : esc(row.last_modified)));
+    }
     // Language is shown by the edition chips when translations exist.
     if (row.language && (row._langs || []).length < 2) bits.push(esc(row.language));
     if (row.year) bits.push(esc(row.year));
@@ -1271,7 +1348,7 @@
             ' fs-6" role="button" tabindex="0" aria-label="Toggle favorite" data-fav="' + esc(row.url) + '"></i>' +
         "</div>" +
         '<div class="mb-2">' +
-          (row.item_code ? '<span class="sa-code me-1">' + esc(row.item_code) + "</span>" : "") +
+          (row.item_code ? codeBadge(row.item_code, row.base_code, "me-1") : "") +
           '<span class="badge rounded-pill" style="background:var(--sa-accent-soft);color:var(--sa-accent)">' +
             esc(row.category) + "</span>" +
         "</div>" +
@@ -1346,7 +1423,7 @@
           'class="text-decoration-none fw-semibold"' + langAttr(c.getRow().getData()) + ">" +
           esc(c.getValue()) + "</a>" },
       { title: "Code", field: "item_code", width: 92, formatter: (c) =>
-          c.getValue() ? '<span class="sa-code">' + esc(c.getValue()) + "</span>" : "" },
+          codeBadge(c.getValue(), c.getRow().getData().base_code) },
       { title: "Category", field: "category", width: 210 },
       { title: "Section", field: "section", width: 160 },
       { title: "Lang", field: "language", width: 90 },
@@ -1354,11 +1431,7 @@
           const row = c.getRow().getData();
           const editions = editionsOf(row);
           if (editions.length < 2) return '<span class="text-body-secondary">&mdash;</span>';
-          return editions.map((r) => r.url === row.url
-            ? '<span class="sa-code">' + esc(LANG_SHORT[r.language]) + "</span>"
-            : '<a href="' + esc(r.url) + '" target="_blank" rel="noopener" ' +
-              'title="' + esc(r.language + ": " + r.title) + '">' +
-              esc(LANG_SHORT[r.language]) + "</a>").join(" ");
+          return editions.map((r) => langChip(r, r.url === row.url)).join(" ");
         } },
       { title: "Year", field: "year", width: 80 },
       { title: "Size", field: "bytes", width: 100, sorter: "number",

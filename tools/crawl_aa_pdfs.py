@@ -36,7 +36,7 @@ DATA_DIR = os.path.join(ROOT, "data")
 SITE = "https://www.aa.org"
 SITEMAP_INDEX = SITE + "/sitemap.xml"
 
-# Hosts that serve aa.org's own documents.
+# Hosts that serve documents aa.org links to.
 ALLOWED_PDF_HOSTS = {
     "www.aa.org",
     "aa.org",
@@ -44,6 +44,19 @@ ALLOWED_PDF_HOSTS = {
     "aaws.widencollective.com",
     "embed.widencdn.net",
     "aa.widen.net",
+    # A.A. Grapevine is a separate corporation, but aa.org links a handful of
+    # its PDFs (La Vina notices and similar) and they are live files members
+    # are being pointed at, so they belong in the index.
+    "www.aagrapevine.org",
+    "aagrapevine.org",
+}
+
+# aa.org sometimes leaks its Acquia origin hostname into links. Those are the
+# same site, so fold them onto the canonical host; that way they get verified
+# like any other link instead of being quietly skipped.
+HOST_REWRITE = {
+    "alcanonymous1.prod.acquia-sites.com": "www.aa.org",
+    "alcanonymous1.prod.acquia-sites.com.": "www.aa.org",
 }
 # Hosts we crawl HTML from.
 CRAWL_HOSTS = {"www.aa.org", "aa.org"}
@@ -168,7 +181,9 @@ def normalize(url, base):
     p = urllib.parse.urlsplit(absolute)
     if p.scheme not in ("http", "https"):
         return None
-    return urllib.parse.urlunsplit(("https", p.netloc.lower(), p.path, p.query, ""))
+    host = p.netloc.lower()
+    host = HOST_REWRITE.get(host, host)
+    return urllib.parse.urlunsplit(("https", host, p.path, p.query, ""))
 
 
 def crawlable(url):
@@ -193,11 +208,21 @@ def crawlable(url):
     return True
 
 
+# Every PDF host seen on the site, including ones not in the allowlist, so a
+# new file host cannot be skipped silently. Reported at the end of a run.
+SEEN_PDF_HOSTS = Counter()
+SKIPPED_PDF_SAMPLES = {}
+
+
 def is_pdf_link(url):
     p = urllib.parse.urlsplit(url)
-    if p.netloc not in ALLOWED_PDF_HOSTS:
+    if not (PDF_RE.search(p.path) or PDF_RE.search(p.query or "")):
         return False
-    return bool(PDF_RE.search(p.path) or PDF_RE.search(p.query or ""))
+    SEEN_PDF_HOSTS[p.netloc] += 1
+    if p.netloc not in ALLOWED_PDF_HOSTS:
+        SKIPPED_PDF_SAMPLES.setdefault(p.netloc, url)
+        return False
+    return True
 
 
 def canonical_pdf(url):
@@ -1190,6 +1215,10 @@ def write_outputs(rows, broken, pages_crawled, fetcher):
         "translated_documents": translated_rows,
         "item_code_families": by("item_code_family"),
         "http": dict(fetcher.stats),
+        "pdf_hosts_seen": dict(SEEN_PDF_HOSTS.most_common()),
+        "pdf_hosts_skipped": {
+            h: SKIPPED_PDF_SAMPLES[h] for h in SKIPPED_PDF_SAMPLES
+        },
     }
     with open(os.path.join(DATA_DIR, "meta.json"), "w", encoding="utf-8") as fh:
         json.dump(meta, fh, indent=2)
@@ -1285,6 +1314,18 @@ def main():
                      % (csv_path, len(rows), len(broken)))
     sys.stderr.write("Categories: %d | Languages: %s\n"
                      % (len(meta["categories"]), meta["languages"]))
+
+    sys.stderr.write("\nPDF links by host:\n")
+    for host, n in SEEN_PDF_HOSTS.most_common():
+        mark = "  " if host in ALLOWED_PDF_HOSTS else "! "
+        sys.stderr.write("  %s%-34s %5d%s\n"
+                         % (mark, host, n,
+                            "" if host in ALLOWED_PDF_HOSTS else "   NOT INDEXED"))
+    if SKIPPED_PDF_SAMPLES:
+        sys.stderr.write("\nPDF hosts linked from aa.org but not indexed -- review whether\n"
+                         "they belong in ALLOWED_PDF_HOSTS:\n")
+        for host, sample in SKIPPED_PDF_SAMPLES.items():
+            sys.stderr.write("  %s\n    e.g. %s\n" % (host, sample[:110]))
     return 0
 
 

@@ -10,7 +10,7 @@ unlikely to find it.
 This project crawls the entire site, collects every PDF link, sorts them into sections, categories and
 topics, and serves the result as a single static page you can search, filter and share.
 
-**2,914 documents** — 1,123 English, 919 Spanish, 872 French — found across 5,401 pages and sorted
+**2,918 documents** — 1,124 English, 921 Spanish, 873 French — found across 5,401 pages and sorted
 into 12 sections, 38 categories and 37 topics. 2,482 of them are cross-linked to their translations.
 
 **➡️ Live site:** https://mkp715.github.io/SimplifyAA/
@@ -45,6 +45,7 @@ file on aa.org. All literature remains the copyright of its publisher.
 | `tools/test_results_pane.js` | Browser regression tests for the filter bar, sorting, grouping and icons. |
 | `tools/make_favicon.py` | Generates the site icons and web manifest from one original mark. |
 | `tools/audit.js` | Debug audit: dangling references, duplicate ids, accessibility, blocked storage, missing data. |
+| `tools/verify_coverage.py` | Re-fetches aa.org pages to prove no PDF link is missing from the index. |
 | `.github/workflows/update-index.yml` | Weekly re-crawl, commit, and Pages deploy. |
 
 The data deliberately lives in CSV rather than inside `index.html`, so the page stays small and the
@@ -71,6 +72,13 @@ index can be regenerated without touching application code.
 - **Share a view** — the URL captures the exact search and filters, so you can send someone a link
   straight to, say, every Spanish corrections document.
 - **Export** — download the current result list as CSV.
+
+Colour is used in two places only, and never as the only signal — the text always says the same
+thing. Item numbers are tinted by family, so a pamphlet number reads differently from a guideline
+number at a glance (`P-` green, `B-` indigo, `F-`/`CF-` teal, `SMF-` amber, `MG-` purple, workbooks
+rose); the **Item codes** panel shows the same colours next to their meanings. Language chips carry a
+hue per language, filled for the edition you are looking at. A date shown in green means aa.org
+refreshed that file within the last 30 days.
 
 ## Understanding A.A. item codes
 
@@ -109,7 +117,7 @@ There is no single way to show a PDF that works on every device:
 - **Some Android browsers** download the file instead of displaying it.
 - **An in-page reader** (pdf.js) avoids all of that by drawing the pages itself, but it has to *fetch*
   the file, which needs a CORS header. `aaws.widen.net` sends `Access-Control-Allow-Origin: *`;
-  `www.aa.org` sends nothing. That is 617 documents the reader can open and 2,297 it cannot.
+  `www.aa.org` sends nothing. That is 617 documents the reader can open and 2,301 it cannot.
 
 So the viewer is a setting rather than a guess. **Settings** offers:
 
@@ -187,6 +195,11 @@ Two safeguards stop a bad run from replacing a good index:
 2. The workflow aborts if the document count drops more than 30% from the previous run — the signature
    of aa.org changing its structure or blocking the crawler.
 
+The workflow works with either Pages setting. If Pages is set to **GitHub Actions** the deploy job
+publishes the new commit; if it is set to **Deploy from a branch**, that commit publishes on its own
+and the deploy job is allowed to fail without turning the run red. Either way the site follows the
+committed data.
+
 ### One-time setup
 
 In **Settings → Pages**, set the source to **GitHub Actions**. That is all; the workflow handles the rest.
@@ -255,10 +268,20 @@ Getting *everything* takes more than reading the sitemap:
   else. Skipping `?page=` query strings hid 257 documents; the crawler now follows pager links
   (and only pager links — facets and sorts just re-slice the same documents).
 - **Some links are only in inline JSON**, not in an `<a>` tag, so the raw HTML is scanned as well.
+- **Documents are not all on one host.** Besides `www.aa.org` and `aaws.widen.net`, aa.org links a
+  few live PDFs on `www.aagrapevine.org`, and sometimes leaks its Acquia origin hostname
+  (`alcanonymous1.prod.acquia-sites.com`) into links. The crawler now reports every host it sees a
+  PDF on, marking any that are not indexed, so a new file host cannot be missed silently.
 
-Completeness is checked by re-fetching random aa.org pages and confirming every PDF link on them is
-accounted for. The last audit covered 400 random pages plus 128 paginated listing pages: **every link
-was either indexed or correctly excluded as dead.**
+Completeness is checked independently by `tools/verify_coverage.py`, which re-fetches pages straight
+from aa.org and confirms every PDF link on them is accounted for — indexed, or recorded as a dead
+link. The last run covered **528 pages** (400 random sitemap pages plus every paginated hub page) and
+found **853 of 853 links covered, 0 missing**. The crawler separately reports every host it sees a PDF
+on, and currently skips none.
+
+```bash
+python tools/verify_coverage.py --sample 400
+```
 
 ## About `broken_links.csv`
 

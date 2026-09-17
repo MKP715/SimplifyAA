@@ -100,7 +100,7 @@ function check(name, cond, detail) {
     const first = withChips[0];
     if (!first) return { withChips: 0 };
     const chips = [...first.querySelectorAll(".bi-translate")][0]
-      .parentElement.querySelectorAll("a,span.badge");
+      .parentElement.querySelectorAll(".sa-lang");
     return {
       withChips: withChips.length,
       total: cards.length,

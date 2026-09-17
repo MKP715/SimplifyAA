@@ -138,6 +138,11 @@ jobs:
     name: Deploy to GitHub Pages
     needs: update
     runs-on: ubuntu-latest
+    # This job only applies when Pages is set to "GitHub Actions". If Pages is
+    # instead set to "Deploy from a branch", the commit the update job pushed
+    # publishes on its own and these steps cannot work -- so a failure here must
+    # not turn the weekly run red. The index update is the part that matters.
+    continue-on-error: true
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
