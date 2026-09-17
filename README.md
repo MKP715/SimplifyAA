@@ -40,24 +40,20 @@ file on aa.org. All literature remains the copyright of its publisher.
 | `data/pdfs.csv` | The document index. One row per PDF. Regenerated automatically. |
 | `data/meta.json` | Counts and the last-rebuild timestamp, shown in the page footer. |
 | `data/broken_links.csv` | Links aa.org publishes that no longer resolve to a PDF (see below). |
+| `data/kits.csv` | Kit membership: one row per kit, language and listed item. |
+| `data/kits_meta.json` | Per-kit summary, used by the workflow's run summary. |
+| `data/i18n.json` | Spanish and French interface text, keyed by the English source string. |
+| `favicon.svg`, `favicon.ico`, `apple-touch-icon.png`, `icon-192.png`, `icon-512.png` | Site icons, drawn as an original mark rather than A.A.'s. |
 | `tools/crawl_aa_pdfs.py` | The crawler and classifier. |
 | `tools/build_kits.py` | Reads each kit's contents PDF and matches the item numbers it names. |
-| `data/kits.csv` | Kit membership: one row per kit, language and listed item. |
-| `tools/test_ui.js` | Browser regression tests for the page (search, filters, translations, preview, mobile). |
-| `tools/test_kits.js` | Browser regression tests for the service-kit view. |
-| `tools/test_viewers.js` | Browser regression tests for the PDF viewer options, including iPhone emulation. |
-| `tools/test_pwa.js` | Browser regression tests for install, offline use and new-document notifications. |
-| `tools/test_layout.js` | Browser regression tests for the resizable sidebar and the card layout controls. |
-| `tools/test_i18n.js` | Browser regression tests for the Spanish and French interface. |
-| `tools/test_mobile.js` | Phone layout tests, plus guards that the phone work has not changed desktop. |
-| `data/i18n.json` | Spanish and French interface text, keyed by the English source string. |
-| `outreach/` | A ready-to-send report of the broken links found on aa.org, for their web team. |
-| `tools/test_results_pane.js` | Browser regression tests for the filter bar, sorting, grouping and icons. |
-| `tools/make_favicon.py` | Generates the site icons and web manifest from one original mark. |
-| `tools/audit.js` | Debug audit: dangling references, duplicate ids, accessibility, blocked storage, missing data. |
-| `tools/verify_coverage.py` | Re-fetches aa.org pages to prove no PDF link is missing from the index. |
 | `tools/should_crawl.py` | Decides from the sitemap whether a full crawl is worth running. |
-| `.github/workflows/update-index.yml` | Weekly re-crawl, commit, and Pages deploy. |
+| `requirements.txt` | The three Python packages the crawler and kit builder need. |
+| `.github/workflows/update-index.yml` | Checks aa.org every six hours, re-crawls when it has changed, commits, and deploys Pages. |
+
+That is the whole repository, and deliberately so: GitHub Pages publishes every file in it, so
+anything committed here is downloadable by anyone. Development tooling — the browser test suites,
+the debug audit, the coverage checker, the icon generator — is kept out for that reason and is
+listed in `.gitignore`. All of it remains in the git history if it is ever needed again.
 
 The data deliberately lives in CSV rather than inside `index.html`, so the page stays small and the
 index can be regenerated without touching application code.
@@ -190,14 +186,15 @@ Measured effect on the distance to the first result:
 | iPhone Plus (428px) | 2,255px | **424px** |
 
 Every one of those changes lives inside a `max-width: 991.98px` query or a `d-lg-none` class, and
-`tools/test_mobile.js` asserts at 1500, 1200 and 992px that the desktop layout still has its inline
+the phone suite asserts at 1500, 1200 and 992px that the desktop layout still has its inline
 resizable sidebar, no bars, no reserved padding and nothing hidden.
 
 ## Icons
 
-`tools/make_favicon.py` generates `favicon.ico` (multi-size), `favicon.svg`, an Apple touch icon,
-192/512px PNGs and `site.webmanifest` from one original mark — a plain document glyph. The manifest
-means the page can be added to a phone's home screen and open like an app.
+`favicon.ico` (multi-size), `favicon.svg`, the Apple touch icon, the 192/512px PNGs and
+`site.webmanifest` were all generated from one original mark — a plain document glyph — by a script
+kept in the git history rather than in the repository. The manifest means the page can be added to a
+phone's home screen and open like an app.
 
 The mark is deliberately generic. A.A.'s circle-and-triangle is a registered mark of A.A. World
 Services and is not used here, because this is an unofficial index and should not look like an
@@ -350,31 +347,35 @@ python -m http.server 8000   # then open http://localhost:8000
 
 ### Testing the page
 
-`tools/test_ui.js` drives real Chrome and checks the facets, search (including item codes),
-translation chips, filters, shareable URLs, both views, favorites, the preview modal and the mobile
-layout, failing on any console error:
+The page is covered by eight Puppeteer suites and a debug audit, driving real Chrome against a local
+server. They are **not tracked here**, because Pages would publish them; they live in the git
+history and can be brought back with, for example:
 
 ```bash
-npm install puppeteer-core
-python -m http.server 8765 &
-node tools/test_ui.js http://127.0.0.1:8765/index.html ./shots
-node tools/test_kits.js http://127.0.0.1:8765/index.html
-node tools/test_viewers.js http://127.0.0.1:8765/index.html
-node tools/test_results_pane.js http://127.0.0.1:8765/index.html
-node tools/test_pwa.js http://127.0.0.1:8765/index.html
-node tools/test_layout.js http://127.0.0.1:8765/index.html
-node tools/test_i18n.js http://127.0.0.1:8765/index.html
-node tools/test_mobile.js http://127.0.0.1:8765/index.html
-node tools/audit.js http://127.0.0.1:8765/index.html index.html
+git log --oneline --diff-filter=D -- tools/test_ui.js   # find the commit that removed it
+git checkout <commit>^ -- tools/                        # restore the suites locally
+```
+
+Between them they cover the facets, search (including item codes), translation chips, filters,
+shareable URLs, both views, favorites, the preview modal, the service kits, install and offline
+behaviour, new-document notifications, the resizable sidebar, the card layout controls, the Spanish
+and French interface, and the phone layout — with explicit guards that the phone work has not
+changed the desktop one. Every suite fails on any console error.
+
+The audit is a debug pass rather than a pass/fail suite. It checks that every id the script
+references exists, that there are no duplicate ids, that every control has an accessible name and
+every field a label, that non-English titles carry a `lang` attribute so screen readers pronounce
+them correctly, and that the page still works with `localStorage` blocked (private browsing) or with
+`data/kits.csv` missing.
+
+Whatever you run them against, serve the folder rather than opening the file, or the browser will
+refuse to load the CSVs:
+
+```bash
+python -m http.server 8765
 ```
 
 Set `CHROME_PATH` if Chrome is not at the default Windows location.
-
-`tools/audit.js` is a separate debug pass rather than a pass/fail suite. It checks that every id the
-script references exists, that there are no duplicate ids, that every control has an accessible name
-and every field a label, that non-English titles carry a `lang` attribute so screen readers pronounce
-them correctly, and that the page still works with `localStorage` blocked (private browsing) or with
-`data/kits.csv` missing.
 
 ## Coverage
 
@@ -391,15 +392,14 @@ Getting *everything* takes more than reading the sitemap:
   (`alcanonymous1.prod.acquia-sites.com`) into links. The crawler now reports every host it sees a
   PDF on, marking any that are not indexed, so a new file host cannot be missed silently.
 
-Completeness is checked independently by `tools/verify_coverage.py`, which re-fetches pages straight
-from aa.org and confirms every PDF link on them is accounted for — indexed, or recorded as a dead
-link. The last run covered **528 pages** (400 random sitemap pages plus every paginated hub page) and
-found **853 of 853 links covered, 0 missing**. The crawler separately reports every host it sees a PDF
-on, and currently skips none.
+Completeness was checked independently by a coverage script that re-fetched pages straight from
+aa.org and confirmed every PDF link on them was accounted for — indexed, or recorded as a dead link.
+The last run covered **528 pages** (400 random sitemap pages plus every paginated hub page) and found
+**853 of 853 links covered, 0 missing**. The crawler separately reports every host it sees a PDF on,
+and currently skips none.
 
-```bash
-python tools/verify_coverage.py --sample 400
-```
+That script is development tooling rather than part of the site, so it is not tracked here either;
+it can be restored from the git history the same way as the test suites above.
 
 ## About `broken_links.csv`
 

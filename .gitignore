@@ -1,19 +1,49 @@
+# What belongs in this repository is the site itself -- index.html, sw.js, the
+# icons, data/ -- plus the three tools the scheduled workflow runs. Everything
+# else is working material and stays out, because GitHub Pages publishes the
+# whole repository: anything committed here is downloadable by anyone.
+
 # Crawl cache: lets --reclassify run offline, not worth committing (~2 MB)
 .cache/
+
+# Browser test suites and the debug audit. These are development tooling, not
+# part of the site, and the workflow does not run them.
+tools/test_*.js
+tools/audit.js
+tools/*.spec.js
+
+# One-off helper scripts. The icons they produced are committed; the scripts
+# themselves are recoverable from git history if they are ever needed again.
+tools/make_favicon.py
+tools/verify_coverage.py
+
+# Correspondence and other working documents. Kept off the site so drafts are
+# not published by accident.
+outreach/
+*.docx
 
 # Python
 __pycache__/
 *.pyc
+.venv/
+venv/
 
 # Node, if puppeteer-core is installed here to run the browser tests
 node_modules/
 package.json
 package-lock.json
 
-# Screenshots written by the browser tests (tools/test_*.js, tools/audit.js)
+# Screenshots and traces written by the browser tests
 shots/
 /[0-9][0-9]-*.png
+*.png.tmp
+trace.json
 
-# OS noise
+# Editor and OS noise
 .DS_Store
 Thumbs.db
+desktop.ini
+.idea/
+.vscode/
+*.swp
+*~
