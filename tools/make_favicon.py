@@ -80,20 +80,42 @@ def main() -> int:
     rounded(512).save(os.path.join(ROOT, "icon-512.png"))
 
     manifest = {
+        # A stable id keeps the installed app the same app across releases.
+        "id": "simplifyaa",
         "name": "SimplifyAA - A.A. Document Finder",
         "short_name": "SimplifyAA",
         "description": "An unofficial, searchable index of every PDF published on aa.org.",
+        "lang": "en",
+        "dir": "ltr",
         "start_url": "./",
         "scope": "./",
         "display": "standalone",
+        "display_override": ["standalone", "minimal-ui", "browser"],
+        "orientation": "any",
         "background_color": "#f4f6f8",
         "theme_color": "#1f6f8b",
+        "categories": ["books", "education", "reference"],
         "icons": [
             {"src": "icon-192.png", "sizes": "192x192", "type": "image/png",
-             "purpose": "any maskable"},
+             "purpose": "any"},
             {"src": "icon-512.png", "sizes": "512x512", "type": "image/png",
-             "purpose": "any maskable"},
+             "purpose": "any"},
+            # Maskable copies let Android crop to its own icon shape.
+            {"src": "icon-192.png", "sizes": "192x192", "type": "image/png",
+             "purpose": "maskable"},
+            {"src": "icon-512.png", "sizes": "512x512", "type": "image/png",
+             "purpose": "maskable"},
             {"src": "favicon.svg", "sizes": "any", "type": "image/svg+xml"},
+        ],
+        # Long-press the installed icon to jump straight to a section.
+        "shortcuts": [
+            {"name": "Service kits", "short_name": "Kits", "url": "./#view=kits",
+             "icons": [{"src": "icon-192.png", "sizes": "192x192"}]},
+            {"name": "New documents", "short_name": "New", "url": "./#view=new",
+             "icons": [{"src": "icon-192.png", "sizes": "192x192"}]},
+            {"name": "Recently updated", "short_name": "Updated",
+             "url": "./#view=recent",
+             "icons": [{"src": "icon-192.png", "sizes": "192x192"}]},
         ],
     }
     with open(os.path.join(ROOT, "site.webmanifest"), "w", encoding="utf-8") as fh:

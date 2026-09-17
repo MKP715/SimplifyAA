@@ -119,6 +119,11 @@ jobs:
           m = json.load(open("data/meta.json"))
           print(f"- **{m['total_pdfs']:,} documents** across {m['pages_crawled']:,} pages")
           print(f"- Stale links filtered out: {m.get('broken_links', 0)}")
+          added = m.get("added_since_last_run")
+          if added is not None:
+              print(f"- **New since the last run: {added}** "
+                    f"(removed: {m.get('removed_since_last_run', 0)}) - "
+                    f"this is what the app notifies members about")
           print(f"- Languages: " + ", ".join(f"{k} ({v})" for k, v in m["languages"].items()))
           print(f"- Rebuilt: {m['generated_utc']}")
           try:

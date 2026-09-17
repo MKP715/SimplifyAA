@@ -1,0 +1,22 @@
+{
+  "latest": {
+    "generated_utc": "2026-09-17T13:43:37Z",
+    "total": 2918,
+    "first_run": false,
+    "added_count": 0,
+    "removed_count": 0,
+    "added": [],
+    "removed": []
+  },
+  "runs": [
+    {
+      "generated_utc": "2026-09-17T13:43:37Z",
+      "total": 2918,
+      "first_run": false,
+      "added_count": 0,
+      "removed_count": 0,
+      "added": [],
+      "removed": []
+    }
+  ]
+}

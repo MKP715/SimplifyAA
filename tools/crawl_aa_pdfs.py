@@ -1163,8 +1163,73 @@ def build_rows(records, page_titles, fetcher, workers, verify, heads_cache=None)
     return good, broken
 
 
+MAX_CHANGE_ITEMS = 60      # per run, enough to describe what happened
+MAX_CHANGE_RUNS = 24       # roughly six months of weekly runs
+
+
+def write_changes(rows):
+    """Diff this run against the committed index and append to changes.json.
+
+    The site is static, so the front-end cannot work out what is new on its
+    own without downloading and comparing the whole index. Recording the diff
+    here keeps that cheap: a small file the page (and the service worker) can
+    poll to tell members what has appeared since they last looked.
+    """
+    csv_path = os.path.join(DATA_DIR, "pdfs.csv")
+    previous = {}
+    if os.path.exists(csv_path):
+        with open(csv_path, encoding="utf-8") as fh:
+            for r in csv.DictReader(fh):
+                previous[r["url"]] = r
+    current = {r["url"]: r for r in rows}
+
+    first_run = not previous
+    added = [current[u] for u in current if u not in previous]
+    removed = [previous[u] for u in previous if u not in current]
+
+    def brief(r):
+        return {
+            "title": r.get("title", ""),
+            "url": r.get("url", ""),
+            "item_code": r.get("item_code", ""),
+            "category": r.get("category", ""),
+            "language": r.get("language", ""),
+        }
+
+    added.sort(key=lambda r: (r.get("category", ""), r.get("title", "").lower()))
+    removed.sort(key=lambda r: r.get("title", "").lower())
+
+    path = os.path.join(DATA_DIR, "changes.json")
+    history = []
+    if os.path.exists(path):
+        try:
+            with open(path, encoding="utf-8") as fh:
+                history = json.load(fh).get("runs", [])
+        except Exception:
+            history = []
+
+    run = {
+        "generated_utc": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
+        "total": len(rows),
+        # The very first run would otherwise report every document as new.
+        "first_run": first_run,
+        "added_count": 0 if first_run else len(added),
+        "removed_count": 0 if first_run else len(removed),
+        "added": [] if first_run else [brief(r) for r in added[:MAX_CHANGE_ITEMS]],
+        "removed": [] if first_run else [brief(r) for r in removed[:MAX_CHANGE_ITEMS]],
+    }
+    history.insert(0, run)
+    history = history[:MAX_CHANGE_RUNS]
+
+    with open(path, "w", encoding="utf-8") as fh:
+        json.dump({"latest": history[0], "runs": history}, fh, indent=2)
+    return run
+
+
 def write_outputs(rows, broken, pages_crawled, fetcher):
     os.makedirs(DATA_DIR, exist_ok=True)
+    # Must run before pdfs.csv is overwritten -- it diffs against it.
+    change = write_changes(rows)
     csv_path = os.path.join(DATA_DIR, "pdfs.csv")
     with open(csv_path, "w", newline="", encoding="utf-8") as fh:
         writer = csv.DictWriter(fh, fieldnames=FIELDS, lineterminator="\n")
@@ -1213,6 +1278,8 @@ def write_outputs(rows, broken, pages_crawled, fetcher):
         "topics": dict(sorted(topic_counts.items(), key=lambda kv: (-kv[1], kv[0]))),
         "translation_groups": len(translated_groups),
         "translated_documents": translated_rows,
+        "added_since_last_run": change["added_count"],
+        "removed_since_last_run": change["removed_count"],
         "item_code_families": by("item_code_family"),
         "http": dict(fetcher.stats),
         "pdf_hosts_seen": dict(SEEN_PDF_HOSTS.most_common()),

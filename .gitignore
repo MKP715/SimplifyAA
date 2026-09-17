@@ -1,8 +1,19 @@
+# Crawl cache: lets --reclassify run offline, not worth committing (~2 MB)
 .cache/
+
+# Python
 __pycache__/
 *.pyc
-.DS_Store
+
+# Node, if puppeteer-core is installed here to run the browser tests
 node_modules/
+package.json
+package-lock.json
+
+# Screenshots written by the browser tests (tools/test_*.js, tools/audit.js)
 shots/
-# numbered screenshots written by the browser tests
 /[0-9][0-9]-*.png
+
+# OS noise
+.DS_Store
+Thumbs.db

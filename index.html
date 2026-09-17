@@ -149,6 +149,17 @@
       <button class="btn btn-sm btn-outline-light" data-bs-toggle="modal" data-bs-target="#aboutModal">
         <i class="bi bi-info-circle"></i><span class="d-none d-sm-inline ms-1">About</span>
       </button>
+      <button class="btn btn-sm btn-outline-light d-none" id="installBtn"
+              title="Install SimplifyAA as an app on this device">
+        <i class="bi bi-download"></i><span class="d-none d-sm-inline ms-1">Install app</span>
+      </button>
+      <button class="btn btn-sm btn-outline-light position-relative" id="bellBtn"
+              data-bs-toggle="modal" data-bs-target="#notifyModal"
+              title="Notifications about new documents">
+        <i class="bi bi-bell"></i>
+        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill text-bg-danger d-none"
+              id="bellCount">0</span>
+      </button>
       <button class="btn btn-sm btn-outline-light" data-bs-toggle="modal" data-bs-target="#settingsModal"
               title="Settings — including how PDFs preview on this device">
         <i class="bi bi-gear"></i><span class="d-none d-lg-inline ms-1">Settings</span>
@@ -189,6 +200,7 @@
             <button class="sa-tree-btn" data-view="favorites"><span><i class="bi bi-star-fill me-1 sa-star"></i>My favorites</span><span class="badge" id="qvFav">0</span></button>
             <button class="sa-tree-btn" data-view="large"><span><i class="bi bi-file-earmark-text me-1"></i>Full books &amp; reports</span></button>
             <button class="sa-tree-btn" data-view="kits"><span><i class="bi bi-box2-heart me-1"></i>Service kits</span><span class="badge" id="qvKits"></span></button>
+            <button class="sa-tree-btn d-none" data-view="new"><span><i class="bi bi-stars me-1"></i>New documents</span><span class="badge" id="qvNew"></span></button>
           </div>
         </div>
 
@@ -520,6 +532,37 @@
   </div>
 </div>
 
+<!-- notifications -->
+<div class="modal fade" id="notifyModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div>
+          <h5 class="modal-title">New documents</h5>
+          <div class="small text-body-secondary" id="notifyLastCheck"></div>
+        </div>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="d-flex flex-wrap gap-2 align-items-center mb-3">
+          <button class="btn btn-sm btn-primary" id="notifyEnable">
+            <i class="bi bi-bell me-1"></i>Turn on notifications
+          </button>
+          <button class="btn btn-sm btn-outline-secondary" id="notifyCheck">
+            <i class="bi bi-arrow-repeat me-1"></i>Check now
+          </button>
+          <button class="btn btn-sm btn-outline-secondary" id="notifyClear">
+            <i class="bi bi-trash3 me-1"></i>Clear history
+          </button>
+        </div>
+        <div class="alert alert-secondary small" id="notifyStatus"></div>
+        <div class="fw-semibold small text-uppercase text-body-secondary mb-2">History</div>
+        <div id="notifyList"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- settings -->
 <div class="modal fade" id="settingsModal" tabindex="-1" aria-hidden="true">
   <div class="modal-dialog modal-lg modal-dialog-scrollable">
@@ -546,6 +589,24 @@
           <input type="range" class="form-range" id="previewHeight" min="40" max="92" step="4" style="max-width:260px">
           <span class="small text-body-secondary" id="previewHeightVal"></span>
         </div>
+
+        <hr class="my-4">
+        <h6>App &amp; notifications</h6>
+        <p class="small text-body-secondary mb-2">
+          SimplifyAA installs as an app and keeps working without a signal, so the index is
+          available at a meeting with no reception. The documents themselves are not stored on
+          your device — those still need a connection.
+        </p>
+        <div class="d-flex flex-wrap gap-2 mb-3">
+          <button class="btn btn-sm btn-outline-secondary" id="installBtn2">
+            <i class="bi bi-download me-1"></i>Install app
+          </button>
+          <button class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal"
+                  data-bs-target="#notifyModal">
+            <i class="bi bi-bell me-1"></i>Notification settings
+          </button>
+        </div>
+        <div class="alert alert-secondary small mb-0" id="settingsAppNote"></div>
 
         <hr class="my-4">
         <h6>Reset</h6>
@@ -1190,6 +1251,7 @@
 
     if (state.view === "favorites") rows = rows.filter((r) => favorites.has(r.url));
     if (state.view === "large") rows = rows.filter((r) => (+r.bytes || 0) > 1.5e6);
+    if (state.view === "new") rows = rows.filter((r) => NEW_URLS.has(r.url));
     if (state.section) rows = rows.filter((r) => r.section === state.section);
     if (state.category) rows = rows.filter((r) => r.category === state.category);
     if (state.language) rows = rows.filter((r) => r.language === state.language);
@@ -1507,7 +1569,8 @@
     if (state.q) chips.push(["Search: " + state.q, () => { state.q = ""; $("#q").value = ""; }]);
     if (state.view !== "all") chips.push([
       { recent: "Recently updated", favorites: "My favorites",
-        large: "Full books & reports", kits: "Service kits" }[state.view],
+        large: "Full books & reports", kits: "Service kits",
+        new: "New since your last visit" }[state.view],
       () => { state.view = "all"; }]);
     if (state.section) chips.push(["Section: " + state.section, () => { state.section = ""; }]);
     if (state.category) chips.push(["Category: " + state.category, () => { state.category = ""; }]);
@@ -1614,7 +1677,8 @@
 
     $("#resultHeading").textContent =
       state.category || state.section ||
-      { recent: "Recently updated", favorites: "My favorites", large: "Full books & reports" }[state.view] ||
+      { recent: "Recently updated", favorites: "My favorites",
+        large: "Full books & reports", new: "New since your last visit" }[state.view] ||
       "All documents";
     $("#resultCount").textContent = total.toLocaleString() +
       (total === 1 ? " document" : " documents") +
@@ -2122,6 +2186,316 @@
     render();
   });
 
+  /* ------------------------- app install & notifications ------------------ */
+  const CHECK_TAG = "simplifyaa-check-new";
+  let CHANGES = { runs: [], latest: null };
+  let NEW_URLS = new Set();
+  let swReg = null;
+  let installPrompt = null;
+
+  const IS_STANDALONE = window.matchMedia("(display-mode: standalone)").matches ||
+    window.navigator.standalone === true;
+
+  /* ---- the same tiny IndexedDB the service worker uses ---- */
+  function openDb() {
+    return new Promise((resolve, reject) => {
+      const req = indexedDB.open("simplifyaa", 1);
+      req.onupgradeneeded = () => {
+        const db = req.result;
+        if (!db.objectStoreNames.contains("state")) db.createObjectStore("state");
+        if (!db.objectStoreNames.contains("notifications")) {
+          db.createObjectStore("notifications", { keyPath: "id", autoIncrement: true });
+        }
+      };
+      req.onsuccess = () => resolve(req.result);
+      req.onerror = () => reject(req.error);
+    });
+  }
+  const dbCall = (store, mode, fn) => openDb().then((db) => new Promise((res, rej) => {
+    const tx = db.transaction(store, mode);
+    const r = fn(tx.objectStore(store));
+    r.onsuccess = () => res(r.result);
+    r.onerror = () => rej(r.error);
+  })).catch(() => null);
+
+  const notifGetAll = () => dbCall("notifications", "readonly", (os) => os.getAll());
+  const notifClear = () => dbCall("notifications", "readwrite", (os) => os.clear());
+  const notifPut = (rec) => dbCall("notifications", "readwrite", (os) => os.put(rec));
+  const stateGet = (k) => dbCall("state", "readonly", (os) => os.get(k));
+  const stateSet = (k, v) => dbCall("state", "readwrite", (os) => os.put(v, k));
+
+  /* ---- service worker ---- */
+  async function registerServiceWorker() {
+    if (!("serviceWorker" in navigator)) return;
+    try {
+      swReg = await navigator.serviceWorker.register("./sw.js", { scope: "./" });
+      // Pick up a new release without the reader having to hard-refresh.
+      swReg.addEventListener("updatefound", () => {
+        const sw = swReg.installing;
+        if (sw) sw.addEventListener("statechange", () => {
+          if (sw.state === "installed" && navigator.serviceWorker.controller) {
+            toast("An update is ready — reopen the app to use it");
+          }
+        });
+      });
+    } catch (e) {
+      // An unregistered worker only costs offline support; the app still works.
+    }
+  }
+
+  navigator.serviceWorker && navigator.serviceWorker.addEventListener("message", (e) => {
+    const msg = e.data || {};
+    if (msg.type === "new-documents") {
+      loadChanges().then(() => { refreshBell(); render(); });
+      if (msg.record) toast(msg.record.title);
+    }
+    if (msg.type === "show-new") {
+      state.view = "new"; state.page = 1; sync();
+    }
+  });
+
+  /* ---- install ---- */
+  window.addEventListener("beforeinstallprompt", (e) => {
+    e.preventDefault();
+    installPrompt = e;
+    document.querySelectorAll("#installBtn").forEach((b) => b.classList.remove("d-none"));
+    updateAppNote();
+  });
+  window.addEventListener("appinstalled", () => {
+    installPrompt = null;
+    document.querySelectorAll("#installBtn").forEach((b) => b.classList.add("d-none"));
+    updateAppNote();
+    toast("SimplifyAA installed");
+  });
+
+  async function doInstall() {
+    if (installPrompt) {
+      installPrompt.prompt();
+      const choice = await installPrompt.userChoice.catch(() => null);
+      if (choice && choice.outcome === "accepted") installPrompt = null;
+      return;
+    }
+    // Safari has no install prompt; it has to be done from the share sheet.
+    bootstrap.Modal.getOrCreateInstance($("#settingsModal")).show();
+    toast(IS_IOS ? "Use Share → Add to Home Screen" : "Use your browser menu → Install");
+  }
+  ["#installBtn", "#installBtn2"].forEach((sel) => {
+    const b = $(sel);
+    if (b) b.addEventListener("click", doInstall);
+  });
+
+  function updateAppNote() {
+    const note = $("#settingsAppNote");
+    if (!note) return;
+    if (IS_STANDALONE) {
+      note.innerHTML = '<i class="bi bi-check2-circle me-1"></i>Running as an installed app.';
+    } else if (installPrompt) {
+      note.innerHTML = '<i class="bi bi-download me-1"></i>This device can install SimplifyAA — ' +
+        "use the Install app button above.";
+    } else if (IS_IOS) {
+      note.innerHTML = '<i class="bi bi-phone me-1"></i>On iPhone and iPad, install with ' +
+        "<strong>Share → Add to Home Screen</strong>. Safari offers no install button.";
+    } else {
+      note.innerHTML = '<i class="bi bi-info-circle me-1"></i>Install from your browser menu ' +
+        "(often <strong>Install app</strong> or <strong>Add to Home Screen</strong>).";
+    }
+  }
+
+  /* ---- what is new ---- */
+  async function loadChanges() {
+    try {
+      const res = await fetch("./data/changes.json?cb=" + Date.now(), { cache: "no-store" });
+      CHANGES = res.ok ? await res.json() : { runs: [], latest: null };
+    } catch (e) {
+      CHANGES = { runs: [], latest: null };
+    }
+    // "New" means added in a run this device had not seen on its last visit.
+    const since = safeLS(() => localStorage.getItem("simplifyaa.lastVisitRun"), "") || "";
+    const runs = (CHANGES.runs || []).filter((r) => !r.first_run &&
+      (since ? r.generated_utc > since : r === CHANGES.runs[0]));
+    NEW_URLS = new Set();
+    runs.forEach((r) => (r.added || []).forEach((a) => NEW_URLS.add(a.url)));
+    const btn = document.querySelector('[data-view="new"]');
+    if (btn) btn.classList.toggle("d-none", NEW_URLS.size === 0);
+    const badge = $("#qvNew");
+    if (badge) badge.textContent = NEW_URLS.size || "";
+  }
+
+  function markVisitSeen() {
+    const newest = (CHANGES.runs && CHANGES.runs[0] && CHANGES.runs[0].generated_utc) || "";
+    if (newest) safeLS(() => localStorage.setItem("simplifyaa.lastVisitRun", newest));
+  }
+
+  /* ---- notification support, stated plainly ---- */
+  function notifyCapability() {
+    const hasSW = "serviceWorker" in navigator;
+    const hasNotif = "Notification" in window;
+    const hasPeriodic = hasSW && "PeriodicSyncManager" in window;
+    return { hasSW, hasNotif, hasPeriodic,
+             permission: hasNotif ? Notification.permission : "unsupported" };
+  }
+
+  async function renderNotifyStatus() {
+    const cap = notifyCapability();
+    const box = $("#notifyStatus");
+    const enableBtn = $("#notifyEnable");
+    if (!box) return;
+
+    let periodicOn = false;
+    if (swReg && swReg.periodicSync) {
+      periodicOn = await swReg.periodicSync.getTags()
+        .then((t) => t.includes(CHECK_TAG)).catch(() => false);
+    }
+
+    const lines = [];
+    if (!cap.hasNotif || !cap.hasSW) {
+      lines.push("<strong>This browser cannot show notifications.</strong> The app will still " +
+        "list new documents whenever you open it.");
+    } else if (cap.permission === "denied") {
+      lines.push("<strong>Notifications are blocked for this site.</strong> Allow them in your " +
+        "browser's site settings, then come back.");
+    } else if (cap.permission !== "granted") {
+      lines.push("Notifications are off. Turning them on lets SimplifyAA tell you when aa.org " +
+        "publishes something new.");
+    } else if (periodicOn) {
+      lines.push("<strong>On, including in the background.</strong> This device checks aa.org " +
+        "periodically on its own, so you can be told about new documents without opening the app.");
+    } else if (cap.hasPeriodic) {
+      lines.push("<strong>On.</strong> Background checking is available on this device but not " +
+        "yet active — install the app and reopen it once, and the browser will enable it.");
+    } else {
+      lines.push("<strong>On, while the app is open.</strong> This browser has no way to wake a " +
+        "site up in the background" + (IS_IOS ? " — Apple does not support it" : "") +
+        ", so you will be told about new documents the next time you open SimplifyAA.");
+    }
+    box.innerHTML = lines.join(" ");
+    if (enableBtn) {
+      const done = cap.permission === "granted";
+      enableBtn.classList.toggle("d-none", done || cap.permission === "denied" || !cap.hasNotif);
+    }
+
+    const last = await stateGet("lastCheck");
+    const el2 = $("#notifyLastCheck");
+    if (el2) {
+      el2.textContent = last ? "Last checked " + new Date(last).toLocaleString()
+                             : "Not checked yet";
+    }
+  }
+
+  async function enableNotifications() {
+    if (!("Notification" in window)) { toast("This browser cannot show notifications"); return; }
+    const perm = await Notification.requestPermission().catch(() => "denied");
+    if (perm !== "granted") { toast("Notifications not allowed"); renderNotifyStatus(); return; }
+    // Periodic background sync needs permission of its own and only works for
+    // an installed app; failing is normal and not an error worth shouting about.
+    try {
+      if (navigator.permissions && swReg && swReg.periodicSync) {
+        const st = await navigator.permissions.query({ name: "periodic-background-sync" });
+        if (st.state === "granted") {
+          await swReg.periodicSync.register(CHECK_TAG, { minInterval: 12 * 60 * 60 * 1000 });
+        }
+      }
+    } catch (e) { /* not supported here */ }
+    toast("Notifications on");
+    renderNotifyStatus();
+    checkNow(true);
+  }
+
+  function checkNow(quiet) {
+    if (navigator.serviceWorker && navigator.serviceWorker.controller) {
+      navigator.serviceWorker.controller.postMessage({ type: "check-now" });
+      if (!quiet) toast("Checking aa.org…");
+      setTimeout(() => { renderNotifyList(); refreshBell(); renderNotifyStatus(); }, 1200);
+      return;
+    }
+    // No worker in control yet: do the comparison here instead.
+    loadChanges().then(async () => {
+      const newest = CHANGES.runs && CHANGES.runs[0];
+      if (!newest) { if (!quiet) toast("Could not reach the index"); return; }
+      await stateSet("lastCheck", new Date().toISOString());
+      const seen = (await stateGet("lastSeenRun")) || "";
+      if (seen && newest.generated_utc > seen && newest.added_count > 0) {
+        await notifPut({
+          time: new Date().toISOString(), runTime: newest.generated_utc,
+          count: newest.added_count,
+          title: newest.added_count + " new documents on aa.org",
+          body: (newest.added || []).slice(0, 3).map((a) => a.title).join("\n"),
+          items: (newest.added || []).slice(0, 8), reason: "page", read: false,
+        });
+      }
+      await stateSet("lastSeenRun", newest.generated_utc);
+      renderNotifyList(); refreshBell(); renderNotifyStatus();
+      if (!quiet) toast("Up to date");
+    });
+  }
+
+  async function refreshBell() {
+    const all = (await notifGetAll()) || [];
+    const unread = all.filter((n) => !n.read).length;
+    const badge = $("#bellCount");
+    if (badge) {
+      badge.textContent = unread;
+      badge.classList.toggle("d-none", unread === 0);
+    }
+  }
+
+  async function renderNotifyList() {
+    const wrap = $("#notifyList");
+    if (!wrap) return;
+    const all = ((await notifGetAll()) || []).sort((a, b) =>
+      String(b.time).localeCompare(String(a.time)));
+    if (!all.length) {
+      wrap.innerHTML = '<p class="small text-body-secondary mb-0">' +
+        "Nothing yet. When aa.org publishes new documents they will be listed here, " +
+        "newest first.</p>";
+      return;
+    }
+    wrap.innerHTML = all.map((n) =>
+      '<div class="sa-panel p-3 mb-2">' +
+        '<div class="d-flex justify-content-between align-items-start gap-2">' +
+          '<div class="fw-semibold">' + esc(n.title) + "</div>" +
+          '<span class="sa-meta text-nowrap">' +
+            esc(new Date(n.time).toLocaleDateString()) + "</span>" +
+        "</div>" +
+        ((n.items || []).length
+          ? '<ul class="list-unstyled small mb-0 mt-2">' + n.items.map((a) =>
+              "<li>" + (a.item_code ? codeBadge(a.item_code, a.item_code) + " " : "") +
+              '<a href="' + esc(a.url) + '" target="_blank" rel="noopener" ' +
+              'class="text-decoration-none">' + esc(a.title) + "</a>" +
+              (a.language && a.language !== "English"
+                ? ' <span class="sa-meta">' + esc(a.language) + "</span>" : "") +
+              "</li>").join("") +
+            (n.count > n.items.length
+              ? '<li class="text-body-secondary">and ' + (n.count - n.items.length) +
+                " more</li>" : "") +
+            "</ul>"
+          : "") +
+      "</div>").join("");
+    // Opening the panel is what marks them read.
+    all.filter((n) => !n.read).forEach((n) => notifPut(Object.assign({}, n, { read: true })));
+    setTimeout(refreshBell, 300);
+  }
+
+  ["#notifyEnable", "#notifyCheck", "#notifyClear"].forEach((sel) => {
+    const b = $(sel);
+    if (!b) return;
+    b.addEventListener("click", async () => {
+      if (sel === "#notifyEnable") return enableNotifications();
+      if (sel === "#notifyCheck") return checkNow(false);
+      await notifClear();
+      renderNotifyList();
+      refreshBell();
+      toast("Notification history cleared");
+    });
+  });
+  const notifyModalEl = $("#notifyModal");
+  if (notifyModalEl) {
+    notifyModalEl.addEventListener("show.bs.modal", () => {
+      renderNotifyStatus();
+      renderNotifyList();
+    });
+  }
+
   /* --------------------------------- boot -------------------------------- */
   function showLoadError(msg) {
     $("#loadError").classList.remove("d-none");
@@ -2216,6 +2590,11 @@
     ROWS.forEach((r) => { r._langs = editionsOf(r).map((e) => e.language); });
 
     buildKits(kitRows);
+    registerServiceWorker();
+    updateAppNote();
+    loadChanges().then(() => { refreshBell(); render(); });
+    // The next visit compares against the newest run this one saw.
+    window.addEventListener("pagehide", markVisitSeen);
     buildTree(); buildLanguages(); buildYearRange(); buildFamilyChips();
     buildTopics(); buildStartLinks();
     hashToState();

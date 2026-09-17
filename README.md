@@ -33,6 +33,9 @@ file on aa.org. All literature remains the copyright of its publisher.
 | Path | What it is |
 |---|---|
 | `index.html` | The entire web app — markup, styles and logic in one file, as required for simple GitHub Pages hosting. |
+| `sw.js` | Service worker: offline support and the background check for new documents. A worker has to be its own file. |
+| `site.webmanifest` | Makes it installable as an app. |
+| `data/changes.json` | What each crawl added or removed, newest first — the basis for "new documents" and notifications. |
 | `data/pdfs.csv` | The document index. One row per PDF. Regenerated automatically. |
 | `data/meta.json` | Counts and the last-rebuild timestamp, shown in the page footer. |
 | `data/broken_links.csv` | Links aa.org publishes that no longer resolve to a PDF (see below). |
@@ -42,6 +45,7 @@ file on aa.org. All literature remains the copyright of its publisher.
 | `tools/test_ui.js` | Browser regression tests for the page (search, filters, translations, preview, mobile). |
 | `tools/test_kits.js` | Browser regression tests for the service-kit view. |
 | `tools/test_viewers.js` | Browser regression tests for the PDF viewer options, including iPhone emulation. |
+| `tools/test_pwa.js` | Browser regression tests for install, offline use and new-document notifications. |
 | `tools/test_results_pane.js` | Browser regression tests for the filter bar, sorting, grouping and icons. |
 | `tools/make_favicon.py` | Generates the site icons and web manifest from one original mark. |
 | `tools/audit.js` | Debug audit: dangling references, duplicate ids, accessibility, blocked storage, missing data. |
@@ -72,6 +76,8 @@ index can be regenerated without touching application code.
 - **Share a view** — the URL captures the exact search and filters, so you can send someone a link
   straight to, say, every Spanish corrections document.
 - **Export** — download the current result list as CSV.
+- **Install it** — it runs as an app and works offline; see below.
+- **New documents** — the bell lists what each crawl added, with a history you can clear.
 
 Colour is used in two places only, and never as the only signal — the text always says the same
 thing. Item numbers are tinted by family, so a pamphlet number reads differently from a guideline
@@ -98,6 +104,38 @@ page has a built-in glossary, in short:
 
 Note that `SM-` is *not* an English service-material number — it is the Spanish edition of an `M-`
 item (`SM-40I` is the Spanish Treatment workbook), and `FM-` is the French one.
+
+## Installing it as an app
+
+The page is a progressive web app. On Android and on desktop Chrome or Edge an **Install app** button
+appears in the header; on iPhone and iPad use **Share → Add to Home Screen**, since Safari offers no
+install button. Installed, it opens in its own window, has its own icon, and long-pressing that icon
+jumps straight to Service kits, New documents or Recently updated.
+
+It also **works with no signal**. The service worker caches the interface and the index, so the whole
+catalogue stays searchable at a meeting with no reception. The documents themselves are not cached —
+those are aa.org's files and are fetched when you open them.
+
+## Being told about new documents
+
+Each crawl records what it added or removed in `data/changes.json`. The app compares that against
+what this device has already seen and lists anything new under **New documents**, and the bell in the
+header keeps a history you can read and clear.
+
+**How far this can go, honestly.** A GitHub Pages site is static — there is no server that can send a
+push message. So notifications are produced by the service worker waking up and checking
+`changes.json` itself, using Periodic Background Sync. That means:
+
+| Device | Told about new documents |
+|---|---|
+| Android / desktop Chrome or Edge, **installed** | In the background, with the app closed |
+| Any other browser, including Safari and Firefox | When you next open the app |
+
+The **Notifications** panel states which of those applies to the device you are reading on, rather
+than leaving you to guess. Nothing is sent to a third-party push service: no member's reading is
+reported to anyone, which matters more here than the convenience would. If true server-sent push is
+ever wanted, it needs a small backend to hold subscriptions and send them — the worker already
+handles a `push` event, so only the sender would be missing.
 
 ## Icons
 
@@ -247,6 +285,7 @@ node tools/test_ui.js http://127.0.0.1:8765/index.html ./shots
 node tools/test_kits.js http://127.0.0.1:8765/index.html
 node tools/test_viewers.js http://127.0.0.1:8765/index.html
 node tools/test_results_pane.js http://127.0.0.1:8765/index.html
+node tools/test_pwa.js http://127.0.0.1:8765/index.html
 node tools/audit.js http://127.0.0.1:8765/index.html index.html
 ```
 
