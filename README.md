@@ -11,7 +11,7 @@ This project crawls the entire site, collects every PDF link, sorts them into se
 topics, and serves the result as a single static page you can search, filter and share.
 
 **2,914 documents** — 1,123 English, 919 Spanish, 872 French — found across 5,401 pages and sorted
-into 12 sections, 38 categories and 37 topics. 2,447 of them are cross-linked to their translations.
+into 12 sections, 38 categories and 37 topics. 2,482 of them are cross-linked to their translations.
 
 **➡️ Live site:** https://mkp715.github.io/SimplifyAA/
 
@@ -42,6 +42,9 @@ file on aa.org. All literature remains the copyright of its publisher.
 | `tools/test_ui.js` | Browser regression tests for the page (search, filters, translations, preview, mobile). |
 | `tools/test_kits.js` | Browser regression tests for the service-kit view. |
 | `tools/test_viewers.js` | Browser regression tests for the PDF viewer options, including iPhone emulation. |
+| `tools/test_results_pane.js` | Browser regression tests for the filter bar, sorting, grouping and icons. |
+| `tools/make_favicon.py` | Generates the site icons and web manifest from one original mark. |
+| `tools/audit.js` | Debug audit: dangling references, duplicate ids, accessibility, blocked storage, missing data. |
 | `.github/workflows/update-index.yml` | Weekly re-crawl, commit, and Pages deploy. |
 
 The data deliberately lives in CSV rather than inside `index.html`, so the page stays small and the
@@ -53,7 +56,15 @@ index can be regenerated without touching application code.
   topics, so "anonimity" and "p-47" both find the right pamphlet.
 - **Browse** — the sidebar tree goes *section → category*, with live counts.
 - **Filter** — stack language and topic filters on top of any search.
-- **Cards or table** — cards for reading, table for sorting and scanning.
+- **Cards or table** — cards for reading, table for sorting and scanning. Columns can be
+  reordered, and hidden or shown from the header menu.
+- **Filter further** — the **Filters** bar narrows by literature type (from the item code),
+  Conference-approved vs service material, file size, when aa.org last updated it, a year range,
+  and switches for "available in another language", "included in a service kit" and favourites.
+  The button badges how many filters are active, and each one appears as a removable chip.
+- **Sort and arrange** — sort by best match, title, date updated, year, size, item code, category or
+  language, in either direction; group the results by category, section, language, literature type or
+  decade; and choose 24–240 results per page with comfortable or compact cards.
 - **Service kits** — every committee kit as a set of working links, workbook first (see below).
 - **Preview** — read a PDF without leaving the page, with a choice of viewer (see below).
 - **Favorites** — star documents you use often; they are remembered in your browser.
@@ -79,6 +90,16 @@ page has a built-in glossary, in short:
 
 Note that `SM-` is *not* an English service-material number — it is the Spanish edition of an `M-`
 item (`SM-40I` is the Spanish Treatment workbook), and `FM-` is the French one.
+
+## Icons
+
+`tools/make_favicon.py` generates `favicon.ico` (multi-size), `favicon.svg`, an Apple touch icon,
+192/512px PNGs and `site.webmanifest` from one original mark — a plain document glyph. The manifest
+means the page can be added to a phone's home screen and open like an app.
+
+The mark is deliberately generic. A.A.'s circle-and-triangle is a registered mark of A.A. World
+Services and is not used here, because this is an unofficial index and should not look like an
+official one.
 
 ## PDF previews and why they need options
 
@@ -151,7 +172,7 @@ discriminator** — the season, month, quarter or year parsed out of the filenam
 language-stripped filename when there is no item code (which is how the Box 4-5-9 archive is matched).
 Multi-part documents, such as the page ranges of *Living Sober*, are separated by their page numbers.
 
-The result: 831 translation groups covering 2,447 documents. In the interface each document shows
+The result: 843 translation groups covering 2,482 documents. In the interface each document shows
 `EN · ES · FR` chips with the current language highlighted; the others are one click away, including
 inside the PDF preview.
 
@@ -212,9 +233,17 @@ python -m http.server 8765 &
 node tools/test_ui.js http://127.0.0.1:8765/index.html ./shots
 node tools/test_kits.js http://127.0.0.1:8765/index.html
 node tools/test_viewers.js http://127.0.0.1:8765/index.html
+node tools/test_results_pane.js http://127.0.0.1:8765/index.html
+node tools/audit.js http://127.0.0.1:8765/index.html index.html
 ```
 
 Set `CHROME_PATH` if Chrome is not at the default Windows location.
+
+`tools/audit.js` is a separate debug pass rather than a pass/fail suite. It checks that every id the
+script references exists, that there are no duplicate ids, that every control has an accessible name
+and every field a label, that non-English titles carry a `lang` attribute so screen readers pronounce
+them correctly, and that the page still works with `localStorage` blocked (private browsing) or with
+`data/kits.csv` missing.
 
 ## Coverage
 

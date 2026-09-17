@@ -5,7 +5,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>SimplifyAA — A.A. Document Finder</title>
 <meta name="description" content="A searchable, categorized index of every PDF published on aa.org. Unofficial; all links point to the official files.">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%231f6f8b'/%3E%3Cpath d='M9 8h10l5 5v11a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2V10a2 2 0 0 1 2-2z' fill='%23fff'/%3E%3Cpath d='M11 17h10M11 21h7' stroke='%231f6f8b' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E">
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="manifest" href="site.webmanifest">
+<meta name="theme-color" content="#1f6f8b">
+<meta name="apple-mobile-web-app-title" content="SimplifyAA">
 
 <!-- Open-source CDN libraries (jsDelivr / cdnjs) -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -66,6 +71,12 @@
     padding: .1rem .35rem; border-radius: .25rem; font-weight: 600;
   }
   .sa-star { cursor: pointer; color: #d9a406; }
+  /* Compact cards: same information, less vertical space for long lists. */
+  .sa-compact .sa-card { padding: .6rem .7rem !important; }
+  .sa-compact .sa-card-title { font-size: .88rem; }
+  .sa-compact .sa-card .sa-meta { font-size: .72rem; }
+  .sa-compact .sa-card .btn-sm { padding: .1rem .4rem; font-size: .75rem; }
+  .sa-compact .sa-card .mb-2, .sa-compact .sa-card .mb-3 { margin-bottom: .35rem !important; }
   .sa-preview-frame { width: 100%; height: 78vh; border: 0; background: var(--sa-page); }
   .tabulator { background: var(--sa-surface); font-size: .88rem; }
   .sa-skip { position: absolute; left: -9999px; }
@@ -148,12 +159,6 @@
         </div>
 
         <div class="sa-panel p-3 mb-3">
-          <label for="yearSel" class="form-label fw-semibold small text-uppercase text-body-secondary">Year</label>
-          <select class="form-select form-select-sm" id="yearSel"></select>
-          <div class="form-text">Useful for newsletter back-issues.</div>
-        </div>
-
-        <div class="sa-panel p-3 mb-3">
           <div class="d-flex justify-content-between align-items-center mb-2">
             <span class="fw-semibold small text-uppercase text-body-secondary">Topics</span>
             <button class="btn btn-sm btn-link p-0 text-decoration-none" data-bs-toggle="collapse" data-bs-target="#topicWrap">show / hide</button>
@@ -183,15 +188,56 @@
             <input type="radio" class="btn-check" name="viewmode" id="vmTable">
             <label class="btn btn-outline-secondary" for="vmTable"><i class="bi bi-table"></i> Table</label>
           </div>
-          <select class="form-select form-select-sm w-auto" id="sortSel">
-            <option value="title">Sort: Title A–Z</option>
-            <option value="-title">Sort: Title Z–A</option>
-            <option value="-last_modified">Sort: Newest updated</option>
-            <option value="last_modified">Sort: Oldest updated</option>
-            <option value="-bytes">Sort: Largest file</option>
-            <option value="bytes">Sort: Smallest file</option>
-            <option value="item_code">Sort: Item code</option>
-          </select>
+          <button class="btn btn-sm btn-outline-secondary" type="button" id="filterToggle"
+                  data-bs-toggle="collapse" data-bs-target="#filterBar" aria-expanded="false"
+                  aria-controls="filterBar" title="Narrow the results further">
+            <i class="bi bi-funnel"></i><span class="d-none d-sm-inline ms-1">Filters</span>
+            <span class="badge rounded-pill text-bg-primary ms-1 d-none" id="filterCount">0</span>
+          </button>
+          <div class="input-group input-group-sm w-auto">
+            <label class="input-group-text" for="sortSel"><i class="bi bi-arrow-down-up"></i></label>
+            <select class="form-select" id="sortSel" aria-label="Sort results by">
+              <option value="relevance">Best match</option>
+              <option value="title">Title</option>
+              <option value="last_modified">Date updated</option>
+              <option value="year">Year</option>
+              <option value="bytes">File size</option>
+              <option value="item_code">Item code</option>
+              <option value="category">Category</option>
+              <option value="language">Language</option>
+            </select>
+            <button class="btn btn-outline-secondary" type="button" id="sortDir"
+                    title="Reverse the order"><i class="bi bi-sort-alpha-down"></i></button>
+          </div>
+          <div class="dropdown">
+            <button class="btn btn-sm btn-outline-secondary dropdown-toggle" type="button"
+                    data-bs-toggle="dropdown" data-bs-auto-close="outside" title="Display options">
+              <i class="bi bi-sliders"></i><span class="d-none d-lg-inline ms-1">Display</span>
+            </button>
+            <div class="dropdown-menu dropdown-menu-end p-3" style="min-width:17rem">
+              <label for="groupSel" class="form-label small fw-semibold mb-1">Group results by</label>
+              <select class="form-select form-select-sm mb-3" id="groupSel">
+                <option value="">No grouping</option>
+                <option value="category">Category</option>
+                <option value="section">Section</option>
+                <option value="language">Language</option>
+                <option value="item_code_family">Literature type</option>
+                <option value="decade">Decade</option>
+              </select>
+              <label for="pageSizeSel" class="form-label small fw-semibold mb-1">Results per page</label>
+              <select class="form-select form-select-sm mb-3" id="pageSizeSel">
+                <option value="24">24</option>
+                <option value="48">48</option>
+                <option value="96">96</option>
+                <option value="240">240</option>
+              </select>
+              <div class="small fw-semibold mb-1">Card size</div>
+              <div class="btn-group btn-group-sm w-100" role="group" id="densityGroup">
+                <button class="btn btn-outline-secondary" data-density="comfortable">Comfortable</button>
+                <button class="btn btn-outline-secondary" data-density="compact">Compact</button>
+              </div>
+            </div>
+          </div>
           <button class="btn btn-sm btn-outline-secondary" id="exportBtn" title="Download the current result list as CSV">
             <i class="bi bi-download"></i><span class="d-none d-sm-inline ms-1">Export</span>
           </button>
@@ -199,6 +245,73 @@
             <i class="bi bi-link-45deg"></i><span class="d-none d-sm-inline ms-1">Share view</span>
           </button>
         </div>
+
+        <div class="collapse mt-3" id="filterBar">
+          <div class="row g-3 border-top pt-3">
+            <div class="col-12">
+              <div class="small fw-semibold text-uppercase text-body-secondary mb-1">
+                Literature type
+                <span class="fw-normal text-body-secondary text-capitalize">— from the item code</span>
+              </div>
+              <div class="d-flex flex-wrap gap-1" id="familyChips"></div>
+            </div>
+            <div class="col-sm-6 col-xl-3">
+              <label for="approvalSel" class="form-label small fw-semibold mb-1">Status</label>
+              <select class="form-select form-select-sm" id="approvalSel"
+                      title="Inferred from the item code prefix">
+                <option value="">Any status</option>
+                <option value="approved">Conference-approved (P, B)</option>
+                <option value="service">Service material &amp; guidelines</option>
+                <option value="none">No item code</option>
+              </select>
+            </div>
+            <div class="col-sm-6 col-xl-3">
+              <label for="sizeSel" class="form-label small fw-semibold mb-1">File size</label>
+              <select class="form-select form-select-sm" id="sizeSel">
+                <option value="">Any size</option>
+                <option value="s">Small — under 250 KB</option>
+                <option value="m">Medium — 250 KB to 2 MB</option>
+                <option value="l">Large — over 2 MB</option>
+              </select>
+            </div>
+            <div class="col-sm-6 col-xl-3">
+              <label for="updatedSel" class="form-label small fw-semibold mb-1">Updated on aa.org</label>
+              <select class="form-select form-select-sm" id="updatedSel">
+                <option value="">Any time</option>
+                <option value="30">Last 30 days</option>
+                <option value="180">Last 6 months</option>
+                <option value="365">Last 12 months</option>
+                <option value="old">Over a year ago</option>
+              </select>
+            </div>
+            <div class="col-sm-6 col-xl-3">
+              <label for="yearFrom" class="form-label small fw-semibold mb-1">Document year</label>
+              <div class="input-group input-group-sm">
+                <select class="form-select" id="yearFrom" aria-label="Earliest year"></select>
+                <span class="input-group-text">to</span>
+                <select class="form-select" id="yearTo" aria-label="Latest year"></select>
+              </div>
+            </div>
+            <div class="col-12 d-flex flex-wrap align-items-center gap-3">
+              <div class="form-check form-switch mb-0">
+                <input class="form-check-input" type="checkbox" id="fTrans">
+                <label class="form-check-label small" for="fTrans">Available in another language</label>
+              </div>
+              <div class="form-check form-switch mb-0">
+                <input class="form-check-input" type="checkbox" id="fKit">
+                <label class="form-check-label small" for="fKit">Included in a service kit</label>
+              </div>
+              <div class="form-check form-switch mb-0">
+                <input class="form-check-input" type="checkbox" id="fFav">
+                <label class="form-check-label small" for="fFav">Favorites only</label>
+              </div>
+              <button class="btn btn-sm btn-link text-decoration-none ms-auto" id="clearFilters">
+                Clear these filters
+              </button>
+            </div>
+          </div>
+        </div>
+
         <div class="d-flex flex-wrap gap-1 mt-2" id="activeChips"></div>
       </div>
 
@@ -419,14 +532,21 @@
   const DATA_CSV = "data/pdfs.csv";
   const DATA_META = "data/meta.json";
   const DATA_KITS = "data/kits.csv";
-  const PAGE_SIZE = 48;
   const LS = { fav: "simplifyaa.favorites", theme: "simplifyaa.theme",
                settings: "simplifyaa.settings" };
 
   const state = {
-    q: "", view: "all", section: "", category: "", language: "", year: "",
-    topics: new Set(), sort: "title", page: 1, mode: "cards", openKit: ""
+    q: "", view: "all", section: "", category: "", language: "",
+    topics: new Set(), families: new Set(),
+    approval: "", size: "", updated: "", yearFrom: "", yearTo: "",
+    hasTrans: false, inKit: false,
+    sortField: "title", sortDir: "asc",
+    group: "", pageSize: 48, density: "comfortable",
+    page: 1, mode: "cards", openKit: ""
   };
+
+  // Filters that live in the collapsible bar, counted on its badge.
+  const BAR_FILTERS = ["approval", "size", "updated"];
 
   let ROWS = [], META = {}, FUSE = null, FILTERED = [], table = null;
   let favorites = new Set();
@@ -436,6 +556,15 @@
   let KIT_MEMBERSHIP = new Map();   // base item code -> [kit names]
   const LANG_ORDER = ["English", "Spanish", "French"];
   const LANG_SHORT = { English: "EN", Spanish: "ES", French: "FR" };
+  const LANG_TAG = { English: "en", Spanish: "es", French: "fr" };
+
+  // Spanish and French titles sit inside an English page. Marking them lets a
+  // screen reader pronounce them with the right voice instead of reading
+  // "Alcohólicos Anónimos" as English.
+  const langAttr = (row) => {
+    const tag = LANG_TAG[row && row.language];
+    return tag && tag !== "en" ? ' lang="' + tag + '"' : "";
+  };
 
   // "p-47", "P47", "smf-121" -> a comparable key
   const CODE_QUERY_RE = /^[a-z]{1,4}[-_ ]?\d{1,3}[a-z]?$/i;
@@ -508,9 +637,20 @@
     if (state.section) p.set("section", state.section);
     if (state.category) p.set("cat", state.category);
     if (state.language) p.set("lang", state.language);
-    if (state.year) p.set("year", state.year);
     if (state.topics.size) p.set("topics", [...state.topics].join("|"));
-    if (state.sort !== "title") p.set("sort", state.sort);
+    if (state.families.size) p.set("family", [...state.families].join("|"));
+    if (state.approval) p.set("status", state.approval);
+    if (state.size) p.set("size", state.size);
+    if (state.updated) p.set("updated", state.updated);
+    if (state.yearFrom) p.set("from", state.yearFrom);
+    if (state.yearTo) p.set("to", state.yearTo);
+    if (state.hasTrans) p.set("trans", "1");
+    if (state.inKit) p.set("inkit", "1");
+    if (state.sortField !== "title") p.set("sort", state.sortField);
+    if (state.sortDir !== "asc") p.set("dir", state.sortDir);
+    if (state.group) p.set("group", state.group);
+    if (state.pageSize !== 48) p.set("per", String(state.pageSize));
+    if (state.density !== "comfortable") p.set("density", state.density);
     if (state.mode !== "cards") p.set("mode", state.mode);
     if (state.openKit) p.set("kit", state.openKit);
     const s = p.toString();
@@ -523,9 +663,20 @@
     state.section = p.get("section") || "";
     state.category = p.get("cat") || "";
     state.language = p.get("lang") || "";
-    state.year = p.get("year") || "";
     state.topics = new Set((p.get("topics") || "").split("|").filter(Boolean));
-    state.sort = p.get("sort") || "title";
+    state.families = new Set((p.get("family") || "").split("|").filter(Boolean));
+    state.approval = p.get("status") || "";
+    state.size = p.get("size") || "";
+    state.updated = p.get("updated") || "";
+    state.yearFrom = p.get("from") || "";
+    state.yearTo = p.get("to") || "";
+    state.hasTrans = p.get("trans") === "1";
+    state.inKit = p.get("inkit") === "1";
+    state.sortField = p.get("sort") || "title";
+    state.sortDir = p.get("dir") === "desc" ? "desc" : "asc";
+    state.group = p.get("group") || "";
+    state.pageSize = [24, 48, 96, 240].includes(+p.get("per")) ? +p.get("per") : 48;
+    state.density = p.get("density") === "compact" ? "compact" : "comfortable";
     state.mode = p.get("mode") === "table" ? "table" : "cards";
     state.openKit = p.get("kit") || "";
   }
@@ -641,7 +792,7 @@
     return '<li class="list-group-item bg-transparent d-flex align-items-center gap-2 py-1 px-2 flex-wrap">' +
       '<span class="sa-code">' + esc(doc.item_code || code) + "</span>" +
       '<a class="small fw-semibold text-decoration-none flex-grow-1" href="' + esc(doc.url) +
-        '" target="_blank" rel="noopener">' + esc(doc.title) + "</a>" +
+        '" target="_blank" rel="noopener"' + langAttr(doc) + ">" + esc(doc.title) + "</a>" +
       (doc.size_human ? '<span class="sa-meta">' + esc(doc.size_human) + "</span>" : "") +
       '<button class="btn btn-sm btn-link p-0 px-1" data-preview="' + esc(doc.url) +
         '" title="Preview"><i class="bi bi-eye"></i></button>' +
@@ -865,29 +1016,45 @@
   }
 
   const isPristine = () => !state.q && state.view === "all" && !state.section &&
-    !state.category && !state.language && !state.year && !state.topics.size;
+    !state.category && !state.language && !state.topics.size && !state.families.size &&
+    !state.approval && !state.size && !state.updated && !state.yearFrom && !state.yearTo &&
+    !state.hasTrans && !state.inKit;
 
-  function buildYears() {
+  function buildYearRange() {
     const counts = new Map();
     ROWS.forEach((r) => {
       if (r.year) counts.set(r.year, (counts.get(r.year) || 0) + 1);
     });
     const years = [...counts.keys()].sort((a, b) => b.localeCompare(a));
-    const sel = $("#yearSel");
-    sel.innerHTML = '<option value="">Any year</option>';
-    // Group by decade so a 60-year newsletter run stays navigable.
-    let decade = null, group = null;
-    years.forEach((y) => {
-      const d = y.slice(0, 3) + "0s";
-      if (d !== decade) {
-        decade = d;
-        group = el("optgroup");
-        group.label = d;
-        sel.appendChild(group);
+    [["#yearFrom", "Earliest"], ["#yearTo", "Latest"]].forEach(([sel, label]) => {
+      const node = $(sel);
+      if (!node) return;
+      node.innerHTML = '<option value="">' + label + "</option>" +
+        years.map((y) => '<option value="' + y + '">' + y +
+          ' (' + counts.get(y) + ")</option>").join("");
+    });
+  }
+
+  function buildFamilyChips() {
+    const counts = new Map();
+    ROWS.forEach((r) => {
+      if (r.item_code_family) {
+        counts.set(r.item_code_family, (counts.get(r.item_code_family) || 0) + 1);
       }
-      const o = el("option", null, y + " (" + counts.get(y) + ")");
-      o.value = y;
-      group.appendChild(o);
+    });
+    const wrap = $("#familyChips");
+    if (!wrap) return;
+    wrap.innerHTML = "";
+    [...counts.entries()].sort((a, b) => b[1] - a[1]).forEach(([fam, n]) => {
+      const c = el("span", "badge rounded-pill text-bg-light sa-chip",
+        esc(fam) + ' <span class="opacity-50">' + n + "</span>");
+      c.dataset.family = fam;
+      c.addEventListener("click", () => {
+        if (state.families.has(fam)) state.families.delete(fam);
+        else state.families.add(fam);
+        state.page = 1; sync();
+      });
+      wrap.appendChild(c);
     });
   }
 
@@ -944,7 +1111,6 @@
     if (state.section) rows = rows.filter((r) => r.section === state.section);
     if (state.category) rows = rows.filter((r) => r.category === state.category);
     if (state.language) rows = rows.filter((r) => r.language === state.language);
-    if (state.year) rows = rows.filter((r) => r.year === state.year);
     if (state.topics.size) {
       rows = rows.filter((r) => {
         const ts = topicList(r);
@@ -952,24 +1118,105 @@
         return true;
       });
     }
-
-    const sortKey = state.view === "recent" ? "-last_modified" : state.sort;
-    const desc = sortKey.startsWith("-");
-    const key = desc ? sortKey.slice(1) : sortKey;
-    // Fuse already ranks by relevance; only re-sort when the user picked an order.
-    const relevanceOrder = state.q.trim().length >= 2 && state.sort === "title" &&
-      state.view !== "recent";
-    if (!relevanceOrder) {
-      rows = rows.slice().sort((a, b) => {
-        let av = a[key], bv = b[key];
-        if (key === "bytes") { av = +av || 0; bv = +bv || 0; }
-        else { av = String(av || "").toLowerCase(); bv = String(bv || "").toLowerCase(); }
-        if (av < bv) return desc ? 1 : -1;
-        if (av > bv) return desc ? -1 : 1;
-        return String(a.title).localeCompare(String(b.title));
+    if (state.families.size) {
+      rows = rows.filter((r) => state.families.has(r.item_code_family));
+    }
+    if (state.approval) {
+      rows = rows.filter((r) => approvalOf(r) === state.approval);
+    }
+    if (state.size) {
+      rows = rows.filter((r) => sizeBandOf(+r.bytes || 0) === state.size);
+    }
+    if (state.updated) {
+      const cutoff = state.updated === "old" ? 365 : +state.updated;
+      rows = rows.filter((r) => {
+        const age = ageInDays(r.last_modified);
+        if (age === null) return false;
+        return state.updated === "old" ? age > cutoff : age <= cutoff;
       });
     }
-    FILTERED = rows;
+    if (state.yearFrom || state.yearTo) {
+      // Tolerate the range being entered backwards.
+      const a = state.yearFrom || "0000";
+      const b = state.yearTo || "9999";
+      const lo = a <= b ? a : b;
+      const hi = a <= b ? b : a;
+      rows = rows.filter((r) => r.year && r.year >= lo && r.year <= hi);
+    }
+    if (state.hasTrans) rows = rows.filter((r) => (r._langs || []).length > 1);
+    if (state.inKit) {
+      rows = rows.filter((r) => r.base_code && KIT_MEMBERSHIP.has(r.base_code));
+    }
+
+    FILTERED = sortRows(rows, q);
+  }
+
+  const approvalOf = (r) => {
+    const base = r.base_code || "";
+    if (/^[PB]-/.test(base)) return "approved";
+    if (/^(SMF?|MG|M|BM|CF|AV|LIM|FL)-/.test(base)) return "service";
+    return r.item_code ? "service" : "none";
+  };
+
+  const sizeBandOf = (bytes) => {
+    if (!bytes) return "";
+    if (bytes < 250 * 1024) return "s";
+    if (bytes <= 2 * 1024 * 1024) return "m";
+    return "l";
+  };
+
+  function ageInDays(iso) {
+    if (!iso) return null;
+    const t = Date.parse(iso + "T00:00:00Z");
+    if (isNaN(t)) return null;
+    return (Date.now() - t) / 86400000;
+  }
+
+  function sortRows(rows, q) {
+    const sorted = sortRowsInner(rows, q);
+    if (!state.group) return sorted;
+    // With grouping on, order by group first so each group stays in one place
+    // instead of being sliced across pages. Sort is stable, so the chosen sort
+    // order survives inside each group.
+    const dir = state.group === "decade" ? -1 : 1;
+    return sorted.slice().sort((a, b) => {
+      const av = groupValue(a), bv = groupValue(b);
+      if (av === bv) return 0;
+      return (av < bv ? -1 : 1) * dir;
+    });
+  }
+
+  function sortRowsInner(rows, q) {
+    const field = state.sortField;
+    // "Best match" only means something while searching; Fuse has already
+    // ordered those rows, so leave them alone.
+    if (field === "relevance") {
+      if (q.length >= 2) return state.sortDir === "desc" ? rows.slice().reverse() : rows;
+      return sortBy(rows, "title", state.sortDir);
+    }
+    if (state.view === "recent" && field === "title") {
+      return sortBy(rows, "last_modified", "desc");
+    }
+    return sortBy(rows, field, state.sortDir);
+  }
+
+  function sortBy(rows, key, dir) {
+    const desc = dir === "desc";
+    const numeric = key === "bytes";
+    return rows.slice().sort((a, b) => {
+      let av = a[key], bv = b[key];
+      if (numeric) { av = +av || 0; bv = +bv || 0; }
+      else {
+        av = String(av == null ? "" : av).toLowerCase();
+        bv = String(bv == null ? "" : bv).toLowerCase();
+        // Rows missing the value sort last whichever way the list runs.
+        if (!av && bv) return 1;
+        if (av && !bv) return -1;
+      }
+      if (av < bv) return desc ? 1 : -1;
+      if (av > bv) return desc ? -1 : 1;
+      return String(a.title).localeCompare(String(b.title));
+    });
   }
 
   /* ------------------------------- rendering ------------------------------ */
@@ -1018,7 +1265,8 @@
     col.innerHTML =
       '<div class="sa-card p-3 d-flex flex-column">' +
         '<div class="d-flex justify-content-between align-items-start gap-2 mb-1">' +
-          '<div class="sa-card-title">' + highlight(row.title, state.q) + "</div>" +
+          '<div class="sa-card-title"' + langAttr(row) + ">" +
+            highlight(row.title, state.q) + "</div>" +
           '<i class="bi ' + (faved ? "bi-star-fill sa-star" : "bi-star text-body-secondary") +
             ' fs-6" role="button" tabindex="0" aria-label="Toggle favorite" data-fav="' + esc(row.url) + '"></i>' +
         "</div>" +
@@ -1045,11 +1293,45 @@
     return col;
   }
 
+  const groupValue = (row) => {
+    if (state.group === "decade") {
+      return row.year ? row.year.slice(0, 3) + "0s" : "No year given";
+    }
+    return row[state.group] || "Not classified";
+  };
+
   function renderCards(pageRows) {
     const wrap = $("#cardsWrap");
     wrap.innerHTML = "";
     const frag = document.createDocumentFragment();
-    pageRows.forEach((r) => frag.appendChild(cardFor(r)));
+
+    if (!state.group) {
+      pageRows.forEach((r) => frag.appendChild(cardFor(r)));
+      wrap.appendChild(frag);
+      return;
+    }
+
+    // Grouping keeps the same page of results, just banded by one field so a
+    // long list reads as sets rather than a wall.
+    const groups = new Map();
+    pageRows.forEach((r) => {
+      const k = groupValue(r);
+      if (!groups.has(k)) groups.set(k, []);
+      groups.get(k).push(r);
+    });
+    const keys = [...groups.keys()].sort((a, b) =>
+      state.group === "decade" ? b.localeCompare(a) : a.localeCompare(b));
+
+    keys.forEach((k) => {
+      const head = el("div", "col-12");
+      head.innerHTML = '<div class="d-flex align-items-center gap-2 mt-2 mb-1">' +
+        '<span class="fw-semibold">' + esc(k) + "</span>" +
+        '<span class="badge rounded-pill" style="background:var(--sa-border);' +
+        'color:var(--sa-muted)">' + groups.get(k).length + "</span>" +
+        '<span class="flex-grow-1 border-bottom"></span></div>';
+      frag.appendChild(head);
+      groups.get(k).forEach((r) => frag.appendChild(cardFor(r)));
+    });
     wrap.appendChild(frag);
   }
 
@@ -1061,7 +1343,8 @@
         cellClick: (e, c) => toggleFavorite(c.getRow().getData().url) },
       { title: "Title", field: "title", minWidth: 260, formatter: (c) =>
           '<a href="' + esc(c.getRow().getData().url) + '" target="_blank" rel="noopener" ' +
-          'class="text-decoration-none fw-semibold">' + esc(c.getValue()) + "</a>" },
+          'class="text-decoration-none fw-semibold"' + langAttr(c.getRow().getData()) + ">" +
+          esc(c.getValue()) + "</a>" },
       { title: "Code", field: "item_code", width: 92, formatter: (c) =>
           c.getValue() ? '<span class="sa-code">' + esc(c.getValue()) + "</span>" : "" },
       { title: "Category", field: "category", width: 210 },
@@ -1086,22 +1369,43 @@
           '<i class="bi bi-eye"></i></button>',
         cellClick: (e, c) => openPreview(c.getRow().getData()) },
     ];
-    if (table) { table.replaceData(FILTERED); return; }
+    // Right-click any header to show or hide columns.
+    const headerMenu = () => cols
+      .filter((c) => c.title)
+      .map((c) => ({
+        label: (table && table.getColumn(c.field || c.title) &&
+                table.getColumn(c.field || c.title).isVisible() ? "✓ " : " ") + c.title,
+        action: (e, column) => {
+          const target = table.getColumn(c.field || c.title);
+          if (!target) return;
+          target.toggle();
+          e.stopPropagation();
+        },
+      }));
+    cols.forEach((c) => { if (c.title) c.headerMenu = headerMenu; });
+
+    const tableGroup = state.group === "decade" ? null : state.group;
+    if (table) {
+      table.setGroupBy(tableGroup || false);
+      table.replaceData(FILTERED);
+      return;
+    }
     table = new Tabulator("#tableWrap", {
       data: FILTERED,
       columns: cols,
       layout: "fitColumns",
       height: "72vh",
       pagination: true,
-      paginationSize: 50,
-      paginationSizeSelector: [25, 50, 100, 250],
+      paginationSize: state.pageSize,
+      paginationSizeSelector: [24, 48, 96, 240],
+      movableColumns: true,
       placeholder: "No documents match these filters",
-      groupBy: undefined,
+      groupBy: tableGroup || false,
     });
   }
 
   function renderPager(total) {
-    const pages = Math.max(1, Math.ceil(total / PAGE_SIZE));
+    const pages = Math.max(1, Math.ceil(total / state.pageSize));
     state.page = Math.min(state.page, pages);
     const ul = $("#pager");
     ul.innerHTML = "";
@@ -1135,7 +1439,28 @@
     if (state.section) chips.push(["Section: " + state.section, () => { state.section = ""; }]);
     if (state.category) chips.push(["Category: " + state.category, () => { state.category = ""; }]);
     if (state.language) chips.push(["Language: " + state.language, () => { state.language = ""; }]);
-    if (state.year) chips.push(["Year: " + state.year, () => { state.year = ""; }]);
+    state.families.forEach((f) =>
+      chips.push(["Type: " + f, () => state.families.delete(f)]));
+    if (state.approval) {
+      const label = { approved: "Conference-approved", service: "Service material",
+                      none: "No item code" }[state.approval];
+      chips.push(["Status: " + label, () => { state.approval = ""; }]);
+    }
+    if (state.size) {
+      const label = { s: "Under 250 KB", m: "250 KB - 2 MB", l: "Over 2 MB" }[state.size];
+      chips.push(["Size: " + label, () => { state.size = ""; }]);
+    }
+    if (state.updated) {
+      const label = { "30": "Updated in 30 days", "180": "Updated in 6 months",
+                      "365": "Updated in 12 months", old: "Not updated in a year" }[state.updated];
+      chips.push([label, () => { state.updated = ""; }]);
+    }
+    if (state.yearFrom || state.yearTo) {
+      chips.push(["Year " + (state.yearFrom || "any") + "-" + (state.yearTo || "any"),
+                  () => { state.yearFrom = ""; state.yearTo = ""; }]);
+    }
+    if (state.hasTrans) chips.push(["Has translations", () => { state.hasTrans = false; }]);
+    if (state.inKit) chips.push(["In a service kit", () => { state.inKit = false; }]);
     state.topics.forEach((t) => chips.push(["Topic: " + t, () => state.topics.delete(t)]));
     chips.forEach(([label, undo]) => {
       const c = el("span", "badge rounded-pill text-bg-secondary",
@@ -1155,8 +1480,35 @@
       c.classList.toggle("active", state.topics.has(c.dataset.topic)));
     document.querySelectorAll("#tree [data-cat]").forEach((b) =>
       b.classList.toggle("active", b.dataset.cat === state.category));
-    $("#sortSel").value = state.sort;
-    $("#yearSel").value = state.year;
+    $("#sortSel").value = state.sortField;
+    $("#sortDir").innerHTML = '<i class="bi bi-sort-alpha-' +
+      (state.sortDir === "desc" ? "up" : "down") + '"></i>';
+    $("#sortDir").title = state.sortDir === "desc" ? "Descending - click for ascending"
+                                                   : "Ascending - click for descending";
+    $("#groupSel").value = state.group;
+    $("#pageSizeSel").value = String(state.pageSize);
+    $("#approvalSel").value = state.approval;
+    $("#sizeSel").value = state.size;
+    $("#updatedSel").value = state.updated;
+    $("#yearFrom").value = state.yearFrom;
+    $("#yearTo").value = state.yearTo;
+    $("#fTrans").checked = state.hasTrans;
+    $("#fKit").checked = state.inKit;
+    $("#fFav").checked = state.view === "favorites";
+    document.querySelectorAll("#familyChips [data-family]").forEach((c) =>
+      c.classList.toggle("active", state.families.has(c.dataset.family)));
+    document.querySelectorAll("#densityGroup [data-density]").forEach((b) =>
+      b.classList.toggle("active", b.dataset.density === state.density));
+    $("#cardsWrap").classList.toggle("sa-compact", state.density === "compact");
+
+    // Badge the Filters button so a narrowed list is never a mystery.
+    // A year range counts once however many ends are set.
+    const active = BAR_FILTERS.filter((k) => state[k]).length +
+      state.families.size + (state.hasTrans ? 1 : 0) + (state.inKit ? 1 : 0) +
+      (state.yearFrom || state.yearTo ? 1 : 0);
+    const badge = $("#filterCount");
+    badge.textContent = active;
+    badge.classList.toggle("d-none", active === 0);
     $("#vmTable").checked = state.mode === "table";
     $("#vmCards").checked = state.mode === "cards";
   }
@@ -1200,8 +1552,8 @@
     $("#tableWrap").classList.toggle("d-none", state.mode !== "table");
 
     if (state.mode === "cards") {
-      const start = (state.page - 1) * PAGE_SIZE;
-      renderCards(FILTERED.slice(start, start + PAGE_SIZE));
+      const start = (state.page - 1) * state.pageSize;
+      renderCards(FILTERED.slice(start, start + state.pageSize));
     } else {
       renderTable();
     }
@@ -1467,6 +1819,7 @@
       return;
     }
     $("#previewTitle").textContent = row.title;
+    $("#previewTitle").setAttribute("lang", LANG_TAG[row.language] || "en");
     $("#previewMeta").textContent = [row.item_code, row.category, row.size_human, row.last_modified]
       .filter(Boolean).join("  ·  ");
     $("#previewOpen").href = row.url;
@@ -1590,16 +1943,52 @@
   document.querySelectorAll("[data-view]").forEach((b) => b.addEventListener("click", () => {
     state.view = b.dataset.view; state.section = ""; state.category = ""; state.page = 1; sync();
   }));
-  $("#sortSel").addEventListener("change", (e) => { state.sort = e.target.value; state.page = 1; sync(); });
-  $("#yearSel").addEventListener("change", (e) => { state.year = e.target.value; state.page = 1; sync(); });
+  $("#sortSel").addEventListener("change", (e) => {
+    state.sortField = e.target.value; state.page = 1; sync();
+  });
+  $("#sortDir").addEventListener("click", () => {
+    state.sortDir = state.sortDir === "asc" ? "desc" : "asc"; state.page = 1; sync();
+  });
+  $("#groupSel").addEventListener("change", (e) => {
+    state.group = e.target.value; state.page = 1; sync();
+  });
+  $("#pageSizeSel").addEventListener("change", (e) => {
+    state.pageSize = +e.target.value || 48; state.page = 1; sync();
+  });
+  document.querySelectorAll("#densityGroup [data-density]").forEach((b) =>
+    b.addEventListener("click", () => { state.density = b.dataset.density; sync(); }));
+  [["#approvalSel", "approval"], ["#sizeSel", "size"], ["#updatedSel", "updated"],
+   ["#yearFrom", "yearFrom"], ["#yearTo", "yearTo"]].forEach(([sel, key]) => {
+    $(sel).addEventListener("change", (e) => {
+      state[key] = e.target.value; state.page = 1; sync();
+    });
+  });
+  [["#fTrans", "hasTrans"], ["#fKit", "inKit"]].forEach(([sel, key]) => {
+    $(sel).addEventListener("change", (e) => {
+      state[key] = e.target.checked; state.page = 1; sync();
+    });
+  });
+  $("#fFav").addEventListener("change", (e) => {
+    state.view = e.target.checked ? "favorites" : "all"; state.page = 1; sync();
+  });
+  $("#clearFilters").addEventListener("click", () => {
+    state.families.clear();
+    state.approval = ""; state.size = ""; state.updated = "";
+    state.yearFrom = ""; state.yearTo = "";
+    state.hasTrans = false; state.inKit = false;
+    state.page = 1; sync();
+  });
   $("#vmCards").addEventListener("change", () => { state.mode = "cards"; sync(); });
   $("#vmTable").addEventListener("change", () => { state.mode = "table"; sync(); });
   $("#clearBrowse").addEventListener("click", () => { state.section = ""; state.category = ""; sync(); });
   $("#resetAll").addEventListener("click", () => {
     state.q = ""; $("#q").value = "";
     state.view = "all"; state.section = ""; state.category = "";
-    state.language = ""; state.year = ""; state.topics.clear();
-    state.sort = "title"; state.page = 1;
+    state.language = ""; state.topics.clear(); state.families.clear();
+    state.approval = ""; state.size = ""; state.updated = "";
+    state.yearFrom = ""; state.yearTo = "";
+    state.hasTrans = false; state.inKit = false;
+    state.sortField = "title"; state.sortDir = "asc"; state.group = ""; state.page = 1;
     sync();
   });
 
@@ -1754,7 +2143,8 @@
     ROWS.forEach((r) => { r._langs = editionsOf(r).map((e) => e.language); });
 
     buildKits(kitRows);
-    buildTree(); buildLanguages(); buildYears(); buildTopics(); buildStartLinks();
+    buildTree(); buildLanguages(); buildYearRange(); buildFamilyChips();
+    buildTopics(); buildStartLinks();
     hashToState();
     $("#q").value = state.q;
     render();

@@ -56,7 +56,7 @@ function check(name, cond, detail) {
       .map((b) => b.textContent.trim().replace(/\s+/g, " ")),
     langs: [...document.querySelectorAll("#langGroup button")].map((b) => b.textContent.trim()),
     topics: document.querySelectorAll("#topics .sa-chip").length,
-    years: document.querySelectorAll("#yearSel option").length,
+    years: document.querySelectorAll("#yearFrom option").length,
     startLinks: document.querySelectorAll("#startLinks button").length,
     errorBanner: !document.querySelector("#loadError").classList.contains("d-none"),
     firstCard: (document.querySelector("#cardsWrap .sa-card-title") || {}).textContent,
@@ -152,9 +152,11 @@ function check(name, cond, detail) {
   await page.click("#resetAll");
   await sleep(400);
   const yr = await page.evaluate(() => {
-    const sel = document.querySelector("#yearSel");
+    const sel = document.querySelector("#yearFrom");
     const opt = [...sel.options].find((o) => o.value && /^(19|20)/.test(o.value));
     sel.value = opt.value; sel.dispatchEvent(new Event("change"));
+    document.querySelector("#yearTo").value = opt.value;
+    document.querySelector("#yearTo").dispatchEvent(new Event("change"));
     return opt.value;
   });
   await sleep(600);
@@ -164,7 +166,7 @@ function check(name, cond, detail) {
 
   console.log("\n=== STATE / SHARE ===");
   const hash = await page.evaluate(() => location.hash);
-  check("filters captured in URL", /year=/.test(hash), hash);
+  check("filters captured in URL", /from=/.test(hash), hash);
   await page.reload({ waitUntil: "networkidle2" });
   await page.waitForFunction(
     () => !/loading/i.test(document.querySelector("#resultCount").textContent), { timeout: 30000 });
@@ -186,7 +188,9 @@ function check(name, cond, detail) {
       || {}).textContent,
   }));
   check("table renders rows", tbl.rows > 10, tbl.rows + " rows");
-  check("table has Editions column", tbl.cols.includes("Editions"), tbl.cols.join(","));
+  // Tabulator prefixes a header-menu glyph, so match loosely.
+  check("table has Editions column",
+    tbl.cols.some((c) => /Editions/.test(c)), tbl.cols.join(","));
   await page.screenshot({ path: OUT + "/04-table.png" });
 
   await page.evaluate(() => document.querySelector("label[for=vmCards]").click());
