@@ -50,6 +50,9 @@ CRAWL_HOSTS = {"www.aa.org", "aa.org"}
 
 UA = "SimplifyAA-Indexer/1.0 (+https://github.com/MKP715/SimplifyAA) link-metadata-only"
 
+# Deepest "?page=N" we will follow on a listing page.
+MAX_PAGER = 100
+
 SKIP_PATH_RE = re.compile(
     r"^/(admin|user|search|comment|filter|node/add|media/oembed|core|profiles"
     r"|modules|themes|sites/default/files/(css|js))(/|$)",
@@ -176,9 +179,17 @@ def crawlable(url):
         return False
     if PDF_RE.search(p.path):
         return False
-    # Drupal facet/pager noise multiplies URLs without adding documents.
-    if p.query and re.search(r"(^|&)(page=|sort_by|sort_order|f%5B|f\[|facet|search_api)", p.query):
-        return False
+    if p.query:
+        # Listing pages really do paginate, and later pages carry documents that
+        # appear nowhere else, so "?page=N" must be followed. Only pager links
+        # actually present in the HTML get queued, which bounds this naturally;
+        # the cap is a backstop against a runaway pager.
+        params = dict(urllib.parse.parse_qsl(p.query))
+        if set(params) - {"page"}:
+            return False  # facets and sorts re-slice the same documents
+        page = params.get("page", "0")
+        if not page.isdigit() or int(page) > MAX_PAGER:
+            return False
     return True
 
 
@@ -273,6 +284,35 @@ CODE_FAMILIES = {
     "fl": "Flyers & Announcements",
 }
 
+# Matched against the FILENAME ONLY, before anything else.
+#
+# A periodical's identity lives in its filename; the scraped title is just the
+# headline of one article inside it. Without this, "Box 459 - 62nd General
+# Service Conference" would file a newsletter issue under Conference reports.
+# The same applies to book chapters, whose page titles mention whatever the
+# chapter is about ("To Employers" is Big Book chapter 10, not CPC material).
+FILENAME_CATEGORY_RULES = [
+    (r"box[-_]?459", "Newsletter: Box 4-5-9"),
+    (r"markings|(^|[_\-])(s|f)?f[-_]?151([_\-.]|$)", "Newsletter: Markings (Archives)"),
+    (r"aaws[-_ ]?highlights?|faits[-_ ]saillants|puntos[-_ ]destacados",
+     "Newsletter: AAWS Highlights"),
+    (r"(^|[_\-])(s|f)?f[-_]?13([_\-.]|$)|about[-_]?aa|acerca[-_ ]de[-_ ]a",
+     "Newsletter: About A.A."),
+    (r"(^|[_\-])(s|f)?f[-_]?14([_\-.]|$)|q(uarterly|trly)[-_ ]?report",
+     "G.S.O. Quarterly Report"),
+    # The corrections newsletter stays with the rest of the corrections material,
+    # where someone doing that service work will look for it.
+    (r"(^|[_\-])(s|f)?f[-_]?97([_\-.]|$)|behind[-_ ]the[-_ ]walls"
+     r"|detr[aá]s[-_ ]de[-_ ]los[-_ ]muros|derri[eè]re[-_ ]les[-_ ]murs",
+     "Corrections"),
+    (r"(^|[_\-])lim[-_]|loners|internationalist|sea[-_ ]?hawk",
+     "Loners & Internationalists"),
+    (r"bigbook|big[-_ ]book|livingsober|living[-_ ]sober|(^|[_\-])tt[-_]"
+     r"|twelveandtwelve|twelve[-_ ]and[-_ ]twelve|tradition\d|step\d"
+     r"|dailyreflection|as[-_ ]bill[-_ ]sees",
+     "Big Book, Steps & Traditions"),
+]
+
 # (regex, category). First match wins, so order is significant.
 CATEGORY_RULES = [
     (r"aa[-_ ]?guidelines|(^|[_\-/])mg[-_]?\d", "A.A. Guidelines"),
@@ -298,7 +338,8 @@ CATEGORY_RULES = [
     (r"accessib|special[-_ ]needs|deaf|blind|braille|large[-_ ]print|(^|[_\-])asl([_\-]|$)",
      "Treatment & Accessibilities"),
     (r"public[-_ ]information|(^|[_\-])pi([_\-]|\d)|media|press|(^|[_\-])psa([_\-]|$)"
-     r"|public[-_ ]service[-_ ]announc", "Public Information"),
+     r"|public[-_ ]service[-_ ]announc|at[-_ ]a[-_ ]glance|aper[cç]u[-_ ]sur"
+     r"|un[-_ ]vistazo", "Public Information"),
     (r"cooperation[-_ ]with[-_ ]the[-_ ]professional|(^|[_\-])cpc([_\-]|\d)"
      r"|professional[-_ ]community|employ|human[-_ ]resource|healthcare|health[-_ ]care"
      r"|legal[-_ ]and[-_ ]correction|clergy|physician|nurse|school|student|educator",
@@ -320,7 +361,9 @@ CATEGORY_RULES = [
      "Surveys & Membership Data"),
     (r"catalog|order[-_ ](form|blank)|price[-_ ]list|literature[-_ ]sales",
      "Forms, Catalogs & Order Blanks"),
-    (r"group[-_ ](handbook|information|change|form|record)|new[-_ ]group|(^|[_\-])gsr([_\-]|$)"
+    (r"group[-_ ](handbook|information|change|form|record)|new[-_ ]group"
+     r"|nouveau[-_ ]groupe|nuevo[-_ ]grupo|(^|[_\-])f?[-_]?group([_\-.]|$)"
+     r"|(^|[_\-])gsr([_\-]|$)"
      r"|(^|[_\-])dcm([_\-]|$)|area[-_ ]service|district|intergroup|central[-_ ]office"
      r"|answering[-_ ]service|home[-_ ]group|group[-_ ]service",
      "Group, District & Area Service"),
@@ -399,6 +442,7 @@ CATEGORY_SECTION = {
     "Books & Big Book": "Literature",
     "Big Book, Steps & Traditions": "Literature",
     "Newsletter: AAWS Highlights": "Newsletters",
+    "G.S.O. Quarterly Report": "Newsletters",
     "Literature & Committees": "Literature",
     "Forms, Catalogs & Order Blanks": "Forms & Catalogs",
     "Displays & Wallet Cards": "Forms & Catalogs",
@@ -483,7 +527,8 @@ def periodical_title(filename):
     'fr_box459_feb-mar69.pdf' -> 'Box 4-5-9 - February-March 1969'
     """
     stem = re.sub(r"\.pdf$", "", urllib.parse.unquote(filename), flags=re.I)
-    stem = re.sub(r"[_\-]\d+$", "", stem)  # Drupal's duplicate suffix (_0, _1)
+    # Drupal's duplicate suffix ("_0", "_12") -- bounded so a year survives.
+    stem = re.sub(r"_\d{1,2}$", "", stem)
 
     name = ""
     for pattern, label in PERIODICALS:
@@ -509,7 +554,7 @@ def periodical_title(filename):
     if m:
         return "%s - %s %s" % (name, MONTHS[m.group(1).lower()], _expand_year(m.group(2)))
 
-    m = re.search(r"\b((?:19|20)\d{2})\b", stem)
+    m = re.search(r"(?<!\d)((?:19|20)\d{2})(?!\d)", stem)
     if m:
         return "%s - %s" % (name, m.group(1))
 
@@ -564,7 +609,7 @@ def prettify_filename(filename):
     stem = re.sub(r"\.pdf$", "", urllib.parse.unquote(filename), flags=re.I)
     stem = re.sub(r"^((?:smf|sm|mg|bm|av|cf|fl|lim|f|p|m|i)[-_]?\d{1,3}[a-z]?)[-_]", "",
                   stem, flags=re.I)
-    stem = re.sub(r"[_\-]\d+$", "", stem)            # Drupal duplicate suffix (_0, _1)
+    stem = re.sub(r"_\d{1,2}$", "", stem)        # Drupal duplicate suffix (_0, _1)
     stem = re.sub(r"^(en|sp|es|fr)[_\-]", "", stem, flags=re.I)   # language prefix
     stem = re.sub(r"[_\-](en|sp|es|fr)$", "", stem, flags=re.I)   # language suffix
     stem = re.sub(r"[_\-]+", " ", stem)
@@ -648,6 +693,75 @@ def parse_item_code(filename):
     return raw, base_code, family, lang_hint
 
 
+def issue_token(stem):
+    """A normalized issue identifier ('spring2012') for a periodical filename.
+
+    Without it, every Markings issue would share item code F-151 and look like a
+    translation of every other Markings issue.
+    """
+    seasons = "|".join(SEASONS)
+    m = re.search(r"(" + seasons + r")[_\-]?((?:19|20)\d{2}|\d{2})\b", stem, re.I)
+    if m:
+        return SEASONS[m.group(1).lower()].lower() + _expand_year(m.group(2))
+    m = re.search(r"(" + MONTHS_ALT + r")[_\-](" + MONTHS_ALT + r")[_\-]?((?:19|20)\d{2}|\d{2})\b",
+                  stem, re.I)
+    if m:
+        return (MONTHS[m.group(1).lower()] + MONTHS[m.group(2).lower()]).lower() + \
+            _expand_year(m.group(3))
+    m = re.search(r"(" + MONTHS_ALT + r")[_\-]?((?:19|20)\d{2}|\d{2})\b", stem, re.I)
+    if m:
+        return MONTHS[m.group(1).lower()].lower() + _expand_year(m.group(2))
+    # Quarterly reports: "..._Third_Quarter_2025" / "..._Q3_2025".
+    quarters = {"first": "1", "1st": "1", "second": "2", "2nd": "2",
+                "third": "3", "3rd": "3", "fourth": "4", "4th": "4"}
+    year = re.search(r"(?<!\d)((?:19|20)\d{2})(?!\d)", stem)
+    if year:
+        m = re.search(r"(" + "|".join(quarters) + r")[_\- ]?quarter", stem, re.I)
+        if m:
+            return "q" + quarters[m.group(1).lower()] + year.group(1)
+        m = re.search(r"(?:^|[_\-])q([1-4])(?:[_\-]|$)", stem, re.I)
+        if m:
+            return "q" + m.group(1) + year.group(1)
+        return year.group(1)
+
+    # Older newsletter files abbreviate the year: "markings1-98" is Spring 1998.
+    # Only trusted for known periodicals, so a page range like "_1-20" is safe.
+    if any(re.search(pat, stem, re.I) for pat, _ in PERIODICALS):
+        m = re.search(r"[_\-](\d{2})$", stem)
+        if m:
+            return _expand_year(m.group(1))
+    return ""
+
+
+def translation_key(filename, base_code):
+    """Group the same document's language editions under one key.
+
+    aa.org numbers translations separately (F-13 / SF-13 / FF-13) and prefixes
+    filenames by language (en_ / sp_ / fr_), so neither alone is enough.
+    """
+    stem = re.sub(r"\.pdf$", "", urllib.parse.unquote(filename), flags=re.I).lower()
+    # Only Drupal's "_0"/"_12" duplicate suffix -- never a four-digit year.
+    stem = re.sub(r"_\d{1,2}$", "", stem)
+    issue = issue_token(stem)
+    # A fillable form is a separate edition of the same item number.
+    variant = "-fillable" if re.search(r"fillable", stem, re.I) else ""
+    if base_code:
+        if issue:
+            return base_code + "|" + issue + variant
+        # Books are split into page ranges that share one item code; the page
+        # numbers are what distinguish a part from its translation.
+        rest = ITEM_CODE_RE.sub("_", stem, count=1)
+        parts = re.findall(r"\d+", rest)
+        return base_code + "|" + ("p" + "-".join(parts) if parts else "") + variant
+
+    # No item code: fall back to the filename with language markers removed.
+    stem = re.sub(r"^(en|sp|es|fr)[_\-]", "", stem)
+    stem = re.sub(r"[_\-](en|sp|es|fr)$", "", stem)
+    stem = re.sub(r"\b(online|final|web|rev|revised|lores|hires|printable|v\d+)\b", "", stem)
+    stem = re.sub(r"[^a-z0-9]+", "", stem)
+    return "stem:" + stem if stem else ""
+
+
 def classify(pdf_url, title, source_page, source_title):
     filename = urllib.parse.unquote(
         urllib.parse.urlsplit(pdf_url).path.rsplit("/", 1)[-1])
@@ -657,10 +771,15 @@ def classify(pdf_url, title, source_page, source_title):
     item_code, base_code, family, _lang = parse_item_code(filename)
 
     category = ""
-    for pattern, name in CATEGORY_RULES:
-        if re.search(pattern, hay, re.I):
+    for pattern, name in FILENAME_CATEGORY_RULES:
+        if re.search(pattern, filename, re.I):
             category = name
             break
+    if not category:
+        for pattern, name in CATEGORY_RULES:
+            if re.search(pattern, hay, re.I):
+                category = name
+                break
     if not category:
         category = family or "Other Documents"
 
@@ -755,8 +874,14 @@ def extract(page_url, html):
         elif crawlable(url):
             internal.add(url)
 
-    # Catch PDF URLs embedded in inline JSON / data attributes.
-    for match in re.finditer(r"https?://[^\s\"'<>\\)]+?\.pdf(?:\?[^\s\"'<>\\)]*)?", html, re.I):
+    # Catch PDF URLs that only appear inside inline JSON, data attributes or
+    # scripts -- absolute, protocol-relative, or site-root-relative.
+    raw_pdf_re = re.compile(
+        r"(?:https?:)?//[^\s\"'<>\\)]+?\.pdf(?:\?[^\s\"'<>\\)]*)?"
+        r"|(?<![\w.])/[\w\-./%]+?\.pdf(?:\?[^\s\"'<>\\)]*)?",
+        re.I,
+    )
+    for match in raw_pdf_re.finditer(html):
         url = normalize(match.group(0), page_url)
         if url and is_pdf_link(url):
             pdf_hits.append((url, []))
@@ -824,7 +949,8 @@ def crawl(fetcher, seeds, max_pages, workers, extra_depth):
 # Output
 # --------------------------------------------------------------------------- #
 FIELDS = [
-    "id", "title", "url", "filename", "item_code", "base_code", "item_code_family",
+    "id", "title", "url", "filename", "item_code", "base_code", "translation_key",
+    "item_code_family",
     "category", "section", "language", "topics", "year", "bytes", "size_human",
     "last_modified", "source_page", "source_title", "source_count", "host", "status",
 ]
@@ -894,6 +1020,33 @@ def build_rows(records, page_titles, fetcher, workers, verify, heads_cache=None)
                 heads[key] = info
         sys.stderr.write("\n")
 
+    # aa.org keeps legacy /sites/default/files/... URLs that 301 to the same
+    # file on the Widen CDN, so one document can appear under two links. Fold
+    # them together on the resolved URL, keeping the link that needs no
+    # redirect and merging what we learned from both source pages.
+    if heads:
+        by_final = defaultdict(list)
+        for key in keys:
+            final = ((heads.get(key) or {}).get("final_url") or key).lower().rstrip("/")
+            by_final[final].append(key)
+        deduped = []
+        for final, group in by_final.items():
+            if len(group) > 1:
+                group.sort(key=lambda k: (
+                    0 if ((heads.get(k) or {}).get("final_url") or "").lower() == k.lower() else 1,
+                    len(k), k))
+                keep = group[0]
+                for other in group[1:]:
+                    for s in records[other]["sources"]:
+                        if s not in records[keep]["sources"]:
+                            records[keep]["sources"].append(s)
+                    records[keep]["candidates"].extend(records[other]["candidates"])
+            deduped.append(group[0])
+        if len(deduped) != len(keys):
+            sys.stderr.write("  merged %d duplicate links that resolve to the same file\n"
+                             % (len(keys) - len(deduped)))
+        keys = sorted(deduped)
+
     rows = []
     for key in keys:
         rec = records[key]
@@ -926,6 +1079,8 @@ def build_rows(records, page_titles, fetcher, workers, verify, heads_cache=None)
             "filename": filename,
             "item_code": item_code,
             "base_code": base_code,
+            "translation_key": translation_key(
+                urllib.parse.unquote(filename), base_code),
             "item_code_family": family,
             "category": category,
             "section": section,
@@ -982,6 +1137,16 @@ def write_outputs(rows, broken, pages_crawled, fetcher):
         t.strip() for r in rows for t in (r["topics"] or "").split(";") if t.strip()
     )
 
+    groups = defaultdict(set)
+    for r in rows:
+        if r["translation_key"]:
+            groups[r["translation_key"]].add(r["language"])
+    translated_groups = {k: v for k, v in groups.items() if len(v) > 1}
+    translated_rows = sum(
+        1 for r in rows
+        if r["translation_key"] in translated_groups
+    )
+
     meta = {
         "generated_utc": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
         "generated_date": datetime.now(timezone.utc).strftime("%B %d, %Y"),
@@ -994,6 +1159,8 @@ def write_outputs(rows, broken, pages_crawled, fetcher):
         "sections": by("section"),
         "languages": by("language"),
         "topics": dict(sorted(topic_counts.items(), key=lambda kv: (-kv[1], kv[0]))),
+        "translation_groups": len(translated_groups),
+        "translated_documents": translated_rows,
         "item_code_families": by("item_code_family"),
         "http": dict(fetcher.stats),
     }
@@ -1035,7 +1202,7 @@ def main():
     ap = argparse.ArgumentParser(description="Index every PDF linked from www.aa.org")
     ap.add_argument("--max-pages", type=int, default=12000)
     ap.add_argument("--workers", type=int, default=8)
-    ap.add_argument("--depth", type=int, default=2,
+    ap.add_argument("--depth", type=int, default=3,
                     help="extra link-following depth beyond the sitemap")
     ap.add_argument("--delay", type=float, default=0.0)
     ap.add_argument("--no-verify", action="store_true",

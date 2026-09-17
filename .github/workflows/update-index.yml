@@ -9,11 +9,11 @@ on:
       depth:
         description: "Extra link-following depth beyond the sitemap"
         required: false
-        default: "2"
+        default: "3"
       max_pages:
         description: "Maximum pages to crawl"
         required: false
-        default: "15000"
+        default: "25000"
   push:
     branches: [main]
     paths:
@@ -34,6 +34,8 @@ jobs:
   update:
     name: Re-crawl aa.org
     runs-on: ubuntu-latest
+    # A full crawl is ~5,400 pages plus a HEAD per file; ~15 min in practice.
+    timeout-minutes: 90
     outputs:
       changed: ${{ steps.commit.outputs.changed }}
     steps:
@@ -60,8 +62,8 @@ jobs:
         if: github.event_name != 'push'
         run: |
           python tools/crawl_aa_pdfs.py \
-            --max-pages "${{ github.event.inputs.max_pages || '15000' }}" \
-            --depth "${{ github.event.inputs.depth || '2' }}" \
+            --max-pages "${{ github.event.inputs.max_pages || '25000' }}" \
+            --depth "${{ github.event.inputs.depth || '3' }}" \
             --workers 10
 
       - name: Sanity-check the new index

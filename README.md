@@ -3,11 +3,15 @@
 A searchable, categorized index of **every PDF published on aa.org** — in one page.
 
 aa.org holds thousands of documents, but there is no single list of them. They are scattered across
-landing pages, hub pages, decade-collapsed newsletter archives, and a separate digital-asset host
-(`aaws.widen.net`). If you don't already know a document's exact name, you are unlikely to find it.
+landing pages, hub pages, decade-collapsed newsletter archives, paginated listings, and a separate
+digital-asset host (`aaws.widen.net`). If you don't already know a document's exact name, you are
+unlikely to find it.
 
 This project crawls the entire site, collects every PDF link, sorts them into sections, categories and
 topics, and serves the result as a single static page you can search, filter and share.
+
+**2,914 documents** — 1,123 English, 919 Spanish, 872 French — found across 5,401 pages and sorted
+into 12 sections, 38 categories and 37 topics. 2,447 of them are cross-linked to their translations.
 
 **➡️ Live site:** https://mkp715.github.io/SimplifyAA/
 
@@ -33,6 +37,7 @@ file on aa.org. All literature remains the copyright of its publisher.
 | `data/meta.json` | Counts and the last-rebuild timestamp, shown in the page footer. |
 | `data/broken_links.csv` | Links aa.org publishes that no longer resolve to a PDF (see below). |
 | `tools/crawl_aa_pdfs.py` | The crawler and classifier. |
+| `tools/test_ui.js` | Browser regression tests for the page (search, filters, translations, preview, mobile). |
 | `.github/workflows/update-index.yml` | Weekly re-crawl, commit, and Pages deploy. |
 
 The data deliberately lives in CSV rather than inside `index.html`, so the page stays small and the
@@ -66,9 +71,21 @@ page has a built-in glossary, in short:
 | `M-` | Displays and wallet cards |
 | `BM-` | Bulletins such as Box 4-5-9 |
 
+## How translations are matched
+
 aa.org numbers translations separately — `F-13` (English) becomes `SF-13` (Spanish) and `FF-13`
-(French). The crawler maps these back to a shared `base_code`, so translations of one document group
-together.
+(French) — and also prefixes filenames by language (`en_`, `sp_`, `fr_`). Neither signal alone is
+enough, and the item code alone is actively misleading: every issue of *Markings* shares code `F-151`,
+so grouping on it would present 81 unrelated issues as translations of each other.
+
+The crawler therefore builds a `translation_key` from the base item code **plus an issue
+discriminator** — the season, month, quarter or year parsed out of the filename — falling back to a
+language-stripped filename when there is no item code (which is how the Box 4-5-9 archive is matched).
+Multi-part documents, such as the page ranges of *Living Sober*, are separated by their page numbers.
+
+The result: 831 translation groups covering 2,447 documents. In the interface each document shows
+`EN · ES · FR` chips with the current language highlighted; the others are one click away, including
+inside the PDF preview.
 
 ## How it stays current
 
@@ -90,7 +107,7 @@ In **Settings → Pages**, set the source to **GitHub Actions**. That is all; th
 ```bash
 pip install -r requirements.txt
 
-# Full crawl (~10 minutes)
+# Full crawl (~15 minutes)
 python tools/crawl_aa_pdfs.py
 
 # Re-run only the classification, using the cached crawl (instant)
@@ -107,12 +124,45 @@ local data loading from `file://`:
 python -m http.server 8000   # then open http://localhost:8000
 ```
 
+### Testing the page
+
+`tools/test_ui.js` drives real Chrome and checks the facets, search (including item codes),
+translation chips, filters, shareable URLs, both views, favorites, the preview modal and the mobile
+layout, failing on any console error:
+
+```bash
+npm install puppeteer-core
+python -m http.server 8765 &
+node tools/test_ui.js http://127.0.0.1:8765/index.html ./shots
+```
+
+Set `CHROME_PATH` if Chrome is not at the default Windows location.
+
+## Coverage
+
+Getting *everything* takes more than reading the sitemap:
+
+- **The sitemap lists no PDFs at all** — only the 4,544 pages. Every document has to be found by
+  reading those pages, plus three levels of links out of them.
+- **Listing pages paginate.** `/news-and-announcements?page=7` carries documents that appear nowhere
+  else. Skipping `?page=` query strings hid 257 documents; the crawler now follows pager links
+  (and only pager links — facets and sorts just re-slice the same documents).
+- **Some links are only in inline JSON**, not in an `<a>` tag, so the raw HTML is scanned as well.
+
+Completeness is checked by re-fetching random aa.org pages and confirming every PDF link on them is
+accounted for. The last audit covered 400 random pages plus 128 paginated listing pages: **every link
+was either indexed or correctly excluded as dead.**
+
 ## About `broken_links.csv`
 
 aa.org still links to legacy `/assets/**.pdf` URLs that now redirect to HTML landing pages instead of
 serving a file. The crawler verifies every candidate and keeps only links that really return a PDF;
-the rest are recorded in `data/broken_links.csv`. If you maintain anything that links into aa.org,
-that file is worth a look.
+the 29 that fail are recorded in `data/broken_links.csv`. If you maintain anything that links into
+aa.org, that file is worth a look.
+
+Other legacy `/sites/default/files/**.pdf` URLs *do* still work, but only by redirecting to the same
+file on the Widen CDN — which is separately indexed. Those are folded together on the resolved URL, so
+one document is one row (21 duplicates merged on the last run).
 
 ## Built with
 
