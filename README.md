@@ -41,6 +41,7 @@ file on aa.org. All literature remains the copyright of its publisher.
 | `data/kits.csv` | Kit membership: one row per kit, language and listed item. |
 | `tools/test_ui.js` | Browser regression tests for the page (search, filters, translations, preview, mobile). |
 | `tools/test_kits.js` | Browser regression tests for the service-kit view. |
+| `tools/test_viewers.js` | Browser regression tests for the PDF viewer options, including iPhone emulation. |
 | `.github/workflows/update-index.yml` | Weekly re-crawl, commit, and Pages deploy. |
 
 The data deliberately lives in CSV rather than inside `index.html`, so the page stays small and the
@@ -54,7 +55,7 @@ index can be regenerated without touching application code.
 - **Filter** — stack language and topic filters on top of any search.
 - **Cards or table** — cards for reading, table for sorting and scanning.
 - **Service kits** — every committee kit as a set of working links, workbook first (see below).
-- **Preview** — read a PDF inline without leaving the page.
+- **Preview** — read a PDF without leaving the page, with a choice of viewer (see below).
 - **Favorites** — star documents you use often; they are remembered in your browser.
 - **Share a view** — the URL captures the exact search and filters, so you can send someone a link
   straight to, say, every Spanish corrections document.
@@ -78,6 +79,35 @@ page has a built-in glossary, in short:
 
 Note that `SM-` is *not* an English service-material number — it is the Spanish edition of an `M-`
 item (`SM-40I` is the Spanish Treatment workbook), and `FM-` is the French one.
+
+## PDF previews and why they need options
+
+There is no single way to show a PDF that works on every device:
+
+- **iPhone and iPad** will not render a PDF inside a frame at all — Apple's browsers show nothing.
+- **Some Android browsers** download the file instead of displaying it.
+- **An in-page reader** (pdf.js) avoids all of that by drawing the pages itself, but it has to *fetch*
+  the file, which needs a CORS header. `aaws.widen.net` sends `Access-Control-Allow-Origin: *`;
+  `www.aa.org` sends nothing. That is 617 documents the reader can open and 2,297 it cannot.
+
+So the viewer is a setting rather than a guess. **Settings** offers:
+
+| Viewer | How it works | Where it works |
+|---|---|---|
+| **Automatic** (default) | Browser viewer on devices that support it; in-page reader on Apple devices where the file allows it; otherwise a new tab | Everywhere, nothing leaves the page |
+| **Browser viewer** | `<iframe>` — the browser's own PDF viewer | Desktop; blank on iOS |
+| **Embedded** | `<object>` — embedded differently | Worth trying on Android |
+| **In-page reader** | pdf.js renders pages to canvas | Everywhere, but only the 617 Widen-hosted files |
+| **Google viewer** | Google renders it server-side | Almost anywhere — **sends the document's URL to Google** |
+| **New tab** | Hands the file to the device | Always |
+
+Every preview also carries a **"Not displaying? Try another viewer"** bar, so a blank preview is one tap
+from a working one, and the choice is remembered. Preview height is adjustable, and saved settings can
+be cleared.
+
+The Google viewer is opt-in and never selected automatically, because it discloses which document is
+being read to a third party — which matters in a fellowship built on anonymity. Everything else stays
+between the device and aa.org.
 
 ## Service kits
 
@@ -181,6 +211,7 @@ npm install puppeteer-core
 python -m http.server 8765 &
 node tools/test_ui.js http://127.0.0.1:8765/index.html ./shots
 node tools/test_kits.js http://127.0.0.1:8765/index.html
+node tools/test_viewers.js http://127.0.0.1:8765/index.html
 ```
 
 Set `CHROME_PATH` if Chrome is not at the default Windows location.

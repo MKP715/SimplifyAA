@@ -91,6 +91,10 @@
       <button class="btn btn-sm btn-outline-light" data-bs-toggle="modal" data-bs-target="#aboutModal">
         <i class="bi bi-info-circle"></i><span class="d-none d-sm-inline ms-1">About</span>
       </button>
+      <button class="btn btn-sm btn-outline-light" data-bs-toggle="modal" data-bs-target="#settingsModal"
+              title="Settings — including how PDFs preview on this device">
+        <i class="bi bi-gear"></i><span class="d-none d-lg-inline ms-1">Settings</span>
+      </button>
       <button class="btn btn-sm btn-outline-light" id="themeToggle" title="Toggle dark mode">
         <i class="bi bi-moon-stars"></i>
       </button>
@@ -235,7 +239,16 @@
         </div>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <div class="modal-body p-0"><iframe class="sa-preview-frame" id="previewFrame" title="PDF preview"></iframe></div>
+      <div class="px-3 py-2 border-bottom d-flex flex-wrap align-items-center gap-2"
+           style="background:var(--sa-page)">
+        <span class="small text-body-secondary">
+          <i class="bi bi-display me-1"></i>Not displaying? Try another viewer:
+        </span>
+        <div class="btn-group btn-group-sm" id="previewMethods" role="group"
+             aria-label="PDF viewer method"></div>
+        <span class="small" id="previewMethodNote"></span>
+      </div>
+      <div class="modal-body p-0" id="previewBody"></div>
       <div class="modal-footer">
         <span class="small text-body-secondary me-auto">Served live from aa.org</span>
         <div class="btn-group btn-group-sm me-2" id="previewLangs" role="group" aria-label="Language edition"></div>
@@ -324,6 +337,14 @@
           the result. The page you are reading always reads the latest committed data, so it updates itself with no
           manual work. Links that aa.org publishes but that no longer resolve to a PDF are filtered out and recorded
           in <code>data/broken_links.csv</code>.</p>
+        <h6>If a preview will not display</h6>
+        <p class="small">PDFs behave differently on every device. iPhones and iPads will not show a PDF
+          inside a page at all, and some Android browsers download the file instead. Rather than guess,
+          <strong>Settings</strong> lets you choose the viewer that works on your device, and every preview
+          has buttons to switch viewer on the spot &mdash; whatever you pick is remembered. The in-page
+          reader draws the pages itself, so it works on Apple devices, but only for documents on A.A.'s
+          file host; the rest do not permit it. Nothing is sent to any other service unless you
+          deliberately choose the Google viewer.</p>
         <h6>What is indexed</h6>
         <p class="small">Link metadata only: the document's title, URL, item code, file size and last-modified date,
           plus the aa.org page it was found on. No PDF contents are copied or stored.</p>
@@ -334,6 +355,46 @@
       </div>
       <div class="modal-footer">
         <span class="small text-body-secondary me-auto" id="aboutMeta"></span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- settings -->
+<div class="modal fade" id="settingsModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Settings</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <h6>How PDFs preview on this device</h6>
+        <p class="small text-body-secondary">
+          Phones and tablets handle PDFs very differently. iPhones and iPads refuse to show a PDF
+          inside a page at all, and some Android browsers download the file instead of displaying it.
+          There is no single method that works everywhere, so pick whichever one works on your device —
+          your choice is remembered here, and you can also switch viewers from inside any preview.
+        </p>
+        <div id="settingsMethods" class="mb-2"></div>
+        <div class="alert alert-secondary small mb-0" id="settingsDeviceNote"></div>
+
+        <hr class="my-4">
+        <h6>Preview size</h6>
+        <div class="d-flex align-items-center gap-2">
+          <label for="previewHeight" class="form-label small mb-0">Height</label>
+          <input type="range" class="form-range" id="previewHeight" min="40" max="92" step="4" style="max-width:260px">
+          <span class="small text-body-secondary" id="previewHeightVal"></span>
+        </div>
+
+        <hr class="my-4">
+        <h6>Reset</h6>
+        <p class="small text-body-secondary mb-2">
+          Clears the viewer choice, theme and saved favorites stored in this browser.
+        </p>
+        <button class="btn btn-sm btn-outline-danger" id="clearSettings">
+          <i class="bi bi-trash3 me-1"></i>Clear saved settings
+        </button>
       </div>
     </div>
   </div>
@@ -359,7 +420,8 @@
   const DATA_META = "data/meta.json";
   const DATA_KITS = "data/kits.csv";
   const PAGE_SIZE = 48;
-  const LS = { fav: "simplifyaa.favorites", theme: "simplifyaa.theme" };
+  const LS = { fav: "simplifyaa.favorites", theme: "simplifyaa.theme",
+               settings: "simplifyaa.settings" };
 
   const state = {
     q: "", view: "all", section: "", category: "", language: "", year: "",
@@ -1151,13 +1213,265 @@
   function sync() { render(); stateToHash(); }
 
   /* -------------------------------- preview ------------------------------- */
+  // No single method shows a PDF everywhere: iOS refuses PDFs inside a page,
+  // some Android browsers download instead of displaying, and only the files on
+  // the Widen host allow an in-page reader to fetch them. So the viewer is a
+  // setting the reader controls, switchable from inside any preview.
+  const PDFJS_VERSION = "3.11.174";
+  const PDFJS_BASE = "https://cdn.jsdelivr.net/npm/pdfjs-dist@" + PDFJS_VERSION + "/build/";
+  // Hosts that send Access-Control-Allow-Origin, so the reader can fetch them.
+  const CORS_OK_RE = /(^|\.)widen\.net$|(^|\.)widencdn\.net$/i;
+
+  const VIEWERS = [
+    { id: "auto", label: "Automatic", icon: "magic",
+      desc: "Uses your browser's viewer where that works, and the in-page reader " +
+            "or a new tab where it does not. Never sends anything to another service." },
+    { id: "iframe", label: "Browser viewer", icon: "window",
+      desc: "Shows the PDF in a frame using your browser's own viewer. Best on a " +
+            "computer; blank on iPhone and iPad." },
+    { id: "object", label: "Embedded", icon: "file-earmark-pdf",
+      desc: "Same idea, embedded a different way. Worth trying if the frame stays " +
+            "blank, as some Android browsers accept this one." },
+    { id: "reader", label: "In-page reader", icon: "book-half",
+      desc: "Draws the pages in the page itself, so it works even on iPhone and " +
+            "iPad. Only available for documents on A.A.'s file host (about 1 in 5) — " +
+            "the rest do not permit it." },
+    { id: "google", label: "Google viewer", icon: "google",
+      desc: "Renders through Google's document viewer, which works on almost any " +
+            "device. This sends the document's web address to Google, so it is off " +
+            "unless you choose it." },
+    { id: "newtab", label: "New tab", icon: "box-arrow-up-right",
+      desc: "Skips the preview and opens the PDF directly, letting your device " +
+            "handle it. Always works." },
+  ];
+
+  // iPhone/iPad (and iPadOS reporting itself as a Mac) will not render a PDF
+  // inside a frame -- it silently shows nothing.
+  const IS_IOS = /iP(hone|od|ad)/.test(navigator.userAgent) ||
+    (/Mac/.test(navigator.userAgent) && (navigator.maxTouchPoints || 0) > 1);
+  const INLINE_OK = !IS_IOS;
+
+  const canUseReader = (row) => {
+    try { return CORS_OK_RE.test(new URL(row.url).hostname); }
+    catch (e) { return false; }
+  };
+
+  const settings = Object.assign(
+    { viewer: "auto", previewHeight: 78 },
+    safeLS(() => JSON.parse(localStorage.getItem(LS.settings) || "{}"), {}) || {}
+  );
+  function saveSettings() {
+    safeLS(() => localStorage.setItem(LS.settings, JSON.stringify(settings)));
+  }
+
+  function resolveMethod(row) {
+    if (settings.viewer !== "auto") return settings.viewer;
+    if (INLINE_OK) return "iframe";
+    return canUseReader(row) ? "reader" : "newtab";
+  }
+
+  /* ---- pdf.js, loaded only when the in-page reader is actually used ---- */
+  let pdfjsPromise = null;
+  function loadPdfJs() {
+    if (pdfjsPromise) return pdfjsPromise;
+    pdfjsPromise = new Promise((resolve, reject) => {
+      const s = document.createElement("script");
+      s.src = PDFJS_BASE + "pdf.min.js";
+      s.onload = () => {
+        if (!window.pdfjsLib) { reject(new Error("reader library did not load")); return; }
+        window.pdfjsLib.GlobalWorkerOptions.workerSrc = PDFJS_BASE + "pdf.worker.min.js";
+        resolve(window.pdfjsLib);
+      };
+      s.onerror = () => reject(new Error("could not reach the reader library"));
+      document.head.appendChild(s);
+    });
+    return pdfjsPromise;
+  }
+
+  const READER_BATCH = 4;
+  function renderWithReader(row, host) {
+    host.innerHTML =
+      '<div class="p-4 text-center text-body-secondary" id="readerStatus">' +
+      '<div class="spinner-border spinner-border-sm me-2"></div>Loading the reader…</div>' +
+      '<div id="readerPages" class="px-2 pb-3"></div>';
+    const status = host.querySelector("#readerStatus");
+    const pagesWrap = host.querySelector("#readerPages");
+
+    loadPdfJs()
+      .then((lib) => lib.getDocument({ url: row.url }).promise)
+      .then((doc) => {
+        status.remove();
+        let next = 1;
+        const renderBatch = () => {
+          const upto = Math.min(doc.numPages, next + READER_BATCH - 1);
+          const jobs = [];
+          for (let n = next; n <= upto; n++) jobs.push(renderPage(doc, n, pagesWrap));
+          next = upto + 1;
+          return Promise.all(jobs).then(() => {
+            const old = pagesWrap.querySelector(".sa-reader-more");
+            if (old) old.remove();
+            if (next <= doc.numPages) {
+              const b = el("div", "sa-reader-more text-center py-3");
+              b.innerHTML = '<button class="btn btn-sm btn-outline-secondary">Show more pages (' +
+                (doc.numPages - next + 1) + " left)</button>";
+              b.querySelector("button").addEventListener("click", renderBatch);
+              pagesWrap.appendChild(b);
+            } else if (doc.numPages > READER_BATCH) {
+              pagesWrap.appendChild(el("div", "text-center small text-body-secondary py-2",
+                "End of document · " + doc.numPages + " pages"));
+            }
+          });
+        };
+        return renderBatch();
+      })
+      .catch((err) => {
+        host.innerHTML = readerErrorHtml(row, err);
+        wireFallbackButtons(row, host);
+      });
+  }
+
+  function renderPage(doc, num, wrap) {
+    return doc.getPage(num).then((page) => {
+      const canvas = el("canvas", "d-block mx-auto mb-2 shadow-sm");
+      canvas.style.maxWidth = "100%";
+      const available = Math.max(320, wrap.clientWidth - 8);
+      const base = page.getViewport({ scale: 1 });
+      const scale = Math.min(2.5, available / base.width) *
+        (window.devicePixelRatio > 1 ? 1.5 : 1);
+      const viewport = page.getViewport({ scale });
+      canvas.width = viewport.width;
+      canvas.height = viewport.height;
+      canvas.style.width = Math.min(available, base.width * Math.min(2.5, available / base.width)) + "px";
+      wrap.appendChild(canvas);
+      return page.render({ canvasContext: canvas.getContext("2d"), viewport }).promise;
+    });
+  }
+
+  function readerErrorHtml(row, err) {
+    const hosted = canUseReader(row);
+    return '<div class="p-4 text-center">' +
+      '<i class="bi bi-exclamation-triangle fs-3 text-body-secondary"></i>' +
+      '<p class="mt-3 mb-1 fw-semibold">The in-page reader cannot open this document</p>' +
+      '<p class="small text-body-secondary mb-3">' +
+      (hosted
+        ? "Reason: " + esc((err && err.message) || "unknown error") + "."
+        : "This file is served from aa.org, which does not allow another site to read " +
+          "it directly. The reader only works for documents on A.A.'s file host.") +
+      "</p>" +
+      '<div class="d-flex justify-content-center gap-2 flex-wrap" data-fallback-here></div>' +
+      "</div>";
+  }
+
+  function wireFallbackButtons(row, host) {
+    const wrap = host.querySelector("[data-fallback-here]");
+    if (!wrap) return;
+    [["iframe", "Browser viewer"], ["google", "Google viewer"], ["newtab", "Open in a new tab"]]
+      .forEach(([id, label]) => {
+        const b = el("button", "btn btn-sm btn-outline-secondary", esc(label));
+        b.addEventListener("click", () => useMethod(row, id));
+        wrap.appendChild(b);
+      });
+  }
+
+  function renderPreviewBody(row, method) {
+    const host = $("#previewBody");
+    const h = Math.round(settings.previewHeight) + "vh";
+    host.innerHTML = "";
+
+    if (method === "reader") {
+      host.style.height = h;
+      host.style.overflowY = "auto";
+      if (!canUseReader(row)) {
+        host.innerHTML = readerErrorHtml(row, null);
+        wireFallbackButtons(row, host);
+        return;
+      }
+      renderWithReader(row, host);
+      return;
+    }
+
+    host.style.overflowY = "hidden";
+    host.style.height = "";
+
+    if (method === "object") {
+      host.innerHTML = '<object data="' + esc(row.url) + '" type="application/pdf" ' +
+        'class="sa-preview-frame" style="height:' + h + '">' +
+        '<div class="p-4 text-center"><p class="mb-2 small">Your browser will not embed this PDF.</p>' +
+        '<div class="d-flex justify-content-center gap-2 flex-wrap" data-fallback-here></div></div>' +
+        "</object>";
+      wireFallbackButtons(row, host);
+      return;
+    }
+
+    if (method === "google") {
+      const src = "https://docs.google.com/viewer?embedded=true&url=" +
+        encodeURIComponent(row.url);
+      host.innerHTML = '<iframe class="sa-preview-frame" style="height:' + h + '" src="' +
+        esc(src) + '" title="PDF preview via Google"></iframe>';
+      return;
+    }
+
+    // Default: the browser's own viewer in a frame.
+    host.innerHTML = '<iframe class="sa-preview-frame" style="height:' + h + '" src="' +
+      esc(row.url) + '" title="PDF preview"></iframe>';
+  }
+
+  function renderMethodBar(row, method) {
+    const wrap = $("#previewMethods");
+    wrap.innerHTML = "";
+    VIEWERS.filter((v) => v.id !== "auto").forEach((v) => {
+      const b = el("button", "btn btn-outline-secondary" + (v.id === method ? " active" : ""),
+        '<i class="bi bi-' + v.icon + '"></i><span class="d-none d-md-inline ms-1">' +
+        esc(v.label) + "</span>");
+      b.title = v.desc;
+      if (v.id === "reader" && !canUseReader(row)) {
+        b.classList.add("opacity-50");
+        b.title = "Not available for this document — it is served from aa.org";
+      }
+      b.addEventListener("click", () => useMethod(row, v.id));
+      wrap.appendChild(b);
+    });
+    const note = $("#previewMethodNote");
+    if (settings.viewer === "auto") {
+      note.className = "small text-body-secondary";
+      note.textContent = "Automatic chose this.";
+    } else {
+      note.className = "small text-body-secondary";
+      note.textContent = "Saved as your preference.";
+    }
+  }
+
+  // Switching from inside a preview also saves the choice, so the next document
+  // opens with whatever worked.
+  function useMethod(row, method) {
+    settings.viewer = method;
+    saveSettings();
+    renderSettingsMethods();
+    if (method === "newtab") {
+      window.open(row.url, "_blank", "noopener");
+      toast("Opened in a new tab — saved as your preference");
+      return;
+    }
+    renderMethodBar(row, method);
+    renderPreviewBody(row, method);
+    toast(VIEWERS.find((v) => v.id === method).label + " saved as your preference");
+  }
+
   let previewModal = null;
+  let previewRow = null;
   function openPreview(row) {
+    previewRow = row;
+    const method = resolveMethod(row);
+    if (method === "newtab") {
+      window.open(row.url, "_blank", "noopener");
+      return;
+    }
     $("#previewTitle").textContent = row.title;
     $("#previewMeta").textContent = [row.item_code, row.category, row.size_human, row.last_modified]
       .filter(Boolean).join("  ·  ");
-    $("#previewFrame").src = row.url;
     $("#previewOpen").href = row.url;
+    renderMethodBar(row, method);
+    renderPreviewBody(row, method);
 
     // Let the reader switch language without leaving the preview.
     const langWrap = $("#previewLangs");
@@ -1176,7 +1490,89 @@
     previewModal = previewModal || new bootstrap.Modal($("#previewModal"));
     previewModal.show();
   }
-  $("#previewModal").addEventListener("hidden.bs.modal", () => { $("#previewFrame").src = "about:blank"; });
+  // Stop the frame or reader from downloading in the background once closed.
+  $("#previewModal").addEventListener("hidden.bs.modal", () => {
+    $("#previewBody").innerHTML = "";
+    previewRow = null;
+  });
+
+  /* ------------------------------- settings ------------------------------ */
+  function renderSettingsMethods() {
+    const wrap = $("#settingsMethods");
+    if (!wrap) return;
+    wrap.innerHTML = VIEWERS.map((v) =>
+      '<div class="form-check mb-2">' +
+        '<input class="form-check-input" type="radio" name="viewerMethod" id="vm_' + v.id +
+          '" value="' + v.id + '"' + (settings.viewer === v.id ? " checked" : "") + ">" +
+        '<label class="form-check-label" for="vm_' + v.id + '">' +
+          '<span class="fw-semibold"><i class="bi bi-' + v.icon + ' me-1"></i>' + esc(v.label) +
+          (v.id === "auto" ? ' <span class="badge text-bg-secondary">default</span>' : "") +
+          "</span>" +
+          '<div class="small text-body-secondary">' + esc(v.desc) + "</div>" +
+        "</label>" +
+      "</div>").join("");
+    wrap.querySelectorAll('input[name="viewerMethod"]').forEach((input) => {
+      input.addEventListener("change", () => {
+        settings.viewer = input.value;
+        saveSettings();
+        toast("Viewer set to " + VIEWERS.find((v) => v.id === input.value).label);
+        // Re-render an open preview so the change is immediately visible.
+        if (previewRow && input.value !== "newtab") {
+          renderMethodBar(previewRow, resolveMethod(previewRow));
+          renderPreviewBody(previewRow, resolveMethod(previewRow));
+        }
+      });
+    });
+
+    const note = $("#settingsDeviceNote");
+    if (note) {
+      note.innerHTML = IS_IOS
+        ? '<i class="bi bi-phone me-1"></i><strong>This looks like an iPhone or iPad.</strong> ' +
+          "Apple's browsers will not show a PDF inside a page, so <em>Automatic</em> uses the " +
+          "in-page reader where the document allows it and otherwise opens a new tab. " +
+          "The Google viewer is the other option that works here."
+        : '<i class="bi bi-laptop me-1"></i>This device should display PDFs in a frame, so ' +
+          "<em>Automatic</em> uses the browser's own viewer. If a preview ever comes up blank, " +
+          "the buttons above every preview switch viewer instantly.";
+    }
+  }
+
+  function applyPreviewHeight() {
+    const slider = $("#previewHeight");
+    const out = $("#previewHeightVal");
+    if (slider) slider.value = settings.previewHeight;
+    if (out) out.textContent = Math.round(settings.previewHeight) + "% of the screen";
+  }
+
+  if ($("#previewHeight")) {
+    $("#previewHeight").addEventListener("input", (e) => {
+      settings.previewHeight = +e.target.value;
+      applyPreviewHeight();
+      saveSettings();
+      if (previewRow) renderPreviewBody(previewRow, resolveMethod(previewRow));
+    });
+  }
+
+  if ($("#clearSettings")) {
+    $("#clearSettings").addEventListener("click", () => {
+      safeLS(() => {
+        localStorage.removeItem(LS.settings);
+        localStorage.removeItem(LS.theme);
+        localStorage.removeItem(LS.fav);
+      });
+      settings.viewer = "auto";
+      settings.previewHeight = 78;
+      favorites = new Set();
+      saveFavorites();
+      renderSettingsMethods();
+      applyPreviewHeight();
+      render();
+      toast("Saved settings cleared");
+    });
+  }
+
+  renderSettingsMethods();
+  applyPreviewHeight();
 
   /* -------------------------------- events ------------------------------- */
   let qTimer = null;

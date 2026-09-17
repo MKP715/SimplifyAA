@@ -208,7 +208,8 @@ function check(name, cond, detail) {
   await sleep(2500);
   const modal = await page.evaluate(() => ({
     shown: document.querySelector("#previewModal").classList.contains("show"),
-    src: document.querySelector("#previewFrame").src,
+    src: (document.querySelector("#previewBody iframe, #previewBody object") || {}).src ||
+         (document.querySelector("#previewBody object") || {}).data || "",
     langBtns: [...document.querySelectorAll("#previewLangs button")].map((b) => b.textContent.trim()),
   }));
   check("preview opens a PDF", modal.shown && /\.pdf/i.test(modal.src));
