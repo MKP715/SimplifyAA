@@ -248,6 +248,37 @@
     /* The header can also be clipped by a notch in landscape. */
     .sa-navbar { padding-left: env(safe-area-inset-left); padding-right: env(safe-area-inset-right); }
 
+    /* The header's overflow menu, which had two things wrong with it.
+       Bootstrap turns Popper off for dropdowns inside a navbar on purpose, so
+       this menu is placed by CSS alone and nothing was keeping it on screen:
+       right-aligned to a 32px button that the header row had wrapped to the
+       middle, it opened from x=105 to x=-101 on a 390px phone, half of it past
+       the left edge. What was left then landed underneath the sticky search
+       bar, because a Bootstrap dropdown sits at z-index 1000 and that bar is at
+       1025, so taps on it went to the search bar instead of the menu.
+
+       Lifting the header above the bar fixes the covering. For the placement,
+       the menu is anchored to the header itself rather than to the button:
+       making the wrapper static hands the job to .sa-navbar, which is the
+       positioned ancestor, so the menu hangs from the bottom edge of the
+       header and stays on screen wherever the row happens to wrap -- at any
+       text size, and in any of the three interface languages. */
+    .sa-navbar { position: relative; z-index: 1026; }
+    /* When the controls wrap, the rows are packed from the right, so the
+       overflow button ends up under the right edge with its menu rather than
+       stranded at the left of the last row. This is what keeps the button and
+       the menu together at a larger text size, where the header wraps more. */
+    .sa-navbar .ms-auto { justify-content: flex-end; }
+    #headerMenuWrap { position: static; }
+    #headerMenu {
+      top: 100%;
+      right: max(.5rem, env(safe-area-inset-right));
+      left: auto;
+      margin-top: .35rem;
+      /* Long labels in Spanish or French must not push it off the edge. */
+      max-width: calc(100vw - 1rem);
+    }
+
     /* Small text is harder to read on a phone than on a monitor. */
     .sa-card .sa-meta, .sa-summary { font-size: .82rem; }
     .sa-lang { font-size: .74rem; padding: .1rem .4rem; }
@@ -275,6 +306,17 @@
 
     /* Trim the header to one row. */
     #statTotal, #installBtn { display: none !important; }
+  }
+
+  /* On a 320px screen the header controls needed 305px and had only 296, so
+     they wrapped onto a third row: 129px of header before a single result, and
+     the overflow button stranded on its own at the far left, away from the menu
+     it opens. The globe next to the language selector is the only thing there
+     that says nothing -- the select names its own languages and carries its own
+     label -- so it gives up its 25px first. */
+  @media (max-width: 374.98px) {
+    .sa-navbar .input-group-text { display: none; }
+    .sa-navbar .input-group > #uiLangSel { border-radius: var(--bs-border-radius-sm); }
   }
 
   /* Printing a collection should produce a plain list on paper, not a
@@ -322,23 +364,6 @@
               data-bs-toggle="modal" data-bs-target="#aboutModal">
         <i class="bi bi-info-circle"></i><span class="d-none d-sm-inline ms-1">About</span>
       </button>
-      <!-- On a phone the header wrapped onto two rows, so the reference and
-           install actions fold into one menu instead. -->
-      <div class="dropdown d-lg-none">
-        <button class="btn btn-sm btn-outline-light" type="button" data-bs-toggle="dropdown"
-                aria-label="More" aria-expanded="false">
-          <i class="bi bi-three-dots"></i>
-        </button>
-        <ul class="dropdown-menu dropdown-menu-end">
-          <li><button class="dropdown-item" type="button" data-bs-toggle="modal"
-                      data-bs-target="#codesModal"><i class="bi bi-hash me-2"></i>Item codes</button></li>
-          <li><button class="dropdown-item" type="button" data-bs-toggle="modal"
-                      data-bs-target="#aboutModal"><i class="bi bi-info-circle me-2"></i>About</button></li>
-          <li><button class="dropdown-item" type="button" id="installBtn3"><i class="bi bi-download me-2"></i>Install app</button></li>
-          <li><button class="dropdown-item" type="button" data-bs-toggle="modal"
-                      data-bs-target="#keysModal"><i class="bi bi-keyboard me-2"></i>Keyboard shortcuts</button></li>
-        </ul>
-      </div>
       <div class="input-group input-group-sm w-auto" title="Interface language">
         <span class="input-group-text bg-transparent text-white border-light">
           <i class="bi bi-translate"></i>
@@ -368,6 +393,25 @@
       <button class="btn btn-sm btn-outline-light" id="themeToggle" title="Toggle dark mode">
         <i class="bi bi-moon-stars"></i>
       </button>
+      <!-- On a phone the header wrapped onto two rows, so the reference and
+           install actions fold into one menu instead. It goes last, where an
+           overflow menu belongs, so it opens under the button rather than
+           across the header. -->
+      <div class="dropdown d-lg-none" id="headerMenuWrap">
+        <button class="btn btn-sm btn-outline-light" type="button" data-bs-toggle="dropdown"
+                aria-label="More" aria-expanded="false">
+          <i class="bi bi-three-dots"></i>
+        </button>
+        <ul class="dropdown-menu dropdown-menu-end" id="headerMenu">
+          <li><button class="dropdown-item" type="button" data-bs-toggle="modal"
+                      data-bs-target="#codesModal"><i class="bi bi-hash me-2"></i>Item codes</button></li>
+          <li><button class="dropdown-item" type="button" data-bs-toggle="modal"
+                      data-bs-target="#aboutModal"><i class="bi bi-info-circle me-2"></i>About</button></li>
+          <li><button class="dropdown-item" type="button" id="installBtn3"><i class="bi bi-download me-2"></i>Install app</button></li>
+          <li><button class="dropdown-item" type="button" data-bs-toggle="modal"
+                      data-bs-target="#keysModal"><i class="bi bi-keyboard me-2"></i>Keyboard shortcuts</button></li>
+        </ul>
+      </div>
     </div>
   </div>
 </nav>
