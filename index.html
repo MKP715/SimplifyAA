@@ -121,6 +121,12 @@
   .sa-chip { cursor: pointer; user-select: none; }
   .sa-chip.active { background: var(--sa-accent) !important; color: #fff !important; }
   .sa-card { background: var(--sa-surface); border: 1px solid var(--sa-border); border-radius: .7rem; height: 100%; }
+  /* Cards off screen are skipped for layout and paint. "Show all" is 2,919 of
+     them and the browser was laying out every one, which was almost all of the
+     four seconds that took on a phone. Only the height is stood in for -- the
+     width still comes from the Bootstrap column -- and "auto" lets each card
+     remember its measured height once seen, so the scrollbar settles down. */
+  #cardsWrap > .col { content-visibility: auto; contain-intrinsic-size: auto none auto 260px; }
   .sa-card-title { font-size: .98rem; font-weight: 600; line-height: 1.3; }
   .sa-card .sa-meta { font-size: .78rem; color: var(--sa-muted); }
   /* aa.org's own one-line description, clamped so cards stay even. */
@@ -282,8 +288,11 @@
     .sa-card, .sa-panel { border: 0 !important; box-shadow: none !important;
       break-inside: avoid; page-break-inside: avoid; padding: 0 !important; }
     #cardsWrap { display: block !important; }
+    /* Everything has to be laid out on paper, so the off-screen skipping that
+       makes long lists fast on screen must not reach the printer. */
     #cardsWrap > .col { width: 100% !important; max-width: none !important;
-      margin-bottom: .35rem; }
+      margin-bottom: .35rem; content-visibility: visible !important;
+      contain-intrinsic-size: none !important; }
     .sa-card-title { font-size: 11pt; }
     .sa-summary { -webkit-line-clamp: unset; display: block; }
     a[href]::after { content: " (" attr(href) ")"; font-size: 7pt; word-break: break-all; }
@@ -1061,6 +1070,8 @@
   let ROWS = [], META = {}, FUSE = null, FILTERED = [], FILTERED_RAW = 0, table = null;
   let favorites = new Set();
   let BY_TRANSLATION = new Map();   // translation_key -> rows, for linking editions
+  let GROUP_BEST = new Map();       // translation_key -> one row per language, in order
+  const NO_EDITIONS = [];           // shared empty result, never mutated
   let BY_BASE_CODE = new Map();     // base item code -> rows in each language
   let KITS = new Map();             // kit key -> { name, base_code, editions }
   let KIT_MEMBERSHIP = new Map();   // base item code -> [kit names]
@@ -2035,6 +2046,47 @@
   }
 
   /* ------------------------------- filtering ------------------------------ */
+  // Fuse compares a query against eight weighted fields of all 2,919 rows, and
+  // on a phone that is most of a second on every keystroke. Almost every real
+  // query is a word the reader can see on a card, so match plain substrings
+  // first -- one scan of a pre-lowercased haystack -- and keep Fuse for the
+  // queries substring matching cannot answer: typos and half-remembered words.
+  const FUZZY_FLOOR = 3;   // fewer hits than this and the query was likely mistyped
+
+  function scoreRow(row, terms, phrase) {
+    let score = 0;
+    for (let i = 0; i < terms.length; i++) {
+      const term = terms[i];
+      if (!row._hay.includes(term)) return 0;      // every word has to appear
+      if (row._code && row._code.includes(term)) score += 5;
+      const at = row._title.indexOf(term);
+      if (at === 0) score += 10;                    // the title begins this way
+      else if (at > 0) score += row._title[at - 1] === " " ? 7 : 4;
+      else if (row._summary && row._summary.includes(term)) score += 2;
+      else score += 1;                              // matched somewhere else
+    }
+    // The words typed together, in that order, beat the same words scattered.
+    if (terms.length > 1 && row._title.includes(phrase)) score += 6;
+    return score;
+  }
+
+  function searchRows(q) {
+    const phrase = q.toLowerCase();
+    const terms = phrase.split(/\s+/).filter(Boolean);
+    const hits = [];
+    for (let i = 0; i < ROWS.length; i++) {
+      const score = scoreRow(ROWS[i], terms, phrase);
+      // The index position is the tie-break, so equal scores keep a stable
+      // order instead of shuffling between renders.
+      if (score > 0) hits.push({ row: ROWS[i], score: score, at: i });
+    }
+    if (hits.length < FUZZY_FLOOR && FUSE) {
+      return FUSE.search(q, { limit: 5000 }).map((m) => m.item);
+    }
+    hits.sort((a, b) => b.score - a.score || a.at - b.at);
+    return hits.map((h) => h.row);
+  }
+
   function applyFilters() {
     let rows = ROWS;
 
@@ -2053,11 +2105,11 @@
           ? rows.filter((r) => bases.has(normCode(r.base_code)) ||
               normCode(r.item_code) === want)
           : exact;
-      } else if (FUSE) {
-        rows = FUSE.search(q, { limit: 5000 }).map((m) => m.item);
+      } else {
+        rows = searchRows(q);
       }
-    } else if (q.length >= 2 && FUSE) {
-      rows = FUSE.search(q, { limit: 5000 }).map((m) => m.item);
+    } else if (q.length >= 2) {
+      rows = searchRows(q);
     } else if (q) {
       const t = state.q.trim().toLowerCase();
       rows = rows.filter((r) => (r._hay || "").includes(t));
@@ -2227,17 +2279,36 @@
   /* ------------------------------- rendering ------------------------------ */
   // aa.org numbers and names each translation differently; translation_key
   // reunites the editions of one document.
-  function editionsOf(row) {
-    if (!row.translation_key) return [];
-    const group = BY_TRANSLATION.get(row.translation_key) || [];
-    const byLang = new Map();
-    group.forEach((r) => {
-      // aa.org sometimes re-uploads a file ("_0"); keep one entry per language.
-      const cur = byLang.get(r.language);
-      if (!cur || r.url.length < cur.url.length) byLang.set(r.language, r);
+  // Each group's editions are worked out once, at load, rather than rebuilt
+  // for every card drawn: the same group is asked for as many times as it has
+  // members, and "Show all" draws 2,919 cards.
+  function buildEditionIndex() {
+    GROUP_BEST = new Map();
+    BY_TRANSLATION.forEach((group, key) => {
+      const byLang = new Map();
+      group.forEach((r) => {
+        // aa.org sometimes re-uploads a file ("_0"); keep one per language.
+        const cur = byLang.get(r.language);
+        if (!cur || r.url.length < cur.url.length) byLang.set(r.language, r);
+      });
+      GROUP_BEST.set(key, LANG_ORDER.filter((l) => byLang.has(l)).map((l) => byLang.get(l)));
     });
-    byLang.set(row.language, row);
-    return LANG_ORDER.filter((l) => byLang.has(l)).map((l) => byLang.get(l));
+  }
+
+  // The returned array is shared, so callers read it and never mutate it.
+  function editionsOf(row) {
+    if (!row.translation_key) return NO_EDITIONS;
+    const editions = GROUP_BEST.get(row.translation_key) || NO_EDITIONS;
+    // The row on screen stands for its own language even when a re-upload of
+    // the same document was picked as the group's entry for that language.
+    for (let i = 0; i < editions.length; i++) {
+      if (editions[i] !== row && editions[i].language === row.language) {
+        const out = editions.slice();
+        out[i] = row;
+        return out;
+      }
+    }
+    return editions;
   }
 
   function translationLinks(row) {
@@ -2248,8 +2319,10 @@
       chips.join(" ") + "</div>";
   }
 
-  function cardFor(row) {
-    const col = el("div", "col");
+  // Returns markup rather than an element: building one string and assigning
+  // it once is several times faster than parsing 2,919 fragments separately,
+  // which is what "Show all" was doing.
+  function cardHtml(row) {
     const faved = favorites.has(row.url);
     const bits = [];
     if (row.size_human) bits.push('<i class="bi bi-file-earmark-pdf"></i> ' + esc(row.size_human));
@@ -2267,7 +2340,7 @@
       bits.push('<span class="sa-fresh">' + esc(t("new")) + "</span>");
     }
 
-    col.innerHTML =
+    return '<div class="col">' +
       '<div class="sa-card p-3 d-flex flex-column">' +
         '<div class="d-flex justify-content-between align-items-start gap-2 mb-1">' +
           '<div class="sa-card-title"' + langAttr(row) + ">" +
@@ -2298,8 +2371,8 @@
             '" target="_blank" rel="noopener" title="See the aa.org page this came from">' +
             '<i class="bi bi-signpost-2"></i></a>' : "") +
         "</div>" +
-      "</div>";
-    return col;
+      "</div>" +
+    "</div>";
   }
 
   const groupValue = (row) => {
@@ -2309,16 +2382,12 @@
     return row[state.group] || "Not classified";
   };
 
-  function renderCards(pageRows) {
-    const wrap = $("#cardsWrap");
-    wrap.innerHTML = "";
-    const frag = document.createDocumentFragment();
-
-    if (!state.group) {
-      pageRows.forEach((r) => frag.appendChild(cardFor(r)));
-      wrap.appendChild(frag);
-      return;
-    }
+  // What the page shows, in order: rows, with a marker object wherever a group
+  // heading belongs. Markup is produced from this a chunk at a time, so a page
+  // of 2,919 does not have to be turned into 2,919 strings before the first
+  // one can be drawn.
+  function cardItems(pageRows) {
+    if (!state.group) return pageRows;
 
     // Grouping keeps the same page of results, just banded by one field so a
     // long list reads as sets rather than a wall.
@@ -2331,17 +2400,63 @@
     const keys = [...groups.keys()].sort((a, b) =>
       state.group === "decade" ? b.localeCompare(a) : a.localeCompare(b));
 
+    const out = [];
     keys.forEach((k) => {
-      const head = el("div", "col-12");
-      head.innerHTML = '<div class="d-flex align-items-center gap-2 mt-2 mb-1">' +
-        '<span class="fw-semibold">' + esc(k) + "</span>" +
-        '<span class="badge rounded-pill" style="background:var(--sa-border);' +
-        'color:var(--sa-muted)">' + groups.get(k).length + "</span>" +
-        '<span class="flex-grow-1 border-bottom"></span></div>';
-      frag.appendChild(head);
-      groups.get(k).forEach((r) => frag.appendChild(cardFor(r)));
+      out.push({ heading: k, count: groups.get(k).length });
+      groups.get(k).forEach((r) => out.push(r));
     });
-    wrap.appendChild(frag);
+    return out;
+  }
+
+  const headingHtml = (it) =>
+    '<div class="col-12">' +
+      '<div class="d-flex align-items-center gap-2 mt-2 mb-1">' +
+      '<span class="fw-semibold">' + esc(it.heading) + "</span>" +
+      '<span class="badge rounded-pill" style="background:var(--sa-border);' +
+      'color:var(--sa-muted)">' + it.count + "</span>" +
+      '<span class="flex-grow-1 border-bottom"></span></div></div>';
+
+  function itemsHtml(items, from, to) {
+    const parts = [];
+    const end = Math.min(to, items.length);
+    for (let i = from; i < end; i++) {
+      parts.push(items[i].heading === undefined ? cardHtml(items[i]) : headingHtml(items[i]));
+    }
+    return parts.join("");
+  }
+
+  // "Show all" is around 60,000 elements, and parsing them in one go locks a
+  // phone up for seconds. Draw more than a screenful straight away, then add
+  // the rest a chunk per frame so scrolling and typing keep working while the
+  // page fills in behind.
+  const CARD_CHUNK = 150;    // enough to fill any screen, cheap to parse
+  const CARD_REST = 500;     // bigger after that: fewer frames, shorter tail
+  let cardRenderToken = 0;
+
+  function renderCards(pageRows) {
+    const token = ++cardRenderToken;
+    const old = $("#cardsWrap");
+    // Filling a detached element and swapping it in discards the outgoing
+    // cards in one go, instead of unpicking them from the live page.
+    const wrap = document.createElement("div");
+    wrap.id = "cardsWrap";
+    wrap.className = old.className;
+
+    const items = cardItems(pageRows);
+    wrap.innerHTML = itemsHtml(items, 0, CARD_CHUNK);
+    old.replaceWith(wrap);
+    if (items.length <= CARD_CHUNK) return;
+
+    let at = CARD_CHUNK;
+    const step = () => {
+      // Stop if a newer render has taken over, or this container is no longer
+      // the one on the page.
+      if (token !== cardRenderToken || !wrap.isConnected) return;
+      wrap.insertAdjacentHTML("beforeend", itemsHtml(items, at, at + CARD_REST));
+      at += CARD_REST;
+      if (at < items.length) requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
   }
 
   function renderTable() {
@@ -2594,7 +2709,9 @@
     renderPager(total);
     renderChips();
     syncControlStates();
+    // The cards have just been rebuilt, so any previous cursor is gone with them.
     cursor = -1;
+    cursorEl = null;
     paintMobileChrome();
     translateDom($("#results"));
     translateDom($("#layoutRow"));
@@ -2999,25 +3116,33 @@
     }
     state.page = 1;
     sync();
+    refreshSuggestions();
   }
 
-  function refreshSuggestions(term) {
+  // Suggestions are the top of the results just worked out, so a keystroke
+  // searches once instead of twice -- the old version ran a second, fuzzy
+  // search on every character, ahead of the debounce, and that was most of
+  // what made typing feel slow. They also respect the active filters now, so
+  // nothing is offered that would come back empty.
+  function refreshSuggestions() {
     const list = $("#qSuggest");
     if (!list) return;
-    const q = term.trim();
-    if (q.length < 2 || !FUSE) { list.innerHTML = ""; return; }
+    if (state.q.trim().length < 2) { list.innerHTML = ""; return; }
     const seen = new Set();
-    const opts = FUSE.search(q, { limit: 12 }).map((m) => m.item)
-      .map((r) => (r.item_code ? r.item_code + " — " : "") + r.title)
-      .filter((label) => !seen.has(label) && seen.add(label))
-      .slice(0, 8);
+    const opts = [];
+    for (let i = 0; i < FILTERED.length && opts.length < 8; i++) {
+      const r = FILTERED[i];
+      const label = (r.item_code ? r.item_code + " — " : "") + r.title;
+      if (seen.has(label)) continue;
+      seen.add(label);
+      opts.push(label);
+    }
     list.innerHTML = opts.map((o) => '<option value="' + esc(o) + '"></option>').join("");
   }
 
   $("#q").addEventListener("input", (e) => {
     clearTimeout(qTimer);
     const v = e.target.value;
-    refreshSuggestions(v);
     qTimer = setTimeout(() => applyQuery(v), 140);
   });
   // Single-key shortcuts must never fire while someone is typing, and never
@@ -3391,7 +3516,6 @@
       clearTimeout(mTimer);
       const v = e.target.value;
       syncSearchInputs("mobile");
-      refreshSuggestions(v);
       mTimer = setTimeout(() => applyQuery(v), 140);
     });
   }
@@ -3472,8 +3596,15 @@
 
   const cursorCards = () => [...document.querySelectorAll("#cardsWrap .sa-card")];
 
-  function paintCursor() {
-    cursorCards().forEach((c, i) => c.classList.toggle("sa-cursor", i === cursor));
+  // Only the card losing the cursor and the card gaining it are touched. The
+  // old version re-stamped the class on every card on the page, which with
+  // "Show all" meant 2,919 of them on every keypress.
+  let cursorEl = null;
+
+  function paintCursor(cards) {
+    if (cursorEl) cursorEl.classList.remove("sa-cursor");
+    cursorEl = (cards || cursorCards())[cursor] || null;
+    if (cursorEl) cursorEl.classList.add("sa-cursor");
   }
 
   function moveCursor(step) {
@@ -3481,7 +3612,7 @@
     if (!cards.length) return;
     cursor = Math.max(0, Math.min(cards.length - 1,
       (cursor === -1 ? (step > 0 ? 0 : cards.length - 1) : cursor + step)));
-    paintCursor();
+    paintCursor(cards);
     const el = cards[cursor];
     if (el) {
       el.scrollIntoView({ block: "nearest", behavior: REDUCED_MOTION ? "auto" : "smooth" });
@@ -4021,8 +4152,12 @@
   function boot(rows, meta, kitRows) {
     ROWS = rows.filter((r) => r.url && r.title);
     ROWS.forEach((r) => {
-      r._hay = [r.title, r.summary, r.item_code, r.category, r.section, r.topics,
-                r.filename, r.source_title].join(" ").toLowerCase();
+      r._hay = [r.title, r.summary, r.item_code, r.base_code, r.category, r.section,
+                r.topics, r.filename, r.source_title].join(" ").toLowerCase();
+      // Lowercased once here so searching never lowercases 2,919 titles again.
+      r._title = String(r.title || "").toLowerCase();
+      r._summary = String(r.summary || "").toLowerCase();
+      r._code = [r.item_code, r.base_code].join(" ").toLowerCase();
     });
     META = meta || {};
 
@@ -4070,6 +4205,7 @@
         BY_BASE_CODE.get(r.base_code).push(r);
       }
     });
+    buildEditionIndex();
     ROWS.forEach((r) => { r._langs = editionsOf(r).map((e) => e.language); });
 
     loadCollections();
