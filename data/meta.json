@@ -1,9 +1,9 @@
 {
-  "generated_utc": "2026-09-17T15:44:22Z",
+  "generated_utc": "2026-09-17T21:19:45Z",
   "generated_date": "September 17, 2026",
   "source": "https://www.aa.org",
   "total_pdfs": 2919,
-  "pages_crawled": 5402,
+  "pages_crawled": 5432,
   "broken_links": 29,
   "total_bytes": 2902644019,
   "categories": {
@@ -120,7 +120,16 @@
     "Conference & Forum Materials": 2,
     "Newsletters & Bulletins": 1
   },
-  "http": {},
-  "pdf_hosts_seen": {},
+  "http": {
+    "http_ok": 8385,
+    "http_403": 10,
+    "http_404": 12,
+    "http_fail": 5
+  },
+  "pdf_hosts_seen": {
+    "www.aa.org": 5777,
+    "aaws.widen.net": 2972,
+    "www.aagrapevine.org": 6
+  },
   "pdf_hosts_skipped": {}
 }
