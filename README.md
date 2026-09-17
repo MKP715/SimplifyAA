@@ -49,6 +49,7 @@ file on aa.org. All literature remains the copyright of its publisher.
 | `tools/test_pwa.js` | Browser regression tests for install, offline use and new-document notifications. |
 | `tools/test_layout.js` | Browser regression tests for the resizable sidebar and the card layout controls. |
 | `tools/test_i18n.js` | Browser regression tests for the Spanish and French interface. |
+| `tools/test_mobile.js` | Phone layout tests, plus guards that the phone work has not changed desktop. |
 | `data/i18n.json` | Spanish and French interface text, keyed by the English source string. |
 | `outreach/` | A ready-to-send report of the broken links found on aa.org, for their web team. |
 | `tools/test_results_pane.js` | Browser regression tests for the filter bar, sorting, grouping and icons. |
@@ -163,6 +164,34 @@ than leaving you to guess. Nothing is sent to a third-party push service: no mem
 reported to anyone, which matters more here than the convenience would. If true server-sent push is
 ever wanted, it needs a small backend to hold subscriptions and send them — the worker already
 handles a `push` event, so only the sender would be missing.
+
+## On a phone
+
+The sidebar holds the search box, the browse tree, language and topics. Stacked above the results on
+a phone that was 1,600px of filters before a single document appeared — four and a half screens of
+scrolling on a small iPhone. So below 992px:
+
+- the sidebar becomes a **slide-in drawer**, opened from the header or the bottom bar, and closes
+  itself once you pick a category so you see the results rather than the drawer;
+- a **sticky search bar** keeps search and the result count reachable without scrolling back up;
+- a **bottom action bar** puts Browse, Filters, Kits, Lists and Top within thumb reach, with targets
+  comfortably past the 44px guidance;
+- `viewport-fit=cover` and safe-area insets keep the fixed bars clear of a notch or home bar;
+- the **Start here** shortcuts become one swipeable row instead of a 13-button block, and the
+  heading, count and Filters button — all duplicated by the two bars — are dropped.
+
+Measured effect on the distance to the first result:
+
+| Device | Before | After |
+|---|---:|---:|
+| iPhone SE (320px) | 2,713px | **502px** |
+| Android (360px) | 2,505px | **463px** |
+| iPhone 14 (390px) | 2,382px | **463px** |
+| iPhone Plus (428px) | 2,255px | **424px** |
+
+Every one of those changes lives inside a `max-width: 991.98px` query or a `d-lg-none` class, and
+`tools/test_mobile.js` asserts at 1500, 1200 and 992px that the desktop layout still has its inline
+resizable sidebar, no bars, no reserved padding and nothing hidden.
 
 ## Icons
 
@@ -335,6 +364,7 @@ node tools/test_results_pane.js http://127.0.0.1:8765/index.html
 node tools/test_pwa.js http://127.0.0.1:8765/index.html
 node tools/test_layout.js http://127.0.0.1:8765/index.html
 node tools/test_i18n.js http://127.0.0.1:8765/index.html
+node tools/test_mobile.js http://127.0.0.1:8765/index.html
 node tools/audit.js http://127.0.0.1:8765/index.html index.html
 ```
 

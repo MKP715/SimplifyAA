@@ -2,7 +2,9 @@
 <html lang="en" data-bs-theme="light">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- viewport-fit=cover lets the fixed bars run under a notch or home bar, which
+     the safe-area padding below then accounts for. -->
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>SimplifyAA — A.A. Document Finder</title>
 <meta name="description" content="A searchable, categorized index of every PDF published on aa.org. Unofficial; all links point to the official files.">
 <link rel="icon" href="favicon.ico" sizes="any">
@@ -179,6 +181,96 @@
   .sa-skip:focus { left: .5rem; top: .5rem; z-index: 2000; background: #fff; padding: .5rem; }
   mark { padding: 0 .1em; background: #ffe8a3; }
 
+  /* ---------------------------- phone layout -----------------------------
+     Everything here is inside a max-width query, so the desktop layout is
+     untouched by it. The safe-area insets keep the fixed bars clear of a
+     notch or a home bar once viewport-fit=cover is in play. */
+  .sa-mobile-bar, .sa-bottom-bar { display: none; }
+
+  @media (max-width: 991.98px) {
+    .sa-mobile-bar {
+      display: block;
+      position: sticky;
+      top: 0;
+      z-index: 1025;              /* above content, below the offcanvas */
+      background: var(--sa-page);
+      padding: .5rem 0 .4rem;
+      margin-bottom: .25rem;
+      border-bottom: 1px solid var(--sa-border);
+    }
+    /* Never let the bars sit under the home bar or a rounded corner. */
+    .sa-bottom-bar {
+      display: flex;
+      position: fixed;
+      left: 0; right: 0; bottom: 0;
+      z-index: 1030;
+      justify-content: space-around;
+      gap: .25rem;
+      background: var(--sa-surface);
+      border-top: 1px solid var(--sa-border);
+      padding: .3rem max(.3rem, env(safe-area-inset-right))
+               max(.3rem, env(safe-area-inset-bottom))
+               max(.3rem, env(safe-area-inset-left));
+    }
+    .sa-bottom-btn {
+      flex: 1 1 0;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      gap: .1rem;
+      /* Comfortably past the 44px guidance. */
+      min-height: 48px;
+      border: 0; background: transparent; color: var(--sa-muted);
+      font-size: .68rem; line-height: 1.1;
+      border-radius: .5rem;
+      position: relative;
+    }
+    .sa-bottom-btn i { font-size: 1.15rem; }
+    .sa-bottom-btn:active, .sa-bottom-btn.active { background: var(--sa-accent-soft); color: var(--sa-accent); }
+    .sa-bottom-btn .badge { position: absolute; top: .1rem; right: 18%; font-size: .6rem; }
+
+    /* Room for the fixed bar, plus the inset, so the last card is reachable. */
+    body { padding-bottom: calc(4.5rem + env(safe-area-inset-bottom)); }
+
+    /* The drawer needs the same treatment on a notched phone. */
+    #sidebarPanel.offcanvas-lg {
+      width: min(88vw, 22rem);
+      padding-top: env(safe-area-inset-top);
+      padding-bottom: env(safe-area-inset-bottom);
+    }
+    /* The sticky sidebar trick is meaningless inside a drawer. */
+    #sidebarPanel .sa-sidebar { position: static; max-height: none; overflow: visible; }
+
+    /* The header can also be clipped by a notch in landscape. */
+    .sa-navbar { padding-left: env(safe-area-inset-left); padding-right: env(safe-area-inset-right); }
+
+    /* Small text is harder to read on a phone than on a monitor. */
+    .sa-card .sa-meta, .sa-summary { font-size: .82rem; }
+    .sa-lang { font-size: .74rem; padding: .1rem .4rem; }
+
+    /* "Start here" wrapped to 13 buttons over ~490px before any result was
+       visible. One swipeable row keeps the shortcuts without the wall. */
+    #startLinks {
+      /* Bootstrap's .flex-wrap utility is !important, so this has to be too. */
+      flex-wrap: nowrap !important;
+      overflow-x: auto;
+      scroll-snap-type: x proximity;
+      -webkit-overflow-scrolling: touch;
+      padding-bottom: .35rem;
+    }
+    #startLinks > * { flex: 0 0 auto; scroll-snap-align: start; }
+    #startLinks::-webkit-scrollbar { height: 4px; }
+    #startLinks::-webkit-scrollbar-thumb { background: var(--sa-border); border-radius: 4px; }
+    #startHere { padding: .6rem .75rem !important; }
+    #startHere > p { display: none; }          /* the buttons explain themselves */
+
+    /* The heading, count and Filters button are all duplicated by the sticky
+       bar and the bottom bar, so they are dead weight here. */
+    #results > .sa-panel .me-auto { display: none; }
+    #filterToggle { display: none; }
+
+    /* Trim the header to one row. */
+    #statTotal, #installBtn { display: none !important; }
+  }
+
   /* Printing a collection should produce a plain list on paper, not a
      screenshot of an interface. */
   @media print {
@@ -213,12 +305,31 @@
     </a>
     <div class="ms-auto d-flex align-items-center gap-2 flex-wrap">
       <span class="badge text-bg-light" id="statTotal">…</span>
-      <button class="btn btn-sm btn-outline-light" data-bs-toggle="modal" data-bs-target="#codesModal">
+      <button class="btn btn-sm btn-outline-light d-none d-lg-inline-block"
+              data-bs-toggle="modal" data-bs-target="#codesModal">
         <i class="bi bi-hash"></i><span class="d-none d-sm-inline ms-1">Item codes</span>
       </button>
-      <button class="btn btn-sm btn-outline-light" data-bs-toggle="modal" data-bs-target="#aboutModal">
+      <button class="btn btn-sm btn-outline-light d-none d-lg-inline-block"
+              data-bs-toggle="modal" data-bs-target="#aboutModal">
         <i class="bi bi-info-circle"></i><span class="d-none d-sm-inline ms-1">About</span>
       </button>
+      <!-- On a phone the header wrapped onto two rows, so the reference and
+           install actions fold into one menu instead. -->
+      <div class="dropdown d-lg-none">
+        <button class="btn btn-sm btn-outline-light" type="button" data-bs-toggle="dropdown"
+                aria-label="More" aria-expanded="false">
+          <i class="bi bi-three-dots"></i>
+        </button>
+        <ul class="dropdown-menu dropdown-menu-end">
+          <li><button class="dropdown-item" type="button" data-bs-toggle="modal"
+                      data-bs-target="#codesModal"><i class="bi bi-hash me-2"></i>Item codes</button></li>
+          <li><button class="dropdown-item" type="button" data-bs-toggle="modal"
+                      data-bs-target="#aboutModal"><i class="bi bi-info-circle me-2"></i>About</button></li>
+          <li><button class="dropdown-item" type="button" id="installBtn3"><i class="bi bi-download me-2"></i>Install app</button></li>
+          <li><button class="dropdown-item" type="button" data-bs-toggle="modal"
+                      data-bs-target="#keysModal"><i class="bi bi-keyboard me-2"></i>Keyboard shortcuts</button></li>
+        </ul>
+      </div>
       <div class="input-group input-group-sm w-auto" title="Interface language">
         <span class="input-group-text bg-transparent text-white border-light">
           <i class="bi bi-translate"></i>
@@ -253,6 +364,24 @@
 </nav>
 
 <div class="container-fluid pb-5">
+  <!-- Phones only: search stays reachable without scrolling back up through
+       thousands of results, and the drawer is one tap away. -->
+  <div class="sa-mobile-bar d-lg-none" id="mobileBar">
+    <div class="d-flex align-items-center gap-2">
+      <button class="btn btn-sm btn-outline-secondary flex-shrink-0" type="button"
+              data-bs-toggle="offcanvas" data-bs-target="#sidebarPanel"
+              aria-controls="sidebarPanel" aria-label="Browse and filter">
+        <i class="bi bi-list"></i>
+      </button>
+      <div class="input-group input-group-sm">
+        <span class="input-group-text"><i class="bi bi-search"></i></span>
+        <input id="qMobile" type="search" class="form-control" autocomplete="off"
+               placeholder="Title, code, topic…" aria-label="Search documents">
+      </div>
+    </div>
+    <div class="small sa-count mt-1" id="mobileCount"></div>
+  </div>
+
   <div id="loadError" class="alert alert-warning d-none">
     <h6 class="alert-heading"><i class="bi bi-exclamation-triangle me-1"></i>Could not load the document index</h6>
     <p class="mb-1 small" id="loadErrorMsg"></p>
@@ -268,6 +397,18 @@
       <div id="resizeHandle" role="separator" tabindex="0" aria-orientation="vertical"
            aria-label="Resize the sidebar — drag, or use the arrow keys"
            title="Drag to resize · double-click to reset"><span></span></div>
+
+      <!-- Below lg this whole panel becomes a slide-in drawer, so the results
+           start at the top of a phone screen instead of a screenful of filters
+           down. At lg and up Bootstrap renders it inline and nothing changes. -->
+      <div class="offcanvas-lg offcanvas-start" tabindex="-1" id="sidebarPanel"
+           aria-labelledby="sidebarPanelTitle">
+        <div class="offcanvas-header d-lg-none">
+          <h5 class="offcanvas-title" id="sidebarPanelTitle">Browse &amp; filter</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="offcanvas"
+                  data-bs-target="#sidebarPanel" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body p-3 p-lg-0">
       <div class="sa-sidebar">
         <div class="sa-panel p-3 mb-3">
           <label for="q" class="form-label fw-semibold small text-uppercase text-body-secondary">Search</label>
@@ -322,6 +463,8 @@
           <button class="btn btn-outline-secondary btn-sm" id="resetAll"><i class="bi bi-arrow-counterclockwise me-1"></i>Reset all filters</button>
         </div>
       </div>
+        </div><!-- /offcanvas-body -->
+      </div><!-- /offcanvas -->
     </aside>
 
     <!-- ------------------------------ results ------------------------------ -->
@@ -511,6 +654,29 @@
     </section>
   </div>
 </div>
+
+<!-- Phones only: the things reached for constantly, within thumb range
+     instead of at the top of a long page. -->
+<nav class="sa-bottom-bar d-lg-none" id="bottomBar" aria-label="Quick actions">
+  <button class="sa-bottom-btn" type="button" data-bs-toggle="offcanvas"
+          data-bs-target="#sidebarPanel" aria-controls="sidebarPanel">
+    <i class="bi bi-list"></i><span>Browse</span>
+  </button>
+  <button class="sa-bottom-btn" type="button" id="bottomFilters">
+    <i class="bi bi-funnel"></i><span>Filters</span>
+    <span class="badge rounded-pill text-bg-primary d-none" id="bottomFilterCount">0</span>
+  </button>
+  <button class="sa-bottom-btn" type="button" id="bottomKits">
+    <i class="bi bi-box2-heart"></i><span>Kits</span>
+  </button>
+  <button class="sa-bottom-btn" type="button" data-bs-toggle="modal"
+          data-bs-target="#collectionsModal">
+    <i class="bi bi-collection"></i><span>Lists</span>
+  </button>
+  <button class="sa-bottom-btn" type="button" id="bottomTop">
+    <i class="bi bi-arrow-up"></i><span>Top</span>
+  </button>
+</nav>
 
 <!-- preview modal -->
 <div class="modal fade" id="previewModal" tabindex="-1" aria-hidden="true">
@@ -1461,6 +1627,7 @@
         all.addEventListener("click", () => {
           state.section = state.section === section && !state.category ? "" : section;
           state.category = ""; state.view = "all"; state.page = 1; sync();
+          closeDrawerOnMobile();
         });
         body.appendChild(all);
 
@@ -1473,6 +1640,7 @@
             state.category = on ? "" : cat;
             state.section = on ? "" : section;
             state.view = "all"; state.page = 1; sync();
+            closeDrawerOnMobile();
           });
           body.appendChild(btn);
         });
@@ -2427,6 +2595,7 @@
     renderChips();
     syncControlStates();
     cursor = -1;
+    paintMobileChrome();
     translateDom($("#results"));
     translateDom($("#layoutRow"));
   }
@@ -2817,6 +2986,7 @@
   // recently updated one. Clearing the search puts your own order back. A sort
   // chosen part-way through a search sticks for that search.
   function applyQuery(v) {
+    syncSearchInputs(v === $("#qMobile").value ? "mobile" : "sidebar");
     const had = state.q.trim().length >= 2;
     const has = v.trim().length >= 2;
     state.q = v;
@@ -2890,6 +3060,7 @@
   });
   document.querySelectorAll("[data-view]").forEach((b) => b.addEventListener("click", () => {
     state.view = b.dataset.view; state.section = ""; state.category = ""; state.page = 1; sync();
+    closeDrawerOnMobile();
   }));
   // Sorting is saved as a browsing preference, but a sort chosen while
   // searching belongs to that search only -- it should not redefine how the
@@ -2973,7 +3144,7 @@
   // Sort returns to whatever they last chose, and theme, viewer, card size and
   // page size are settings rather than filters, so they stay put.
   function resetAllFilters(scrollUp) {
-    state.q = ""; $("#q").value = "";
+    state.q = ""; $("#q").value = ""; syncSearchInputs("sidebar");
     state.view = "all"; state.section = ""; state.category = "";
     state.language = ""; state.topics.clear(); state.families.clear();
     state.approval = ""; state.size = ""; state.updated = "";
@@ -3190,6 +3361,78 @@
     } catch (e) {
       return null;
     }
+  }
+
+  /* ------------------------------ phone chrome ---------------------------- */
+  const isPhoneLayout = () => window.innerWidth < 992;
+
+  // Picking a category in the drawer should show the results, not leave the
+  // reader looking at the drawer they just used.
+  function closeDrawerOnMobile() {
+    if (!isPhoneLayout()) return;
+    const panel = $("#sidebarPanel");
+    if (!panel || !window.bootstrap || !bootstrap.Offcanvas) return;
+    const oc = bootstrap.Offcanvas.getInstance(panel);
+    if (oc) oc.hide();
+  }
+
+  // One search, two inputs: the sidebar field and the sticky phone field are
+  // kept in step so neither can show a stale query.
+  function syncSearchInputs(from) {
+    const a = $("#q"), b = $("#qMobile");
+    if (!a || !b) return;
+    if (from === "mobile") a.value = b.value;
+    else b.value = a.value;
+  }
+
+  if ($("#qMobile")) {
+    let mTimer = null;
+    $("#qMobile").addEventListener("input", (e) => {
+      clearTimeout(mTimer);
+      const v = e.target.value;
+      syncSearchInputs("mobile");
+      refreshSuggestions(v);
+      mTimer = setTimeout(() => applyQuery(v), 140);
+    });
+  }
+
+  function paintMobileChrome() {
+    const count = $("#mobileCount");
+    if (count) count.textContent = ($("#resultCount") || {}).textContent || "";
+    const badge = $("#filterCount");
+    const mirror = $("#bottomFilterCount");
+    if (badge && mirror) {
+      mirror.textContent = badge.textContent;
+      mirror.classList.toggle("d-none", badge.classList.contains("d-none"));
+    }
+    const kitsBtn = $("#bottomKits");
+    if (kitsBtn) kitsBtn.classList.toggle("active", state.view === "kits");
+  }
+
+  if ($("#bottomFilters")) {
+    $("#bottomFilters").addEventListener("click", () => {
+      const bar = $("#filterBar");
+      if (!bar) return;
+      bootstrap.Collapse.getOrCreateInstance(bar).toggle();
+      // The bar is inside the results panel, so bring it into view.
+      setTimeout(() => {
+        const top = bar.getBoundingClientRect().top + window.scrollY - 70;
+        window.scrollTo({ top: Math.max(0, top),
+          behavior: REDUCED_MOTION ? "auto" : "smooth" });
+      }, 60);
+    });
+  }
+  if ($("#bottomKits")) {
+    $("#bottomKits").addEventListener("click", () => {
+      state.view = state.view === "kits" ? "all" : "kits";
+      state.section = ""; state.category = ""; state.page = 1;
+      sync();
+      window.scrollTo({ top: 0, behavior: REDUCED_MOTION ? "auto" : "smooth" });
+    });
+  }
+  if ($("#bottomTop")) {
+    $("#bottomTop").addEventListener("click", () =>
+      window.scrollTo({ top: 0, behavior: REDUCED_MOTION ? "auto" : "smooth" }));
   }
 
   /* ------------------------ recently opened documents --------------------- */
@@ -3463,7 +3706,7 @@
     bootstrap.Modal.getOrCreateInstance($("#settingsModal")).show();
     toast(IS_IOS ? "Use Share → Add to Home Screen" : "Use your browser menu → Install");
   }
-  ["#installBtn", "#installBtn2"].forEach((sel) => {
+  ["#installBtn", "#installBtn2", "#installBtn3"].forEach((sel) => {
     const b = $(sel);
     if (b) b.addEventListener("click", doInstall);
   });
