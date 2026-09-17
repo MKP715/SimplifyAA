@@ -26,6 +26,18 @@ const setSel = (p, sel, val) => p.evaluate((s, v) => {
   n.value = v;
   n.dispatchEvent(new Event("change"));
 }, sel, val);
+// Read and set the sort direction from the icon, rather than assuming which
+// way round it starts — the default is now newest-first.
+const curDir = (p) => p.evaluate(() =>
+  document.querySelector("#sortDir .bi-sort-down") ? "desc" : "asc");
+const setDir = async (p, want) => {
+  for (let i = 0; i < 3; i++) {
+    if ((await curDir(p)) === want) return want;
+    await p.evaluate(() => document.querySelector("#sortDir").click());
+    await sleep(700);
+  }
+  return curDir(p);
+};
 const toggle = (p, sel) => p.evaluate((s) => {
   const n = document.querySelector(s);
   n.checked = !n.checked;
@@ -74,6 +86,26 @@ const toggle = (p, sel) => p.evaluate((s) => {
   });
   check("all icon files load", Object.values(assets).every((v) => v === 200),
     JSON.stringify(assets));
+
+  console.log("\n=== FIRST-RUN DEFAULTS ===");
+  // Fresh profile, nothing saved: a member opening this cold should land on
+  // what aa.org has just refreshed.
+  const firstRun = await p.evaluate(() => ({
+    sort: document.querySelector("#sortSel").value,
+    dir: document.querySelector("#sortDir .bi-sort-down") ? "desc" : "asc",
+    saved: localStorage.getItem("simplifyaa.settings"),
+  }));
+  check("opens sorted by date updated", firstRun.sort === "last_modified", firstRun.sort);
+  check("opens newest first", firstRun.dir === "desc", firstRun.dir);
+  check("nothing was saved before the reader chose anything",
+    !firstRun.saved || !JSON.parse(firstRun.saved).sortField, String(firstRun.saved));
+  const dates = await p.evaluate(() =>
+    [...document.querySelectorAll("#cardsWrap .sa-card")].slice(0, 8)
+      .map((c) => (c.textContent.match(/[0-9]{4}-[0-9]{2}-[0-9]{2}/) || [""])[0])
+      .filter(Boolean));
+  check("the newest dates really are first",
+    dates.length > 2 && dates.every((d, i) => i === 0 || dates[i - 1] >= d),
+    dates.slice(0, 4).join(" >= "));
 
   console.log("\n=== FILTER BAR OPENS ===");
   const bar = await p.evaluate(() => ({
@@ -177,10 +209,10 @@ const toggle = (p, sel) => p.evaluate((s) => {
   const desc = await firstTitles();
   check("sort direction reverses the list", asc[0] !== desc[0],
     (asc[0] || "").slice(0, 26) + " vs " + (desc[0] || "").slice(0, 26));
-  check("direction icon flips", await p.evaluate(() =>
-    !!document.querySelector("#sortDir .bi-sort-alpha-up")));
+  check("direction icon flips", (await curDir(p)) === "asc", "now " + (await curDir(p)));
 
   await setSel(p, "#sortSel", "bytes");
+  await setDir(p, "desc");
   await sleep(700);
   const bySize = await p.evaluate(() =>
     [...document.querySelectorAll("#cardsWrap .sa-card")].slice(0, 6).map((c) => {
@@ -260,6 +292,42 @@ const toggle = (p, sel) => p.evaluate((s) => {
   check("shared link restores every control",
     restored.approval === "approved" && restored.group === "section" &&
     restored.per === "96" && restored.compact, JSON.stringify(restored));
+
+  console.log("\n=== SORT CHOICE IS REMEMBERED ===");
+  await setSel(p, "#sortSel", "title");
+  await setDir(p, "asc");
+  await sleep(700);
+  const savedSort = await p.evaluate(() =>
+    JSON.parse(localStorage.getItem("simplifyaa.settings") || "{}"));
+  check("a changed sort is saved",
+    savedSort.sortField === "title" && savedSort.sortDir === "asc",
+    JSON.stringify({ f: savedSort.sortField, d: savedSort.sortDir }));
+
+  // A plain revisit, with no parameters in the link, must reopen that way.
+  await p.goto(URL, { waitUntil: "networkidle2" });
+  await p.waitForFunction(
+    () => !/loading/i.test(document.querySelector("#resultCount").textContent),
+    { timeout: 45000 });
+  await sleep(900);
+  const reopened = await p.evaluate(() => ({
+    sort: document.querySelector("#sortSel").value,
+    dir: document.querySelector("#sortDir .bi-sort-down") ? "desc" : "asc",
+  }));
+  check("reopens with the reader's own sort",
+    reopened.sort === "title" && reopened.dir === "asc", JSON.stringify(reopened));
+
+  // Someone else's shared link should show their order, not the reader's.
+  await p.goto(URL + "#sort=bytes&dir=desc", { waitUntil: "networkidle2" });
+  await p.waitForFunction(
+    () => !/loading/i.test(document.querySelector("#resultCount").textContent),
+    { timeout: 45000 });
+  await sleep(900);
+  const shared = await p.evaluate(() => ({
+    sort: document.querySelector("#sortSel").value,
+    dir: document.querySelector("#sortDir .bi-sort-down") ? "desc" : "asc",
+  }));
+  check("a shared link overrides the saved sort",
+    shared.sort === "bytes" && shared.dir === "desc", JSON.stringify(shared));
 
   console.log("\n=== TABLE VIEW OPTIONS ===");
   await p.evaluate(() => document.querySelector("#resetAll").click());

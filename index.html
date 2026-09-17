@@ -648,7 +648,7 @@
     topics: new Set(), families: new Set(),
     approval: "", size: "", updated: "", yearFrom: "", yearTo: "",
     hasTrans: false, inKit: false,
-    sortField: "title", sortDir: "asc",
+    sortField: "last_modified", sortDir: "desc",
     group: "", pageSize: 48, density: "comfortable",
     page: 1, mode: "cards", openKit: ""
   };
@@ -794,8 +794,8 @@
     if (state.yearTo) p.set("to", state.yearTo);
     if (state.hasTrans) p.set("trans", "1");
     if (state.inKit) p.set("inkit", "1");
-    if (state.sortField !== "title") p.set("sort", state.sortField);
-    if (state.sortDir !== "asc") p.set("dir", state.sortDir);
+    p.set("sort", state.sortField);
+    p.set("dir", state.sortDir);
     if (state.group) p.set("group", state.group);
     if (state.pageSize !== 48) p.set("per", String(state.pageSize));
     if (state.density !== "comfortable") p.set("density", state.density);
@@ -820,8 +820,9 @@
     state.yearTo = p.get("to") || "";
     state.hasTrans = p.get("trans") === "1";
     state.inKit = p.get("inkit") === "1";
-    state.sortField = p.get("sort") || "title";
-    state.sortDir = p.get("dir") === "desc" ? "desc" : "asc";
+    state.sortField = p.get("sort") || settings.sortField || "last_modified";
+    state.sortDir = p.get("dir") || settings.sortDir || "desc";
+    if (state.sortDir !== "asc" && state.sortDir !== "desc") state.sortDir = "desc";
     state.group = p.get("group") || "";
     state.pageSize = [24, 48, 96, 240].includes(+p.get("per")) ? +p.get("per") : 48;
     state.density = p.get("density") === "compact" ? "compact" : "comfortable";
@@ -1617,8 +1618,8 @@
     document.querySelectorAll("#tree [data-cat]").forEach((b) =>
       b.classList.toggle("active", b.dataset.cat === state.category));
     $("#sortSel").value = state.sortField;
-    $("#sortDir").innerHTML = '<i class="bi bi-sort-alpha-' +
-      (state.sortDir === "desc" ? "up" : "down") + '"></i>';
+    $("#sortDir").innerHTML = '<i class="bi bi-sort-' +
+      (state.sortDir === "desc" ? "down" : "up") + '"></i>';
     $("#sortDir").title = state.sortDir === "desc" ? "Descending - click for ascending"
                                                    : "Ascending - click for descending";
     $("#groupSel").value = state.group;
@@ -1746,7 +1747,8 @@
   };
 
   const settings = Object.assign(
-    { viewer: "auto", previewHeight: 78 },
+    { viewer: "auto", previewHeight: 78,
+      sortField: "last_modified", sortDir: "desc" },
     safeLS(() => JSON.parse(localStorage.getItem(LS.settings) || "{}"), {}) || {}
   );
   function saveSettings() {
@@ -2052,6 +2054,10 @@
       });
       settings.viewer = "auto";
       settings.previewHeight = 78;
+      settings.sortField = "last_modified";
+      settings.sortDir = "desc";
+      state.sortField = "last_modified";
+      state.sortDir = "desc";
       favorites = new Set();
       saveFavorites();
       renderSettingsMethods();
@@ -2081,10 +2087,16 @@
     state.view = b.dataset.view; state.section = ""; state.category = ""; state.page = 1; sync();
   }));
   $("#sortSel").addEventListener("change", (e) => {
-    state.sortField = e.target.value; state.page = 1; sync();
+    state.sortField = e.target.value;
+    settings.sortField = state.sortField;
+    saveSettings();
+    state.page = 1; sync();
   });
   $("#sortDir").addEventListener("click", () => {
-    state.sortDir = state.sortDir === "asc" ? "desc" : "asc"; state.page = 1; sync();
+    state.sortDir = state.sortDir === "asc" ? "desc" : "asc";
+    settings.sortDir = state.sortDir;
+    saveSettings();
+    state.page = 1; sync();
   });
   $("#groupSel").addEventListener("change", (e) => {
     state.group = e.target.value; state.page = 1; sync();
@@ -2125,7 +2137,9 @@
     state.approval = ""; state.size = ""; state.updated = "";
     state.yearFrom = ""; state.yearTo = "";
     state.hasTrans = false; state.inKit = false;
-    state.sortField = "title"; state.sortDir = "asc"; state.group = ""; state.page = 1;
+    state.sortField = settings.sortField || "last_modified";
+    state.sortDir = settings.sortDir || "desc";
+    state.group = ""; state.page = 1;
     sync();
   });
 

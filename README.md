@@ -69,7 +69,9 @@ index can be regenerated without touching application code.
   Conference-approved vs service material, file size, when aa.org last updated it, a year range,
   and switches for "available in another language", "included in a service kit" and favourites.
   The button badges how many filters are active, and each one appears as a removable chip.
-- **Sort and arrange** — sort by best match, title, date updated, year, size, item code, category or
+- **Sort and arrange** — it opens on **date updated, newest first**, so you see what A.A. has just
+  refreshed; change it and that choice is remembered for next time, while a shared link still shows
+  the sender's order. Sort by best match, title, date updated, year, size, item code, category or
   language, in either direction; group the results by category, section, language, literature type or
   decade; and choose 24–240 results per page with comfortable or compact cards.
 - **Service kits** — every committee kit as a set of working links, workbook first (see below).
