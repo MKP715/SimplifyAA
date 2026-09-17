@@ -64,6 +64,11 @@
   }
   .sa-navbar { background: var(--sa-accent); }
   .sa-navbar .navbar-brand, .sa-navbar .nav-link, .sa-navbar .btn { color: #fff; }
+  .sa-home { text-decoration: none; border-radius: .4rem; padding: .15rem .4rem; }
+  .sa-home:hover, .sa-home:focus-visible {
+    color: #fff; background: rgba(255, 255, 255, .16); text-decoration: none;
+  }
+  .sa-home:hover small { opacity: 1 !important; }
   .sa-panel {
     background: var(--sa-surface);
     border: 1px solid var(--sa-border);
@@ -137,10 +142,13 @@
 
 <nav class="navbar navbar-expand-lg sa-navbar shadow-sm mb-3" data-bs-theme="dark">
   <div class="container-fluid gap-2">
-    <span class="navbar-brand fw-semibold mb-0">
+    <!-- Doubles as the way back to a clean slate, which is what people reach
+         for a logo to do. Still a real link, so open-in-new-tab works. -->
+    <a class="navbar-brand fw-semibold mb-0 sa-home" href="./" id="homeLink"
+       title="Back to all documents — clears the search and every filter">
       <i class="bi bi-journals me-1"></i>SimplifyAA
       <small class="fw-normal opacity-75 d-none d-md-inline">· every A.A. PDF, organized</small>
-    </span>
+    </a>
     <div class="ms-auto d-flex align-items-center gap-2 flex-wrap">
       <span class="badge text-bg-light" id="statTotal">…</span>
       <button class="btn btn-sm btn-outline-light" data-bs-toggle="modal" data-bs-target="#codesModal">
@@ -1603,9 +1611,21 @@
       const c = el("span", "badge rounded-pill text-bg-secondary",
         esc(label) + ' <i class="bi bi-x-lg ms-1"></i>');
       c.style.cursor = "pointer";
+      c.title = "Remove this filter";
       c.addEventListener("click", () => { undo(); state.page = 1; sync(); });
       wrap.appendChild(c);
     });
+
+    // Removing filters one at a time gets tedious past a couple, so offer the
+    // whole lot right where the reader is already looking.
+    if (chips.length >= 2) {
+      const all = el("button", "badge rounded-pill btn btn-sm text-bg-light border-0",
+        '<i class="bi bi-x-circle me-1"></i>Clear all');
+      all.title = "Clear the search and every filter";
+      all.id = "clearAllChip";
+      all.addEventListener("click", () => resetAllFilters(false));
+      wrap.appendChild(all);
+    }
   }
 
   function syncControlStates() {
@@ -2130,17 +2150,34 @@
   $("#vmCards").addEventListener("change", () => { state.mode = "cards"; sync(); });
   $("#vmTable").addEventListener("change", () => { state.mode = "table"; sync(); });
   $("#clearBrowse").addEventListener("click", () => { state.section = ""; state.category = ""; sync(); });
-  $("#resetAll").addEventListener("click", () => {
+  // Back to a clean slate. Reached from the sidebar button, the brand in the
+  // header and the "Clear all" chip, so it lives in one place.
+  //
+  // Filters and the search are cleared; the reader's own preferences are not.
+  // Sort returns to whatever they last chose, and theme, viewer, card size and
+  // page size are settings rather than filters, so they stay put.
+  function resetAllFilters(scrollUp) {
     state.q = ""; $("#q").value = "";
     state.view = "all"; state.section = ""; state.category = "";
     state.language = ""; state.topics.clear(); state.families.clear();
     state.approval = ""; state.size = ""; state.updated = "";
     state.yearFrom = ""; state.yearTo = "";
     state.hasTrans = false; state.inKit = false;
+    state.openKit = "";
     state.sortField = settings.sortField || "last_modified";
     state.sortDir = settings.sortDir || "desc";
     state.group = ""; state.page = 1;
     sync();
+    if (scrollUp) window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+
+  $("#resetAll").addEventListener("click", () => resetAllFilters(true));
+
+  $("#homeLink").addEventListener("click", (e) => {
+    // Let the browser do its normal thing for a new tab or window.
+    if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
+    e.preventDefault();
+    resetAllFilters(true);
   });
 
   document.addEventListener("click", (e) => {

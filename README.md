@@ -79,6 +79,10 @@ index can be regenerated without touching application code.
 - **Favorites** — star documents you use often; they are remembered in your browser.
 - **Share a view** — the URL captures the exact search and filters, so you can send someone a link
   straight to, say, every Spanish corrections document.
+- **Start over** — click **SimplifyAA** in the header to go back to all documents, clearing the
+  search and every filter. A **Clear all** chip also appears beside the active filters once there
+  is more than one, and the sidebar keeps its **Reset all filters** button. Your own preferences
+  — sort order, theme, viewer, card size — are left alone.
 - **Export** — download the current result list as CSV.
 - **Install it** — it runs as an app and works offline; see below.
 - **New documents** — the bell lists what each crawl added, with a history you can clear.

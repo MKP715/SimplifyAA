@@ -359,6 +359,85 @@ const toggle = (p, sel) => p.evaluate((s) => {
   check("start-here row returns on a clean slate", await p.evaluate(() =>
     !document.querySelector("#startHere").classList.contains("d-none")));
 
+  console.log("\n=== HOME LINK / CLEAR ALL ===");
+  const brand = await p.evaluate(() => {
+    const a = document.querySelector("#homeLink");
+    return { tag: a ? a.tagName : "", href: a ? a.getAttribute("href") : "",
+             title: a ? a.getAttribute("title") : "" };
+  });
+  check("the brand is a real link", brand.tag === "A" && brand.href === "./",
+    brand.tag + " href=" + brand.href);
+  check("the brand says what it does", /clear/i.test(brand.title || ""),
+    (brand.title || "").slice(0, 58));
+
+  // Pile on a search plus filters plus a non-default view, then click the brand.
+  await p.evaluate(() => {
+    const q = document.querySelector("#q");
+    q.value = "corrections"; q.dispatchEvent(new Event("input"));
+  });
+  await sleep(700);
+  await setSel(p, "#approvalSel", "service");
+  await p.evaluate(() => document.querySelector("#familyChips [data-family]").click());
+  await sleep(800);
+  const messy = await count(p);
+  const chipsNow = await p.evaluate(() =>
+    document.querySelectorAll("#activeChips .badge").length);
+  check("filters are active before clearing", messy < total && chipsNow >= 3,
+    messy + " docs, " + chipsNow + " chips");
+  check("a Clear all chip appears", await p.evaluate(() => !!document.querySelector("#clearAllChip")));
+
+  await p.evaluate(() => document.querySelector("#clearAllChip").click());
+  await sleep(900);
+  let home = await p.evaluate(() => ({
+    n: parseInt((document.querySelector("#resultCount").textContent.match(/[\d,]+/) || ["0"])[0]
+        .replace(/,/g, ""), 10),
+    q: document.querySelector("#q").value,
+    chips: document.querySelectorAll("#activeChips .badge").length,
+  }));
+  check("Clear all clears the search and filters",
+    home.n === total && home.q === "" && home.chips === 0,
+    home.n + " docs, q=" + JSON.stringify(home.q) + ", " + home.chips + " chips");
+
+  // Now the same through the brand, from a different kind of view.
+  await p.evaluate(() => {
+    const q = document.querySelector("#q");
+    q.value = "treatment"; q.dispatchEvent(new Event("input"));
+  });
+  await sleep(700);
+  await p.evaluate(() => document.querySelector('[data-view="kits"]').click());
+  await sleep(900);
+  await p.evaluate(() => document.querySelector("#homeLink").click());
+  await sleep(900);
+  home = await p.evaluate(() => ({
+    n: parseInt((document.querySelector("#resultCount").textContent.match(/[\d,]+/) || ["0"])[0]
+        .replace(/,/g, ""), 10),
+    q: document.querySelector("#q").value,
+    heading: document.querySelector("#resultHeading").textContent.trim(),
+    kitsHidden: document.querySelector("#kitsWrap").classList.contains("d-none"),
+    startHere: !document.querySelector("#startHere").classList.contains("d-none"),
+  }));
+  check("the brand returns to all documents",
+    home.n === total && home.q === "" && home.heading === "All documents" && home.kitsHidden,
+    home.heading + ", " + home.n + " docs");
+  check("the clean landing view comes back", home.startHere);
+
+  // A modified click must stay a normal link so it can open in a new tab.
+  const hijacked = await p.evaluate(() => {
+    const ev = new MouseEvent("click",
+      { bubbles: true, cancelable: true, ctrlKey: true });
+    document.querySelector("#homeLink").dispatchEvent(ev);
+    return ev.defaultPrevented;
+  });
+  check("ctrl-click is left to the browser", hijacked === false, "prevented=" + hijacked);
+
+  // The reader's saved sort must survive a clear; it is a preference, not a filter.
+  const sortAfter = await p.evaluate(() => ({
+    sort: document.querySelector("#sortSel").value,
+    saved: JSON.parse(localStorage.getItem("simplifyaa.settings") || "{}").sortField,
+  }));
+  check("clearing keeps the reader's sort preference",
+    sortAfter.sort === sortAfter.saved, JSON.stringify(sortAfter));
+
   console.log("\n=== MOBILE ===");
   await p.setViewport({ width: 390, height: 844 });
   await sleep(800);
