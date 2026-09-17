@@ -134,6 +134,50 @@ const layout = (p) => p.evaluate(() => {
     check("the full sidebar is inside the drawer", drawer.searchReachable);
     check("drawer closes once a view is chosen", drawer.closed);
 
+    // The header's overflow menu once opened underneath the sticky search bar
+    // and half off the left edge of the screen, because Bootstrap turns Popper
+    // off for dropdowns inside a navbar and nothing was keeping it in view.
+    // elementFromPoint is the test that matters: it answers by paint order,
+    // which is what a thumb hits.
+    const menu = await p.evaluate(async () => {
+      document.querySelector("#headerMenuWrap > button").click();
+      await new Promise((r) => setTimeout(r, 500));
+      const m = document.querySelector("#headerMenu");
+      const box = m.getBoundingClientRect();
+      const btn = document.querySelector("#headerMenuWrap > button").getBoundingClientRect();
+      const nav = document.querySelector(".sa-navbar").getBoundingClientRect();
+      const items = [...m.querySelectorAll(".dropdown-item")];
+      const tappable = items.filter((it) => {
+        const r = it.getBoundingClientRect();
+        if (r.left < 0 || r.right > window.innerWidth ||
+            r.top < 0 || r.bottom > window.innerHeight) return false;
+        const hit = document.elementFromPoint(
+          Math.round(r.left + r.width / 2), Math.round(r.top + r.height / 2));
+        return !!(hit && m.contains(hit));
+      }).length;
+      document.body.click();
+      await new Promise((r) => setTimeout(r, 300));
+      return { shown: m.classList.contains("show"), items: items.length, tappable: tappable,
+               left: Math.round(box.left), right: Math.round(box.right),
+               top: Math.round(box.top), navBottom: Math.round(nav.bottom),
+               btnRight: Math.round(btn.right), vw: window.innerWidth,
+               closed: !m.classList.contains("show") };
+    });
+    check("the overflow menu opens", menu.shown || menu.items > 0,
+      menu.items + " items");
+    check("the overflow menu is fully on screen",
+      menu.left >= 0 && menu.right <= menu.vw,
+      menu.left + " to " + menu.right + " of " + menu.vw);
+    check("every overflow item receives its own tap",
+      menu.items > 0 && menu.tappable === menu.items,
+      menu.tappable + " of " + menu.items + " tappable");
+    check("the overflow menu hangs below the header",
+      menu.top >= menu.navBottom - 2,
+      "menu top " + menu.top + ", header bottom " + menu.navBottom);
+    check("the overflow menu lines up with its button",
+      Math.abs(menu.right - menu.btnRight) <= 24,
+      "menu right " + menu.right + ", button right " + menu.btnRight);
+
     if (d.w === 390) {
       await p.evaluate(() => document.querySelector("#homeLink").click());
       await sleep(700);

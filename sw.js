@@ -17,7 +17,13 @@
  * current device supports.
  */
 
-const VERSION = "v2";
+// Bump this whenever index.html or an icon changes. Navigations are
+// network-first, so an open tab always gets fresh HTML -- but the copy kept for
+// offline use is only rewritten when this worker reinstalls, and the worker
+// only reinstalls when this file's bytes change. Leaving it alone means a
+// phone with no signal keeps showing whichever version it first cached, and
+// the "an update is ready" notice never fires.
+const VERSION = "v3";
 const SHELL_CACHE = "simplifyaa-shell-" + VERSION;
 const DATA_CACHE = "simplifyaa-data-" + VERSION;
 const CDN_CACHE = "simplifyaa-cdn-" + VERSION;
