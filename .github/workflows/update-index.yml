@@ -2,10 +2,25 @@ name: Update PDF index and deploy
 
 on:
   schedule:
-    # Mondays, 07:00 UTC. aa.org changes slowly; weekly is plenty.
-    - cron: "0 7 * * 1"
+    # Every 6 hours (00:00, 06:00, 12:00, 18:00 UTC) -- four checks a day, so a
+    # new document shows up within hours rather than within a week.
+    #
+    # A check is not the same as a full crawl. Each run first asks the sitemap
+    # what changed (three requests) and only crawls if something did, or if the
+    # last full crawl is over --max-age hours old. Four full crawls a day would
+    # be ~86,000 requests against a nonprofit's site for nothing.
+    - cron: "0 */6 * * *"
   workflow_dispatch:
     inputs:
+      force:
+        description: "Crawl even if aa.org looks unchanged"
+        required: false
+        type: boolean
+        default: false
+      max_age_hours:
+        description: "Crawl anyway if the last full crawl is older than this"
+        required: false
+        default: "24"
       depth:
         description: "Extra link-following depth beyond the sitemap"
         required: false
@@ -57,9 +72,18 @@ jobs:
             echo "count=0" >> "$GITHUB_OUTPUT"
           fi
 
+      # Three requests that decide whether the next ~8,000 are worth making.
+      - name: Has aa.org changed?
+        id: gate
+        if: github.event_name != 'push'
+        run: |
+          python tools/should_crawl.py \
+            --max-age "${{ github.event.inputs.max_age_hours || '24' }}" \
+            ${{ github.event.inputs.force == 'true' && '--force' || '' }}
+
       # A plain push to main only redeploys the site; it must not re-crawl.
       - name: Crawl aa.org
-        if: github.event_name != 'push'
+        if: github.event_name != 'push' && steps.gate.outputs.should_crawl == 'true'
         run: |
           python tools/crawl_aa_pdfs.py \
             --max-pages "${{ github.event.inputs.max_pages || '25000' }}" \
@@ -70,12 +94,12 @@ jobs:
       # Allowed to fail without blocking the document index: the previous
       # kits.csv stays valid, and the step shows up red in the run.
       - name: Rebuild service-kit contents
-        if: github.event_name != 'push'
+        if: github.event_name != 'push' && steps.gate.outputs.should_crawl == 'true'
         continue-on-error: true
         run: python tools/build_kits.py
 
       - name: Sanity-check the new index
-        if: github.event_name != 'push'
+        if: github.event_name != 'push' && steps.gate.outputs.should_crawl == 'true'
         run: |
           before=${{ steps.before.outputs.count }}
           after=$(( $(wc -l < data/pdfs.csv) - 1 ))
@@ -91,9 +115,14 @@ jobs:
             exit 1
           fi
 
+      # Records the sitemap fingerprint so the next check can tell nothing moved.
+      - name: Record the crawl fingerprint
+        if: github.event_name != 'push' && steps.gate.outputs.should_crawl == 'true'
+        run: python tools/should_crawl.py --commit
+
       - name: Commit updated index
         id: commit
-        if: github.event_name != 'push'
+        if: github.event_name != 'push' && steps.gate.outputs.should_crawl == 'true'
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
@@ -113,6 +142,14 @@ jobs:
         run: |
           {
             echo "## aa.org PDF index"
+            if [ "${{ github.event_name }}" = "push" ]; then
+              echo "- Redeploy only (triggered by a push); no crawl."
+            elif [ "${{ steps.gate.outputs.should_crawl }}" != "true" ]; then
+              echo "- **Checked, no crawl needed.** ${{ steps.gate.outputs.reason }}"
+              echo "- The figures below are from the last crawl."
+            else
+              echo "- **Crawled.** ${{ steps.gate.outputs.reason }}"
+            fi
             if [ -f data/meta.json ]; then
               python - <<'PY'
           import json
@@ -146,7 +183,7 @@ jobs:
     # This job only applies when Pages is set to "GitHub Actions". If Pages is
     # instead set to "Deploy from a branch", the commit the update job pushed
     # publishes on its own and these steps cannot work -- so a failure here must
-    # not turn the weekly run red. The index update is the part that matters.
+    # not turn the scheduled run red. The index update is the part that matters.
     continue-on-error: true
     environment:
       name: github-pages

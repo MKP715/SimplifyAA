@@ -36,6 +36,7 @@ file on aa.org. All literature remains the copyright of its publisher.
 | `sw.js` | Service worker: offline support and the background check for new documents. A worker has to be its own file. |
 | `site.webmanifest` | Makes it installable as an app. |
 | `data/changes.json` | What each crawl added or removed, newest first — the basis for "new documents" and notifications. |
+| `data/crawl_state.json` | Sitemap fingerprint and last-crawl time, so a check can tell whether a crawl is needed. |
 | `data/pdfs.csv` | The document index. One row per PDF. Regenerated automatically. |
 | `data/meta.json` | Counts and the last-rebuild timestamp, shown in the page footer. |
 | `data/broken_links.csv` | Links aa.org publishes that no longer resolve to a PDF (see below). |
@@ -50,6 +51,7 @@ file on aa.org. All literature remains the copyright of its publisher.
 | `tools/make_favicon.py` | Generates the site icons and web manifest from one original mark. |
 | `tools/audit.js` | Debug audit: dangling references, duplicate ids, accessibility, blocked storage, missing data. |
 | `tools/verify_coverage.py` | Re-fetches aa.org pages to prove no PDF link is missing from the index. |
+| `tools/should_crawl.py` | Decides from the sitemap whether a full crawl is worth running. |
 | `.github/workflows/update-index.yml` | Weekly re-crawl, commit, and Pages deploy. |
 
 The data deliberately lives in CSV rather than inside `index.html`, so the page stays small and the
@@ -224,8 +226,28 @@ inside the PDF preview.
 
 ## How it stays current
 
-`.github/workflows/update-index.yml` runs every Monday (and on demand via **Actions → Run workflow**).
-It re-crawls aa.org, rebuilds the CSV, commits any changes, and redeploys the site. No manual work.
+`.github/workflows/update-index.yml` runs **every 6 hours** — 00:00, 06:00, 12:00 and 18:00 UTC —
+and on demand via **Actions → Run workflow**. A new document therefore appears within hours rather
+than within a week.
+
+A *check* is not a *crawl*, though, and the difference matters. A full crawl is about 5,400 page
+requests plus a HEAD for every document; doing that four times a day would mean roughly 86,000
+requests a day against a nonprofit's website, almost always to discover that nothing changed.
+
+So each run first asks the sitemap what changed, which costs three requests. The sitemap index is no
+use for this — Drupal regenerates it hourly regardless — but every URL entry carries a real content
+timestamp, so a fingerprint over all 4,544 `(url, lastmod)` pairs says whether anything was published
+or edited. A full crawl then runs only when:
+
+- the fingerprint differs from the last crawl, **or**
+- the last full crawl is more than 24 hours old — because aa.org can replace a PDF without touching
+  the page that links it, which no sitemap timestamp would reveal, **or**
+- the sitemap cannot be read at all, in which case it crawls rather than risk going stale, **or**
+- you tick **force** when running it by hand.
+
+The result is four checks a day, changes picked up within hours, a guaranteed full crawl daily, and
+none of the wasted load. `data/crawl_state.json` holds the fingerprint and the last crawl time, and
+the run summary states which path it took.
 
 Two safeguards stop a bad run from replacing a good index:
 
@@ -244,7 +266,7 @@ In **Settings → Pages**, set the source to **GitHub Actions**. That is all; th
 
 > **Worth knowing:** GitHub disables scheduled workflows in a repository that has had no commits for
 > 60 days, and emails the owner first. Because this workflow only commits when aa.org actually changes,
-> a long quiet spell is possible. If the weekly run stops, re-enable it under **Actions** — or just
+> a long quiet spell is possible. If the schedule stops, re-enable it under **Actions** — or just
 > press **Run workflow** occasionally, which resets the clock.
 
 ## Running it yourself
