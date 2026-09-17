@@ -160,6 +160,13 @@
   /* Quietly marks a file aa.org refreshed in the last 30 days. */
   .sa-fresh { color: var(--sa-fresh); font-weight: 600; }
   .sa-star { cursor: pointer; color: #d9a406; }
+  /* Where the keyboard is, when moving with j and k. */
+  .sa-cursor { outline: 2px solid var(--sa-accent); outline-offset: 2px; }
+  /* Honour a system request for less movement. */
+  @media (prefers-reduced-motion: reduce) {
+    * { animation-duration: .001ms !important; animation-iteration-count: 1 !important;
+        transition-duration: .001ms !important; scroll-behavior: auto !important; }
+  }
   /* Compact cards: same information, less vertical space for long lists. */
   .sa-compact .sa-card { padding: .6rem .7rem !important; }
   .sa-compact .sa-card-title { font-size: .88rem; }
@@ -171,6 +178,24 @@
   .sa-skip { position: absolute; left: -9999px; }
   .sa-skip:focus { left: .5rem; top: .5rem; z-index: 2000; background: #fff; padding: .5rem; }
   mark { padding: 0 .1em; background: #ffe8a3; }
+
+  /* Printing a collection should produce a plain list on paper, not a
+     screenshot of an interface. */
+  @media print {
+    .sa-navbar, aside, #resizeHandle, #startHere, #pager, .modal, .toast-container,
+    .sa-card .btn, .sa-card .sa-star, #footerNote, .sa-panel .btn-group,
+    .dropdown, #filterBar, #activeChips { display: none !important; }
+    body { background: #fff; }
+    #layoutRow > #results { width: 100% !important; flex: 1 1 100% !important; }
+    .sa-card, .sa-panel { border: 0 !important; box-shadow: none !important;
+      break-inside: avoid; page-break-inside: avoid; padding: 0 !important; }
+    #cardsWrap { display: block !important; }
+    #cardsWrap > .col { width: 100% !important; max-width: none !important;
+      margin-bottom: .35rem; }
+    .sa-card-title { font-size: 11pt; }
+    .sa-summary { -webkit-line-clamp: unset; display: block; }
+    a[href]::after { content: " (" attr(href) ")"; font-size: 7pt; word-break: break-all; }
+  }
   [data-bs-theme="dark"] mark { background: #6b5514; color: #fff; }
 </style>
 </head>
@@ -248,9 +273,12 @@
           <label for="q" class="form-label fw-semibold small text-uppercase text-body-secondary">Search</label>
           <div class="input-group">
             <span class="input-group-text"><i class="bi bi-search"></i></span>
-            <input id="q" type="search" class="form-control sa-search" placeholder="Title, code, topic…" autocomplete="off">
+            <input id="q" type="search" class="form-control sa-search" placeholder="Title, code, topic…"
+                   autocomplete="off" list="qSuggest" aria-describedby="qHint">
+            <datalist id="qSuggest"></datalist>
           </div>
-          <div class="form-text">Press <kbd>/</kbd> to focus, <kbd>Esc</kbd> to clear.</div>
+          <div class="form-text" id="qHint">Press <kbd>/</kbd> to focus, <kbd>Esc</kbd> to clear,
+            <kbd>?</kbd> for keys.</div>
         </div>
 
         <div class="sa-panel p-3 mb-3">
@@ -258,10 +286,12 @@
           <div class="d-grid gap-1">
             <button class="sa-tree-btn active" data-view="all"><span><i class="bi bi-collection me-1"></i>All documents</span><span class="badge" id="qvAll"></span></button>
             <button class="sa-tree-btn" data-view="recent"><span><i class="bi bi-clock-history me-1"></i>Recently updated</span></button>
-            <button class="sa-tree-btn" data-view="favorites"><span><i class="bi bi-star-fill me-1 sa-star"></i>My favorites</span><span class="badge" id="qvFav">0</span></button>
+            <button class="sa-tree-btn" data-view="favorites"><span><i class="bi bi-star-fill me-1 sa-star"></i><span id="qvFavLabel">My favorites</span></span><span class="badge" id="qvFav">0</span></button>
+            <button class="sa-tree-btn" data-bs-toggle="modal" data-bs-target="#collectionsModal"><span><i class="bi bi-collection me-1"></i>Collections…</span><span class="badge" id="qvCols"></span></button>
             <button class="sa-tree-btn" data-view="large"><span><i class="bi bi-file-earmark-text me-1"></i>Full books &amp; reports</span></button>
             <button class="sa-tree-btn" data-view="kits"><span><i class="bi bi-box2-heart me-1"></i>Service kits</span><span class="badge" id="qvKits"></span></button>
             <button class="sa-tree-btn d-none" data-view="new"><span><i class="bi bi-stars me-1"></i>New documents</span><span class="badge" id="qvNew"></span></button>
+            <button class="sa-tree-btn d-none" data-view="recent-opened"><span><i class="bi bi-clock me-1"></i>Recently opened</span><span class="badge" id="qvOpened"></span></button>
           </div>
         </div>
 
@@ -614,6 +644,99 @@
   </div>
 </div>
 
+<!-- collections -->
+<div class="modal fade" id="collectionsModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div>
+          <h5 class="modal-title">Collections</h5>
+          <div class="small text-body-secondary">
+            Named lists of documents — a packet for a new G.S.R., the reading for a
+            workshop — that you can share with a link.
+          </div>
+        </div>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div id="sharedBanner" class="alert alert-primary small d-none">
+          <div class="fw-semibold mb-1" id="sharedName"></div>
+          <div class="mb-2" id="sharedCount"></div>
+          <button class="btn btn-sm btn-primary" id="sharedSave">
+            <i class="bi bi-download me-1"></i>Save to my collections
+          </button>
+          <button class="btn btn-sm btn-outline-secondary" id="sharedDismiss">Dismiss</button>
+        </div>
+
+        <div class="fw-semibold small text-uppercase text-body-secondary mb-2">
+          Your collections
+        </div>
+        <div id="collectionList" class="mb-3"></div>
+
+        <div class="input-group input-group-sm mb-4">
+          <input class="form-control" id="newCollectionName" maxlength="60"
+                 placeholder="Name a new collection" aria-label="Name a new collection">
+          <button class="btn btn-outline-secondary" id="newCollectionAdd">
+            <i class="bi bi-plus-lg me-1"></i>Create
+          </button>
+        </div>
+
+        <div class="fw-semibold small text-uppercase text-body-secondary mb-2">
+          Share or keep a copy
+        </div>
+        <p class="small text-body-secondary">
+          A share link carries the whole list inside the link itself, so anyone can open
+          it without an account and nothing is stored on a server. Long lists make long
+          links; the export file has no size limit.
+        </p>
+        <div class="d-flex flex-wrap gap-2">
+          <button class="btn btn-sm btn-primary" id="colShare">
+            <i class="bi bi-link-45deg me-1"></i>Copy share link
+          </button>
+          <button class="btn btn-sm btn-outline-secondary" id="colExport">
+            <i class="bi bi-file-earmark-arrow-down me-1"></i>Export file
+          </button>
+          <button class="btn btn-sm btn-outline-secondary" id="colImportBtn">
+            <i class="bi bi-file-earmark-arrow-up me-1"></i>Import file
+          </button>
+          <input type="file" id="colImport" accept=".json,application/json" class="d-none"
+                 aria-label="Choose a collection file to import">
+          <button class="btn btn-sm btn-outline-secondary" id="colPrint">
+            <i class="bi bi-printer me-1"></i>Print list
+          </button>
+        </div>
+        <div class="small text-body-secondary mt-2" id="colShareNote"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- keyboard shortcuts -->
+<div class="modal fade" id="keysModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Keyboard shortcuts</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <table class="table table-sm align-middle mb-0">
+          <tbody>
+            <tr><td><kbd>/</kbd></td><td>Jump to the search box</td></tr>
+            <tr><td><kbd>Esc</kbd></td><td>Clear the search</td></tr>
+            <tr><td><kbd>j</kbd> <kbd>k</kbd></td><td>Move down and up the results</td></tr>
+            <tr><td><kbd>Enter</kbd></td><td>Open the highlighted document</td></tr>
+            <tr><td><kbd>p</kbd></td><td>Preview the highlighted document</td></tr>
+            <tr><td><kbd>f</kbd></td><td>Star or unstar it</td></tr>
+            <tr><td><kbd>g</kbd></td><td>Back to all documents</td></tr>
+            <tr><td><kbd>?</kbd></td><td>This list</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- notifications -->
 <div class="modal fade" id="notifyModal" tabindex="-1" aria-hidden="true">
   <div class="modal-dialog modal-lg modal-dialog-scrollable">
@@ -640,6 +763,22 @@
         <div class="alert alert-secondary small" id="notifyStatus"></div>
         <div class="fw-semibold small text-uppercase text-body-secondary mb-2">History</div>
         <div id="notifyList"></div>
+
+        <hr class="my-4">
+        <div class="d-flex justify-content-between align-items-center mb-2">
+          <span class="fw-semibold small text-uppercase text-body-secondary">
+            Change history on aa.org
+          </span>
+          <button class="btn btn-sm btn-link p-0 text-decoration-none" type="button"
+                  data-bs-toggle="collapse" data-bs-target="#timelineWrap">show / hide</button>
+        </div>
+        <div class="collapse" id="timelineWrap">
+          <p class="small text-body-secondary">
+            Every check that found something, newest first. This is the record the
+            notifications are drawn from.
+          </p>
+          <div id="timeline"></div>
+        </div>
       </div>
     </div>
   </div>
@@ -670,6 +809,19 @@
           <label for="previewHeight" class="form-label small mb-0">Height</label>
           <input type="range" class="form-range" id="previewHeight" min="40" max="92" step="4" style="max-width:260px">
           <span class="small text-body-secondary" id="previewHeightVal"></span>
+        </div>
+
+        <hr class="my-4">
+        <h6>Text size</h6>
+        <p class="small text-body-secondary mb-2">
+          Scales the whole interface. Useful on a small screen, or if the default is
+          simply too small to read comfortably.
+        </p>
+        <div class="btn-group btn-group-sm w-100 mb-1" role="group" id="textSizeGroup">
+          <button class="btn btn-outline-secondary" data-textsize="0.9">Small</button>
+          <button class="btn btn-outline-secondary" data-textsize="1">Normal</button>
+          <button class="btn btn-outline-secondary" data-textsize="1.15">Large</button>
+          <button class="btn btn-outline-secondary" data-textsize="1.3">Larger</button>
         </div>
 
         <hr class="my-4">
@@ -908,6 +1060,11 @@
   async function setUiLang(lang, save) {
     uiLang = UI_LANGS[lang] ? lang : "en";
     document.documentElement.setAttribute("lang", uiLang);
+    // Reflect the choice in the control straight away. Waiting until after the
+    // translation file has downloaded leaves the selector contradicting the
+    // page for a second or two.
+    const selEarly = $("#uiLangSel");
+    if (selEarly) selEarly.value = uiLang;
     if (uiLang !== "en" && !I18N_ALL) {
       try {
         const res = await fetch("./data/i18n.json?cb=" + Date.now());
@@ -929,8 +1086,6 @@
       render();
     }
     translateDom(document.body);
-    const sel = $("#uiLangSel");
-    if (sel) sel.value = uiLang;
   }
 
   // Offer the reader's own language the first time, without overriding a choice.
@@ -973,17 +1128,243 @@
   });
 
   /* ------------------------------ favorites ------------------------------ */
-  favorites = new Set(safeLS(
-    () => JSON.parse(localStorage.getItem(LS.fav) || "[]"), []) || []);
+  // The star acts on whichever collection is active, so switching collection
+  // switches what starring means. Kept as a Set for the hot path.
+  //
+  // Loading happens in boot(), not here: the collection state is declared
+  // further down the file, so touching it at this point would hit its
+  // temporal dead zone.
+  favorites = new Set();
+
   function saveFavorites() {
-    safeLS(() => localStorage.setItem(LS.fav, JSON.stringify([...favorites])));
+    COLLECTIONS.lists[COLLECTIONS.active] = [...favorites];
+    saveCollections();
     $("#qvFav").textContent = favorites.size;
+    const label = $("#qvFavLabel");
+    if (label) label.textContent = COLLECTIONS.active;
+    const cols = $("#qvCols");
+    if (cols) cols.textContent = Object.keys(COLLECTIONS.lists).length;
+  }
+
+  function setActiveCollection(name) {
+    if (!COLLECTIONS.lists[name]) return;
+    COLLECTIONS.active = name;
+    favorites = new Set(activeList());
+    saveCollections();
+    saveFavorites();
+    renderCollections();
+    render();
   }
   function toggleFavorite(url) {
     if (favorites.has(url)) { favorites.delete(url); toast("Removed from favorites"); }
     else { favorites.add(url); toast("Saved to favorites"); }
     saveFavorites();
     render();
+  }
+
+  /* --------------------- collections: interface + sharing ----------------- */
+  function renderCollections() {
+    const wrap = $("#collectionList");
+    if (!wrap) return;
+    const names = Object.keys(COLLECTIONS.lists).sort((a, b) => a.localeCompare(b));
+    wrap.innerHTML = names.map((name) => {
+      const n = (COLLECTIONS.lists[name] || []).length;
+      const on = name === COLLECTIONS.active;
+      return '<div class="d-flex align-items-center gap-2 py-1">' +
+        '<input class="form-check-input mt-0" type="radio" name="activeCol"' +
+          (on ? " checked" : "") + ' data-col-active="' + esc(name) +
+          '" aria-label="' + esc(t("Use this collection")) + '">' +
+        '<span class="flex-grow-1 small' + (on ? " fw-semibold" : "") + '">' +
+          esc(name) + ' <span class="sa-meta">' + n + "</span></span>" +
+        '<button class="btn btn-sm btn-link p-0 px-1 text-decoration-none" ' +
+          'data-col-rename="' + esc(name) + '" title="' + esc(t("Rename")) +
+          '"><i class="bi bi-pencil"></i></button>' +
+        (names.length > 1
+          ? '<button class="btn btn-sm btn-link p-0 px-1 text-decoration-none text-danger" ' +
+            'data-col-delete="' + esc(name) + '" title="' + esc(t("Delete")) +
+            '"><i class="bi bi-trash3"></i></button>'
+          : "") +
+      "</div>";
+    }).join("");
+    const note = $("#colShareNote");
+    if (note) {
+      const n = activeList().length;
+      note.textContent = n
+        ? t("Sharing") + ' "' + COLLECTIONS.active + '" — ' + n + " " +
+          t(n === 1 ? "document" : "documents")
+        : t("This collection is empty. Star some documents first.");
+    }
+    translateDom($("#collectionsModal"));
+  }
+
+  const colModalEl = $("#collectionsModal");
+  if (colModalEl) {
+    colModalEl.addEventListener("show.bs.modal", renderCollections);
+  }
+
+  document.addEventListener("click", (e) => {
+    const use = e.target.closest("[data-col-active]");
+    if (use) { setActiveCollection(use.dataset.colActive); return; }
+
+    const ren = e.target.closest("[data-col-rename]");
+    if (ren) {
+      const from = ren.dataset.colRename;
+      const to = (prompt(t("New name for this collection"), from) || "").trim().slice(0, 60);
+      if (!to || to === from) return;
+      if (COLLECTIONS.lists[to]) { toast("A collection with that name already exists"); return; }
+      COLLECTIONS.lists[to] = COLLECTIONS.lists[from];
+      delete COLLECTIONS.lists[from];
+      if (COLLECTIONS.active === from) COLLECTIONS.active = to;
+      saveCollections(); saveFavorites(); renderCollections(); render();
+      return;
+    }
+
+    const del = e.target.closest("[data-col-delete]");
+    if (del) {
+      const name = del.dataset.colDelete;
+      const n = (COLLECTIONS.lists[name] || []).length;
+      if (n && !confirm(t("Delete") + ' "' + name + '"? ' +
+          n + " " + t("starred documents will be forgotten."))) return;
+      delete COLLECTIONS.lists[name];
+      if (COLLECTIONS.active === name) {
+        COLLECTIONS.active = Object.keys(COLLECTIONS.lists)[0];
+        favorites = new Set(activeList());
+      }
+      saveCollections(); saveFavorites(); renderCollections(); render();
+      toast("Collection deleted");
+    }
+  });
+
+  const addCol = $("#newCollectionAdd");
+  if (addCol) {
+    addCol.addEventListener("click", () => {
+      const input = $("#newCollectionName");
+      const name = (input.value || "").trim().slice(0, 60);
+      if (!name) return;
+      if (COLLECTIONS.lists[name]) { toast("A collection with that name already exists"); return; }
+      COLLECTIONS.lists[name] = [];
+      input.value = "";
+      setActiveCollection(name);
+      toast("Collection created");
+    });
+  }
+
+  const shareBtn = $("#colShare");
+  if (shareBtn) {
+    shareBtn.addEventListener("click", async () => {
+      const urls = activeList();
+      if (!urls.length) { toast("This collection is empty. Star some documents first."); return; }
+      const packed = await packCollection(COLLECTIONS.active, urls);
+      const link = location.origin + location.pathname + "#col=" + packed;
+      const copied = await (navigator.clipboard
+        ? navigator.clipboard.writeText(link).then(() => true, () => false)
+        : Promise.resolve(false));
+      // A very long list makes a link some clients will wrap or truncate.
+      if (link.length > 8000) {
+        toast("Link copied, but it is very long - the export file may travel better");
+      } else {
+        toast(copied ? "Share link copied" : link);
+      }
+    });
+  }
+
+  const exportBtn2 = $("#colExport");
+  if (exportBtn2) {
+    exportBtn2.addEventListener("click", () => {
+      const payload = {
+        kind: "simplifyaa.collection", version: 1,
+        name: COLLECTIONS.active,
+        exported: new Date().toISOString(),
+        documents: activeList().map((u) => {
+          const row = ROWS.find((r) => r.url === u);
+          return row
+            ? { url: u, title: row.title, item_code: row.item_code, language: row.language }
+            : { url: u };
+        }),
+      };
+      const blob = new Blob([JSON.stringify(payload, null, 2)],
+        { type: "application/json" });
+      const a = el("a");
+      a.href = URL.createObjectURL(blob);
+      a.download = "simplifyaa-" +
+        COLLECTIONS.active.toLowerCase().replace(/[^a-z0-9]+/g, "-") + ".json";
+      a.click();
+      URL.revokeObjectURL(a.href);
+      toast("Collection exported");
+    });
+  }
+
+  if ($("#colImportBtn")) {
+    $("#colImportBtn").addEventListener("click", () => $("#colImport").click());
+    $("#colImport").addEventListener("change", (e) => {
+      const file = e.target.files && e.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = () => {
+        try {
+          const obj = JSON.parse(String(reader.result));
+          const docs = Array.isArray(obj.documents) ? obj.documents : [];
+          const urls = docs.map((d) => (typeof d === "string" ? d : d.url)).filter(Boolean);
+          if (!urls.length) { toast("That file has no documents in it"); return; }
+          let name = String(obj.name || "Imported").slice(0, 60);
+          while (COLLECTIONS.lists[name]) name = name + " (2)";
+          COLLECTIONS.lists[name] = urls;
+          setActiveCollection(name);
+          toast(urls.length + " documents imported");
+        } catch (err) {
+          toast("That file could not be read");
+        }
+      };
+      reader.readAsText(file);
+      e.target.value = "";
+    });
+  }
+
+  if ($("#colPrint")) {
+    $("#colPrint").addEventListener("click", () => {
+      if (!activeList().length) { toast("This collection is empty. Star some documents first."); return; }
+      bootstrap.Modal.getOrCreateInstance(colModalEl).hide();
+      state.view = "favorites";
+      state.page = 1;
+      state.pageSize = 0;            // one page, so printing gets the whole list
+      sync();
+      setTimeout(() => window.print(), 600);
+    });
+  }
+
+  /* ---- arriving on a shared link ---- */
+  async function handleSharedCollection(packed) {
+    const parsed = await unpackCollection(packed);
+    if (!parsed) { toast("That shared link could not be read"); return; }
+    SHARED_INCOMING = parsed;
+    const banner = $("#sharedBanner");
+    if (banner) {
+      banner.classList.remove("d-none");
+      $("#sharedName").textContent = parsed.name;
+      $("#sharedCount").textContent = parsed.urls.length + " " +
+        t(parsed.urls.length === 1 ? "document" : "documents") + " — " +
+        t("not saved until you choose to");
+    }
+    bootstrap.Modal.getOrCreateInstance(colModalEl).show();
+  }
+
+  if ($("#sharedSave")) {
+    $("#sharedSave").addEventListener("click", () => {
+      if (!SHARED_INCOMING) return;
+      let name = SHARED_INCOMING.name || "Shared collection";
+      while (COLLECTIONS.lists[name]) name = name + " (2)";
+      COLLECTIONS.lists[name] = SHARED_INCOMING.urls.slice();
+      setActiveCollection(name);
+      $("#sharedBanner").classList.add("d-none");
+      SHARED_INCOMING = null;
+      toast("Saved to your collections");
+    });
+  }
+  if ($("#sharedDismiss")) {
+    $("#sharedDismiss").addEventListener("click", () => {
+      SHARED_INCOMING = null;
+      $("#sharedBanner").classList.add("d-none");
+    });
   }
 
   /* ------------------------------ URL state ------------------------------ */
@@ -1147,16 +1528,50 @@
            kit.editions[Object.keys(kit.editions)[0]];
   }
 
-  function kitItemRow(code) {
+  /* ---- assembling a kit: tick items off as you gather them ---- */
+  const KIT_PROGRESS_KEY = "simplifyaa.kitProgress";
+  let KIT_PROGRESS = safeLS(
+    () => JSON.parse(localStorage.getItem(KIT_PROGRESS_KEY) || "{}"), {}) || {};
+
+  const kitChecked = (kitKey, code) =>
+    !!(KIT_PROGRESS[kitKey] && KIT_PROGRESS[kitKey].indexOf(code) !== -1);
+
+  function kitToggle(kitKey, code) {
+    const list = KIT_PROGRESS[kitKey] || [];
+    const at = list.indexOf(code);
+    if (at === -1) list.push(code);
+    else list.splice(at, 1);
+    KIT_PROGRESS[kitKey] = list;
+    if (!list.length) delete KIT_PROGRESS[kitKey];
+    safeLS(() => localStorage.setItem(KIT_PROGRESS_KEY, JSON.stringify(KIT_PROGRESS)));
+  }
+
+  const kitGathered = (kitKey, items) =>
+    items.filter((c) => kitChecked(kitKey, c)).length;
+
+  function kitTick(kitKey, code) {
+    if (!kitKey) return "";
+    const on = kitChecked(kitKey, code);
+    return '<input class="form-check-input mt-0 flex-shrink-0" type="checkbox"' +
+      (on ? " checked" : "") + ' data-kit-check="' + esc(code) +
+      '" data-kit-key="' + esc(kitKey) + '" aria-label="' +
+      esc(t("Gathered")) + '">';
+  }
+
+  function kitItemRow(code, kitKey) {
     const doc = docForCode(code);
+    const done = kitKey && kitChecked(kitKey, code);
+    const dim = done ? " opacity-50" : "";
     if (!doc) {
       // The kit list names it, but aa.org publishes no PDF for it.
-      return '<li class="list-group-item bg-transparent d-flex align-items-center gap-2 py-1 px-2">' +
+      return '<li class="list-group-item bg-transparent d-flex align-items-center gap-2 py-1 px-2' +
+        dim + '">' + kitTick(kitKey, code) +
         codeBadge(code, code, "opacity-50") +
         '<span class="small text-body-secondary fst-italic">not published as a PDF ' +
         "&mdash; print item</span></li>";
     }
-    return '<li class="list-group-item bg-transparent d-flex align-items-center gap-2 py-1 px-2 flex-wrap">' +
+    return '<li class="list-group-item bg-transparent d-flex align-items-center gap-2 py-1 px-2 flex-wrap' +
+      dim + '">' + kitTick(kitKey, code) +
       codeBadge(doc.item_code || code, doc.base_code || code) +
       '<a class="small fw-semibold text-decoration-none flex-grow-1" href="' + esc(doc.url) +
         '" target="_blank" rel="noopener"' + langAttr(doc) + ">" + esc(doc.title) + "</a>" +
@@ -1216,6 +1631,7 @@
       const ed = kitEdition(kit);
       const items = ed.items;
       const available = items.filter((c) => docForCode(c)).length;
+      const gathered = kitGathered(kit.key, items);
       const id = "kit" + i;
       const langChips = ["English", "Spanish", "French"]
         .filter((l) => kit.editions[l])
@@ -1243,7 +1659,7 @@
               '<i class="bi bi-' + g.icon + ' me-1"></i>' + esc(g.label) +
               ' <span class="opacity-50">' + codes.length + "</span></div>" +
             '<ul class="list-group list-group-flush">' +
-              codes.map(kitItemRow).join("") +
+              codes.map((c) => kitItemRow(c, kit.key)).join("") +
             "</ul>" +
           "</div>";
       });
@@ -1258,7 +1674,11 @@
               (kit.base_code ? codeBadge(kit.base_code, kit.base_code) : "") +
               '<span class="fw-semibold">' + esc(kit.name) + "</span>" +
               '<span class="sa-meta">' + items.length + " " + t("items") +
-                " &middot; " + available + " " + t("as PDF") + "</span>" +
+                " &middot; " + available + " " + t("as PDF") +
+                (gathered
+                  ? ' &middot; <span class="sa-fresh">' + gathered + " " + t("gathered") +
+                    "</span>"
+                  : "") + "</span>" +
             "</span>" +
           "</button></h2>" +
           '<div id="' + id + '" class="accordion-collapse collapse' + (isOpen ? " show" : "") +
@@ -1269,8 +1689,17 @@
                   'rel="noopener"><i class="bi bi-list-check me-1"></i>Official kit list (PDF)</a>' +
                 '<button class="btn btn-sm btn-outline-secondary" data-preview="' + esc(ed.url) +
                   '"><i class="bi bi-eye me-1"></i>Preview list</button>' +
+                (gathered
+                  ? '<button class="btn btn-sm btn-outline-secondary" data-kit-clear="' +
+                    esc(kit.key) + '"><i class="bi bi-arrow-counterclockwise me-1"></i>' +
+                    esc(t("Clear ticks")) + "</button>"
+                  : "") +
                 '<span class="sa-meta ms-1"><i class="bi bi-translate me-1"></i>' + langChips + "</span>" +
               "</div>" +
+              '<p class="small text-body-secondary">' +
+                esc(t("Tick items off as you gather them; this device remembers.")) +
+                (gathered ? " <strong>" + gathered + " / " + items.length + "</strong>" : "") +
+              "</p>" +
               body +
             "</div>" +
           "</div>" +
@@ -1298,7 +1727,8 @@
             ' <span class="opacity-50">' + orphans.length + "</span></div>" +
           '<p class="small text-body-secondary mb-2">These committees have a workbook, but aa.org ' +
             "publishes no contents list for a matching kit.</p>" +
-          '<ul class="list-group list-group-flush">' + orphans.map(kitItemRow).join("") + "</ul>" +
+          '<ul class="list-group list-group-flush">' +
+            orphans.map((c) => kitItemRow(c, "")).join("") + "</ul>" +
         "</div>";
     }
     wrap.innerHTML = html;
@@ -1466,7 +1896,17 @@
 
     if (state.view === "favorites") rows = rows.filter((r) => favorites.has(r.url));
     if (state.view === "large") rows = rows.filter((r) => (+r.bytes || 0) > 1.5e6);
-    if (state.view === "new") rows = rows.filter((r) => NEW_URLS.has(r.url));
+    if (state.view === "recent-opened") {
+      const order = new Map(OPENED.map((u, i) => [u, i]));
+      rows = rows.filter((r) => order.has(r.url))
+        .sort((a, b) => order.get(a.url) - order.get(b.url));
+      FILTERED_RAW = rows.length;
+      FILTERED = rows;
+      return;
+    }
+    if (state.view === "new") {
+      rows = rows.filter((r) => NEW_URLS.has(r.url) || REVISED_URLS.has(r.url));
+    }
     if (state.section) rows = rows.filter((r) => r.section === state.section);
     if (state.category) rows = rows.filter((r) => r.category === state.category);
     if (state.language) rows = rows.filter((r) => r.language === state.language);
@@ -1652,6 +2092,11 @@
     // Language is shown by the edition chips when translations exist.
     if (row.language && (row._langs || []).length < 2) bits.push(esc(t(row.language)));
     if (row.year) bits.push(esc(row.year));
+    if (REVISED_URLS.has(row.url)) {
+      bits.push('<span class="sa-fresh">' + esc(t("revised")) + "</span>");
+    } else if (NEW_URLS.has(row.url)) {
+      bits.push('<span class="sa-fresh">' + esc(t("new")) + "</span>");
+    }
 
     col.innerHTML =
       '<div class="sa-card p-3 d-flex flex-column">' +
@@ -1830,7 +2275,8 @@
     if (state.view !== "all") chips.push([
       { recent: "Recently updated", favorites: "My favorites",
         large: "Full books & reports", kits: "Service kits",
-        new: "New since your last visit" }[state.view],
+        new: "New since your last visit",
+        "recent-opened": "Recently opened" }[state.view],
       () => { state.view = "all"; }]);
     if (state.section) chips.push(["Section: " + state.section, () => { state.section = ""; }]);
     if (state.category) chips.push(["Category: " + state.category, () => { state.category = ""; }]);
@@ -1952,7 +2398,8 @@
     $("#resultHeading").textContent =
       state.category || state.section ||
       { recent: "Recently updated", favorites: "My favorites",
-        large: "Full books & reports", new: "New since your last visit" }[state.view] ||
+        large: "Full books & reports", new: "New since your last visit",
+        "recent-opened": "Recently opened" }[state.view] ||
       "All documents";
     const folded = state.fold && total !== FILTERED_RAW;
     $("#resultCount").textContent = total.toLocaleString() + " " +
@@ -1978,6 +2425,7 @@
     renderPager(total);
     renderChips();
     syncControlStates();
+    cursor = -1;
     translateDom($("#results"));
     translateDom($("#layoutRow"));
   }
@@ -2033,7 +2481,7 @@
       sortField: "last_modified", sortDir: "desc",
       // Layout choices belong to the device, not to a shared link.
       sidebarWidth: 0, cols: "", density: "comfortable", pageSize: 48,
-      fold: false, uiLang: "" },
+      fold: false, uiLang: "", textSize: 1 },
     safeLS(() => JSON.parse(localStorage.getItem(LS.settings) || "{}"), {}) || {}
   );
   function saveSettings() {
@@ -2344,6 +2792,7 @@
       state.sortField = "last_modified";
       state.sortDir = "desc";
       settings.sidebarWidth = 0; settings.cols = ""; settings.fold = false;
+      settings.textSize = 1; applyTextSize();
       state.fold = false;
       settings.density = "comfortable"; settings.pageSize = 48;
       state.cols = ""; state.density = "comfortable"; state.pageSize = 48;
@@ -2381,12 +2830,57 @@
     sync();
   }
 
+  function refreshSuggestions(term) {
+    const list = $("#qSuggest");
+    if (!list) return;
+    const q = term.trim();
+    if (q.length < 2 || !FUSE) { list.innerHTML = ""; return; }
+    const seen = new Set();
+    const opts = FUSE.search(q, { limit: 12 }).map((m) => m.item)
+      .map((r) => (r.item_code ? r.item_code + " — " : "") + r.title)
+      .filter((label) => !seen.has(label) && seen.add(label))
+      .slice(0, 8);
+    list.innerHTML = opts.map((o) => '<option value="' + esc(o) + '"></option>').join("");
+  }
+
   $("#q").addEventListener("input", (e) => {
     clearTimeout(qTimer);
     const v = e.target.value;
+    refreshSuggestions(v);
     qTimer = setTimeout(() => applyQuery(v), 140);
   });
+  // Single-key shortcuts must never fire while someone is typing, and never
+  // steal a browser or screen-reader combination.
+  const typing = () => {
+    const el = document.activeElement;
+    if (!el) return false;
+    return /^(INPUT|TEXTAREA|SELECT)$/.test(el.tagName) || el.isContentEditable;
+  };
+  const modified = (e) => e.ctrlKey || e.metaKey || e.altKey;
+
   document.addEventListener("keydown", (e) => {
+    if (!typing() && !modified(e) && state.mode === "cards" && state.view !== "kits") {
+      if (e.key === "j" || e.key === "ArrowDown") { moveCursor(1); e.preventDefault(); return; }
+      if (e.key === "k" || e.key === "ArrowUp") { moveCursor(-1); e.preventDefault(); return; }
+      if (cursor >= 0 && (e.key === "Enter" || e.key === "p" || e.key === "f")) {
+        const row = cursorRow();
+        if (row) {
+          if (e.key === "Enter") { window.open(row.url, "_blank", "noopener"); noteOpened(row.url); }
+          else if (e.key === "p") openPreview(row);
+          else toggleFavorite(row.url);
+          e.preventDefault();
+          return;
+        }
+      }
+    }
+    if (!typing() && !modified(e) && e.key === "g") {
+      resetAllFilters(true); e.preventDefault(); return;
+    }
+    if (!typing() && e.key === "?") {
+      bootstrap.Modal.getOrCreateInstance($("#keysModal")).show();
+      e.preventDefault();
+      return;
+    }
     if (e.key === "/" && document.activeElement.tagName !== "INPUT") { e.preventDefault(); $("#q").focus(); }
     if (e.key === "Escape" && document.activeElement === $("#q")) {
       $("#q").value = "";
@@ -2513,6 +3007,39 @@
       stateToHash();
       return;
     }
+    const tick = e.target.closest("[data-kit-check]");
+    if (tick) {
+      // Re-rendering the whole accordion here would collapse it under the
+      // reader's finger, so only this row and the header count are touched.
+      kitToggle(tick.dataset.kitKey, tick.dataset.kitCheck);
+      const row = tick.closest("li");
+      if (row) row.classList.toggle("opacity-50", tick.checked);
+      const item = tick.closest(".accordion-item");
+      const kit = KITS.get(tick.dataset.kitKey);
+      if (item && kit) {
+        const items = kitEdition(kit).items;
+        const done = kitGathered(kit.key, items);
+        const meta = item.querySelector(".accordion-button .sa-meta");
+        if (meta) {
+          const base = meta.textContent.split("·").slice(0, 2).join("·").trim();
+          meta.innerHTML = esc(base) +
+            (done ? ' &middot; <span class="sa-fresh">' + done + " " +
+              esc(t("gathered")) + "</span>" : "");
+        }
+        const prog = item.querySelector(".accordion-body p.small strong");
+        if (prog) prog.textContent = done + " / " + items.length;
+      }
+      return;
+    }
+    const clearKit = e.target.closest("[data-kit-clear]");
+    if (clearKit) {
+      delete KIT_PROGRESS[clearKit.dataset.kitClear];
+      safeLS(() => localStorage.setItem(KIT_PROGRESS_KEY, JSON.stringify(KIT_PROGRESS)));
+      state.openKit = clearKit.dataset.kitClear;
+      render();
+      toast("Ticks cleared");
+      return;
+    }
     const fav = e.target.closest("[data-fav]");
     if (fav) { toggleFavorite(fav.dataset.fav); return; }
     const prev = e.target.closest("[data-preview]");
@@ -2520,6 +3047,10 @@
       const row = ROWS.find((r) => r.url === prev.dataset.preview);
       if (row) openPreview(row);
       return;
+    }
+    const opened = e.target.closest('a[target="_blank"][href]');
+    if (opened && /\.pdf($|\?)/i.test(opened.getAttribute("href") || "")) {
+      noteOpened(opened.getAttribute("href"));
     }
     const copy = e.target.closest("[data-copy]");
     if (copy) {
@@ -2559,6 +3090,169 @@
     state.page = 1;
     render();
   });
+
+  /* ------------------------------ collections ----------------------------- */
+  // A single starred list is not enough for service work: someone assembling a
+  // packet for a new G.S.R. wants that list kept apart from their own reading.
+  // Collections are named lists, and because there is no server, a share link
+  // carries the whole list inside the fragment.
+  const COLLECTIONS_KEY = "simplifyaa.collections";
+  const DEFAULT_COLLECTION = "My favorites";
+  let COLLECTIONS = { active: DEFAULT_COLLECTION, lists: {} };
+  let SHARED_INCOMING = null;
+
+  function loadCollections() {
+    const saved = safeLS(
+      () => JSON.parse(localStorage.getItem(COLLECTIONS_KEY) || "null"), null);
+    if (saved && saved.lists) {
+      COLLECTIONS = saved;
+    } else {
+      // Carry over whatever was starred before collections existed.
+      const old = safeLS(() => JSON.parse(localStorage.getItem(LS.fav) || "[]"), []) || [];
+      COLLECTIONS = { active: DEFAULT_COLLECTION, lists: {} };
+      COLLECTIONS.lists[DEFAULT_COLLECTION] = old;
+    }
+    if (!COLLECTIONS.lists[COLLECTIONS.active]) {
+      COLLECTIONS.active = Object.keys(COLLECTIONS.lists)[0] || DEFAULT_COLLECTION;
+      if (!COLLECTIONS.lists[COLLECTIONS.active]) COLLECTIONS.lists[COLLECTIONS.active] = [];
+    }
+  }
+
+  function saveCollections() {
+    safeLS(() => localStorage.setItem(COLLECTIONS_KEY, JSON.stringify(COLLECTIONS)));
+  }
+
+  const activeList = () => COLLECTIONS.lists[COLLECTIONS.active] || [];
+
+  /* ---- share links: the list travels inside the URL ---- */
+  // aa.org URLs share long prefixes, so they are tokenised before compressing.
+  const URL_PREFIXES = [
+    ["1", "https://www.aa.org/sites/default/files/"],
+    ["2", "https://aaws.widen.net/content/"],
+    ["3", "https://www.aagrapevine.org/sites/default/files/"],
+    ["4", "https://www.aa.org/"],
+  ];
+  const shrinkUrl = (u) => {
+    for (const [tok, pre] of URL_PREFIXES) if (u.startsWith(pre)) return tok + "|" + u.slice(pre.length);
+    return "0|" + u;
+  };
+  const growUrl = (s) => {
+    const at = s.indexOf("|");
+    if (at === -1) return s;
+    const tok = s.slice(0, at), rest = s.slice(at + 1);
+    const hit = URL_PREFIXES.find(([t]) => t === tok);
+    return hit ? hit[1] + rest : rest;
+  };
+
+  const b64url = (bytes) => {
+    let str = "";
+    bytes.forEach((b) => { str += String.fromCharCode(b); });
+    return btoa(str).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "");
+  };
+  const unb64url = (s) => {
+    const pad = s.replace(/-/g, "+").replace(/_/g, "/");
+    const raw = atob(pad + "===".slice((pad.length + 3) % 4));
+    return Uint8Array.from(raw, (c) => c.charCodeAt(0));
+  };
+
+  async function packCollection(name, urls) {
+    const payload = JSON.stringify({ n: name, u: urls.map(shrinkUrl) });
+    const bytes = new TextEncoder().encode(payload);
+    if (typeof CompressionStream === "function") {
+      try {
+        const stream = new Blob([bytes]).stream()
+          .pipeThrough(new CompressionStream("deflate-raw"));
+        const out = new Uint8Array(await new Response(stream).arrayBuffer());
+        return "z" + b64url(out);
+      } catch (e) { /* fall through to uncompressed */ }
+    }
+    return "p" + b64url(bytes);
+  }
+
+  async function unpackCollection(str) {
+    try {
+      const kind = str[0];
+      const bytes = unb64url(str.slice(1));
+      let text;
+      if (kind === "z") {
+        if (typeof DecompressionStream !== "function") return null;
+        const stream = new Blob([bytes]).stream()
+          .pipeThrough(new DecompressionStream("deflate-raw"));
+        text = await new Response(stream).text();
+      } else {
+        text = new TextDecoder().decode(bytes);
+      }
+      const obj = JSON.parse(text);
+      if (!obj || !Array.isArray(obj.u)) return null;
+      return { name: String(obj.n || "Shared collection").slice(0, 60),
+               urls: obj.u.map(growUrl) };
+    } catch (e) {
+      return null;
+    }
+  }
+
+  /* ------------------------ recently opened documents --------------------- */
+  // Members come back to the same handful of documents, so keep a short trail.
+  const OPENED_KEY = "simplifyaa.opened";
+  const OPENED_MAX = 40;
+  let OPENED = safeLS(
+    () => JSON.parse(localStorage.getItem(OPENED_KEY) || "[]"), []) || [];
+
+  function noteOpened(url) {
+    if (!url) return;
+    OPENED = [url].concat(OPENED.filter((u) => u !== url)).slice(0, OPENED_MAX);
+    safeLS(() => localStorage.setItem(OPENED_KEY, JSON.stringify(OPENED)));
+    const btn = document.querySelector('[data-view="recent-opened"]');
+    if (btn) btn.classList.toggle("d-none", OPENED.length === 0);
+    const badge = $("#qvOpened");
+    if (badge) badge.textContent = OPENED.length || "";
+  }
+
+  /* ----------------------------- text size -------------------------------- */
+  function applyTextSize() {
+    const scale = +settings.textSize || 1;
+    document.documentElement.style.fontSize = (scale === 1 ? "" : (scale * 100) + "%");
+    document.querySelectorAll("#textSizeGroup [data-textsize]").forEach((b) =>
+      b.classList.toggle("active", Math.abs(+b.dataset.textsize - scale) < 0.01));
+  }
+  document.querySelectorAll("#textSizeGroup [data-textsize]").forEach((b) =>
+    b.addEventListener("click", () => {
+      settings.textSize = +b.dataset.textsize;
+      saveSettings();
+      applyTextSize();
+    }));
+
+  /* -------------------------- keyboard navigation ------------------------- */
+  // Moving through results without reaching for the mouse.
+  let cursor = -1;
+
+  const cursorCards = () => [...document.querySelectorAll("#cardsWrap .sa-card")];
+
+  function paintCursor() {
+    cursorCards().forEach((c, i) => c.classList.toggle("sa-cursor", i === cursor));
+  }
+
+  function moveCursor(step) {
+    const cards = cursorCards();
+    if (!cards.length) return;
+    cursor = Math.max(0, Math.min(cards.length - 1,
+      (cursor === -1 ? (step > 0 ? 0 : cards.length - 1) : cursor + step)));
+    paintCursor();
+    const el = cards[cursor];
+    if (el) {
+      el.scrollIntoView({ block: "nearest", behavior: REDUCED_MOTION ? "auto" : "smooth" });
+    }
+  }
+
+  function cursorRow() {
+    const cards = cursorCards();
+    const el = cards[cursor];
+    if (!el) return null;
+    const link = el.querySelector("a[href]");
+    const url = el.querySelector("[data-preview]");
+    const key = url ? url.dataset.preview : (link ? link.href : "");
+    return ROWS.find((r) => r.url === key) || null;
+  }
 
   /* --------------------------- layout preferences ------------------------- */
   const SIDEBAR_MIN = 210;
@@ -2647,6 +3341,8 @@
         if (clamped !== settings.sidebarWidth) setSidebarWidth(clamped, true);
       }
       applySidebarWidth(settings.sidebarWidth);
+    applyTextSize();
+    noteOpened("");   // reveals the Recently opened view if there is history
     });
   })();
 
@@ -2672,8 +3368,13 @@
   const CHECK_TAG = "simplifyaa-check-new";
   let CHANGES = { runs: [], latest: null };
   let NEW_URLS = new Set();
+  let REVISED_URLS = new Set();
   let swReg = null;
   let installPrompt = null;
+
+  // Respect a reader who has asked their system for less movement.
+  const REDUCED_MOTION = window.matchMedia
+    && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   const IS_STANDALONE = window.matchMedia("(display-mode: standalone)").matches ||
     window.navigator.standalone === true;
@@ -2796,11 +3497,16 @@
     const runs = (CHANGES.runs || []).filter((r) => !r.first_run &&
       (since ? r.generated_utc > since : r === CHANGES.runs[0]));
     NEW_URLS = new Set();
-    runs.forEach((r) => (r.added || []).forEach((a) => NEW_URLS.add(a.url)));
+    REVISED_URLS = new Set();
+    runs.forEach((r) => {
+      (r.added || []).forEach((a) => NEW_URLS.add(a.url));
+      (r.revised || []).forEach((a) => REVISED_URLS.add(a.url));
+    });
+    const total = NEW_URLS.size + REVISED_URLS.size;
     const btn = document.querySelector('[data-view="new"]');
-    if (btn) btn.classList.toggle("d-none", NEW_URLS.size === 0);
+    if (btn) btn.classList.toggle("d-none", total === 0);
     const badge = $("#qvNew");
-    if (badge) badge.textContent = NEW_URLS.size || "";
+    if (badge) badge.textContent = total || "";
   }
 
   function markVisitSeen() {
@@ -2896,19 +3602,30 @@
       if (!newest) { if (!quiet) toast("Could not reach the index"); return; }
       await stateSet("lastCheck", new Date().toISOString());
       const seen = (await stateGet("lastSeenRun")) || "";
-      if (seen && newest.generated_utc > seen && newest.added_count > 0) {
+      const moved = (newest.added_count || 0) + (newest.revised_count || 0);
+      if (seen && newest.generated_utc > seen && moved > 0) {
+        const items = (newest.added || []).concat(newest.revised || []);
         await notifPut({
           time: new Date().toISOString(), runTime: newest.generated_utc,
-          count: newest.added_count,
-          title: newest.added_count + " new documents on aa.org",
-          body: (newest.added || []).slice(0, 3).map((a) => a.title).join("\n"),
-          items: (newest.added || []).slice(0, 8), reason: "page", read: false,
+          count: moved,
+          added: newest.added_count || 0, revised: newest.revised_count || 0,
+          title: describeChange(newest.added_count || 0, newest.revised_count || 0),
+          body: items.slice(0, 3).map((a) => a.title).join("\n"),
+          items: items.slice(0, 8), reason: "page", read: false,
         });
       }
       await stateSet("lastSeenRun", newest.generated_utc);
       renderNotifyList(); refreshBell(); renderNotifyStatus();
       if (!quiet) toast("Up to date");
     });
+  }
+
+  // One phrasing, used by the page and mirrored in the service worker.
+  function describeChange(added, revised) {
+    const bits = [];
+    if (added) bits.push(added + " " + t(added === 1 ? "new document" : "new documents"));
+    if (revised) bits.push(revised + " " + t("revised"));
+    return bits.join(" " + t("and") + " ") + " " + t("on aa.org");
   }
 
   async function refreshBell() {
@@ -2970,11 +3687,50 @@
       toast("Notification history cleared");
     });
   });
+  // A plain record of what each crawl found, so notifications are not the only
+  // way to see what moved.
+  function renderTimeline() {
+    const wrap = $("#timeline");
+    if (!wrap) return;
+    const runs = (CHANGES.runs || []).filter((r) => !r.first_run &&
+      ((r.added_count || 0) + (r.revised_count || 0) + (r.removed_count || 0)) > 0);
+    if (!runs.length) {
+      wrap.innerHTML = '<p class="small text-body-secondary mb-0">' +
+        esc(t("No changes recorded yet.")) + "</p>";
+      return;
+    }
+    wrap.innerHTML = runs.map((r) => {
+      const when = new Date(r.generated_utc);
+      const parts = [];
+      if (r.added_count) parts.push(r.added_count + " " + t("added"));
+      if (r.revised_count) parts.push(r.revised_count + " " + t("revised"));
+      if (r.removed_count) parts.push(r.removed_count + " " + t("removed"));
+      const items = (r.added || []).concat(r.revised || []).slice(0, 6);
+      return '<div class="sa-panel p-2 mb-2">' +
+        '<div class="d-flex justify-content-between gap-2">' +
+          '<span class="small fw-semibold">' + esc(parts.join(" · ")) + "</span>" +
+          '<span class="sa-meta text-nowrap">' +
+            esc(isNaN(when.getTime()) ? r.generated_utc : when.toLocaleDateString()) +
+          "</span>" +
+        "</div>" +
+        (items.length
+          ? '<ul class="list-unstyled small mb-0 mt-1">' + items.map((a) =>
+              "<li>" + (a.item_code ? codeBadge(a.item_code, a.item_code) + " " : "") +
+              '<a href="' + esc(a.url) + '" target="_blank" rel="noopener" ' +
+              'class="text-decoration-none"' + langAttr(a) + ">" + esc(a.title) +
+              "</a></li>").join("") + "</ul>"
+          : "") +
+        "</div>";
+    }).join("");
+  }
+
   const notifyModalEl = $("#notifyModal");
   if (notifyModalEl) {
     notifyModalEl.addEventListener("show.bs.modal", () => {
       renderNotifyStatus();
       renderNotifyList();
+      renderTimeline();
+      translateDom(notifyModalEl);
     });
   }
 
@@ -3072,8 +3828,32 @@
     });
     ROWS.forEach((r) => { r._langs = editionsOf(r).map((e) => e.language); });
 
+    loadCollections();
+    favorites = new Set(activeList());
     buildKits(kitRows);
+    saveFavorites();          // paints the active collection's name and counts
     setUiLang(preferredUiLang(), false);
+
+    // A shared collection or a single-document link is handled before the
+    // normal view state, then removed from the URL so it is not re-applied.
+    const raw = new URLSearchParams(location.hash.replace(/^#/, ""));
+    const sharedCol = raw.get("col");
+    const wantedDoc = raw.get("doc");
+    if (sharedCol) {
+      history.replaceState(null, "", location.pathname);
+      handleSharedCollection(sharedCol);
+    } else if (wantedDoc) {
+      history.replaceState(null, "", location.pathname);
+      const key = decodeURIComponent(wantedDoc);
+      const hit = ROWS.find((r) => r.url === key) ||
+        ROWS.find((r) => normCode(r.item_code) === normCode(key)) ||
+        ROWS.find((r) => normCode(r.base_code) === normCode(key));
+      if (hit) {
+        setTimeout(() => openPreview(hit), 400);
+      } else {
+        toast("That document link could not be matched");
+      }
+    }
     registerServiceWorker();
     updateAppNote();
     applySidebarWidth(settings.sidebarWidth);

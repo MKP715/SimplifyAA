@@ -1211,17 +1211,38 @@ def write_changes(rows):
     added = [current[u] for u in current if u not in previous]
     removed = [previous[u] for u in previous if u not in current]
 
+    # A document that keeps its URL but gets a new last-modified date has been
+    # replaced on aa.org. Someone tracking a revised pamphlet needs to hear
+    # about that as much as about a brand new one, and nothing else reports it.
+    revised = []
+    for url, row in current.items():
+        was = previous.get(url)
+        if not was:
+            continue
+        before = (was.get("last_modified") or "").strip()
+        after = (row.get("last_modified") or "").strip()
+        if before and after and before != after:
+            entry = dict(row)
+            entry["previous_modified"] = before
+            revised.append(entry)
+
     def brief(r):
-        return {
+        out = {
             "title": r.get("title", ""),
             "url": r.get("url", ""),
             "item_code": r.get("item_code", ""),
             "category": r.get("category", ""),
             "language": r.get("language", ""),
         }
+        if r.get("previous_modified"):
+            out["previous_modified"] = r["previous_modified"]
+            out["last_modified"] = r.get("last_modified", "")
+        return out
 
     added.sort(key=lambda r: (r.get("category", ""), r.get("title", "").lower()))
     removed.sort(key=lambda r: r.get("title", "").lower())
+    revised.sort(key=lambda r: (r.get("last_modified", ""), r.get("title", "").lower()),
+                 reverse=True)
 
     path = os.path.join(DATA_DIR, "changes.json")
     history = []
@@ -1239,8 +1260,10 @@ def write_changes(rows):
         "first_run": first_run,
         "added_count": 0 if first_run else len(added),
         "removed_count": 0 if first_run else len(removed),
+        "revised_count": 0 if first_run else len(revised),
         "added": [] if first_run else [brief(r) for r in added[:MAX_CHANGE_ITEMS]],
         "removed": [] if first_run else [brief(r) for r in removed[:MAX_CHANGE_ITEMS]],
+        "revised": [] if first_run else [brief(r) for r in revised[:MAX_CHANGE_ITEMS]],
     }
     history.insert(0, run)
     history = history[:MAX_CHANGE_RUNS]
@@ -1304,6 +1327,7 @@ def write_outputs(rows, broken, pages_crawled, fetcher):
         "translated_documents": translated_rows,
         "added_since_last_run": change["added_count"],
         "removed_since_last_run": change["removed_count"],
+        "revised_since_last_run": change["revised_count"],
         "item_code_families": by("item_code_family"),
         "http": dict(fetcher.stats),
         "pdf_hosts_seen": dict(SEEN_PDF_HOSTS.most_common()),

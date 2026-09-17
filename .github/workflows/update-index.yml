@@ -159,7 +159,8 @@ jobs:
           added = m.get("added_since_last_run")
           if added is not None:
               print(f"- **New since the last run: {added}** "
-                    f"(removed: {m.get('removed_since_last_run', 0)}) - "
+                    f"(revised: {m.get('revised_since_last_run', 0)}, "
+                    f"removed: {m.get('removed_since_last_run', 0)}) - "
                     f"this is what the app notifies members about")
           print(f"- Languages: " + ", ".join(f"{k} ({v})" for k, v in m["languages"].items()))
           print(f"- Rebuilt: {m['generated_utc']}")

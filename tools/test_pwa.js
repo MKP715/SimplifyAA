@@ -178,9 +178,16 @@ const ready = async (p) => {
     await page.reload({ waitUntil: "networkidle2" });
     await ready(page);
     await page.evaluate(() => document.querySelector("#bellBtn").click());
-    await sleep(1200);
-    const persisted = await page.evaluate(() =>
-      document.querySelectorAll("#notifyList .sa-panel").length);
+    // The list is rendered from IndexedDB, so wait for the read rather than
+    // guessing how long it takes.
+    let persisted = 0;
+    try {
+      await page.waitForFunction(
+        () => document.querySelectorAll("#notifyList .sa-panel").length > 0,
+        { timeout: 8000 });
+      persisted = await page.evaluate(() =>
+        document.querySelectorAll("#notifyList .sa-panel").length);
+    } catch (e) { persisted = 0; }
     check("history survives a restart", persisted >= 1, persisted + " entries");
     await page.screenshot({ path: SHOTS + "/51-notifications.png" });
 

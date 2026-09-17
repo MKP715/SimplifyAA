@@ -88,7 +88,14 @@ index can be regenerated without touching application code.
   layout is never imposed on anyone else.
 - **Service kits** — every committee kit as a set of working links, workbook first (see below).
 - **Preview** — read a PDF without leaving the page, with a choice of viewer (see below).
-- **Favorites** — star documents you use often; they are remembered in your browser.
+- **Collections** — star documents into named lists (a packet for a new G.S.R., the reading for
+  a workshop). Share one with a link that carries the whole list inside it, export or import it as
+  a file, or print it as a plain handout. Nothing is stored on a server.
+- **What changed** — new *and revised* documents are listed and notified, with a visible history
+  of every crawl that found something.
+- **Recently opened**, **keyboard shortcuts** (<kbd>?</kbd> lists them), adjustable **text size**,
+  and reduced-motion support.
+- **Kit checklists** — tick items off as you assemble a kit; progress is remembered per kit.
 - **Share a view** — the URL captures the exact search and filters, so you can send someone a link
   straight to, say, every Spanish corrections document.
 - **Start over** — click **SimplifyAA** in the header to go back to all documents, clearing the

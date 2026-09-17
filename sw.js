@@ -17,7 +17,7 @@
  * current device supports.
  */
 
-const VERSION = "v1";
+const VERSION = "v2";
 const SHELL_CACHE = "simplifyaa-shell-" + VERSION;
 const DATA_CACHE = "simplifyaa-data-" + VERSION;
 const CDN_CACHE = "simplifyaa-cdn-" + VERSION;
@@ -191,9 +191,21 @@ async function fetchChanges() {
 }
 
 function summarise(runs) {
-  const added = [];
-  runs.forEach((r) => (r.added || []).forEach((a) => added.push(a)));
-  return added;
+  const out = [];
+  // Revisions matter as much as additions: aa.org keeps the URL and replaces
+  // the file, so nothing else would tell you a pamphlet had changed.
+  runs.forEach((r) => {
+    (r.added || []).forEach((a) => out.push(a));
+    (r.revised || []).forEach((a) => out.push(Object.assign({ revised: true }, a)));
+  });
+  return out;
+}
+
+function describeChange(added, revised) {
+  const bits = [];
+  if (added) bits.push(added + (added === 1 ? " new document" : " new documents"));
+  if (revised) bits.push(revised + " revised");
+  return bits.join(" and ") + " on aa.org";
 }
 
 /**
@@ -220,20 +232,23 @@ async function checkForNewDocuments(reason) {
   await idbSet("state", "lastCheck", new Date().toISOString()).catch(() => {});
 
   const addedCount = fresh.reduce((n, r) => n + (r.added_count || 0), 0);
-  if (!seen || addedCount === 0) return null;   // first sight: set the baseline only
+  const revisedCount = fresh.reduce((n, r) => n + (r.revised_count || 0), 0);
+  const movedCount = addedCount + revisedCount;
+  if (!seen || movedCount === 0) return null;   // first sight: set the baseline only
 
   const items = summarise(fresh).slice(0, 8);
   const titles = items.slice(0, 3).map((a) =>
-    (a.item_code ? a.item_code + " " : "") + a.title);
+    (a.item_code ? a.item_code + " " : "") + a.title + (a.revised ? " (revised)" : ""));
   const body = titles.join("\n") +
-    (addedCount > titles.length ? "\nand " + (addedCount - titles.length) + " more" : "");
+    (movedCount > titles.length ? "\nand " + (movedCount - titles.length) + " more" : "");
 
   const record = {
     time: new Date().toISOString(),
     runTime: newest,
-    count: addedCount,
-    title: addedCount === 1 ? "1 new document on aa.org"
-                            : addedCount + " new documents on aa.org",
+    count: movedCount,
+    added: addedCount,
+    revised: revisedCount,
+    title: describeChange(addedCount, revisedCount),
     body: body,
     items: items,
     reason: reason || "check",
