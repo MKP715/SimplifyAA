@@ -23,7 +23,7 @@
 // only reinstalls when this file's bytes change. Leaving it alone means a
 // phone with no signal keeps showing whichever version it first cached, and
 // the "an update is ready" notice never fires.
-const VERSION = "v3";
+const VERSION = "v4";
 const SHELL_CACHE = "simplifyaa-shell-" + VERSION;
 const DATA_CACHE = "simplifyaa-data-" + VERSION;
 const CDN_CACHE = "simplifyaa-cdn-" + VERSION;

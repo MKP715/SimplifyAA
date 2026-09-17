@@ -12,6 +12,15 @@
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="manifest" href="site.webmanifest">
 <meta name="theme-color" content="#1f6f8b">
+<!-- iPhone and iPad have no install prompt: the app is added from the share
+     sheet, and these are what make it open as an app afterwards rather than
+     inside a Safari tab. "default" keeps the status bar in its own space, so
+     the header cannot end up underneath the clock or a notch.
+     mobile-web-app-capable is the standard spelling; Chrome warns about the
+     apple- one on its own, and iOS only reads the apple- one, so both. -->
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="SimplifyAA">
 
 <!-- Open-source CDN libraries (jsDelivr / cdnjs) -->
