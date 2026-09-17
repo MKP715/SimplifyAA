@@ -1415,11 +1415,12 @@
     state.sortDir = p.get("dir") || settings.sortDir || "desc";
     if (state.sortDir !== "asc" && state.sortDir !== "desc") state.sortDir = "desc";
     state.group = p.get("group") || "";
-    // 0 means "show all". A link wins for this visit; otherwise the reader's
-    // own saved layout applies.
+    // 0 means "show all". An absent parameter must not be read as 0 -- a plain
+    // +null is 0, which would silently render every document on a first visit.
     const per = p.get("per");
-    state.pageSize = PAGE_SIZES.includes(+per) ? +per
-      : (PAGE_SIZES.includes(+settings.pageSize) ? +settings.pageSize : 48);
+    const perNum = (per === null || per === "") ? NaN : Number(per);
+    state.pageSize = PAGE_SIZES.includes(perNum) ? perNum
+      : (PAGE_SIZES.includes(Number(settings.pageSize)) ? Number(settings.pageSize) : 48);
     state.density = (p.get("density") || settings.density) === "compact"
       ? "compact" : "comfortable";
     // Cards-across is a property of this screen, so it is never taken from a link.

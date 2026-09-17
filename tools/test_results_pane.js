@@ -107,6 +107,19 @@ const toggle = (p, sel) => p.evaluate((s) => {
     dates.length > 2 && dates.every((d, i) => i === 0 || dates[i - 1] >= d),
     dates.slice(0, 4).join(" >= "));
 
+  // Regression: an absent "per" parameter once coerced to 0, which is the
+  // "show all" sentinel, so a first visit rendered every document.
+  const firstLoad = await p.evaluate(() => ({
+    cards: document.querySelectorAll("#cardsWrap .sa-card").length,
+    per: document.querySelector("#pageSizeSel").value,
+    height: document.documentElement.scrollHeight,
+  }));
+  check("a first visit pages the results rather than rendering all of them",
+    firstLoad.cards === 48 && firstLoad.per === "48",
+    firstLoad.cards + " cards, per=" + firstLoad.per);
+  check("and the page stays a sane height", firstLoad.height < 40000,
+    firstLoad.height + "px");
+
   console.log("\n=== FILTER BAR OPENS ===");
   const bar = await p.evaluate(() => ({
     btn: !!document.querySelector("#filterToggle"),
