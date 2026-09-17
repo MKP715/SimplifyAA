@@ -66,6 +66,14 @@ jobs:
             --depth "${{ github.event.inputs.depth || '3' }}" \
             --workers 10
 
+      # Reads each kit's contents PDF and re-matches the item numbers it names.
+      # Allowed to fail without blocking the document index: the previous
+      # kits.csv stays valid, and the step shows up red in the run.
+      - name: Rebuild service-kit contents
+        if: github.event_name != 'push'
+        continue-on-error: true
+        run: python tools/build_kits.py
+
       - name: Sanity-check the new index
         if: github.event_name != 'push'
         run: |
@@ -113,6 +121,12 @@ jobs:
           print(f"- Stale links filtered out: {m.get('broken_links', 0)}")
           print(f"- Languages: " + ", ".join(f"{k} ({v})" for k, v in m["languages"].items()))
           print(f"- Rebuilt: {m['generated_utc']}")
+          try:
+              k = json.load(open("data/kits_meta.json"))
+              print(f"- Service kits: {k['kits']} covering "
+                    f"{k['coverage']}/{k['total_items']} listed items")
+          except Exception:
+              print("- Service kits: not rebuilt this run")
           print("\n| Section | Documents |\n|---|---:|")
           for k, v in m["sections"].items():
               print(f"| {k} | {v} |")

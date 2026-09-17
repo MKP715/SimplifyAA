@@ -1,0 +1,190 @@
+{
+  "generated_utc": "2026-09-17T12:02:44Z",
+  "kits": 12,
+  "rows": 994,
+  "total_items": 368,
+  "coverage": 298,
+  "kit_list": [
+    {
+      "key": "CF-36",
+      "name": "A.A. Group Handbook for Groups That Meet in Correctional Facilities",
+      "base_code": "CF-36",
+      "category": "Corrections",
+      "languages": [
+        "English",
+        "Spanish"
+      ],
+      "items": 27,
+      "items_in_index": 27,
+      "workbooks": []
+    },
+    {
+      "key": "F-182",
+      "name": "Accessibilities Kit",
+      "base_code": "F-182",
+      "category": "Treatment & Accessibilities",
+      "languages": [
+        "English",
+        "French",
+        "Spanish"
+      ],
+      "items": 30,
+      "items_in_index": 25,
+      "workbooks": [
+        "M-48I"
+      ]
+    },
+    {
+      "key": "F-66",
+      "name": "CPC Kit",
+      "base_code": "F-66",
+      "category": "Cooperation with the Professional Community",
+      "languages": [
+        "English",
+        "French",
+        "Spanish"
+      ],
+      "items": 39,
+      "items_in_index": 29,
+      "workbooks": [
+        "M-41I"
+      ]
+    },
+    {
+      "key": "F-234",
+      "name": "Cooperation with the Elder Community Resource",
+      "base_code": "F-234",
+      "category": "Forms, Catalogs & Order Blanks",
+      "languages": [
+        "English",
+        "French",
+        "Spanish"
+      ],
+      "items": 33,
+      "items_in_index": 27,
+      "workbooks": [
+        "M-48I"
+      ]
+    },
+    {
+      "key": "F-68",
+      "name": "Corrections Committee Kit",
+      "base_code": "F-68",
+      "category": "Corrections",
+      "languages": [
+        "English",
+        "French",
+        "Spanish"
+      ],
+      "items": 39,
+      "items_in_index": 26,
+      "workbooks": [
+        "M-45I"
+      ]
+    },
+    {
+      "key": "F-153",
+      "name": "District Committee Member (D.C.M.) Kit",
+      "base_code": "F-153",
+      "category": "Group, District & Area Service",
+      "languages": [
+        "English",
+        "French",
+        "Spanish"
+      ],
+      "items": 28,
+      "items_in_index": 21,
+      "workbooks": []
+    },
+    {
+      "key": "stem:gsrkitdigitalonline",
+      "name": "General Service Representative (G.S.R.) Kit",
+      "base_code": "",
+      "category": "Group, District & Area Service",
+      "languages": [
+        "English",
+        "French",
+        "Spanish"
+      ],
+      "items": 22,
+      "items_in_index": 18,
+      "workbooks": []
+    },
+    {
+      "key": "F-119",
+      "name": "Group Handbook",
+      "base_code": "F-119",
+      "category": "Group, District & Area Service",
+      "languages": [
+        "English",
+        "French",
+        "Spanish"
+      ],
+      "items": 21,
+      "items_in_index": 17,
+      "workbooks": []
+    },
+    {
+      "key": "F-65",
+      "name": "Public Information Kit",
+      "base_code": "F-65",
+      "category": "Public Information",
+      "languages": [
+        "English",
+        "French",
+        "Spanish"
+      ],
+      "items": 35,
+      "items_in_index": 26,
+      "workbooks": [
+        "M-27I"
+      ]
+    },
+    {
+      "key": "F-227",
+      "name": "Remote Communities Kit",
+      "base_code": "F-227",
+      "category": "Military & Remote Communities",
+      "languages": [
+        "English",
+        "French",
+        "Spanish"
+      ],
+      "items": 26,
+      "items_in_index": 26,
+      "workbooks": [
+        "M-48I"
+      ]
+    },
+    {
+      "key": "SMF-241",
+      "name": "Resource List for Information on Self-Support and Finance",
+      "base_code": "SMF-241",
+      "category": "Finance & Self-Support",
+      "languages": [
+        "English",
+        "French",
+        "Spanish"
+      ],
+      "items": 20,
+      "items_in_index": 17,
+      "workbooks": []
+    },
+    {
+      "key": "F-167",
+      "name": "Treatment Committee Kit",
+      "base_code": "F-167",
+      "category": "Treatment & Accessibilities",
+      "languages": [
+        "English",
+        "French",
+        "Spanish"
+      ],
+      "items": 48,
+      "items_in_index": 39,
+      "workbooks": [
+        "M-40I"
+      ]
+    }
+  ]
+}

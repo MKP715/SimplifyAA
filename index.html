@@ -126,6 +126,7 @@
             <button class="sa-tree-btn" data-view="recent"><span><i class="bi bi-clock-history me-1"></i>Recently updated</span></button>
             <button class="sa-tree-btn" data-view="favorites"><span><i class="bi bi-star-fill me-1 sa-star"></i>My favorites</span><span class="badge" id="qvFav">0</span></button>
             <button class="sa-tree-btn" data-view="large"><span><i class="bi bi-file-earmark-text me-1"></i>Full books &amp; reports</span></button>
+            <button class="sa-tree-btn" data-view="kits"><span><i class="bi bi-box2-heart me-1"></i>Service kits</span><span class="badge" id="qvKits"></span></button>
           </div>
         </div>
 
@@ -205,6 +206,7 @@
         <div class="d-flex flex-wrap gap-2" id="startLinks"></div>
       </div>
 
+      <div id="kitsWrap" class="d-none"></div>
       <div id="cardsWrap" class="row row-cols-1 row-cols-md-2 row-cols-xxl-3 g-3"></div>
       <div id="tableWrap" class="sa-panel p-2 d-none"></div>
 
@@ -262,7 +264,9 @@
             <tr><td><span class="sa-code">P-</span></td><td>Pamphlets &amp; Booklets</td><td>Conference-approved pamphlets — the core reading handed to newcomers and used in meetings.</td></tr>
             <tr><td><span class="sa-code">B-</span></td><td>Books &amp; Big Book</td><td>The bound books, including the Big Book, the Twelve and Twelve and Living Sober.</td></tr>
             <tr><td><span class="sa-code">F-</span></td><td>Forms, Catalogs &amp; Flyers</td><td>Order blanks, the literature catalog, service pieces and printable flyers.</td></tr>
-            <tr><td><span class="sa-code">SM- / SMF-</span></td><td>Service Material</td><td>Not conference-approved, but prepared by G.S.O. to help groups and committees do service work.</td></tr>
+            <tr><td><span class="sa-code">SMF-</span></td><td>Service Material</td><td>Not conference-approved, but prepared by G.S.O. to help groups and committees do service work.</td></tr>
+            <tr><td><span class="sa-code">M-&hellip;I</span></td><td>Committee Workbooks</td><td>The workbook at the heart of each service kit — Treatment (M-40I), Corrections (M-45I), C.P.C. (M-41I) and so on.</td></tr>
+            <tr><td><span class="sa-code">CF-</span></td><td>Conference &amp; Forum</td><td>Material tied to the General Service Conference and regional forums.</td></tr>
             <tr><td><span class="sa-code">MG-</span></td><td>A.A. Guidelines</td><td>Shared experience on running a committee, office, or event. Suggestions, never rules.</td></tr>
             <tr><td><span class="sa-code">M-</span></td><td>Displays &amp; Cards</td><td>Wallet cards, posters and display pieces.</td></tr>
             <tr><td><span class="sa-code">BM-</span></td><td>Bulletins</td><td>Box 4-5-9 and other periodic bulletins from G.S.O.</td></tr>
@@ -278,7 +282,9 @@
           <strong>F</strong> for French. So <span class="sa-code">P-47</span> becomes
           <span class="sa-code">SP-47</span> and <span class="sa-code">FP-47</span>;
           <span class="sa-code">SMF-121</span> becomes <span class="sa-code">SMFS-121</span> and
-          <span class="sa-code">SMFF-121</span>. That is why searching aa.org in one language rarely surfaces the others.
+          <span class="sa-code">SMFF-121</span>. This is also why <span class="sa-code">SM-40I</span> is
+          not service material at all &mdash; it is the Spanish Treatment workbook.
+          That is why searching aa.org in one language rarely surfaces the others.
           Here they are matched back together — searching any one of the three finds all of them.</p>
       </div>
     </div>
@@ -351,17 +357,21 @@
 
   const DATA_CSV = "data/pdfs.csv";
   const DATA_META = "data/meta.json";
+  const DATA_KITS = "data/kits.csv";
   const PAGE_SIZE = 48;
   const LS = { fav: "simplifyaa.favorites", theme: "simplifyaa.theme" };
 
   const state = {
     q: "", view: "all", section: "", category: "", language: "", year: "",
-    topics: new Set(), sort: "title", page: 1, mode: "cards"
+    topics: new Set(), sort: "title", page: 1, mode: "cards", openKit: ""
   };
 
   let ROWS = [], META = {}, FUSE = null, FILTERED = [], table = null;
   let favorites = new Set();
-  let BY_TRANSLATION = new Map();  // translation_key -> rows, for linking editions
+  let BY_TRANSLATION = new Map();   // translation_key -> rows, for linking editions
+  let BY_BASE_CODE = new Map();     // base item code -> rows in each language
+  let KITS = new Map();             // kit key -> { name, base_code, editions }
+  let KIT_MEMBERSHIP = new Map();   // base item code -> [kit names]
   const LANG_ORDER = ["English", "Spanish", "French"];
   const LANG_SHORT = { English: "EN", Spanish: "ES", French: "FR" };
 
@@ -440,6 +450,7 @@
     if (state.topics.size) p.set("topics", [...state.topics].join("|"));
     if (state.sort !== "title") p.set("sort", state.sort);
     if (state.mode !== "cards") p.set("mode", state.mode);
+    if (state.openKit) p.set("kit", state.openKit);
     const s = p.toString();
     history.replaceState(null, "", s ? "#" + s : location.pathname);
   }
@@ -454,6 +465,7 @@
     state.topics = new Set((p.get("topics") || "").split("|").filter(Boolean));
     state.sort = p.get("sort") || "title";
     state.mode = p.get("mode") === "table" ? "table" : "cards";
+    state.openKit = p.get("kit") || "";
   }
 
   /* -------------------------------- facets ------------------------------- */
@@ -526,6 +538,216 @@
     });
   }
 
+  /* --------------------------------- kits -------------------------------- */
+  // A kit is a set of item numbers listed inside its contents PDF. Only the
+  // numbers are stored; titles and links come from the document index, so a
+  // kit renders in whichever language the reader has selected.
+  const KIT_GROUPS = [
+    { label: "Committee workbook", test: (c) => /^M-\d+I$/.test(c), icon: "journal-check" },
+    { label: "Pamphlets", test: (c) => /^P-/.test(c), icon: "file-earmark-text" },
+    { label: "Books", test: (c) => /^B-/.test(c), icon: "book" },
+    { label: "Service material", test: (c) => /^SMF?-/.test(c), icon: "tools" },
+    { label: "A.A. Guidelines", test: (c) => /^MG-/.test(c), icon: "signpost-split" },
+    { label: "Forms & service pieces", test: (c) => /^F-/.test(c), icon: "file-earmark-ruled" },
+    { label: "Displays & cards", test: (c) => /^M-/.test(c), icon: "credit-card-2-front" },
+    { label: "Other material", test: () => true, icon: "three-dots" },
+  ];
+
+  function docForCode(code, preferredLang) {
+    const group = BY_BASE_CODE.get(code);
+    if (!group || !group.length) return null;
+    const want = preferredLang || state.language || "English";
+    return group.find((r) => r.language === want) ||
+           group.find((r) => r.language === "English") || group[0];
+  }
+
+  function kitEdition(kit) {
+    const want = state.language || "English";
+    return kit.editions[want] || kit.editions.English ||
+           kit.editions[Object.keys(kit.editions)[0]];
+  }
+
+  function kitItemRow(code) {
+    const doc = docForCode(code);
+    if (!doc) {
+      // The kit list names it, but aa.org publishes no PDF for it.
+      return '<li class="list-group-item bg-transparent d-flex align-items-center gap-2 py-1 px-2">' +
+        '<span class="sa-code opacity-50">' + esc(code) + "</span>" +
+        '<span class="small text-body-secondary fst-italic">not published as a PDF ' +
+        "&mdash; print item</span></li>";
+    }
+    return '<li class="list-group-item bg-transparent d-flex align-items-center gap-2 py-1 px-2 flex-wrap">' +
+      '<span class="sa-code">' + esc(doc.item_code || code) + "</span>" +
+      '<a class="small fw-semibold text-decoration-none flex-grow-1" href="' + esc(doc.url) +
+        '" target="_blank" rel="noopener">' + esc(doc.title) + "</a>" +
+      (doc.size_human ? '<span class="sa-meta">' + esc(doc.size_human) + "</span>" : "") +
+      '<button class="btn btn-sm btn-link p-0 px-1" data-preview="' + esc(doc.url) +
+        '" title="Preview"><i class="bi bi-eye"></i></button>' +
+      translationLinksInline(doc) +
+      "</li>";
+  }
+
+  function translationLinksInline(row) {
+    const editions = editionsOf(row);
+    if (editions.length < 2) return "";
+    return '<span class="sa-meta">' + editions.map((r) => r.url === row.url
+      ? '<span class="badge rounded-pill" style="background:var(--sa-accent);color:#fff">' +
+        esc(LANG_SHORT[r.language]) + "</span>"
+      : '<a class="badge rounded-pill text-decoration-none" style="background:var(--sa-border);' +
+        'color:var(--sa-muted)" href="' + esc(r.url) + '" target="_blank" rel="noopener" title="' +
+        esc(r.language + ": " + r.title) + '">' + esc(LANG_SHORT[r.language]) + "</a>"
+    ).join(" ") + "</span>";
+  }
+
+  function kitMatchesQuery(kit, q) {
+    if (!q) return true;
+    const t = q.toLowerCase();
+    if (kit.name.toLowerCase().includes(t)) return true;
+    if ((kit.base_code || "").toLowerCase().includes(t)) return true;
+    const ed = kitEdition(kit);
+    return ed.items.some((c) => {
+      if (c.toLowerCase().includes(t)) return true;
+      const doc = docForCode(c);
+      return doc && doc.title.toLowerCase().includes(t);
+    });
+  }
+
+  function renderKits() {
+    const wrap = $("#kitsWrap");
+    const q = state.q.trim();
+    const kits = [...KITS.values()]
+      .filter((k) => kitMatchesQuery(k, q))
+      .sort((a, b) => a.name.localeCompare(b.name));
+
+    let html =
+      '<div class="sa-panel p-3 mb-3">' +
+        '<div class="fw-semibold mb-1"><i class="bi bi-box2-heart me-1"></i>A.A. service kits</div>' +
+        '<p class="small text-body-secondary mb-0">G.S.O. ships a kit to each committee: a workbook ' +
+        'plus a set of pamphlets, guidelines and service pieces. What is in a kit is only stated inside ' +
+        'its contents PDF, so those lists have been read and every item matched to its download. ' +
+        'Items the list names but aa.org does not publish as a PDF are marked as print items. ' +
+        'Pick a language in the sidebar to see a kit and its contents in that language.</p>' +
+      "</div>";
+
+    if (!kits.length) {
+      html += '<div class="text-center py-5 text-body-secondary">' +
+        '<i class="bi bi-box2 display-6"></i><p class="mt-3 mb-0">No kit matches this search.</p></div>';
+      wrap.innerHTML = html;
+      return;
+    }
+
+    // Only one kit's contents are built at a time; switching language or
+    // searching re-renders, so the open kit is remembered rather than snapping
+    // shut under the reader.
+    html += '<div class="accordion" id="kitAcc">';
+    kits.forEach((kit, i) => {
+      const isOpen = state.openKit === kit.key;
+      const ed = kitEdition(kit);
+      const items = ed.items;
+      const available = items.filter((c) => docForCode(c)).length;
+      const id = "kit" + i;
+      const langChips = ["English", "Spanish", "French"]
+        .filter((l) => kit.editions[l])
+        .map((l) => {
+          const e = kit.editions[l];
+          const cur = e === ed;
+          return cur
+            ? '<span class="badge rounded-pill" style="background:var(--sa-accent);color:#fff">' +
+              esc(LANG_SHORT[l]) + "</span>"
+            : '<a class="badge rounded-pill text-decoration-none" style="background:var(--sa-border);' +
+              'color:var(--sa-muted)" href="' + esc(e.url) + '" target="_blank" rel="noopener" ' +
+              'title="' + esc(l + " edition of the kit list") + '">' + esc(LANG_SHORT[l]) + "</a>";
+        }).join(" ");
+
+      // Group the contents so a kit reads like the printed list.
+      const used = new Set();
+      let body = "";
+      KIT_GROUPS.forEach((g) => {
+        const codes = items.filter((c) => !used.has(c) && g.test(c));
+        codes.forEach((c) => used.add(c));
+        if (!codes.length) return;
+        body +=
+          '<div class="mb-3">' +
+            '<div class="small fw-semibold text-uppercase text-body-secondary mb-1">' +
+              '<i class="bi bi-' + g.icon + ' me-1"></i>' + esc(g.label) +
+              ' <span class="opacity-50">' + codes.length + "</span></div>" +
+            '<ul class="list-group list-group-flush">' +
+              codes.map(kitItemRow).join("") +
+            "</ul>" +
+          "</div>";
+      });
+
+      html +=
+        '<div class="accordion-item sa-panel mb-2">' +
+          '<h2 class="accordion-header"><button class="accordion-button bg-transparent' +
+            (isOpen ? '" aria-expanded="true"' : ' collapsed"') +
+            ' type="button" data-bs-toggle="collapse" data-bs-target="#' + id +
+            '" data-kit-key="' + esc(kit.key) + '">' +
+            '<span class="d-flex flex-wrap align-items-center gap-2">' +
+              (kit.base_code ? '<span class="sa-code">' + esc(kit.base_code) + "</span>" : "") +
+              '<span class="fw-semibold">' + esc(kit.name) + "</span>" +
+              '<span class="sa-meta">' + items.length + " items &middot; " + available +
+                " as PDF</span>" +
+            "</span>" +
+          "</button></h2>" +
+          '<div id="' + id + '" class="accordion-collapse collapse' + (isOpen ? " show" : "") +
+            '" data-bs-parent="#kitAcc">' +
+            '<div class="accordion-body pt-2">' +
+              '<div class="d-flex flex-wrap align-items-center gap-2 mb-3">' +
+                '<a class="btn btn-sm btn-primary" href="' + esc(ed.url) + '" target="_blank" ' +
+                  'rel="noopener"><i class="bi bi-list-check me-1"></i>Official kit list (PDF)</a>' +
+                '<button class="btn btn-sm btn-outline-secondary" data-preview="' + esc(ed.url) +
+                  '"><i class="bi bi-eye me-1"></i>Preview list</button>' +
+                '<span class="sa-meta ms-1"><i class="bi bi-translate me-1"></i>' + langChips + "</span>" +
+              "</div>" +
+              body +
+            "</div>" +
+          "</div>" +
+        "</div>";
+    });
+    html += "</div>";
+
+    // Not every committee workbook belongs to a kit: Archives and Literature
+    // have a workbook but aa.org publishes no kit contents list for them, so
+    // they would otherwise be invisible here.
+    const orphans = [...BY_BASE_CODE.keys()]
+      .filter((c) => /^M-\d+I$/.test(c) && !KIT_MEMBERSHIP.has(c))
+      .filter((c) => {
+        if (!q) return true;
+        const doc = docForCode(c);
+        return c.toLowerCase().includes(q.toLowerCase()) ||
+          (doc && doc.title.toLowerCase().includes(q.toLowerCase()));
+      })
+      .sort();
+    if (orphans.length) {
+      html +=
+        '<div class="sa-panel p-3 mt-3">' +
+          '<div class="small fw-semibold text-uppercase text-body-secondary mb-1">' +
+            '<i class="bi bi-journal-check me-1"></i>Committee workbooks without a kit list' +
+            ' <span class="opacity-50">' + orphans.length + "</span></div>" +
+          '<p class="small text-body-secondary mb-2">These committees have a workbook, but aa.org ' +
+            "publishes no contents list for a matching kit.</p>" +
+          '<ul class="list-group list-group-flush">' + orphans.map(kitItemRow).join("") + "</ul>" +
+        "</div>";
+    }
+    wrap.innerHTML = html;
+  }
+
+  // Reverse view: which service kits include a given document. Knowing a
+  // pamphlet ships in the Corrections kit is useful context when you find it
+  // by searching.
+  function kitBadges(row) {
+    const kits = (row.base_code && KIT_MEMBERSHIP.get(row.base_code)) || [];
+    if (!kits.length) return "";
+    const shown = kits.slice(0, 3).map((name) =>
+      '<span class="badge rounded-pill" style="background:var(--sa-border);color:var(--sa-muted)">' +
+      esc(name) + "</span>").join(" ");
+    const more = kits.length > 3
+      ? ' <span class="sa-meta">+' + (kits.length - 3) + " more</span>" : "";
+    return '<div class="sa-meta mb-2"><i class="bi bi-box2-heart me-1"></i>In kits: ' +
+      shown + more + "</div>";
+  }
+
   // Orientation shortcuts for the landing view. Each one just sets filters, so
   // nothing is hidden -- they are doors, not a curated subset.
   const START_LINKS = [
@@ -546,6 +768,18 @@
   function buildStartLinks() {
     const wrap = $("#startLinks");
     wrap.innerHTML = "";
+    if (KITS.size) {
+      const b = el("button", "btn btn-sm btn-outline-primary",
+        '<i class="bi bi-box2-heart me-1"></i>Service kits &amp; workbooks' +
+        ' <span class="opacity-50">' + KITS.size + "</span>");
+      b.addEventListener("click", () => {
+        state.q = ""; $("#q").value = "";
+        state.view = "kits"; state.section = ""; state.category = "";
+        state.topics = new Set(); state.page = 1;
+        sync();
+      });
+      wrap.appendChild(b);
+    }
     START_LINKS.forEach((s) => {
       // Only offer a door that actually leads somewhere in this dataset.
       const n = ROWS.filter((r) =>
@@ -733,6 +967,7 @@
         "</div>" +
         '<div class="sa-meta mb-2">' + bits.join(' &nbsp;·&nbsp; ') + "</div>" +
         translationLinks(row) +
+        kitBadges(row) +
         '<div class="mt-auto d-flex gap-1 flex-wrap">' +
           '<a class="btn btn-sm btn-primary" href="' + esc(row.url) + '" target="_blank" rel="noopener">' +
             '<i class="bi bi-box-arrow-up-right"></i> Open</a>' +
@@ -832,7 +1067,8 @@
     const chips = [];
     if (state.q) chips.push(["Search: " + state.q, () => { state.q = ""; $("#q").value = ""; }]);
     if (state.view !== "all") chips.push([
-      { recent: "Recently updated", favorites: "My favorites", large: "Full books & reports" }[state.view],
+      { recent: "Recently updated", favorites: "My favorites",
+        large: "Full books & reports", kits: "Service kits" }[state.view],
       () => { state.view = "all"; }]);
     if (state.section) chips.push(["Section: " + state.section, () => { state.section = ""; }]);
     if (state.category) chips.push(["Category: " + state.category, () => { state.category = ""; }]);
@@ -864,6 +1100,28 @@
   }
 
   function render() {
+    const isKits = state.view === "kits";
+
+    // The kit view is a different shape of answer: sets of documents rather
+    // than a filtered list, so the list machinery stands down.
+    $("#kitsWrap").classList.toggle("d-none", !isKits);
+    $("#startHere").classList.toggle("d-none", isKits || !isPristine());
+    if (isKits) {
+      const kits = [...KITS.values()].filter((k) => kitMatchesQuery(k, state.q.trim()));
+      const items = kits.reduce((n, k) => n + kitEdition(k).items.length, 0);
+      $("#resultHeading").textContent = "A.A. service kits";
+      $("#resultCount").textContent = kits.length + (kits.length === 1 ? " kit" : " kits") +
+        " · " + items.toLocaleString() + " listed items";
+      $("#cardsWrap").classList.add("d-none");
+      $("#tableWrap").classList.add("d-none");
+      $("#emptyState").classList.add("d-none");
+      $("#pager").innerHTML = "";
+      renderKits();
+      renderChips();
+      syncControlStates();
+      return;
+    }
+
     applyFilters();
     const total = FILTERED.length;
 
@@ -876,7 +1134,6 @@
       (total !== ROWS.length ? " of " + ROWS.length.toLocaleString() : "");
 
     $("#emptyState").classList.toggle("d-none", total > 0);
-    $("#startHere").classList.toggle("d-none", !isPristine());
     $("#cardsWrap").classList.toggle("d-none", state.mode !== "cards" || total === 0);
     $("#tableWrap").classList.toggle("d-none", state.mode !== "table");
 
@@ -951,6 +1208,15 @@
   });
 
   document.addEventListener("click", (e) => {
+    const kitHeader = e.target.closest("[data-kit-key]");
+    if (kitHeader) {
+      // Bootstrap animates the collapse; only the remembered key is updated,
+      // so the URL stays shareable without re-rendering mid-animation.
+      const key = kitHeader.dataset.kitKey;
+      state.openKit = state.openKit === key ? "" : key;
+      stateToHash();
+      return;
+    }
     const fav = e.target.closest("[data-fav]");
     if (fav) { toggleFavorite(fav.dataset.fav); return; }
     const prev = e.target.closest("[data-preview]");
@@ -1005,7 +1271,40 @@
     $("#resultCount").textContent = "no data";
   }
 
-  function boot(rows, meta) {
+  function buildKits(kitRows) {
+    KITS = new Map();
+    KIT_MEMBERSHIP = new Map();
+    (kitRows || []).forEach((r) => {
+      if (!r.kit_key || !r.item_code) return;
+      let kit = KITS.get(r.kit_key);
+      if (!kit) {
+        kit = { key: r.kit_key, name: r.kit_name, base_code: r.kit_base_code, editions: {} };
+        KITS.set(r.kit_key, kit);
+      }
+      let ed = kit.editions[r.kit_language];
+      if (!ed) {
+        ed = { item_code: r.kit_item_code, url: r.kit_url, items: [] };
+        kit.editions[r.kit_language] = ed;
+      }
+      ed.items.push(r.item_code);
+    });
+    // Reverse index, from the English list so a document's kits are stable.
+    KITS.forEach((kit) => {
+      const ed = kit.editions.English || kit.editions[Object.keys(kit.editions)[0]];
+      if (!ed) return;
+      new Set(ed.items).forEach((code) => {
+        if (!KIT_MEMBERSHIP.has(code)) KIT_MEMBERSHIP.set(code, []);
+        if (!KIT_MEMBERSHIP.get(code).includes(kit.name)) {
+          KIT_MEMBERSHIP.get(code).push(kit.name);
+        }
+      });
+    });
+    const btn = document.querySelector('[data-view="kits"]');
+    if (btn) btn.classList.toggle("d-none", KITS.size === 0);
+    $("#qvKits").textContent = KITS.size || "";
+  }
+
+  function boot(rows, meta, kitRows) {
     ROWS = rows.filter((r) => r.url && r.title);
     ROWS.forEach((r) => {
       r._hay = [r.title, r.item_code, r.category, r.section, r.topics,
@@ -1045,13 +1344,20 @@
       : "";
 
     BY_TRANSLATION = new Map();
+    BY_BASE_CODE = new Map();
     ROWS.forEach((r) => {
-      if (!r.translation_key) return;
-      if (!BY_TRANSLATION.has(r.translation_key)) BY_TRANSLATION.set(r.translation_key, []);
-      BY_TRANSLATION.get(r.translation_key).push(r);
+      if (r.translation_key) {
+        if (!BY_TRANSLATION.has(r.translation_key)) BY_TRANSLATION.set(r.translation_key, []);
+        BY_TRANSLATION.get(r.translation_key).push(r);
+      }
+      if (r.base_code) {
+        if (!BY_BASE_CODE.has(r.base_code)) BY_BASE_CODE.set(r.base_code, []);
+        BY_BASE_CODE.get(r.base_code).push(r);
+      }
     });
     ROWS.forEach((r) => { r._langs = editionsOf(r).map((e) => e.language); });
 
+    buildKits(kitRows);
     buildTree(); buildLanguages(); buildYears(); buildTopics(); buildStartLinks();
     hashToState();
     $("#q").value = state.q;
@@ -1067,9 +1373,17 @@
       });
     }),
     fetch(DATA_META).then((r) => (r.ok ? r.json() : {})).catch(() => ({})),
-  ]).then(([rows, meta]) => {
+    // Kit contents are optional: if the file is absent the rest still works.
+    new Promise((resolve) => {
+      Papa.parse(DATA_KITS, {
+        download: true, header: true, skipEmptyLines: true,
+        complete: (res) => resolve(res.data || []),
+        error: () => resolve([]),
+      });
+    }),
+  ]).then(([rows, meta, kitRows]) => {
     if (!rows || !rows.length) { showLoadError("The index file is empty."); return; }
-    boot(rows, meta);
+    boot(rows, meta, kitRows);
   }).catch((err) => {
     showLoadError((err && err.message) || "Network error while loading data/pdfs.csv.");
   });

@@ -250,10 +250,14 @@ def language_of(url, *hints, filename="", code_lang=""):
 # Classification
 # --------------------------------------------------------------------------- #
 ITEM_CODE_RE = re.compile(
-    r"(?:^|[/_\-])((?:smfs|smff|smf|smg|fmg|sm|mg|bm|av|cf|fl|lim|sf|ff|sp|fp|sb|fb"
-    r"|ps|mr|f|p|m|b|i)[-_]?\d{1,3}[a-z]?)(?:[_\-.]|$)",
+    r"(?:^|[/_\-])((?:smfs|smff|smf|smg|fmg|sm|fm|mg|bm|av|cf|fl|lim|sf|ff|sp|fp|sb|fb"
+    r"|ps|mr|f|p|m|b|i)[-_]?\d{1,3}[a-z]{0,2})(?:[_\-.]|$)",
     re.I,
 )
+# Some filenames tack the language onto the number instead of the prefix
+# ("cf-36sp", "f-13sp"), so the trailing letters need interpreting rather than
+# being kept as part of the number.
+CODE_LANG_SUFFIX = {"SP": "Spanish", "ES": "Spanish", "FR": "French", "EN": "English"}
 
 # aa.org numbers the same document differently per language: F-13 (English)
 # becomes SF-13 (Spanish) and FF-13 (French). Mapping those back to one base
@@ -265,6 +269,10 @@ CODE_LANG_PREFIX = {
     "smfs": ("smf", "Spanish"), "smff": ("smf", "French"),
     "smg": ("mg", "Spanish"), "fmg": ("mg", "French"),
     "sb": ("b", "Spanish"), "fb": ("b", "French"),
+    # Committee workbooks and display items: M- English, SM- Spanish, FM- French.
+    # Every sm-/fm- file on the site follows this, so "SM-" is never an English
+    # service-material number (that family is SMF-).
+    "sm": ("m", "Spanish"), "fm": ("m", "French"),
 }
 # Filename prefixes separated by "_" mark the language of the file itself.
 FILE_LANG_PREFIX = {"en": "English", "sp": "Spanish", "es": "Spanish", "fr": "French"}
@@ -687,9 +695,28 @@ def parse_item_code(filename):
     if "-" not in raw:
         raw = re.sub(r"^([A-Z]+)(\d)", r"\1-\2", raw)
     prefix, _, number = raw.partition("-")
-    base_prefix, lang_hint = CODE_LANG_PREFIX.get(prefix.lower(), (prefix.lower(), ""))
+
+    # Split "36SP" into the number and a language marker; keep a real variant
+    # letter such as the "I" of M-40I or the "A" of P-48A.
+    suffix_lang = ""
+    m2 = re.match(r"^(\d{1,3})([A-Z]{0,2})$", number)
+    if m2:
+        number, letters = m2.group(1), m2.group(2)
+        if letters in CODE_LANG_SUFFIX:
+            suffix_lang = CODE_LANG_SUFFIX[letters]
+        else:
+            number += letters
+
+    prefix_base, lang_hint = CODE_LANG_PREFIX.get(prefix.lower(), (prefix.lower(), ""))
+    base_prefix = prefix_base
+    lang_hint = lang_hint or suffix_lang
+    raw = prefix.upper() + "-" + number
     base_code = base_prefix.upper() + "-" + number
     family = CODE_FAMILIES.get(base_prefix, "")
+    # An "I" suffix on an M- number marks a committee workbook (M-40I) rather
+    # than a display piece or wallet card (M-2).
+    if base_prefix == "m" and number.lower().endswith("i"):
+        family = "Committee Workbooks"
     return raw, base_code, family, lang_hint
 
 

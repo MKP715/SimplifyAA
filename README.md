@@ -37,7 +37,10 @@ file on aa.org. All literature remains the copyright of its publisher.
 | `data/meta.json` | Counts and the last-rebuild timestamp, shown in the page footer. |
 | `data/broken_links.csv` | Links aa.org publishes that no longer resolve to a PDF (see below). |
 | `tools/crawl_aa_pdfs.py` | The crawler and classifier. |
+| `tools/build_kits.py` | Reads each kit's contents PDF and matches the item numbers it names. |
+| `data/kits.csv` | Kit membership: one row per kit, language and listed item. |
 | `tools/test_ui.js` | Browser regression tests for the page (search, filters, translations, preview, mobile). |
+| `tools/test_kits.js` | Browser regression tests for the service-kit view. |
 | `.github/workflows/update-index.yml` | Weekly re-crawl, commit, and Pages deploy. |
 
 The data deliberately lives in CSV rather than inside `index.html`, so the page stays small and the
@@ -50,6 +53,7 @@ index can be regenerated without touching application code.
 - **Browse** — the sidebar tree goes *section → category*, with live counts.
 - **Filter** — stack language and topic filters on top of any search.
 - **Cards or table** — cards for reading, table for sorting and scanning.
+- **Service kits** — every committee kit as a set of working links, workbook first (see below).
 - **Preview** — read a PDF inline without leaving the page.
 - **Favorites** — star documents you use often; they are remembered in your browser.
 - **Share a view** — the URL captures the exact search and filters, so you can send someone a link
@@ -66,10 +70,44 @@ page has a built-in glossary, in short:
 | `P-` | Conference-approved pamphlets |
 | `B-` | Books, including the Big Book |
 | `F-` | Forms, catalogs, flyers and service pieces |
-| `SM-` / `SMF-` | Service material (not Conference-approved) |
+| `SMF-` | Service material (not Conference-approved) |
 | `MG-` | A.A. Guidelines |
-| `M-` | Displays and wallet cards |
+| `M-` | Committee workbooks when the number ends in `I` (`M-40I`), otherwise displays and wallet cards |
 | `BM-` | Bulletins such as Box 4-5-9 |
+| `CF-` | Conference and forum material |
+
+Note that `SM-` is *not* an English service-material number — it is the Spanish edition of an `M-`
+item (`SM-40I` is the Spanish Treatment workbook), and `FM-` is the French one.
+
+## Service kits
+
+G.S.O. ships a kit to each committee — a workbook plus a set of pamphlets, guidelines and service
+pieces. What is *in* a kit is only stated inside that kit's own contents PDF (F-167 for Treatment,
+F-68 for Corrections, and so on), so the kit is useless as a shopping list unless you open it and
+look up each item number by hand.
+
+`tools/build_kits.py` reads each contents list, extracts the A.A. item numbers it names, and matches
+them against the document index. The **Service kits** view then presents each kit as a set of working
+links, grouped the way the printed list reads:
+
+- the committee **workbook** first (`M-40I`, `M-45I`, …),
+- then pamphlets, books, service material, guidelines, and forms,
+- with anything the list names but aa.org does not publish as a PDF marked **print item**, so you
+  know it exists rather than wondering whether the index missed it.
+
+12 kits, 368 listed items, 298 of them available as PDFs. Kits are language-aware: choosing Spanish
+shows the Spanish contents list *and* the Spanish edition of each item. Each kit is deep-linkable
+(`#view=kits&kit=F-167`), and every document elsewhere in the index shows which kits include it.
+
+Two committees — Archives (`M-44I`) and Literature (`M-52I`) — have a workbook but no kit contents
+list on aa.org; those are listed separately rather than dropped.
+
+Kits are **discovered, not hard-coded**: candidates are found by title, then confirmed only if the PDF
+actually names several other item numbers. A new kit on aa.org is picked up on the next run, and the
+press kit and convention toolkit are correctly rejected because they list no item numbers.
+
+Only item numbers are extracted from those PDFs. Titles, sizes and links all come from the document
+index, so nothing from inside a document is copied.
 
 ## How translations are matched
 
@@ -117,6 +155,9 @@ python tools/crawl_aa_pdfs.py
 
 # Re-run only the classification, using the cached crawl (instant)
 python tools/crawl_aa_pdfs.py --reclassify
+
+# Rebuild the service-kit contents (reads ~37 kit PDFs)
+python tools/build_kits.py
 ```
 
 Useful flags: `--depth N` (how far to follow links beyond the sitemap), `--max-pages N`,
@@ -139,6 +180,7 @@ layout, failing on any console error:
 npm install puppeteer-core
 python -m http.server 8765 &
 node tools/test_ui.js http://127.0.0.1:8765/index.html ./shots
+node tools/test_kits.js http://127.0.0.1:8765/index.html
 ```
 
 Set `CHROME_PATH` if Chrome is not at the default Windows location.
