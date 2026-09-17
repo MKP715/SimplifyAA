@@ -1,14 +1,125 @@
 {
   "latest": {
-    "generated_utc": "2026-09-17T13:43:37Z",
-    "total": 2918,
+    "generated_utc": "2026-09-17T15:19:21Z",
+    "total": 2919,
     "first_run": false,
-    "added_count": 0,
-    "removed_count": 0,
-    "added": [],
-    "removed": []
+    "added_count": 4,
+    "removed_count": 3,
+    "added": [
+      {
+        "title": "Gu\u00edas de AA - Participaci\u00f3n de los grupos en l\u00ednea",
+        "url": "https://aaws.widen.net/content/1ohn3cokqq/pdf/SMG-26_Participation_of_Online_Groups_ONLINE.pdf",
+        "item_code": "SMG-26",
+        "category": "Anonymity, Internet & Online Groups",
+        "language": "Spanish"
+      },
+      {
+        "title": "Contribuciones = Servicio",
+        "url": "https://www.aa.org/sites/default/files/literature/aa-contributions-equals-service-sp-updated.pdf",
+        "item_code": "",
+        "category": "Finance & Self-Support",
+        "language": "Spanish"
+      },
+      {
+        "title": "Contributions = Service!",
+        "url": "https://www.aa.org/sites/default/files/literature/aa-contributions-equals-service-en-updated.pdf",
+        "item_code": "",
+        "category": "Finance & Self-Support",
+        "language": "English"
+      },
+      {
+        "title": "Contributions = Service!",
+        "url": "https://www.aa.org/sites/default/files/literature/aa-contributions-equals-service-fr-updated.pdf",
+        "item_code": "",
+        "category": "Finance & Self-Support",
+        "language": "French"
+      }
+    ],
+    "removed": [
+      {
+        "title": "Contribuciones = Servicio",
+        "url": "https://www.aa.org/sites/default/files/literature/aa-contributions-equals-service-sp.pdf",
+        "item_code": "",
+        "category": "Finance & Self-Support",
+        "language": "Spanish"
+      },
+      {
+        "title": "Contributions = Service!",
+        "url": "https://www.aa.org/sites/default/files/literature/aa-contributions-equals-service-en.pdf",
+        "item_code": "",
+        "category": "Finance & Self-Support",
+        "language": "English"
+      },
+      {
+        "title": "Contributions = Service!",
+        "url": "https://www.aa.org/sites/default/files/literature/aa-contributions-equals-service-fr.pdf",
+        "item_code": "",
+        "category": "Finance & Self-Support",
+        "language": "French"
+      }
+    ]
   },
   "runs": [
+    {
+      "generated_utc": "2026-09-17T15:19:21Z",
+      "total": 2919,
+      "first_run": false,
+      "added_count": 4,
+      "removed_count": 3,
+      "added": [
+        {
+          "title": "Gu\u00edas de AA - Participaci\u00f3n de los grupos en l\u00ednea",
+          "url": "https://aaws.widen.net/content/1ohn3cokqq/pdf/SMG-26_Participation_of_Online_Groups_ONLINE.pdf",
+          "item_code": "SMG-26",
+          "category": "Anonymity, Internet & Online Groups",
+          "language": "Spanish"
+        },
+        {
+          "title": "Contribuciones = Servicio",
+          "url": "https://www.aa.org/sites/default/files/literature/aa-contributions-equals-service-sp-updated.pdf",
+          "item_code": "",
+          "category": "Finance & Self-Support",
+          "language": "Spanish"
+        },
+        {
+          "title": "Contributions = Service!",
+          "url": "https://www.aa.org/sites/default/files/literature/aa-contributions-equals-service-en-updated.pdf",
+          "item_code": "",
+          "category": "Finance & Self-Support",
+          "language": "English"
+        },
+        {
+          "title": "Contributions = Service!",
+          "url": "https://www.aa.org/sites/default/files/literature/aa-contributions-equals-service-fr-updated.pdf",
+          "item_code": "",
+          "category": "Finance & Self-Support",
+          "language": "French"
+        }
+      ],
+      "removed": [
+        {
+          "title": "Contribuciones = Servicio",
+          "url": "https://www.aa.org/sites/default/files/literature/aa-contributions-equals-service-sp.pdf",
+          "item_code": "",
+          "category": "Finance & Self-Support",
+          "language": "Spanish"
+        },
+        {
+          "title": "Contributions = Service!",
+          "url": "https://www.aa.org/sites/default/files/literature/aa-contributions-equals-service-en.pdf",
+          "item_code": "",
+          "category": "Finance & Self-Support",
+          "language": "English"
+        },
+        {
+          "title": "Contributions = Service!",
+          "url": "https://www.aa.org/sites/default/files/literature/aa-contributions-equals-service-fr.pdf",
+          "item_code": "",
+          "category": "Finance & Self-Support",
+          "language": "French"
+        }
+      ]
+    },
     {
       "generated_utc": "2026-09-17T13:43:37Z",
       "total": 2918,

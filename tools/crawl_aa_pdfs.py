@@ -66,6 +66,10 @@ UA = "SimplifyAA-Indexer/1.0 (+https://github.com/MKP715/SimplifyAA) link-metada
 # Deepest "?page=N" we will follow on a listing page.
 MAX_PAGER = 100
 
+# Longest catalogue summary kept per document. aa.org's own descriptions run to
+# about 114 characters; this is a ceiling, not a target.
+MAX_SUMMARY = 300
+
 SKIP_PATH_RE = re.compile(
     r"^/(admin|user|search|comment|filter|node/add|media/oembed|core|profiles"
     r"|modules|themes|sites/default/files/(css|js))(/|$)",
@@ -898,6 +902,15 @@ def extract(page_url, html):
     page_title = re.sub(r"\s+", " ", title_tag.get_text(" ", strip=True)) if title_tag else ""
     page_title = re.sub(r"\s*\|\s*Alcoholics Anonymous\s*$", "", page_title).strip()
 
+    # aa.org writes a one-line description of most documents, in the document's
+    # own language. Indexing it is what lets someone search for what a document
+    # is about rather than having to know its catalogue name. Kept short: it is
+    # a catalogue summary, not the document.
+    page_desc = ""
+    meta = soup.find("meta", attrs={"name": "description"})
+    if meta and meta.get("content"):
+        page_desc = re.sub(r"\s+", " ", meta["content"]).strip()[:MAX_SUMMARY]
+
     pdf_hits, internal = [], set()
 
     for tag in soup.find_all(["a", "iframe", "embed", "object", "source"]):
@@ -938,7 +951,7 @@ def extract(page_url, html):
         if url and is_pdf_link(url):
             pdf_hits.append((url, []))
 
-    return pdf_hits, internal, page_title
+    return pdf_hits, internal, page_title, page_desc
 
 
 def crawl(fetcher, seeds, max_pages, workers, extra_depth):
@@ -950,6 +963,7 @@ def crawl(fetcher, seeds, max_pages, workers, extra_depth):
 
     records = {}          # canonical pdf url -> record dict
     page_titles = {}
+    page_descs = {}       # aa.org's own one-line summary, per page
     pages_done = 0
     lock = threading.Lock()
 
@@ -957,19 +971,21 @@ def crawl(fetcher, seeds, max_pages, workers, extra_depth):
         url, depth = item
         html, final = fetcher.text(url)
         if not html:
-            return url, depth, [], set(), ""
-        pdfs, links, title = extract(final or url, html)
-        return url, depth, pdfs, links, title
+            return url, depth, [], set(), "", ""
+        pdfs, links, title, desc = extract(final or url, html)
+        return url, depth, pdfs, links, title, desc
 
     with ThreadPoolExecutor(max_workers=workers) as pool:
         while queue and pages_done < max_pages:
             batch = []
             while queue and len(batch) < workers * 4:
                 batch.append(queue.popleft())
-            for url, depth, pdfs, links, title in pool.map(work, batch):
+            for url, depth, pdfs, links, title, desc in pool.map(work, batch):
                 pages_done += 1
                 if title:
                     page_titles[url] = title
+                if desc:
+                    page_descs[url] = desc
                 for pdf_url, candidates in pdfs:
                     key = canonical_pdf(pdf_url)
                     rec = records.get(key)
@@ -994,15 +1010,15 @@ def crawl(fetcher, seeds, max_pages, workers, extra_depth):
                              % (pages_done, len(queue), len(records)))
             sys.stderr.flush()
     sys.stderr.write("\n")
-    return records, page_titles, pages_done
+    return records, page_titles, page_descs, pages_done
 
 
 # --------------------------------------------------------------------------- #
 # Output
 # --------------------------------------------------------------------------- #
 FIELDS = [
-    "id", "title", "url", "filename", "item_code", "base_code", "translation_key",
-    "item_code_family",
+    "id", "title", "summary", "url", "filename", "item_code", "base_code",
+    "translation_key", "item_code_family",
     "category", "section", "language", "topics", "year", "bytes", "size_human",
     "last_modified", "source_page", "source_title", "source_count", "host", "status",
 ]
@@ -1046,7 +1062,8 @@ def iso_date(http_date):
     return ""
 
 
-def build_rows(records, page_titles, fetcher, workers, verify, heads_cache=None):
+def build_rows(records, page_titles, page_descs, fetcher, workers, verify,
+               heads_cache=None):
     keys = sorted(records)
 
     heads = {}
@@ -1124,9 +1141,16 @@ def build_rows(records, page_titles, fetcher, workers, verify, heads_cache=None)
                 status = "ok"
         info = heads.get(key) or {}
 
+        # aa.org's own summary of the page this document sits on. Dropped when
+        # it merely repeats the title, which adds nothing to search.
+        summary = (page_descs or {}).get(source_page, "")
+        if summary and summary.strip().lower() == title.strip().lower():
+            summary = ""
+
         rows.append({
             "id": "",
             "title": title,
+            "summary": summary,
             "url": key,
             "filename": filename,
             "item_code": item_code,
@@ -1295,12 +1319,13 @@ def write_outputs(rows, broken, pages_crawled, fetcher):
 CACHE_PATH = os.path.join(ROOT, ".cache", "crawl_raw.json")
 
 
-def save_cache(records, page_titles, pages, heads=None):
+def save_cache(records, page_titles, page_descs, pages, heads=None):
     """Persist the raw crawl so classification can be re-run offline."""
     os.makedirs(os.path.dirname(CACHE_PATH), exist_ok=True)
     payload = {
         "pages": pages,
         "page_titles": page_titles,
+        "page_descs": page_descs or {},
         "heads": heads or {},
         "records": {
             k: {"sources": v["sources"], "candidates": v["candidates"]}
@@ -1318,7 +1343,8 @@ def load_cache():
         k: {"url": k, "raw_urls": {k}, "sources": v["sources"], "candidates": v["candidates"]}
         for k, v in payload["records"].items()
     }
-    return records, payload["page_titles"], payload["pages"], payload.get("heads", {})
+    return (records, payload["page_titles"], payload.get("page_descs", {}),
+            payload["pages"], payload.get("heads", {}))
 
 
 def main():
@@ -1342,11 +1368,11 @@ def main():
                              % CACHE_PATH)
             return 1
         sys.stderr.write("Rebuilding from cached crawl...\n")
-        records, page_titles, pages, heads = load_cache()
-        rows, broken = build_rows(records, page_titles, fetcher, args.workers,
-                                  not args.no_verify, heads_cache=heads)
+        records, page_titles, page_descs, pages, heads = load_cache()
+        rows, broken = build_rows(records, page_titles, page_descs, fetcher,
+                                  args.workers, not args.no_verify, heads_cache=heads)
         csv_path, meta = write_outputs(rows, broken, pages, fetcher)
-        save_cache(records, page_titles, pages, build_rows.last_heads)
+        save_cache(records, page_titles, page_descs, pages, build_rows.last_heads)
         sys.stderr.write("Wrote %s (%d live PDFs)\n" % (csv_path, len(rows)))
         return 0
 
@@ -1360,7 +1386,7 @@ def main():
         return 1
 
     sys.stderr.write("Crawling...\n")
-    records, page_titles, pages = crawl(
+    records, page_titles, page_descs, pages = crawl(
         fetcher, seeds, args.max_pages, args.workers, args.depth
     )
     sys.stderr.write("  %d unique PDF URLs from %d pages\n" % (len(records), pages))
@@ -1368,14 +1394,14 @@ def main():
         sys.stderr.write("ERROR: no PDFs found; refusing to write an empty index.\n")
         return 1
 
-    rows, broken = build_rows(records, page_titles, fetcher, args.workers,
-                              not args.no_verify)
+    rows, broken = build_rows(records, page_titles, page_descs, fetcher,
+                              args.workers, not args.no_verify)
     if not rows:
         sys.stderr.write("ERROR: every candidate failed verification; "
                          "refusing to overwrite the index.\n")
         return 1
     csv_path, meta = write_outputs(rows, broken, pages, fetcher)
-    save_cache(records, page_titles, pages, build_rows.last_heads)
+    save_cache(records, page_titles, page_descs, pages, build_rows.last_heads)
 
     sys.stderr.write("\nWrote %s (%d live PDFs, %d dead links reported)\n"
                      % (csv_path, len(rows), len(broken)))

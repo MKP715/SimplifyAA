@@ -48,6 +48,9 @@ file on aa.org. All literature remains the copyright of its publisher.
 | `tools/test_viewers.js` | Browser regression tests for the PDF viewer options, including iPhone emulation. |
 | `tools/test_pwa.js` | Browser regression tests for install, offline use and new-document notifications. |
 | `tools/test_layout.js` | Browser regression tests for the resizable sidebar and the card layout controls. |
+| `tools/test_i18n.js` | Browser regression tests for the Spanish and French interface. |
+| `data/i18n.json` | Spanish and French interface text, keyed by the English source string. |
+| `outreach/` | A ready-to-send report of the broken links found on aa.org, for their web team. |
 | `tools/test_results_pane.js` | Browser regression tests for the filter bar, sorting, grouping and icons. |
 | `tools/make_favicon.py` | Generates the site icons and web manifest from one original mark. |
 | `tools/audit.js` | Debug audit: dangling references, duplicate ids, accessibility, blocked storage, missing data. |
@@ -60,8 +63,12 @@ index can be regenerated without touching application code.
 
 ## Using the page
 
-- **Search** — type in the box (or press <kbd>/</kbd>). Fuzzy matching covers titles, item codes and
-  topics, so "anonimity" and "p-47" both find the right pamphlet.
+- **Search** — type in the box (or press <kbd>/</kbd>). Fuzzy matching covers titles, item codes,
+  topics and aa.org's own one-line description of each document, so you can search for what a
+  document is *about* and not only for its catalogue name. "anonimity" and "p-47" both find the
+  right pamphlet, and typing anything switches the order to **Best match** automatically.
+- **Read it in Spanish or French** — the interface, the categories and the topics all translate;
+  pick a language in the header. Two thirds of the catalogue is not in English.
 - **Browse** — the sidebar tree goes *section → category*, with live counts.
 - **Filter** — stack language and topic filters on top of any search.
 - **Cards or table** — cards for reading, table for sorting and scanning. Columns can be
@@ -320,6 +327,7 @@ node tools/test_viewers.js http://127.0.0.1:8765/index.html
 node tools/test_results_pane.js http://127.0.0.1:8765/index.html
 node tools/test_pwa.js http://127.0.0.1:8765/index.html
 node tools/test_layout.js http://127.0.0.1:8765/index.html
+node tools/test_i18n.js http://127.0.0.1:8765/index.html
 node tools/audit.js http://127.0.0.1:8765/index.html index.html
 ```
 

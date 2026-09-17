@@ -1,11 +1,11 @@
 {
-  "generated_utc": "2026-09-17T13:43:37Z",
+  "generated_utc": "2026-09-17T15:19:21Z",
   "generated_date": "September 17, 2026",
   "source": "https://www.aa.org",
-  "total_pdfs": 2918,
-  "pages_crawled": 5401,
+  "total_pdfs": 2919,
+  "pages_crawled": 5402,
   "broken_links": 29,
-  "total_bytes": 2895352656,
+  "total_bytes": 2902644019,
   "categories": {
     "Newsletter: Box 4-5-9": 1037,
     "Corrections": 237,
@@ -31,8 +31,8 @@
     "Cooperation with the Professional Community": 24,
     "Literature & Committees": 22,
     "Finance & Self-Support": 19,
+    "Anonymity, Internet & Online Groups": 18,
     "Grapevine & La Vi\u00f1a": 18,
-    "Anonymity, Internet & Online Groups": 17,
     "Military & Remote Communities": 17,
     "Bridging the Gap": 14,
     "Surveys & Membership Data": 13,
@@ -53,7 +53,7 @@
     "Forms & Catalogs": 207,
     "Conference & Events": 137,
     "Service Structure": 79,
-    "For Members": 73,
+    "For Members": 74,
     "Service Material": 64,
     "Resources": 45,
     "A.A. Guidelines": 29,
@@ -62,7 +62,7 @@
   },
   "languages": {
     "English": 1124,
-    "Spanish": 921,
+    "Spanish": 922,
     "French": 873
   },
   "topics": {
@@ -105,21 +105,30 @@
     "Military": 4
   },
   "translation_groups": 843,
-  "translated_documents": 2482,
-  "added_since_last_run": 0,
-  "removed_since_last_run": 0,
+  "translated_documents": 2481,
+  "added_since_last_run": 4,
+  "removed_since_last_run": 3,
   "item_code_families": {
     "Forms, Catalogs & Order Blanks": 743,
     "Pamphlets & Booklets": 184,
     "Service Material": 136,
-    "A.A. Guidelines": 61,
+    "A.A. Guidelines": 62,
     "Books & Big Book": 28,
     "Committee Workbooks": 21,
     "Displays & Wallet Cards": 9,
     "Conference & Forum Materials": 2,
     "Newsletters & Bulletins": 1
   },
-  "http": {},
-  "pdf_hosts_seen": {},
+  "http": {
+    "http_ok": 8355,
+    "http_403": 10,
+    "http_404": 12,
+    "http_fail": 5
+  },
+  "pdf_hosts_seen": {
+    "www.aa.org": 5771,
+    "aaws.widen.net": 2972,
+    "www.aagrapevine.org": 6
+  },
   "pdf_hosts_skipped": {}
 }

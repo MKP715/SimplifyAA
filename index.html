@@ -121,6 +121,13 @@
   .sa-card { background: var(--sa-surface); border: 1px solid var(--sa-border); border-radius: .7rem; height: 100%; }
   .sa-card-title { font-size: .98rem; font-weight: 600; line-height: 1.3; }
   .sa-card .sa-meta { font-size: .78rem; color: var(--sa-muted); }
+  /* aa.org's own one-line description, clamped so cards stay even. */
+  .sa-summary {
+    font-size: .8rem; color: var(--sa-muted); margin-bottom: .45rem;
+    display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .sa-compact .sa-summary { -webkit-line-clamp: 1; font-size: .75rem; }
   .sa-code {
     font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: .75rem;
     background: var(--sa-accent-soft); color: var(--sa-accent);
@@ -187,6 +194,17 @@
       <button class="btn btn-sm btn-outline-light" data-bs-toggle="modal" data-bs-target="#aboutModal">
         <i class="bi bi-info-circle"></i><span class="d-none d-sm-inline ms-1">About</span>
       </button>
+      <div class="input-group input-group-sm w-auto" title="Interface language">
+        <span class="input-group-text bg-transparent text-white border-light">
+          <i class="bi bi-translate"></i>
+        </span>
+        <select class="form-select form-select-sm bg-transparent text-white border-light"
+                id="uiLangSel" aria-label="Interface language" style="max-width:7.5rem">
+          <option value="en">English</option>
+          <option value="es">Espa&ntilde;ol</option>
+          <option value="fr">Fran&ccedil;ais</option>
+        </select>
+      </div>
       <button class="btn btn-sm btn-outline-light d-none" id="installBtn"
               title="Install SimplifyAA as an app on this device">
         <i class="bi bi-download"></i><span class="d-none d-sm-inline ms-1">Install app</span>
@@ -344,6 +362,16 @@
                 <option value="4">4 cards</option>
                 <option value="5">5 cards</option>
               </select>
+              <div class="form-check form-switch mb-3">
+                <input class="form-check-input" type="checkbox" id="foldSel">
+                <label class="form-check-label small" for="foldSel">
+                  One row per document
+                  <div class="text-body-secondary" style="font-size:.78rem">
+                    Folds the Spanish and French editions of a document into a single
+                    result instead of three.
+                  </div>
+                </label>
+              </div>
               <div class="small fw-semibold mb-1">Card size</div>
               <div class="btn-group btn-group-sm w-100" role="group" id="densityGroup">
                 <button class="btn btn-outline-secondary" data-density="comfortable">Comfortable</button>
@@ -491,10 +519,10 @@
   <div class="modal-dialog modal-lg modal-dialog-scrollable">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title">What the item codes mean</h5>
+        <h5 class="modal-title" data-i18n-block="codesTitle">What the item codes mean</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <div class="modal-body">
+      <div class="modal-body" data-i18n-block="codes">
         <p class="small text-body-secondary">The colours below are used throughout the page, so a pamphlet number looks different from a guideline number at a glance. A.A. World Services prints a code on nearly every piece of literature.
           Once you know the prefix, the catalog stops being a maze — you can tell at a glance what a document is.</p>
         <table class="table table-sm align-middle">
@@ -535,10 +563,10 @@
   <div class="modal-dialog modal-lg modal-dialog-scrollable">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title">About this index</h5>
+        <h5 class="modal-title" data-i18n-block="aboutTitle">About this index</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <div class="modal-body">
+      <div class="modal-body" data-i18n-block="about">
         <div class="alert alert-secondary small">
           <strong>Unofficial.</strong> This page is not produced by, endorsed by, or affiliated with
           Alcoholics Anonymous World Services, Inc. or the A.A. General Service Office. It is an independent
@@ -627,7 +655,7 @@
       </div>
       <div class="modal-body">
         <h6>How PDFs preview on this device</h6>
-        <p class="small text-body-secondary">
+        <p class="small text-body-secondary" data-i18n-block="viewerIntro">
           Phones and tablets handle PDFs very differently. iPhones and iPads refuse to show a PDF
           inside a page at all, and some Android browsers download the file instead of displaying it.
           There is no single method that works everywhere, so pick whichever one works on your device —
@@ -646,7 +674,7 @@
 
         <hr class="my-4">
         <h6>App &amp; notifications</h6>
-        <p class="small text-body-secondary mb-2">
+        <p class="small text-body-secondary mb-2" data-i18n-block="appIntro">
           SimplifyAA installs as an app and keeps working without a signal, so the index is
           available at a meeting with no reception. The documents themselves are not stored on
           your device — those still need a connection.
@@ -703,7 +731,7 @@
     approval: "", size: "", updated: "", yearFrom: "", yearTo: "",
     hasTrans: false, inKit: false,
     sortField: "last_modified", sortDir: "desc",
-    group: "", pageSize: 48, density: "comfortable", cols: "",
+    group: "", pageSize: 48, density: "comfortable", cols: "", fold: false,
     page: 1, mode: "cards", openKit: ""
   };
 
@@ -712,7 +740,7 @@
   // Filters that live in the collapsible bar, counted on its badge.
   const BAR_FILTERS = ["approval", "size", "updated"];
 
-  let ROWS = [], META = {}, FUSE = null, FILTERED = [], table = null;
+  let ROWS = [], META = {}, FUSE = null, FILTERED = [], FILTERED_RAW = 0, table = null;
   let favorites = new Set();
   let BY_TRANSLATION = new Map();   // translation_key -> rows, for linking editions
   let BY_BASE_CODE = new Map();     // base item code -> rows in each language
@@ -788,8 +816,133 @@
   function safeLS(fn, fallback) {
     try { return fn(); } catch (e) { return fallback; }
   }
+
+  /* ---------------------------------- i18n -------------------------------- */
+  // Two thirds of the catalogue is Spanish or French, so the interface should
+  // not be English-only. Translations are keyed by the English string, which
+  // keeps English as the source of truth and means no markup carries ids.
+  // Longer prose contains inline markup, so those blocks are swapped whole.
+  const UI_LANGS = { en: "English", es: "Español", fr: "Français" };
+  const UI_LANG_DOC = { en: "English", es: "Spanish", fr: "French" };
+  const SKIP_TAGS = new Set(["SCRIPT", "STYLE", "CODE", "PRE", "TEXTAREA"]);
+
+  let uiLang = "en";
+  let I18N_ALL = null;      // whole file, fetched once
+  let I18N = {};            // { "English source": "translation" }
+  let I18N_BLOCKS = {};     // { block name: html }
+  const BLOCK_ORIGINAL = {};
+
+  // Translate a UI string. English passes straight through.
+  const t = (s) => (uiLang !== "en" && I18N[s]) || s;
+  // Which document language this reader most likely wants.
+  const uiLanguageName = () => UI_LANG_DOC[uiLang] || "English";
+
+  // Walks static markup and swaps exact matches.
+  //
+  // The English original is remembered per node, because translating in place
+  // is destructive: once a node reads "Buscar" it is no longer the key
+  // "Search", so it could never be switched again -- not to French, and not
+  // back to English. Every pass therefore translates from the original.
+  const ORIGINAL_TEXT = new WeakMap();
+  const ORIGINAL_ATTR = new WeakMap();
+  const I18N_ATTRS = ["title", "placeholder", "aria-label"];
+  let everTranslated = false;
+
+  function translateDom(root) {
+    // Nothing to do for an English reader who has never switched away.
+    if (uiLang === "en" && !everTranslated) return;
+    if (uiLang !== "en") everTranslated = true;
+
+    const scope = root || document.body;
+    const walker = document.createTreeWalker(scope, NodeFilter.SHOW_TEXT, {
+      acceptNode(node) {
+        if (!node.nodeValue || !node.nodeValue.trim()) return NodeFilter.FILTER_REJECT;
+        const parent = node.parentElement;
+        if (parent && SKIP_TAGS.has(parent.tagName)) return NodeFilter.FILTER_REJECT;
+        return NodeFilter.FILTER_ACCEPT;
+      },
+    });
+    const nodes = [];
+    while (walker.nextNode()) nodes.push(walker.currentNode);
+
+    nodes.forEach((n) => {
+      let src = ORIGINAL_TEXT.get(n);
+      if (src === undefined) {
+        src = n.nodeValue;
+        ORIGINAL_TEXT.set(n, src);
+      }
+      const key = src.trim();
+      if (!key) return;
+      const hit = uiLang !== "en" ? I18N[key] : null;
+      const next = hit ? src.replace(key, hit) : src;
+      if (n.nodeValue !== next) n.nodeValue = next;
+    });
+
+    scope.querySelectorAll("[title],[placeholder],[aria-label]").forEach((el) => {
+      let store = ORIGINAL_ATTR.get(el);
+      if (!store) {
+        store = {};
+        I18N_ATTRS.forEach((a) => {
+          if (el.hasAttribute(a)) store[a] = el.getAttribute(a);
+        });
+        ORIGINAL_ATTR.set(el, store);
+      }
+      Object.keys(store).forEach((a) => {
+        const src = store[a];
+        const hit = uiLang !== "en" ? I18N[src.trim()] : null;
+        const next = hit || src;
+        if (el.getAttribute(a) !== next) el.setAttribute(a, next);
+      });
+    });
+  }
+
+  function applyBlocks() {
+    document.querySelectorAll("[data-i18n-block]").forEach((el) => {
+      const name = el.getAttribute("data-i18n-block");
+      if (!(name in BLOCK_ORIGINAL)) BLOCK_ORIGINAL[name] = el.innerHTML;
+      const swap = uiLang !== "en" && I18N_BLOCKS[name];
+      el.innerHTML = swap || BLOCK_ORIGINAL[name];
+    });
+  }
+
+  async function setUiLang(lang, save) {
+    uiLang = UI_LANGS[lang] ? lang : "en";
+    document.documentElement.setAttribute("lang", uiLang);
+    if (uiLang !== "en" && !I18N_ALL) {
+      try {
+        const res = await fetch("./data/i18n.json?cb=" + Date.now());
+        I18N_ALL = res.ok ? await res.json() : {};
+      } catch (e) {
+        I18N_ALL = {};
+      }
+    }
+    const pack = (I18N_ALL && I18N_ALL[uiLang]) || {};
+    I18N = uiLang === "en" ? {} : (pack.strings || {});
+    I18N_BLOCKS = uiLang === "en" ? {} : (pack.blocks || {});
+    if (save) { settings.uiLang = uiLang; saveSettings(); }
+
+    applyBlocks();
+    // Facet labels come from the data, so they are rebuilt rather than walked.
+    if (ROWS.length) {
+      buildTree(); buildLanguages(); buildYearRange();
+      buildFamilyChips(); buildTopics(); buildStartLinks();
+      render();
+    }
+    translateDom(document.body);
+    const sel = $("#uiLangSel");
+    if (sel) sel.value = uiLang;
+  }
+
+  // Offer the reader's own language the first time, without overriding a choice.
+  function preferredUiLang() {
+    if (settings.uiLang && UI_LANGS[settings.uiLang]) return settings.uiLang;
+    const nav = (navigator.languages || [navigator.language || "en"]).join(",").toLowerCase();
+    if (/\bes\b|es-/.test(nav)) return "es";
+    if (/\bfr\b|fr-/.test(nav)) return "fr";
+    return "en";
+  }
   function toast(msg) {
-    $("#toastBody").textContent = msg;
+    $("#toastBody").textContent = t(msg);
     bootstrap.Toast.getOrCreateInstance($("#toast"), { delay: 2200 }).show();
   }
   function highlight(text, query) {
@@ -855,6 +1008,7 @@
     if (state.group) p.set("group", state.group);
     if (state.pageSize !== 48) p.set("per", String(state.pageSize));
     if (state.density !== "comfortable") p.set("density", state.density);
+    if (state.fold) p.set("fold", "1");
     if (state.mode !== "cards") p.set("mode", state.mode);
     if (state.openKit) p.set("kit", state.openKit);
     const s = p.toString();
@@ -889,6 +1043,7 @@
       ? "compact" : "comfortable";
     // Cards-across is a property of this screen, so it is never taken from a link.
     state.cols = /^[1-5]$/.test(String(settings.cols || "")) ? String(settings.cols) : "";
+    state.fold = p.get("fold") === "1" || (!p.has("fold") && !!settings.fold);
     state.mode = p.get("mode") === "table" ? "table" : "cards";
     state.openKit = p.get("kit") || "";
   }
@@ -1042,11 +1197,7 @@
     let html =
       '<div class="sa-panel p-3 mb-3">' +
         '<div class="fw-semibold mb-1"><i class="bi bi-box2-heart me-1"></i>A.A. service kits</div>' +
-        '<p class="small text-body-secondary mb-0">G.S.O. ships a kit to each committee: a workbook ' +
-        'plus a set of pamphlets, guidelines and service pieces. What is in a kit is only stated inside ' +
-        'its contents PDF, so those lists have been read and every item matched to its download. ' +
-        'Items the list names but aa.org does not publish as a PDF are marked as print items. ' +
-        'Pick a language in the sidebar to see a kit and its contents in that language.</p>' +
+        '<p class="small text-body-secondary mb-0">' + t("kitsIntro") + "</p>" +
       "</div>";
 
     if (!kits.length) {
@@ -1106,8 +1257,8 @@
             '<span class="d-flex flex-wrap align-items-center gap-2">' +
               (kit.base_code ? codeBadge(kit.base_code, kit.base_code) : "") +
               '<span class="fw-semibold">' + esc(kit.name) + "</span>" +
-              '<span class="sa-meta">' + items.length + " items &middot; " + available +
-                " as PDF</span>" +
+              '<span class="sa-meta">' + items.length + " " + t("items") +
+                " &middot; " + available + " " + t("as PDF") + "</span>" +
             "</span>" +
           "</button></h2>" +
           '<div id="' + id + '" class="accordion-collapse collapse' + (isOpen ? " show" : "") +
@@ -1356,7 +1507,38 @@
       rows = rows.filter((r) => r.base_code && KIT_MEMBERSHIP.has(r.base_code));
     }
 
+    // Kept so the count can say "1,296 documents · 2,918 editions".
+    FILTERED_RAW = rows.length;
+    if (state.fold) rows = foldTranslations(rows);
     FILTERED = sortRows(rows, q);
+  }
+
+  // Most documents exist three times over, once per language. Folding shows one
+  // result per document, preferring the language the reader is filtered to (or
+  // asked for in the interface), with the other editions still one click away
+  // on the chips.
+  function foldTranslations(rows) {
+    const preference = [state.language || uiLanguageName(), "English", "Spanish", "French"];
+    const rank = (r) => {
+      const i = preference.indexOf(r.language);
+      return i === -1 ? preference.length : i;
+    };
+    const chosen = new Map();
+    const out = [];
+    rows.forEach((r) => {
+      if (!r.translation_key) { out.push(r); return; }
+      const prev = chosen.get(r.translation_key);
+      if (!prev) {
+        chosen.set(r.translation_key, r);
+        out.push(r);
+        return;
+      }
+      if (rank(r) < rank(prev)) {
+        out[out.indexOf(prev)] = r;
+        chosen.set(r.translation_key, r);
+      }
+    });
+    return out;
   }
 
   const approvalOf = (r) => {
@@ -1399,8 +1581,14 @@
     // "Best match" only means something while searching; Fuse has already
     // ordered those rows, so leave them alone.
     if (field === "relevance") {
-      if (q.length >= 2) return state.sortDir === "desc" ? rows.slice().reverse() : rows;
-      return sortBy(rows, "title", state.sortDir);
+      // Fuse returns best-first, so descending (highest relevance first) is the
+      // natural reading and the order to leave alone.
+      if (q.length >= 2) return state.sortDir === "asc" ? rows.slice().reverse() : rows;
+      // With nothing typed there is no relevance; fall back to the reader's own
+      // browsing order rather than to an arbitrary one.
+      return sortBy(rows, settings.sortField === "relevance"
+        ? "last_modified" : (settings.sortField || "last_modified"),
+        settings.sortDir || "desc");
     }
     if (state.view === "recent" && field === "title") {
       return sortBy(rows, "last_modified", "desc");
@@ -1462,7 +1650,7 @@
           esc(row.last_modified) + "</span>" : esc(row.last_modified)));
     }
     // Language is shown by the edition chips when translations exist.
-    if (row.language && (row._langs || []).length < 2) bits.push(esc(row.language));
+    if (row.language && (row._langs || []).length < 2) bits.push(esc(t(row.language)));
     if (row.year) bits.push(esc(row.year));
 
     col.innerHTML =
@@ -1478,6 +1666,10 @@
           '<span class="badge rounded-pill" style="background:var(--sa-accent-soft);color:var(--sa-accent)">' +
             esc(row.category) + "</span>" +
         "</div>" +
+        (row.summary
+          ? '<div class="sa-summary"' + langAttr(row) + ">" +
+            highlight(row.summary, state.q) + "</div>"
+          : "") +
         '<div class="sa-meta mb-2">' + bits.join(' &nbsp;·&nbsp; ') + "</div>" +
         translationLinks(row) +
         kitBadges(row) +
@@ -1550,7 +1742,10 @@
           esc(c.getValue()) + "</a>" },
       { title: "Code", field: "item_code", width: 92, formatter: (c) =>
           codeBadge(c.getValue(), c.getRow().getData().base_code) },
-      { title: "Category", field: "category", width: 210 },
+      { title: "Category", field: "category", width: 210,
+        formatter: (c) => esc(t(c.getValue() || "")) },
+      { title: "Summary", field: "summary", minWidth: 220, visible: false,
+        formatter: (c) => esc(c.getValue() || "") },
       { title: "Section", field: "section", width: 160 },
       { title: "Lang", field: "language", width: 90 },
       { title: "Editions", width: 118, headerSort: false, formatter: (c) => {
@@ -1701,6 +1896,7 @@
     $("#groupSel").value = state.group;
     $("#pageSizeSel").value = String(state.pageSize);
     $("#colsSel").value = state.cols || "";
+    $("#foldSel").checked = !!state.fold;
     $("#approvalSel").value = state.approval;
     $("#sizeSel").value = state.size;
     $("#updatedSel").value = state.updated;
@@ -1758,9 +1954,11 @@
       { recent: "Recently updated", favorites: "My favorites",
         large: "Full books & reports", new: "New since your last visit" }[state.view] ||
       "All documents";
-    $("#resultCount").textContent = total.toLocaleString() +
-      (total === 1 ? " document" : " documents") +
-      (total !== ROWS.length ? " of " + ROWS.length.toLocaleString() : "");
+    const folded = state.fold && total !== FILTERED_RAW;
+    $("#resultCount").textContent = total.toLocaleString() + " " +
+      (total === 1 ? t("document") : t("documents")) +
+      (total !== ROWS.length ? " " + t("of") + " " + ROWS.length.toLocaleString() : "") +
+      (folded ? " · " + FILTERED_RAW.toLocaleString() + " " + t("editions") : "");
 
     $("#emptyState").classList.toggle("d-none", total > 0);
     $("#cardsWrap").classList.toggle("d-none", state.mode !== "cards" || total === 0);
@@ -1780,6 +1978,8 @@
     renderPager(total);
     renderChips();
     syncControlStates();
+    translateDom($("#results"));
+    translateDom($("#layoutRow"));
   }
 
   function sync() { render(); stateToHash(); }
@@ -1832,7 +2032,8 @@
     { viewer: "auto", previewHeight: 78,
       sortField: "last_modified", sortDir: "desc",
       // Layout choices belong to the device, not to a shared link.
-      sidebarWidth: 0, cols: "", density: "comfortable", pageSize: 48 },
+      sidebarWidth: 0, cols: "", density: "comfortable", pageSize: 48,
+      fold: false, uiLang: "" },
     safeLS(() => JSON.parse(localStorage.getItem(LS.settings) || "{}"), {}) || {}
   );
   function saveSettings() {
@@ -2142,7 +2343,8 @@
       settings.sortDir = "desc";
       state.sortField = "last_modified";
       state.sortDir = "desc";
-      settings.sidebarWidth = 0; settings.cols = "";
+      settings.sidebarWidth = 0; settings.cols = ""; settings.fold = false;
+      state.fold = false;
       settings.density = "comfortable"; settings.pageSize = 48;
       state.cols = ""; state.density = "comfortable"; state.pageSize = 48;
       applySidebarWidth(0);
@@ -2160,30 +2362,59 @@
 
   /* -------------------------------- events ------------------------------- */
   let qTimer = null;
+  // Starting a search switches to Best match, because when you have typed
+  // something the most relevant document is what you want first, not the most
+  // recently updated one. Clearing the search puts your own order back. A sort
+  // chosen part-way through a search sticks for that search.
+  function applyQuery(v) {
+    const had = state.q.trim().length >= 2;
+    const has = v.trim().length >= 2;
+    state.q = v;
+    if (has && !had) {
+      state.sortField = "relevance";
+      state.sortDir = "desc";
+    } else if (!has && had) {
+      state.sortField = settings.sortField || "last_modified";
+      state.sortDir = settings.sortDir || "desc";
+    }
+    state.page = 1;
+    sync();
+  }
+
   $("#q").addEventListener("input", (e) => {
     clearTimeout(qTimer);
     const v = e.target.value;
-    qTimer = setTimeout(() => { state.q = v; state.page = 1; sync(); }, 140);
+    qTimer = setTimeout(() => applyQuery(v), 140);
   });
   document.addEventListener("keydown", (e) => {
     if (e.key === "/" && document.activeElement.tagName !== "INPUT") { e.preventDefault(); $("#q").focus(); }
     if (e.key === "Escape" && document.activeElement === $("#q")) {
-      $("#q").value = ""; state.q = ""; state.page = 1; sync();
+      $("#q").value = "";
+      applyQuery("");
     }
   });
   document.querySelectorAll("[data-view]").forEach((b) => b.addEventListener("click", () => {
     state.view = b.dataset.view; state.section = ""; state.category = ""; state.page = 1; sync();
   }));
+  // Sorting is saved as a browsing preference, but a sort chosen while
+  // searching belongs to that search only -- it should not redefine how the
+  // app opens next time.
+  const searching = () => state.q.trim().length >= 2;
+
   $("#sortSel").addEventListener("change", (e) => {
     state.sortField = e.target.value;
-    settings.sortField = state.sortField;
-    saveSettings();
+    if (!searching() && state.sortField !== "relevance") {
+      settings.sortField = state.sortField;
+      saveSettings();
+    }
     state.page = 1; sync();
   });
   $("#sortDir").addEventListener("click", () => {
     state.sortDir = state.sortDir === "asc" ? "desc" : "asc";
-    settings.sortDir = state.sortDir;
-    saveSettings();
+    if (!searching() && state.sortField !== "relevance") {
+      settings.sortDir = state.sortDir;
+      saveSettings();
+    }
     state.page = 1; sync();
   });
   $("#groupSel").addEventListener("change", (e) => {
@@ -2194,6 +2425,12 @@
     const v = +e.target.value;
     state.pageSize = PAGE_SIZES.includes(v) ? v : 48;
     settings.pageSize = state.pageSize;
+    saveSettings();
+    state.page = 1; sync();
+  });
+  $("#foldSel").addEventListener("change", (e) => {
+    state.fold = e.target.checked;
+    settings.fold = state.fold;
     saveSettings();
     state.page = 1; sync();
   });
@@ -2254,6 +2491,8 @@
     sync();
     if (scrollUp) window.scrollTo({ top: 0, behavior: "smooth" });
   }
+
+  $("#uiLangSel").addEventListener("change", (e) => setUiLang(e.target.value, true));
 
   $("#resetAll").addEventListener("click", () => resetAllFilters(true));
 
@@ -2782,18 +3021,19 @@
   function boot(rows, meta, kitRows) {
     ROWS = rows.filter((r) => r.url && r.title);
     ROWS.forEach((r) => {
-      r._hay = [r.title, r.item_code, r.category, r.section, r.topics,
+      r._hay = [r.title, r.summary, r.item_code, r.category, r.section, r.topics,
                 r.filename, r.source_title].join(" ").toLowerCase();
     });
     META = meta || {};
 
     FUSE = new Fuse(ROWS, {
       keys: [
-        { name: "title", weight: 0.45 },
-        { name: "item_code", weight: 0.2 },
-        { name: "topics", weight: 0.14 },
-        { name: "category", weight: 0.1 },
-        { name: "source_title", weight: 0.06 },
+        { name: "title", weight: 0.36 },
+        { name: "summary", weight: 0.22 },
+        { name: "item_code", weight: 0.16 },
+        { name: "topics", weight: 0.1 },
+        { name: "category", weight: 0.06 },
+        { name: "source_title", weight: 0.05 },
         { name: "filename", weight: 0.05 },
       ],
       threshold: 0.35, ignoreLocation: true, minMatchCharLength: 2,
@@ -2833,6 +3073,7 @@
     ROWS.forEach((r) => { r._langs = editionsOf(r).map((e) => e.language); });
 
     buildKits(kitRows);
+    setUiLang(preferredUiLang(), false);
     registerServiceWorker();
     updateAppNote();
     applySidebarWidth(settings.sidebarWidth);
