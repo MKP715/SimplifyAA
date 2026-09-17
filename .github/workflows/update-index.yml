@@ -1,0 +1,138 @@
+name: Update PDF index and deploy
+
+on:
+  schedule:
+    # Mondays, 07:00 UTC. aa.org changes slowly; weekly is plenty.
+    - cron: "0 7 * * 1"
+  workflow_dispatch:
+    inputs:
+      depth:
+        description: "Extra link-following depth beyond the sitemap"
+        required: false
+        default: "2"
+      max_pages:
+        description: "Maximum pages to crawl"
+        required: false
+        default: "15000"
+  push:
+    branches: [main]
+    paths:
+      - "index.html"
+      - "data/**"
+      - ".github/workflows/update-index.yml"
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  update:
+    name: Re-crawl aa.org
+    runs-on: ubuntu-latest
+    outputs:
+      changed: ${{ steps.commit.outputs.changed }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: pip install --disable-pip-version-check -r requirements.txt
+
+      - name: Record current index size
+        id: before
+        run: |
+          if [ -f data/pdfs.csv ]; then
+            echo "count=$(( $(wc -l < data/pdfs.csv) - 1 ))" >> "$GITHUB_OUTPUT"
+          else
+            echo "count=0" >> "$GITHUB_OUTPUT"
+          fi
+
+      # A plain push to main only redeploys the site; it must not re-crawl.
+      - name: Crawl aa.org
+        if: github.event_name != 'push'
+        run: |
+          python tools/crawl_aa_pdfs.py \
+            --max-pages "${{ github.event.inputs.max_pages || '15000' }}" \
+            --depth "${{ github.event.inputs.depth || '2' }}" \
+            --workers 10
+
+      - name: Sanity-check the new index
+        if: github.event_name != 'push'
+        run: |
+          before=${{ steps.before.outputs.count }}
+          after=$(( $(wc -l < data/pdfs.csv) - 1 ))
+          echo "Previous: $before documents / New: $after documents"
+          if [ "$after" -lt 100 ]; then
+            echo "::error::Only $after documents found - aborting rather than publishing a broken index."
+            exit 1
+          fi
+          # A sudden collapse usually means aa.org changed or started blocking us.
+          if [ "$before" -gt 0 ] && [ "$after" -lt $(( before * 70 / 100 )) ]; then
+            echo "::error::Document count fell from $before to $after (>30% drop). Refusing to publish."
+            echo "::error::Re-run manually to confirm, or adjust the crawler if aa.org changed."
+            exit 1
+          fi
+
+      - name: Commit updated index
+        id: commit
+        if: github.event_name != 'push'
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/
+          if git diff --cached --quiet; then
+            echo "No changes to the index."
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          else
+            count=$(( $(wc -l < data/pdfs.csv) - 1 ))
+            git commit -m "Update aa.org PDF index ($count documents)"
+            git push
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Job summary
+        if: always()
+        run: |
+          {
+            echo "## aa.org PDF index"
+            if [ -f data/meta.json ]; then
+              python - <<'PY'
+          import json
+          m = json.load(open("data/meta.json"))
+          print(f"- **{m['total_pdfs']:,} documents** across {m['pages_crawled']:,} pages")
+          print(f"- Stale links filtered out: {m.get('broken_links', 0)}")
+          print(f"- Languages: " + ", ".join(f"{k} ({v})" for k, v in m["languages"].items()))
+          print(f"- Rebuilt: {m['generated_utc']}")
+          print("\n| Section | Documents |\n|---|---:|")
+          for k, v in m["sections"].items():
+              print(f"| {k} | {v} |")
+          PY
+            fi
+          } >> "$GITHUB_STEP_SUMMARY"
+
+  deploy:
+    name: Deploy to GitHub Pages
+    needs: update
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          # Pick up the commit the update job just pushed.
+          ref: main
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: "."
+      - id: deployment
+        uses: actions/deploy-pages@v4

@@ -1,0 +1,1007 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SimplifyAA — A.A. Document Finder</title>
+<meta name="description" content="A searchable, categorized index of every PDF published on aa.org. Unofficial; all links point to the official files.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%231f6f8b'/%3E%3Cpath d='M9 8h10l5 5v11a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2V10a2 2 0 0 1 2-2z' fill='%23fff'/%3E%3Cpath d='M11 17h10M11 21h7' stroke='%231f6f8b' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E">
+
+<!-- Open-source CDN libraries (jsDelivr / cdnjs) -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/tabulator-tables@6.2.5/dist/css/tabulator_bootstrap5.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/@fontsource/inter@5.0.18/index.min.css" rel="stylesheet">
+
+<style>
+  :root {
+    --sa-accent: #1f6f8b;
+    --sa-accent-soft: rgba(31, 111, 139, .12);
+    --sa-surface: #ffffff;
+    --sa-page: #f4f6f8;
+    --sa-border: rgba(0, 0, 0, .1);
+    --sa-muted: #5b6770;
+  }
+  :root:not([data-bs-theme="light"]) { }
+  [data-bs-theme="dark"] {
+    --sa-accent: #6fb3c9;
+    --sa-accent-soft: rgba(111, 179, 201, .16);
+    --sa-surface: #1b2127;
+    --sa-page: #12171c;
+    --sa-border: rgba(255, 255, 255, .12);
+    --sa-muted: #9aa7b1;
+  }
+  body {
+    background: var(--sa-page);
+    font-family: Inter, system-ui, -apple-system, "Segoe UI", sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  .sa-navbar { background: var(--sa-accent); }
+  .sa-navbar .navbar-brand, .sa-navbar .nav-link, .sa-navbar .btn { color: #fff; }
+  .sa-panel {
+    background: var(--sa-surface);
+    border: 1px solid var(--sa-border);
+    border-radius: .75rem;
+  }
+  .sa-sidebar { position: sticky; top: 1rem; max-height: calc(100vh - 2rem); overflow-y: auto; }
+  @media (max-width: 991.98px) { .sa-sidebar { position: static; max-height: none; } }
+  .sa-search { font-size: 1.05rem; }
+  .sa-count { font-variant-numeric: tabular-nums; color: var(--sa-muted); }
+  .sa-tree-btn {
+    display: flex; align-items: center; justify-content: space-between; gap: .5rem;
+    width: 100%; text-align: left; border: 0; background: transparent;
+    padding: .3rem .5rem; border-radius: .4rem; font-size: .9rem; color: inherit;
+  }
+  .sa-tree-btn:hover { background: var(--sa-accent-soft); }
+  .sa-tree-btn.active { background: var(--sa-accent-soft); font-weight: 600; color: var(--sa-accent); }
+  .sa-tree-btn .badge { background: var(--sa-border); color: var(--sa-muted); font-weight: 500; }
+  .sa-chip { cursor: pointer; user-select: none; }
+  .sa-chip.active { background: var(--sa-accent) !important; color: #fff !important; }
+  .sa-card { background: var(--sa-surface); border: 1px solid var(--sa-border); border-radius: .7rem; height: 100%; }
+  .sa-card-title { font-size: .98rem; font-weight: 600; line-height: 1.3; }
+  .sa-card .sa-meta { font-size: .78rem; color: var(--sa-muted); }
+  .sa-code {
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: .75rem;
+    background: var(--sa-accent-soft); color: var(--sa-accent);
+    padding: .1rem .35rem; border-radius: .25rem; font-weight: 600;
+  }
+  .sa-star { cursor: pointer; color: #d9a406; }
+  .sa-preview-frame { width: 100%; height: 78vh; border: 0; background: var(--sa-page); }
+  .tabulator { background: var(--sa-surface); font-size: .88rem; }
+  .sa-skip { position: absolute; left: -9999px; }
+  .sa-skip:focus { left: .5rem; top: .5rem; z-index: 2000; background: #fff; padding: .5rem; }
+  mark { padding: 0 .1em; background: #ffe8a3; }
+  [data-bs-theme="dark"] mark { background: #6b5514; color: #fff; }
+</style>
+</head>
+<body>
+<a class="sa-skip" href="#results">Skip to results</a>
+
+<nav class="navbar navbar-expand-lg sa-navbar shadow-sm mb-3" data-bs-theme="dark">
+  <div class="container-fluid gap-2">
+    <span class="navbar-brand fw-semibold mb-0">
+      <i class="bi bi-journals me-1"></i>SimplifyAA
+      <small class="fw-normal opacity-75 d-none d-md-inline">· every A.A. PDF, organized</small>
+    </span>
+    <div class="ms-auto d-flex align-items-center gap-2 flex-wrap">
+      <span class="badge text-bg-light" id="statTotal">…</span>
+      <button class="btn btn-sm btn-outline-light" data-bs-toggle="modal" data-bs-target="#codesModal">
+        <i class="bi bi-hash"></i><span class="d-none d-sm-inline ms-1">Item codes</span>
+      </button>
+      <button class="btn btn-sm btn-outline-light" data-bs-toggle="modal" data-bs-target="#aboutModal">
+        <i class="bi bi-info-circle"></i><span class="d-none d-sm-inline ms-1">About</span>
+      </button>
+      <button class="btn btn-sm btn-outline-light" id="themeToggle" title="Toggle dark mode">
+        <i class="bi bi-moon-stars"></i>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<div class="container-fluid pb-5">
+  <div id="loadError" class="alert alert-warning d-none">
+    <h6 class="alert-heading"><i class="bi bi-exclamation-triangle me-1"></i>Could not load the document index</h6>
+    <p class="mb-1 small" id="loadErrorMsg"></p>
+    <p class="mb-0 small">If you opened this file directly from disk, browsers block local data loading.
+      Serve the folder instead — <code>python -m http.server</code> — or use the GitHub&nbsp;Pages URL.</p>
+  </div>
+
+  <div class="row g-3">
+    <!-- ------------------------------ sidebar ------------------------------ -->
+    <aside class="col-lg-3">
+      <div class="sa-sidebar">
+        <div class="sa-panel p-3 mb-3">
+          <label for="q" class="form-label fw-semibold small text-uppercase text-body-secondary">Search</label>
+          <div class="input-group">
+            <span class="input-group-text"><i class="bi bi-search"></i></span>
+            <input id="q" type="search" class="form-control sa-search" placeholder="Title, code, topic…" autocomplete="off">
+          </div>
+          <div class="form-text">Press <kbd>/</kbd> to focus, <kbd>Esc</kbd> to clear.</div>
+        </div>
+
+        <div class="sa-panel p-3 mb-3">
+          <div class="fw-semibold small text-uppercase text-body-secondary mb-2">Quick views</div>
+          <div class="d-grid gap-1">
+            <button class="sa-tree-btn active" data-view="all"><span><i class="bi bi-collection me-1"></i>All documents</span><span class="badge" id="qvAll"></span></button>
+            <button class="sa-tree-btn" data-view="recent"><span><i class="bi bi-clock-history me-1"></i>Recently updated</span></button>
+            <button class="sa-tree-btn" data-view="favorites"><span><i class="bi bi-star-fill me-1 sa-star"></i>My favorites</span><span class="badge" id="qvFav">0</span></button>
+            <button class="sa-tree-btn" data-view="large"><span><i class="bi bi-file-earmark-text me-1"></i>Full books &amp; reports</span></button>
+          </div>
+        </div>
+
+        <div class="sa-panel p-3 mb-3">
+          <div class="d-flex justify-content-between align-items-center mb-2">
+            <span class="fw-semibold small text-uppercase text-body-secondary">Browse</span>
+            <button class="btn btn-sm btn-link p-0 text-decoration-none" id="clearBrowse">clear</button>
+          </div>
+          <div class="accordion accordion-flush" id="tree"></div>
+        </div>
+
+        <div class="sa-panel p-3 mb-3">
+          <div class="fw-semibold small text-uppercase text-body-secondary mb-2">Language</div>
+          <div class="btn-group btn-group-sm w-100" role="group" id="langGroup"></div>
+        </div>
+
+        <div class="sa-panel p-3 mb-3">
+          <label for="yearSel" class="form-label fw-semibold small text-uppercase text-body-secondary">Year</label>
+          <select class="form-select form-select-sm" id="yearSel"></select>
+          <div class="form-text">Useful for newsletter back-issues.</div>
+        </div>
+
+        <div class="sa-panel p-3 mb-3">
+          <div class="d-flex justify-content-between align-items-center mb-2">
+            <span class="fw-semibold small text-uppercase text-body-secondary">Topics</span>
+            <button class="btn btn-sm btn-link p-0 text-decoration-none" data-bs-toggle="collapse" data-bs-target="#topicWrap">show / hide</button>
+          </div>
+          <div class="collapse show" id="topicWrap">
+            <div class="d-flex flex-wrap gap-1" id="topics"></div>
+          </div>
+        </div>
+
+        <div class="d-grid">
+          <button class="btn btn-outline-secondary btn-sm" id="resetAll"><i class="bi bi-arrow-counterclockwise me-1"></i>Reset all filters</button>
+        </div>
+      </div>
+    </aside>
+
+    <!-- ------------------------------ results ------------------------------ -->
+    <section class="col-lg-9" id="results">
+      <div class="sa-panel p-3 mb-3">
+        <div class="d-flex flex-wrap align-items-center gap-2">
+          <div class="me-auto">
+            <div class="fw-semibold" id="resultHeading">All documents</div>
+            <div class="small sa-count" id="resultCount">loading…</div>
+          </div>
+          <div class="btn-group btn-group-sm" role="group" aria-label="View mode">
+            <input type="radio" class="btn-check" name="viewmode" id="vmCards" checked>
+            <label class="btn btn-outline-secondary" for="vmCards"><i class="bi bi-grid-3x2-gap"></i> Cards</label>
+            <input type="radio" class="btn-check" name="viewmode" id="vmTable">
+            <label class="btn btn-outline-secondary" for="vmTable"><i class="bi bi-table"></i> Table</label>
+          </div>
+          <select class="form-select form-select-sm w-auto" id="sortSel">
+            <option value="title">Sort: Title A–Z</option>
+            <option value="-title">Sort: Title Z–A</option>
+            <option value="-last_modified">Sort: Newest updated</option>
+            <option value="last_modified">Sort: Oldest updated</option>
+            <option value="-bytes">Sort: Largest file</option>
+            <option value="bytes">Sort: Smallest file</option>
+            <option value="item_code">Sort: Item code</option>
+          </select>
+          <button class="btn btn-sm btn-outline-secondary" id="exportBtn" title="Download the current result list as CSV">
+            <i class="bi bi-download"></i><span class="d-none d-sm-inline ms-1">Export</span>
+          </button>
+          <button class="btn btn-sm btn-outline-secondary" id="shareBtn" title="Copy a link to this exact view">
+            <i class="bi bi-link-45deg"></i><span class="d-none d-sm-inline ms-1">Share view</span>
+          </button>
+        </div>
+        <div class="d-flex flex-wrap gap-1 mt-2" id="activeChips"></div>
+      </div>
+
+      <div class="sa-panel p-3 mb-3" id="startHere">
+        <div class="fw-semibold small text-uppercase text-body-secondary mb-1">Start here</div>
+        <p class="small text-body-secondary mb-2">
+          The doors most people are actually looking for. Everything else is searchable above.
+        </p>
+        <div class="d-flex flex-wrap gap-2" id="startLinks"></div>
+      </div>
+
+      <div id="cardsWrap" class="row row-cols-1 row-cols-md-2 row-cols-xxl-3 g-3"></div>
+      <div id="tableWrap" class="sa-panel p-2 d-none"></div>
+
+      <div id="emptyState" class="text-center py-5 d-none">
+        <i class="bi bi-search display-5 text-body-secondary"></i>
+        <p class="mt-3 mb-1 fw-semibold">No documents match these filters</p>
+        <p class="small text-body-secondary">Try clearing the search box or resetting the filters.</p>
+        <button class="btn btn-sm btn-outline-secondary" onclick="document.getElementById('resetAll').click()">Reset filters</button>
+      </div>
+
+      <nav class="mt-3 d-flex justify-content-center"><ul class="pagination pagination-sm mb-0" id="pager"></ul></nav>
+
+      <p class="text-center small text-body-secondary mt-4 mb-0" id="footerNote"></p>
+    </section>
+  </div>
+</div>
+
+<!-- preview modal -->
+<div class="modal fade" id="previewModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-xl modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div>
+          <h5 class="modal-title" id="previewTitle">Preview</h5>
+          <div class="small text-body-secondary" id="previewMeta"></div>
+        </div>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body p-0"><iframe class="sa-preview-frame" id="previewFrame" title="PDF preview"></iframe></div>
+      <div class="modal-footer">
+        <span class="small text-body-secondary me-auto">Served live from aa.org</span>
+        <a class="btn btn-sm btn-primary" id="previewOpen" target="_blank" rel="noopener">
+          <i class="bi bi-box-arrow-up-right me-1"></i>Open on aa.org
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- item code glossary -->
+<div class="modal fade" id="codesModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">What the item codes mean</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p class="small text-body-secondary">A.A. World Services prints a code on nearly every piece of literature.
+          Once you know the prefix, the catalog stops being a maze — you can tell at a glance what a document is.</p>
+        <table class="table table-sm align-middle">
+          <thead><tr><th>Prefix</th><th>Family</th><th>What it is</th></tr></thead>
+          <tbody>
+            <tr><td><span class="sa-code">P-</span></td><td>Pamphlets &amp; Booklets</td><td>Conference-approved pamphlets — the core reading handed to newcomers and used in meetings.</td></tr>
+            <tr><td><span class="sa-code">F-</span></td><td>Forms, Catalogs &amp; Flyers</td><td>Order blanks, the literature catalog, service pieces and printable flyers.</td></tr>
+            <tr><td><span class="sa-code">SM- / SMF-</span></td><td>Service Material</td><td>Not conference-approved, but prepared by G.S.O. to help groups and committees do service work.</td></tr>
+            <tr><td><span class="sa-code">MG-</span></td><td>A.A. Guidelines</td><td>Shared experience on running a committee, office, or event. Suggestions, never rules.</td></tr>
+            <tr><td><span class="sa-code">M-</span></td><td>Displays &amp; Cards</td><td>Wallet cards, posters and display pieces.</td></tr>
+            <tr><td><span class="sa-code">BM-</span></td><td>Bulletins</td><td>Box 4-5-9 and other periodic bulletins from G.S.O.</td></tr>
+            <tr><td><span class="sa-code">LIM-</span></td><td>Loners &amp; Internationalists</td><td>Material for members without access to a local group — sailors, remote communities, homebound members.</td></tr>
+            <tr><td><span class="sa-code">AV-</span></td><td>Audio &amp; Video</td><td>Scripts and companion documents for A.A.'s audio-visual material.</td></tr>
+          </tbody>
+        </table>
+        <p class="small mb-0"><strong>Conference-approved</strong> means the General Service Conference approved the content as
+          representing A.A. as a whole. Service material is practical guidance and carries no such approval — both are useful,
+          they just carry different weight.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- about -->
+<div class="modal fade" id="aboutModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">About this index</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="alert alert-secondary small">
+          <strong>Unofficial.</strong> This page is not produced by, endorsed by, or affiliated with
+          Alcoholics Anonymous World Services, Inc. or the A.A. General Service Office. It is an independent
+          index built by a member to make existing documents easier to find. Every result links to the
+          official file on <a href="https://www.aa.org" target="_blank" rel="noopener">aa.org</a> — nothing is
+          re-hosted here, and all literature remains the copyright of its publisher.
+        </div>
+        <h6>Why this exists</h6>
+        <p class="small">aa.org holds well over a thousand PDFs, spread across landing pages, hub pages and a
+          separate digital-asset host. There is no single list. If you do not already know a document's name you are
+          unlikely to find it. This page crawls the whole site, collects every PDF link, and sorts them into
+          sections, categories and topics so they can be searched in one box.</p>
+        <h6>How it stays current</h6>
+        <p class="small">A GitHub Actions workflow re-crawls aa.org on a schedule, rebuilds the index, and commits
+          the result. The page you are reading always reads the latest committed data, so it updates itself with no
+          manual work. Links that aa.org publishes but that no longer resolve to a PDF are filtered out and recorded
+          in <code>data/broken_links.csv</code>.</p>
+        <h6>What is indexed</h6>
+        <p class="small">Link metadata only: the document's title, URL, item code, file size and last-modified date,
+          plus the aa.org page it was found on. No PDF contents are copied or stored.</p>
+        <h6>Built with</h6>
+        <p class="small mb-0">Bootstrap 5, Bootstrap Icons, Tabulator, Papa Parse and Fuse.js — all open source,
+          all loaded from public CDNs. The entire interface is one <code>index.html</code>; the data lives in
+          <code>data/pdfs.csv</code>.</p>
+      </div>
+      <div class="modal-footer">
+        <span class="small text-body-secondary me-auto" id="aboutMeta"></span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="toast-container position-fixed bottom-0 end-0 p-3">
+  <div class="toast align-items-center text-bg-dark" id="toast" role="status" aria-live="polite">
+    <div class="d-flex"><div class="toast-body" id="toastBody"></div>
+      <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button></div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@7.0.0/dist/fuse.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/tabulator-tables@6.2.5/dist/js/tabulator.min.js"></script>
+
+<script>
+(function () {
+  "use strict";
+
+  const DATA_CSV = "data/pdfs.csv";
+  const DATA_META = "data/meta.json";
+  const PAGE_SIZE = 48;
+  const LS = { fav: "simplifyaa.favorites", theme: "simplifyaa.theme" };
+
+  const state = {
+    q: "", view: "all", section: "", category: "", language: "", year: "",
+    topics: new Set(), sort: "title", page: 1, mode: "cards"
+  };
+
+  let ROWS = [], META = {}, FUSE = null, FILTERED = [], table = null;
+  let favorites = new Set();
+  let BY_BASE_CODE = new Map();   // base_code -> rows, for linking translations
+
+  // "p-47", "P47", "smf-121" -> a comparable key
+  const CODE_QUERY_RE = /^[a-z]{1,4}[-_ ]?\d{1,3}[a-z]?$/i;
+  const normCode = (s) => String(s || "").replace(/[-_ ]/g, "").toUpperCase();
+
+  /* ----------------------------- tiny helpers ----------------------------- */
+  const $ = (sel) => document.querySelector(sel);
+  const el = (tag, cls, html) => {
+    const n = document.createElement(tag);
+    if (cls) n.className = cls;
+    if (html != null) n.innerHTML = html;
+    return n;
+  };
+  const esc = (s) => String(s == null ? "" : s).replace(/[&<>"']/g,
+    (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+
+  function safeLS(fn, fallback) {
+    try { return fn(); } catch (e) { return fallback; }
+  }
+  function toast(msg) {
+    $("#toastBody").textContent = msg;
+    bootstrap.Toast.getOrCreateInstance($("#toast"), { delay: 2200 }).show();
+  }
+  function highlight(text, query) {
+    const safe = esc(text);
+    const term = query.trim();
+    if (term.length < 2) return safe;
+    try {
+      const re = new RegExp("(" + term.replace(/[.*+?^${}()|[\]\\]/g, "\\$&") + ")", "gi");
+      return safe.replace(re, "<mark>$1</mark>");
+    } catch (e) { return safe; }
+  }
+  const topicList = (row) =>
+    (row.topics || "").split(";").map((t) => t.trim()).filter(Boolean);
+
+  /* -------------------------------- theme -------------------------------- */
+  function applyTheme(mode) {
+    document.documentElement.setAttribute("data-bs-theme", mode);
+    $("#themeToggle").innerHTML = mode === "dark"
+      ? '<i class="bi bi-sun"></i>' : '<i class="bi bi-moon-stars"></i>';
+    safeLS(() => localStorage.setItem(LS.theme, mode));
+  }
+  applyTheme(
+    safeLS(() => localStorage.getItem(LS.theme), null) ||
+    (window.matchMedia && matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light")
+  );
+  $("#themeToggle").addEventListener("click", () => {
+    applyTheme(document.documentElement.getAttribute("data-bs-theme") === "dark" ? "light" : "dark");
+  });
+
+  /* ------------------------------ favorites ------------------------------ */
+  favorites = new Set(safeLS(
+    () => JSON.parse(localStorage.getItem(LS.fav) || "[]"), []) || []);
+  function saveFavorites() {
+    safeLS(() => localStorage.setItem(LS.fav, JSON.stringify([...favorites])));
+    $("#qvFav").textContent = favorites.size;
+  }
+  function toggleFavorite(url) {
+    if (favorites.has(url)) { favorites.delete(url); toast("Removed from favorites"); }
+    else { favorites.add(url); toast("Saved to favorites"); }
+    saveFavorites();
+    render();
+  }
+
+  /* ------------------------------ URL state ------------------------------ */
+  function stateToHash() {
+    const p = new URLSearchParams();
+    if (state.q) p.set("q", state.q);
+    if (state.view !== "all") p.set("view", state.view);
+    if (state.section) p.set("section", state.section);
+    if (state.category) p.set("cat", state.category);
+    if (state.language) p.set("lang", state.language);
+    if (state.year) p.set("year", state.year);
+    if (state.topics.size) p.set("topics", [...state.topics].join("|"));
+    if (state.sort !== "title") p.set("sort", state.sort);
+    if (state.mode !== "cards") p.set("mode", state.mode);
+    const s = p.toString();
+    history.replaceState(null, "", s ? "#" + s : location.pathname);
+  }
+  function hashToState() {
+    const p = new URLSearchParams(location.hash.replace(/^#/, ""));
+    state.q = p.get("q") || "";
+    state.view = p.get("view") || "all";
+    state.section = p.get("section") || "";
+    state.category = p.get("cat") || "";
+    state.language = p.get("lang") || "";
+    state.year = p.get("year") || "";
+    state.topics = new Set((p.get("topics") || "").split("|").filter(Boolean));
+    state.sort = p.get("sort") || "title";
+    state.mode = p.get("mode") === "table" ? "table" : "cards";
+  }
+
+  /* -------------------------------- facets ------------------------------- */
+  function buildTree() {
+    const tree = new Map();
+    ROWS.forEach((r) => {
+      if (!tree.has(r.section)) tree.set(r.section, new Map());
+      const cats = tree.get(r.section);
+      cats.set(r.category, (cats.get(r.category) || 0) + 1);
+    });
+    const wrap = $("#tree");
+    wrap.innerHTML = "";
+    [...tree.entries()]
+      .sort((a, b) => sectionTotal(b[1]) - sectionTotal(a[1]))
+      .forEach(([section, cats], i) => {
+        const id = "sec" + i;
+        const item = el("div", "accordion-item bg-transparent border-0");
+        const total = sectionTotal(cats);
+        item.innerHTML =
+          '<h2 class="accordion-header">' +
+            '<button class="accordion-button collapsed px-2 py-2 bg-transparent shadow-none" type="button" ' +
+              'data-bs-toggle="collapse" data-bs-target="#' + id + '">' +
+              '<span class="small fw-semibold">' + esc(section) + '</span>' +
+              '<span class="badge ms-2" style="background:var(--sa-border);color:var(--sa-muted)">' + total + '</span>' +
+            '</button></h2>' +
+          '<div id="' + id + '" class="accordion-collapse collapse"><div class="accordion-body p-1"></div></div>';
+        const body = item.querySelector(".accordion-body");
+
+        const all = el("button", "sa-tree-btn",
+          '<span class="fst-italic">Everything in this section</span>');
+        all.addEventListener("click", () => {
+          state.section = state.section === section && !state.category ? "" : section;
+          state.category = ""; state.view = "all"; state.page = 1; sync();
+        });
+        body.appendChild(all);
+
+        [...cats.entries()].sort((a, b) => b[1] - a[1]).forEach(([cat, n]) => {
+          const btn = el("button", "sa-tree-btn",
+            "<span>" + esc(cat) + '</span><span class="badge">' + n + "</span>");
+          btn.dataset.cat = cat;
+          btn.addEventListener("click", () => {
+            const on = state.category === cat;
+            state.category = on ? "" : cat;
+            state.section = on ? "" : section;
+            state.view = "all"; state.page = 1; sync();
+          });
+          body.appendChild(btn);
+        });
+        wrap.appendChild(item);
+      });
+  }
+  const sectionTotal = (cats) => [...cats.values()].reduce((a, b) => a + b, 0);
+
+  function buildLanguages() {
+    const counts = new Map();
+    ROWS.forEach((r) => counts.set(r.language, (counts.get(r.language) || 0) + 1));
+    const g = $("#langGroup");
+    g.innerHTML = "";
+    const entries = [["", "All"]].concat(
+      [...counts.entries()].sort((a, b) => b[1] - a[1]).map(([k]) => [k, k]));
+    entries.forEach(([value, label]) => {
+      const b = el("button", "btn btn-outline-secondary",
+        esc(label) + (value ? ' <span class="opacity-75">' + counts.get(value) + "</span>" : ""));
+      b.dataset.lang = value;
+      b.addEventListener("click", () => {
+        state.language = state.language === value ? "" : value;
+        state.page = 1; sync();
+      });
+      g.appendChild(b);
+    });
+  }
+
+  // Orientation shortcuts for the landing view. Each one just sets filters, so
+  // nothing is hidden -- they are doors, not a curated subset.
+  const START_LINKS = [
+    { label: "New to A.A.", icon: "door-open", topic: "Newcomer" },
+    { label: "Sponsorship", icon: "people", topic: "Sponsorship" },
+    { label: "The Twelve Steps", icon: "list-ol", topic: "Twelve Steps" },
+    { label: "The Twelve Traditions", icon: "shield-check", topic: "Twelve Traditions" },
+    { label: "Big Book & literature", icon: "book", section: "Literature" },
+    { label: "A.A. Guidelines", icon: "signpost-split", section: "A.A. Guidelines" },
+    { label: "Service material", icon: "tools", section: "Service Material" },
+    { label: "Group & district service", icon: "diagram-3", section: "Service Structure" },
+    { label: "Carrying the message", icon: "megaphone", section: "Carrying the Message" },
+    { label: "Self-support", icon: "cash-coin", section: "Finance" },
+    { label: "Conference reports", icon: "file-earmark-text", category: "General Service Conference" },
+    { label: "Newsletters & archives", icon: "newspaper", section: "Newsletters" },
+  ];
+
+  function buildStartLinks() {
+    const wrap = $("#startLinks");
+    wrap.innerHTML = "";
+    START_LINKS.forEach((s) => {
+      // Only offer a door that actually leads somewhere in this dataset.
+      const n = ROWS.filter((r) =>
+        (s.topic ? topicList(r).includes(s.topic) : true) &&
+        (s.section ? r.section === s.section : true) &&
+        (s.category ? r.category === s.category : true)).length;
+      if (!n) return;
+      const b = el("button", "btn btn-sm btn-outline-secondary",
+        '<i class="bi bi-' + s.icon + ' me-1"></i>' + esc(s.label) +
+        ' <span class="opacity-50">' + n + "</span>");
+      b.addEventListener("click", () => {
+        state.q = ""; $("#q").value = "";
+        state.view = "all"; state.section = s.section || ""; state.category = s.category || "";
+        state.topics = new Set(s.topic ? [s.topic] : []);
+        state.page = 1;
+        sync();
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      });
+      wrap.appendChild(b);
+    });
+  }
+
+  const isPristine = () => !state.q && state.view === "all" && !state.section &&
+    !state.category && !state.language && !state.year && !state.topics.size;
+
+  function buildYears() {
+    const counts = new Map();
+    ROWS.forEach((r) => {
+      if (r.year) counts.set(r.year, (counts.get(r.year) || 0) + 1);
+    });
+    const years = [...counts.keys()].sort((a, b) => b.localeCompare(a));
+    const sel = $("#yearSel");
+    sel.innerHTML = '<option value="">Any year</option>';
+    // Group by decade so a 60-year newsletter run stays navigable.
+    let decade = null, group = null;
+    years.forEach((y) => {
+      const d = y.slice(0, 3) + "0s";
+      if (d !== decade) {
+        decade = d;
+        group = el("optgroup");
+        group.label = d;
+        sel.appendChild(group);
+      }
+      const o = el("option", null, y + " (" + counts.get(y) + ")");
+      o.value = y;
+      group.appendChild(o);
+    });
+  }
+
+  function buildTopics() {
+    const counts = new Map();
+    ROWS.forEach((r) => topicList(r).forEach(
+      (t) => counts.set(t, (counts.get(t) || 0) + 1)));
+    const wrap = $("#topics");
+    wrap.innerHTML = "";
+    [...counts.entries()].sort((a, b) => b[1] - a[1]).forEach(([topic, n]) => {
+      const c = el("span", "badge rounded-pill text-bg-light sa-chip",
+        esc(topic) + ' <span class="opacity-50">' + n + "</span>");
+      c.dataset.topic = topic;
+      c.addEventListener("click", () => {
+        if (state.topics.has(topic)) state.topics.delete(topic);
+        else state.topics.add(topic);
+        state.page = 1; sync();
+      });
+      wrap.appendChild(c);
+    });
+  }
+
+  /* ------------------------------- filtering ------------------------------ */
+  function applyFilters() {
+    let rows = ROWS;
+
+    const q = state.q.trim();
+    // An exact item-code query should return that document, not everything
+    // fuzzily resembling it.
+    if (CODE_QUERY_RE.test(q)) {
+      const want = normCode(q);
+      const exact = rows.filter((r) =>
+        normCode(r.item_code) === want || normCode(r.base_code) === want);
+      if (exact.length) rows = exact;
+      else if (FUSE) rows = FUSE.search(q, { limit: 5000 }).map((m) => m.item);
+    } else if (q.length >= 2 && FUSE) {
+      rows = FUSE.search(q, { limit: 5000 }).map((m) => m.item);
+    } else if (q) {
+      const t = state.q.trim().toLowerCase();
+      rows = rows.filter((r) => (r._hay || "").includes(t));
+    }
+
+    if (state.view === "favorites") rows = rows.filter((r) => favorites.has(r.url));
+    if (state.view === "large") rows = rows.filter((r) => (+r.bytes || 0) > 1.5e6);
+    if (state.section) rows = rows.filter((r) => r.section === state.section);
+    if (state.category) rows = rows.filter((r) => r.category === state.category);
+    if (state.language) rows = rows.filter((r) => r.language === state.language);
+    if (state.year) rows = rows.filter((r) => r.year === state.year);
+    if (state.topics.size) {
+      rows = rows.filter((r) => {
+        const ts = topicList(r);
+        for (const t of state.topics) if (!ts.includes(t)) return false;
+        return true;
+      });
+    }
+
+    const sortKey = state.view === "recent" ? "-last_modified" : state.sort;
+    const desc = sortKey.startsWith("-");
+    const key = desc ? sortKey.slice(1) : sortKey;
+    // Fuse already ranks by relevance; only re-sort when the user picked an order.
+    const relevanceOrder = state.q.trim().length >= 2 && state.sort === "title" &&
+      state.view !== "recent";
+    if (!relevanceOrder) {
+      rows = rows.slice().sort((a, b) => {
+        let av = a[key], bv = b[key];
+        if (key === "bytes") { av = +av || 0; bv = +bv || 0; }
+        else { av = String(av || "").toLowerCase(); bv = String(bv || "").toLowerCase(); }
+        if (av < bv) return desc ? 1 : -1;
+        if (av > bv) return desc ? -1 : 1;
+        return String(a.title).localeCompare(String(b.title));
+      });
+    }
+    FILTERED = rows;
+  }
+
+  /* ------------------------------- rendering ------------------------------ */
+  // aa.org gives each translation its own item number; base_code reunites them.
+  function translationLinks(row) {
+    if (!row.base_code) return "";
+    const siblings = (BY_BASE_CODE.get(row.base_code) || [])
+      .filter((r) => r.language !== row.language && r.url !== row.url);
+    if (!siblings.length) return "";
+    const seen = new Set();
+    const links = siblings.filter((r) => {
+      if (seen.has(r.language)) return false;
+      seen.add(r.language);
+      return true;
+    }).map((r) =>
+      '<a class="badge rounded-pill text-decoration-none" style="background:var(--sa-border);' +
+      'color:var(--sa-muted)" href="' + esc(r.url) + '" target="_blank" rel="noopener" ' +
+      'title="' + esc(r.title) + '">' + esc(r.language) + "</a>");
+    return '<div class="sa-meta mb-2">Also in: ' + links.join(" ") + "</div>";
+  }
+
+  function cardFor(row) {
+    const col = el("div", "col");
+    const faved = favorites.has(row.url);
+    const bits = [];
+    if (row.size_human) bits.push('<i class="bi bi-file-earmark-pdf"></i> ' + esc(row.size_human));
+    if (row.last_modified) bits.push('<i class="bi bi-calendar3"></i> ' + esc(row.last_modified));
+    if (row.language && row.language !== "English") bits.push(esc(row.language));
+    if (row.year) bits.push(esc(row.year));
+
+    col.innerHTML =
+      '<div class="sa-card p-3 d-flex flex-column">' +
+        '<div class="d-flex justify-content-between align-items-start gap-2 mb-1">' +
+          '<div class="sa-card-title">' + highlight(row.title, state.q) + "</div>" +
+          '<i class="bi ' + (faved ? "bi-star-fill sa-star" : "bi-star text-body-secondary") +
+            ' fs-6" role="button" tabindex="0" aria-label="Toggle favorite" data-fav="' + esc(row.url) + '"></i>' +
+        "</div>" +
+        '<div class="mb-2">' +
+          (row.item_code ? '<span class="sa-code me-1">' + esc(row.item_code) + "</span>" : "") +
+          '<span class="badge rounded-pill" style="background:var(--sa-accent-soft);color:var(--sa-accent)">' +
+            esc(row.category) + "</span>" +
+        "</div>" +
+        '<div class="sa-meta mb-2">' + bits.join(' &nbsp;·&nbsp; ') + "</div>" +
+        translationLinks(row) +
+        '<div class="mt-auto d-flex gap-1 flex-wrap">' +
+          '<a class="btn btn-sm btn-primary" href="' + esc(row.url) + '" target="_blank" rel="noopener">' +
+            '<i class="bi bi-box-arrow-up-right"></i> Open</a>' +
+          '<button class="btn btn-sm btn-outline-secondary" data-preview="' + esc(row.url) + '">' +
+            '<i class="bi bi-eye"></i> Preview</button>' +
+          '<button class="btn btn-sm btn-outline-secondary" data-copy="' + esc(row.url) + '" title="Copy PDF link">' +
+            '<i class="bi bi-clipboard"></i></button>' +
+          (row.source_page ? '<a class="btn btn-sm btn-outline-secondary" href="' + esc(row.source_page) +
+            '" target="_blank" rel="noopener" title="See the aa.org page this came from">' +
+            '<i class="bi bi-signpost-2"></i></a>' : "") +
+        "</div>" +
+      "</div>";
+    return col;
+  }
+
+  function renderCards(pageRows) {
+    const wrap = $("#cardsWrap");
+    wrap.innerHTML = "";
+    const frag = document.createDocumentFragment();
+    pageRows.forEach((r) => frag.appendChild(cardFor(r)));
+    wrap.appendChild(frag);
+  }
+
+  function renderTable() {
+    const cols = [
+      { title: "", field: "fav", width: 42, hozAlign: "center", headerSort: false,
+        formatter: (c) => favorites.has(c.getRow().getData().url)
+          ? '<i class="bi bi-star-fill sa-star"></i>' : '<i class="bi bi-star text-body-secondary"></i>',
+        cellClick: (e, c) => toggleFavorite(c.getRow().getData().url) },
+      { title: "Title", field: "title", minWidth: 260, formatter: (c) =>
+          '<a href="' + esc(c.getRow().getData().url) + '" target="_blank" rel="noopener" ' +
+          'class="text-decoration-none fw-semibold">' + esc(c.getValue()) + "</a>" },
+      { title: "Code", field: "item_code", width: 92, formatter: (c) =>
+          c.getValue() ? '<span class="sa-code">' + esc(c.getValue()) + "</span>" : "" },
+      { title: "Category", field: "category", width: 210 },
+      { title: "Section", field: "section", width: 160 },
+      { title: "Lang", field: "language", width: 90 },
+      { title: "Year", field: "year", width: 80 },
+      { title: "Size", field: "bytes", width: 100, sorter: "number",
+        formatter: (c) => esc(c.getRow().getData().size_human || "") },
+      { title: "Updated", field: "last_modified", width: 110 },
+      { title: "", width: 108, headerSort: false, hozAlign: "center", formatter: () =>
+          '<button class="btn btn-sm btn-outline-secondary py-0" data-tabpreview="1">' +
+          '<i class="bi bi-eye"></i></button>',
+        cellClick: (e, c) => openPreview(c.getRow().getData()) },
+    ];
+    if (table) { table.replaceData(FILTERED); return; }
+    table = new Tabulator("#tableWrap", {
+      data: FILTERED,
+      columns: cols,
+      layout: "fitColumns",
+      height: "72vh",
+      pagination: true,
+      paginationSize: 50,
+      paginationSizeSelector: [25, 50, 100, 250],
+      placeholder: "No documents match these filters",
+      groupBy: undefined,
+    });
+  }
+
+  function renderPager(total) {
+    const pages = Math.max(1, Math.ceil(total / PAGE_SIZE));
+    state.page = Math.min(state.page, pages);
+    const ul = $("#pager");
+    ul.innerHTML = "";
+    if (pages < 2 || state.mode === "table") return;
+    const add = (label, page, disabled, active) => {
+      const li = el("li", "page-item" + (disabled ? " disabled" : "") + (active ? " active" : ""));
+      const a = el("a", "page-link", label);
+      a.href = "#";
+      a.addEventListener("click", (ev) => {
+        ev.preventDefault();
+        if (!disabled && !active) { state.page = page; render(); window.scrollTo({ top: 0, behavior: "smooth" }); }
+      });
+      li.appendChild(a);
+      ul.appendChild(li);
+    };
+    add("&laquo;", state.page - 1, state.page === 1);
+    const from = Math.max(1, state.page - 2), to = Math.min(pages, from + 4);
+    for (let p = from; p <= to; p++) add(String(p), p, false, p === state.page);
+    add("&raquo;", state.page + 1, state.page === pages);
+  }
+
+  function renderChips() {
+    const wrap = $("#activeChips");
+    wrap.innerHTML = "";
+    const chips = [];
+    if (state.q) chips.push(["Search: " + state.q, () => { state.q = ""; $("#q").value = ""; }]);
+    if (state.view !== "all") chips.push([
+      { recent: "Recently updated", favorites: "My favorites", large: "Full books & reports" }[state.view],
+      () => { state.view = "all"; }]);
+    if (state.section) chips.push(["Section: " + state.section, () => { state.section = ""; }]);
+    if (state.category) chips.push(["Category: " + state.category, () => { state.category = ""; }]);
+    if (state.language) chips.push(["Language: " + state.language, () => { state.language = ""; }]);
+    if (state.year) chips.push(["Year: " + state.year, () => { state.year = ""; }]);
+    state.topics.forEach((t) => chips.push(["Topic: " + t, () => state.topics.delete(t)]));
+    chips.forEach(([label, undo]) => {
+      const c = el("span", "badge rounded-pill text-bg-secondary",
+        esc(label) + ' <i class="bi bi-x-lg ms-1"></i>');
+      c.style.cursor = "pointer";
+      c.addEventListener("click", () => { undo(); state.page = 1; sync(); });
+      wrap.appendChild(c);
+    });
+  }
+
+  function syncControlStates() {
+    document.querySelectorAll("[data-view]").forEach((b) =>
+      b.classList.toggle("active", b.dataset.view === state.view));
+    document.querySelectorAll("#langGroup [data-lang]").forEach((b) =>
+      b.classList.toggle("active", b.dataset.lang === state.language));
+    document.querySelectorAll("#topics [data-topic]").forEach((c) =>
+      c.classList.toggle("active", state.topics.has(c.dataset.topic)));
+    document.querySelectorAll("#tree [data-cat]").forEach((b) =>
+      b.classList.toggle("active", b.dataset.cat === state.category));
+    $("#sortSel").value = state.sort;
+    $("#yearSel").value = state.year;
+    $("#vmTable").checked = state.mode === "table";
+    $("#vmCards").checked = state.mode === "cards";
+  }
+
+  function render() {
+    applyFilters();
+    const total = FILTERED.length;
+
+    $("#resultHeading").textContent =
+      state.category || state.section ||
+      { recent: "Recently updated", favorites: "My favorites", large: "Full books & reports" }[state.view] ||
+      "All documents";
+    $("#resultCount").textContent = total.toLocaleString() +
+      (total === 1 ? " document" : " documents") +
+      (total !== ROWS.length ? " of " + ROWS.length.toLocaleString() : "");
+
+    $("#emptyState").classList.toggle("d-none", total > 0);
+    $("#startHere").classList.toggle("d-none", !isPristine());
+    $("#cardsWrap").classList.toggle("d-none", state.mode !== "cards" || total === 0);
+    $("#tableWrap").classList.toggle("d-none", state.mode !== "table");
+
+    if (state.mode === "cards") {
+      const start = (state.page - 1) * PAGE_SIZE;
+      renderCards(FILTERED.slice(start, start + PAGE_SIZE));
+    } else {
+      renderTable();
+    }
+    renderPager(total);
+    renderChips();
+    syncControlStates();
+  }
+
+  function sync() { render(); stateToHash(); }
+
+  /* -------------------------------- preview ------------------------------- */
+  let previewModal = null;
+  function openPreview(row) {
+    $("#previewTitle").textContent = row.title;
+    $("#previewMeta").textContent = [row.item_code, row.category, row.size_human, row.last_modified]
+      .filter(Boolean).join("  ·  ");
+    $("#previewFrame").src = row.url;
+    $("#previewOpen").href = row.url;
+    previewModal = previewModal || new bootstrap.Modal($("#previewModal"));
+    previewModal.show();
+  }
+  $("#previewModal").addEventListener("hidden.bs.modal", () => { $("#previewFrame").src = "about:blank"; });
+
+  /* -------------------------------- events ------------------------------- */
+  let qTimer = null;
+  $("#q").addEventListener("input", (e) => {
+    clearTimeout(qTimer);
+    const v = e.target.value;
+    qTimer = setTimeout(() => { state.q = v; state.page = 1; sync(); }, 140);
+  });
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "/" && document.activeElement.tagName !== "INPUT") { e.preventDefault(); $("#q").focus(); }
+    if (e.key === "Escape" && document.activeElement === $("#q")) {
+      $("#q").value = ""; state.q = ""; state.page = 1; sync();
+    }
+  });
+  document.querySelectorAll("[data-view]").forEach((b) => b.addEventListener("click", () => {
+    state.view = b.dataset.view; state.section = ""; state.category = ""; state.page = 1; sync();
+  }));
+  $("#sortSel").addEventListener("change", (e) => { state.sort = e.target.value; state.page = 1; sync(); });
+  $("#yearSel").addEventListener("change", (e) => { state.year = e.target.value; state.page = 1; sync(); });
+  $("#vmCards").addEventListener("change", () => { state.mode = "cards"; sync(); });
+  $("#vmTable").addEventListener("change", () => { state.mode = "table"; sync(); });
+  $("#clearBrowse").addEventListener("click", () => { state.section = ""; state.category = ""; sync(); });
+  $("#resetAll").addEventListener("click", () => {
+    state.q = ""; $("#q").value = "";
+    state.view = "all"; state.section = ""; state.category = "";
+    state.language = ""; state.year = ""; state.topics.clear();
+    state.sort = "title"; state.page = 1;
+    sync();
+  });
+
+  document.addEventListener("click", (e) => {
+    const fav = e.target.closest("[data-fav]");
+    if (fav) { toggleFavorite(fav.dataset.fav); return; }
+    const prev = e.target.closest("[data-preview]");
+    if (prev) {
+      const row = ROWS.find((r) => r.url === prev.dataset.preview);
+      if (row) openPreview(row);
+      return;
+    }
+    const copy = e.target.closest("[data-copy]");
+    if (copy) {
+      const url = copy.dataset.copy;
+      if (navigator.clipboard) navigator.clipboard.writeText(url).then(
+        () => toast("PDF link copied"), () => toast("Could not copy — " + url));
+      else toast(url);
+    }
+  });
+
+  $("#exportBtn").addEventListener("click", () => {
+    const cols = ["title", "item_code", "category", "section", "language",
+                  "topics", "size_human", "last_modified", "url", "source_page"];
+    const csv = Papa.unparse(FILTERED.map((r) => {
+      const o = {}; cols.forEach((c) => (o[c] = r[c])); return o;
+    }));
+    const blob = new Blob([csv], { type: "text/csv;charset=utf-8" });
+    const a = el("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = "simplifyaa-documents.csv";
+    a.click();
+    URL.revokeObjectURL(a.href);
+    toast("Exported " + FILTERED.length + " rows");
+  });
+
+  $("#shareBtn").addEventListener("click", () => {
+    stateToHash();
+    const url = location.href;
+    if (navigator.clipboard) navigator.clipboard.writeText(url).then(
+      () => toast("Link to this view copied"), () => toast(url));
+    else toast(url);
+  });
+
+  window.addEventListener("hashchange", () => {
+    hashToState();
+    $("#q").value = state.q;
+    state.page = 1;
+    render();
+  });
+
+  /* --------------------------------- boot -------------------------------- */
+  function showLoadError(msg) {
+    $("#loadError").classList.remove("d-none");
+    $("#loadErrorMsg").textContent = msg;
+    $("#resultCount").textContent = "no data";
+  }
+
+  function boot(rows, meta) {
+    ROWS = rows.filter((r) => r.url && r.title);
+    ROWS.forEach((r) => {
+      r._hay = [r.title, r.item_code, r.category, r.section, r.topics,
+                r.filename, r.source_title].join(" ").toLowerCase();
+    });
+    META = meta || {};
+
+    FUSE = new Fuse(ROWS, {
+      keys: [
+        { name: "title", weight: 0.45 },
+        { name: "item_code", weight: 0.2 },
+        { name: "topics", weight: 0.14 },
+        { name: "category", weight: 0.1 },
+        { name: "source_title", weight: 0.06 },
+        { name: "filename", weight: 0.05 },
+      ],
+      threshold: 0.35, ignoreLocation: true, minMatchCharLength: 2,
+    });
+
+    $("#statTotal").textContent = ROWS.length.toLocaleString() + " PDFs";
+    $("#qvAll").textContent = ROWS.length;
+    saveFavorites();
+
+    const when = META.generated_date || "";
+    $("#footerNote").innerHTML =
+      "Unofficial index of <a href='https://www.aa.org' target='_blank' rel='noopener'>aa.org</a>. " +
+      ROWS.length.toLocaleString() + " documents" +
+      (META.pages_crawled ? " found across " + META.pages_crawled.toLocaleString() + " pages" : "") +
+      (when ? ", last rebuilt " + esc(when) : "") + ". All files open on aa.org.";
+    $("#aboutMeta").textContent = when
+      ? "Index rebuilt " + when + " · " + ROWS.length + " documents" +
+        (META.broken_links ? " · " + META.broken_links + " stale aa.org links filtered out" : "")
+      : "";
+
+    BY_BASE_CODE = new Map();
+    ROWS.forEach((r) => {
+      if (!r.base_code) return;
+      if (!BY_BASE_CODE.has(r.base_code)) BY_BASE_CODE.set(r.base_code, []);
+      BY_BASE_CODE.get(r.base_code).push(r);
+    });
+
+    buildTree(); buildLanguages(); buildYears(); buildTopics(); buildStartLinks();
+    hashToState();
+    $("#q").value = state.q;
+    render();
+  }
+
+  Promise.all([
+    new Promise((resolve, reject) => {
+      Papa.parse(DATA_CSV, {
+        download: true, header: true, skipEmptyLines: true,
+        complete: (res) => resolve(res.data),
+        error: (err) => reject(err),
+      });
+    }),
+    fetch(DATA_META).then((r) => (r.ok ? r.json() : {})).catch(() => ({})),
+  ]).then(([rows, meta]) => {
+    if (!rows || !rows.length) { showLoadError("The index file is empty."); return; }
+    boot(rows, meta);
+  }).catch((err) => {
+    showLoadError((err && err.message) || "Network error while loading data/pdfs.csv.");
+  });
+})();
+</script>
+</body>
+</html>
