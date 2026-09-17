@@ -76,6 +76,36 @@
   }
   .sa-sidebar { position: sticky; top: 1rem; max-height: calc(100vh - 2rem); overflow-y: auto; }
   @media (max-width: 991.98px) { .sa-sidebar { position: static; max-height: none; } }
+
+  /* Resizable sidebar, but only once the layout is side by side. Below that it
+     stacks and a width would make no sense, so the handle is hidden. */
+  #resizeHandle { display: none; }
+  @media (min-width: 992px) {
+    #layoutRow > #sidebarCol {
+      position: relative;
+      flex: 0 0 auto;
+      width: var(--sa-side-w, 25%);
+      max-width: none;
+    }
+    #layoutRow > #results { flex: 1 1 0; min-width: 0; width: auto; max-width: none; }
+    #resizeHandle {
+      display: flex; align-items: center; justify-content: center;
+      position: absolute; top: 0; bottom: 0; right: calc(-.75rem - 2px);
+      width: 1.1rem; cursor: col-resize; z-index: 5;
+      border: 0; background: transparent; padding: 0;
+    }
+    /* The grip only shows up when it is wanted, so it is not visual noise. */
+    #resizeHandle > span {
+      display: block; width: 3px; height: 2.2rem; border-radius: 3px;
+      background: var(--sa-border); transition: background .12s, height .12s;
+    }
+    #resizeHandle:hover > span,
+    #resizeHandle:focus-visible > span,
+    #resizeHandle.sa-dragging > span { background: var(--sa-accent); height: 4rem; }
+    #resizeHandle:focus-visible { outline: 2px solid var(--sa-accent); outline-offset: 2px; }
+    /* While dragging, stop the pointer selecting text across the page. */
+    body.sa-resizing { cursor: col-resize; user-select: none; }
+  }
   .sa-search { font-size: 1.05rem; }
   .sa-count { font-variant-numeric: tabular-nums; color: var(--sa-muted); }
   .sa-tree-btn {
@@ -187,9 +217,14 @@
       Serve the folder instead — <code>python -m http.server</code> — or use the GitHub&nbsp;Pages URL.</p>
   </div>
 
-  <div class="row g-3">
+  <div class="row g-3" id="layoutRow">
     <!-- ------------------------------ sidebar ------------------------------ -->
-    <aside class="col-lg-3">
+    <aside class="col-lg-3" id="sidebarCol">
+      <!-- Drag to set the sidebar width; arrow keys work too, and a
+           double-click puts it back. Hidden when the layout stacks. -->
+      <div id="resizeHandle" role="separator" tabindex="0" aria-orientation="vertical"
+           aria-label="Resize the sidebar — drag, or use the arrow keys"
+           title="Drag to resize · double-click to reset"><span></span></div>
       <div class="sa-sidebar">
         <div class="sa-panel p-3 mb-3">
           <label for="q" class="form-label fw-semibold small text-uppercase text-body-secondary">Search</label>
@@ -293,10 +328,21 @@
               </select>
               <label for="pageSizeSel" class="form-label small fw-semibold mb-1">Results per page</label>
               <select class="form-select form-select-sm mb-3" id="pageSizeSel">
+                <option value="12">12</option>
                 <option value="24">24</option>
                 <option value="48">48</option>
                 <option value="96">96</option>
                 <option value="240">240</option>
+                <option value="0">Show all</option>
+              </select>
+              <label for="colsSel" class="form-label small fw-semibold mb-1">Cards across</label>
+              <select class="form-select form-select-sm mb-3" id="colsSel">
+                <option value="">Fit the window</option>
+                <option value="1">1 card</option>
+                <option value="2">2 cards</option>
+                <option value="3">3 cards</option>
+                <option value="4">4 cards</option>
+                <option value="5">5 cards</option>
               </select>
               <div class="small fw-semibold mb-1">Card size</div>
               <div class="btn-group btn-group-sm w-100" role="group" id="densityGroup">
@@ -657,9 +703,11 @@
     approval: "", size: "", updated: "", yearFrom: "", yearTo: "",
     hasTrans: false, inKit: false,
     sortField: "last_modified", sortDir: "desc",
-    group: "", pageSize: 48, density: "comfortable",
+    group: "", pageSize: 48, density: "comfortable", cols: "",
     page: 1, mode: "cards", openKit: ""
   };
+
+  const PAGE_SIZES = [0, 12, 24, 48, 96, 240];   // 0 = show every result
 
   // Filters that live in the collapsible bar, counted on its badge.
   const BAR_FILTERS = ["approval", "size", "updated"];
@@ -832,8 +880,15 @@
     state.sortDir = p.get("dir") || settings.sortDir || "desc";
     if (state.sortDir !== "asc" && state.sortDir !== "desc") state.sortDir = "desc";
     state.group = p.get("group") || "";
-    state.pageSize = [24, 48, 96, 240].includes(+p.get("per")) ? +p.get("per") : 48;
-    state.density = p.get("density") === "compact" ? "compact" : "comfortable";
+    // 0 means "show all". A link wins for this visit; otherwise the reader's
+    // own saved layout applies.
+    const per = p.get("per");
+    state.pageSize = PAGE_SIZES.includes(+per) ? +per
+      : (PAGE_SIZES.includes(+settings.pageSize) ? +settings.pageSize : 48);
+    state.density = (p.get("density") || settings.density) === "compact"
+      ? "compact" : "comfortable";
+    // Cards-across is a property of this screen, so it is never taken from a link.
+    state.cols = /^[1-5]$/.test(String(settings.cols || "")) ? String(settings.cols) : "";
     state.mode = p.get("mode") === "table" ? "table" : "cards";
     state.openKit = p.get("kit") || "";
   }
@@ -1540,7 +1595,7 @@
       layout: "fitColumns",
       height: "72vh",
       pagination: true,
-      paginationSize: state.pageSize,
+      paginationSize: state.pageSize || 240,
       paginationSizeSelector: [24, 48, 96, 240],
       movableColumns: true,
       placeholder: "No documents match these filters",
@@ -1549,7 +1604,8 @@
   }
 
   function renderPager(total) {
-    const pages = Math.max(1, Math.ceil(total / state.pageSize));
+    // "Show all" means a single page, so there is nothing to page through.
+    const pages = state.pageSize ? Math.max(1, Math.ceil(total / state.pageSize)) : 1;
     state.page = Math.min(state.page, pages);
     const ul = $("#pager");
     ul.innerHTML = "";
@@ -1644,6 +1700,7 @@
                                                    : "Ascending - click for descending";
     $("#groupSel").value = state.group;
     $("#pageSizeSel").value = String(state.pageSize);
+    $("#colsSel").value = state.cols || "";
     $("#approvalSel").value = state.approval;
     $("#sizeSel").value = state.size;
     $("#updatedSel").value = state.updated;
@@ -1710,8 +1767,13 @@
     $("#tableWrap").classList.toggle("d-none", state.mode !== "table");
 
     if (state.mode === "cards") {
-      const start = (state.page - 1) * state.pageSize;
-      renderCards(FILTERED.slice(start, start + state.pageSize));
+      applyColumns();
+      if (state.pageSize) {
+        const start = (state.page - 1) * state.pageSize;
+        renderCards(FILTERED.slice(start, start + state.pageSize));
+      } else {
+        renderCards(FILTERED);
+      }
     } else {
       renderTable();
     }
@@ -1768,7 +1830,9 @@
 
   const settings = Object.assign(
     { viewer: "auto", previewHeight: 78,
-      sortField: "last_modified", sortDir: "desc" },
+      sortField: "last_modified", sortDir: "desc",
+      // Layout choices belong to the device, not to a shared link.
+      sidebarWidth: 0, cols: "", density: "comfortable", pageSize: 48 },
     safeLS(() => JSON.parse(localStorage.getItem(LS.settings) || "{}"), {}) || {}
   );
   function saveSettings() {
@@ -2078,6 +2142,10 @@
       settings.sortDir = "desc";
       state.sortField = "last_modified";
       state.sortDir = "desc";
+      settings.sidebarWidth = 0; settings.cols = "";
+      settings.density = "comfortable"; settings.pageSize = 48;
+      state.cols = ""; state.density = "comfortable"; state.pageSize = 48;
+      applySidebarWidth(0);
       favorites = new Set();
       saveFavorites();
       renderSettingsMethods();
@@ -2121,11 +2189,27 @@
   $("#groupSel").addEventListener("change", (e) => {
     state.group = e.target.value; state.page = 1; sync();
   });
+  // Layout choices stick to the device, so the next visit looks the same.
   $("#pageSizeSel").addEventListener("change", (e) => {
-    state.pageSize = +e.target.value || 48; state.page = 1; sync();
+    const v = +e.target.value;
+    state.pageSize = PAGE_SIZES.includes(v) ? v : 48;
+    settings.pageSize = state.pageSize;
+    saveSettings();
+    state.page = 1; sync();
+  });
+  $("#colsSel").addEventListener("change", (e) => {
+    state.cols = /^[1-5]$/.test(e.target.value) ? e.target.value : "";
+    settings.cols = state.cols;
+    saveSettings();
+    sync();
   });
   document.querySelectorAll("#densityGroup [data-density]").forEach((b) =>
-    b.addEventListener("click", () => { state.density = b.dataset.density; sync(); }));
+    b.addEventListener("click", () => {
+      state.density = b.dataset.density;
+      settings.density = state.density;
+      saveSettings();
+      sync();
+    }));
   [["#approvalSel", "approval"], ["#sizeSel", "size"], ["#updatedSel", "updated"],
    ["#yearFrom", "yearFrom"], ["#yearTo", "yearTo"]].forEach(([sel, key]) => {
     $(sel).addEventListener("change", (e) => {
@@ -2236,6 +2320,114 @@
     state.page = 1;
     render();
   });
+
+  /* --------------------------- layout preferences ------------------------- */
+  const SIDEBAR_MIN = 210;
+  const SIDEBAR_DEFAULT_PCT = 25;
+
+  const sidebarMax = () => Math.max(SIDEBAR_MIN + 80, Math.round(window.innerWidth * 0.45));
+
+  function applySidebarWidth(px) {
+    const row = $("#layoutRow");
+    if (!row) return;
+    if (!px) {
+      row.style.removeProperty("--sa-side-w");
+    } else {
+      row.style.setProperty("--sa-side-w", px + "px");
+    }
+    const handle = $("#resizeHandle");
+    if (handle) {
+      const col = $("#sidebarCol");
+      const now = px || (col ? Math.round(col.getBoundingClientRect().width) : 0);
+      handle.setAttribute("aria-valuenow", String(now));
+      handle.setAttribute("aria-valuemin", String(SIDEBAR_MIN));
+      handle.setAttribute("aria-valuemax", String(sidebarMax()));
+    }
+  }
+
+  function setSidebarWidth(px, save) {
+    const clamped = px ? Math.min(sidebarMax(), Math.max(SIDEBAR_MIN, Math.round(px))) : 0;
+    settings.sidebarWidth = clamped;
+    applySidebarWidth(clamped);
+    if (save) saveSettings();
+    return clamped;
+  }
+
+  (function wireResize() {
+    const handle = $("#resizeHandle");
+    const col = $("#sidebarCol");
+    if (!handle || !col) return;
+    let startX = 0, startW = 0, dragging = false;
+
+    handle.addEventListener("pointerdown", (e) => {
+      if (window.innerWidth < 992) return;
+      dragging = true;
+      startX = e.clientX;
+      startW = col.getBoundingClientRect().width;
+      handle.setPointerCapture(e.pointerId);
+      handle.classList.add("sa-dragging");
+      document.body.classList.add("sa-resizing");
+      e.preventDefault();
+    });
+    handle.addEventListener("pointermove", (e) => {
+      if (!dragging) return;
+      setSidebarWidth(startW + (e.clientX - startX), false);
+    });
+    const end = () => {
+      if (!dragging) return;
+      dragging = false;
+      handle.classList.remove("sa-dragging");
+      document.body.classList.remove("sa-resizing");
+      saveSettings();
+      if (table) table.redraw();
+    };
+    handle.addEventListener("pointerup", end);
+    handle.addEventListener("pointercancel", end);
+
+    // Double-click puts it back to the default proportion.
+    handle.addEventListener("dblclick", () => {
+      setSidebarWidth(0, true);
+      toast("Sidebar width reset");
+    });
+
+    // A splitter has to be usable without a mouse.
+    handle.addEventListener("keydown", (e) => {
+      const step = e.shiftKey ? 48 : 16;
+      const current = col.getBoundingClientRect().width;
+      if (e.key === "ArrowLeft") { setSidebarWidth(current - step, true); e.preventDefault(); }
+      else if (e.key === "ArrowRight") { setSidebarWidth(current + step, true); e.preventDefault(); }
+      else if (e.key === "Home") { setSidebarWidth(0, true); e.preventDefault(); }
+      else if (e.key === "End") { setSidebarWidth(sidebarMax(), true); e.preventDefault(); }
+    });
+
+    // Keep a saved pixel width sane if the window shrinks.
+    window.addEventListener("resize", () => {
+      if (settings.sidebarWidth) {
+        const clamped = Math.min(sidebarMax(),
+          Math.max(SIDEBAR_MIN, settings.sidebarWidth));
+        if (clamped !== settings.sidebarWidth) setSidebarWidth(clamped, true);
+      }
+      applySidebarWidth(settings.sidebarWidth);
+    });
+  })();
+
+  // How many cards sit across the results area.
+  function applyColumns() {
+    const wrap = $("#cardsWrap");
+    if (!wrap) return;
+    // Only touch the column classes -- d-none and sa-compact are managed
+    // elsewhere and must survive.
+    [...wrap.classList].forEach((c) => {
+      if (/^row-cols(-(sm|md|lg|xl|xxl))?-\d+$/.test(c)) wrap.classList.remove(c);
+    });
+    const n = parseInt(state.cols, 10);
+    if (n >= 1 && n <= 5) {
+      // A chosen count applies once there is room; phones stay single file.
+      wrap.classList.add("row-cols-1", "row-cols-md-" + n);
+    } else {
+      wrap.classList.add("row-cols-1", "row-cols-md-2", "row-cols-xxl-3");
+    }
+  }
 
   /* ------------------------- app install & notifications ------------------ */
   const CHECK_TAG = "simplifyaa-check-new";
@@ -2643,6 +2835,7 @@
     buildKits(kitRows);
     registerServiceWorker();
     updateAppNote();
+    applySidebarWidth(settings.sidebarWidth);
     loadChanges().then(() => { refreshBell(); render(); });
     // The next visit compares against the newest run this one saw.
     window.addEventListener("pagehide", markVisitSeen);

@@ -47,6 +47,7 @@ file on aa.org. All literature remains the copyright of its publisher.
 | `tools/test_kits.js` | Browser regression tests for the service-kit view. |
 | `tools/test_viewers.js` | Browser regression tests for the PDF viewer options, including iPhone emulation. |
 | `tools/test_pwa.js` | Browser regression tests for install, offline use and new-document notifications. |
+| `tools/test_layout.js` | Browser regression tests for the resizable sidebar and the card layout controls. |
 | `tools/test_results_pane.js` | Browser regression tests for the filter bar, sorting, grouping and icons. |
 | `tools/make_favicon.py` | Generates the site icons and web manifest from one original mark. |
 | `tools/audit.js` | Debug audit: dangling references, duplicate ids, accessibility, blocked storage, missing data. |
@@ -73,7 +74,11 @@ index can be regenerated without touching application code.
   refreshed; change it and that choice is remembered for next time, while a shared link still shows
   the sender's order. Sort by best match, title, date updated, year, size, item code, category or
   language, in either direction; group the results by category, section, language, literature type or
-  decade; and choose 24–240 results per page with comfortable or compact cards.
+  decade; and choose 12–240 results per page, or all of them at once.
+- **Fit it to your screen** — drag the divider to set the sidebar width (arrow keys work too, and
+  a double-click resets it), choose how many cards sit across, and pick comfortable or compact
+  cards. These are remembered per device and are deliberately kept out of shared links, so your
+  layout is never imposed on anyone else.
 - **Service kits** — every committee kit as a set of working links, workbook first (see below).
 - **Preview** — read a PDF without leaving the page, with a choice of viewer (see below).
 - **Favorites** — star documents you use often; they are remembered in your browser.
@@ -314,6 +319,7 @@ node tools/test_kits.js http://127.0.0.1:8765/index.html
 node tools/test_viewers.js http://127.0.0.1:8765/index.html
 node tools/test_results_pane.js http://127.0.0.1:8765/index.html
 node tools/test_pwa.js http://127.0.0.1:8765/index.html
+node tools/test_layout.js http://127.0.0.1:8765/index.html
 node tools/audit.js http://127.0.0.1:8765/index.html index.html
 ```
 
