@@ -1069,6 +1069,16 @@
           </button>
         </div>
         <div class="alert alert-secondary small mb-0" id="settingsAppNote"></div>
+        <!-- "Install option not available" is all a browser will tell you, and
+             it covers several unrelated causes. This reports what this device
+             actually answers for each requirement, so the reason is visible
+             rather than guessed at. -->
+        <details class="small mt-2" id="installWhy">
+          <summary class="text-body-secondary" style="cursor:pointer">
+            Installing not offered? Check this device
+          </summary>
+          <div id="installChecks" class="mt-2"></div>
+        </details>
 
         <hr class="my-4">
         <h6>Reset</h6>
@@ -3910,7 +3920,120 @@
       note.innerHTML = '<i class="bi bi-info-circle me-1"></i>Install from your browser menu ' +
         "(often <strong>Install app</strong> or <strong>Add to Home Screen</strong>).";
     }
+    const why = $("#installWhy");
+    if (why && why.open) renderInstallChecks();
   }
+
+  // Which browser this is, because several of them cannot install at all and
+  // say the same thing as one that simply has not offered yet.
+  function browserName() {
+    const ua = navigator.userAgent;
+    if (/FBAN|FBAV|Instagram|Line\/|MicroMessenger|Twitter/i.test(ua)) {
+      return "an in-app browser inside another app";
+    }
+    if (/; wv\)/.test(ua)) return "an app's built-in browser (Android WebView)";
+    if (/SamsungBrowser/.test(ua)) return "Samsung Internet";
+    if (/Edg(A|iOS)?\//.test(ua)) return "Edge";
+    if (/OPR\/|Opera/.test(ua)) return "Opera";
+    if (/FxiOS|Firefox/.test(ua)) return "Firefox";
+    if (/CriOS/.test(ua)) return "Chrome on iOS";
+    if (/Chrome\//.test(ua)) return "Chrome";
+    if (/Safari\//.test(ua)) return "Safari";
+    return "this browser";
+  }
+
+  // A browser will only ever say "install option not available", and that one
+  // message covers a private tab, an app's built-in browser, an app that is
+  // already installed and a genuine fault equally. This reports what this
+  // device answers for each requirement, so the reason can be seen.
+  async function renderInstallChecks() {
+    const box = $("#installChecks");
+    if (!box) return;
+    const rows = [];
+    const row = (ok, label, detail) => rows.push(
+      '<div class="d-flex gap-2 align-items-start mb-1"><i class="bi ' +
+      (ok === null ? "bi-dash-circle text-body-secondary"
+        : ok ? "bi-check-circle-fill text-success" : "bi-x-circle-fill text-danger") +
+      ' mt-1"></i><div><strong>' + esc(label) + "</strong>" +
+      (detail ? '<div class="text-body-secondary">' + detail + "</div>" : "") +
+      "</div></div>");
+
+    const secure = location.protocol === "https:" ||
+      location.hostname === "localhost" || location.hostname === "127.0.0.1";
+    row(secure, "Secure connection", esc(location.protocol + "//" + location.hostname));
+
+    let manifestOk = false, manifestDetail = "could not be read";
+    try {
+      const res = await fetch("./site.webmanifest", { cache: "no-store" });
+      if (res.ok) {
+        const m = await res.json();
+        const sizes = (m.icons || []).map((i) => String(i.sizes || ""));
+        const has192 = sizes.some((s) => /\b192x192\b/.test(s));
+        const has512 = sizes.some((s) => /\b512x512\b/.test(s));
+        const displayOk = ["standalone", "fullscreen", "minimal-ui"].indexOf(m.display) !== -1;
+        manifestOk = !!(m.name && has192 && has512 && displayOk);
+        manifestDetail = (has192 ? "192px icon" : "no 192px icon") + ", " +
+          (has512 ? "512px icon" : "no 512px icon") + ", display: " + esc(m.display || "none");
+      } else {
+        manifestDetail = "server returned " + res.status;
+      }
+    } catch (e) {
+      manifestDetail = "could not be fetched";
+    }
+    row(manifestOk, "App manifest", manifestDetail);
+
+    let swOk = false, swDetail = "not supported by this browser";
+    if ("serviceWorker" in navigator) {
+      try {
+        const reg = await navigator.serviceWorker.getRegistration();
+        swOk = !!(reg && reg.active);
+        swDetail = swOk
+          ? (navigator.serviceWorker.controller ? "active and in control" : "active, not yet in control")
+          : "not registered yet — reload the page once";
+      } catch (e) {
+        swDetail = "blocked, which a private window usually does";
+      }
+    }
+    row(swOk, "Offline support", swDetail);
+
+    row(!!installPrompt, "This browser offered an install",
+      installPrompt ? "yes — use Install app above"
+        : IS_IOS ? "iPhone and iPad never do, by design"
+        : "not offered");
+
+    row(null, "Browser", esc(browserName()));
+    row(null, "Already installed", IS_STANDALONE ? "yes — you are in the app now" : "not right now");
+
+    let verdict;
+    if (IS_STANDALONE) {
+      verdict = "You are already running SimplifyAA as an installed app.";
+    } else if (installPrompt) {
+      verdict = "This device can install it now — use <strong>Install app</strong> above.";
+    } else if (IS_IOS) {
+      verdict = "On iPhone and iPad, install with <strong>Share → Add to Home Screen</strong> " +
+        "in Safari. No browser offers an install button on iOS.";
+    } else if (/in-app|built-in/.test(browserName())) {
+      verdict = "You are in a browser built into another app, which cannot install anything. " +
+        "Open this page in Chrome first — that menu usually has <strong>Open in browser</strong>.";
+    } else if (!secure || !manifestOk || !swOk) {
+      verdict = "Whatever is marked in red above is what is blocking it.";
+    } else {
+      verdict = "Everything needed is in place, so the browser is holding it back for a reason " +
+        "of its own. In order of likelihood: you are in a <strong>private or incognito tab</strong> " +
+        "(installing is disabled there); it is <strong>already installed</strong>, so look for " +
+        "SimplifyAA in your app list; or this browser does not install web apps — Chrome, Edge " +
+        "and Samsung Internet do. In Chrome, use the <strong>⋮</strong> menu and look for " +
+        "<strong>Install app</strong> or <strong>Add to Home screen</strong>.";
+    }
+    box.innerHTML = rows.join("") +
+      '<div class="alert alert-secondary mb-0 mt-2">' + verdict + "</div>";
+  }
+
+  (() => {
+    const why = $("#installWhy");
+    // Worked out when it is opened, so the extra requests cost nothing on load.
+    if (why) why.addEventListener("toggle", () => { if (why.open) renderInstallChecks(); });
+  })();
 
   /* ---- what is new ---- */
   async function loadChanges() {
