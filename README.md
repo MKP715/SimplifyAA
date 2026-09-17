@@ -102,6 +102,11 @@ Two safeguards stop a bad run from replacing a good index:
 
 In **Settings → Pages**, set the source to **GitHub Actions**. That is all; the workflow handles the rest.
 
+> **Worth knowing:** GitHub disables scheduled workflows in a repository that has had no commits for
+> 60 days, and emails the owner first. Because this workflow only commits when aa.org actually changes,
+> a long quiet spell is possible. If the weekly run stops, re-enable it under **Actions** — or just
+> press **Run workflow** occasionally, which resets the clock.
+
 ## Running it yourself
 
 ```bash
