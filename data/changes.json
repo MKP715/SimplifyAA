@@ -1,16 +1,95 @@
 {
   "latest": {
-    "generated_utc": "2026-09-17T21:19:45Z",
-    "total": 2919,
+    "generated_utc": "2026-09-19T04:11:43Z",
+    "total": 2921,
     "first_run": false,
-    "added_count": 0,
+    "added_count": 2,
     "removed_count": 0,
-    "revised_count": 0,
-    "added": [],
+    "revised_count": 2,
+    "added": [
+      {
+        "title": "Program",
+        "url": "https://www.aa.org/sites/default/files/literature/2026-SERF-Program-Final-EN.pdf",
+        "item_code": "",
+        "category": "Other Documents",
+        "language": "English"
+      },
+      {
+        "title": "Programa",
+        "url": "https://www.aa.org/sites/default/files/literature/2026-SERF-Program-Final-SP.pdf",
+        "item_code": "",
+        "category": "Other Documents",
+        "language": "Spanish"
+      }
+    ],
     "removed": [],
-    "revised": []
+    "revised": [
+      {
+        "title": "Volante",
+        "url": "https://www.aa.org/sites/default/files/literature/SP-2026-Southeast-RF-Flyer-072426.pdf",
+        "item_code": "",
+        "category": "Regional Forums",
+        "language": "Spanish",
+        "previous_modified": "2026-07-24",
+        "last_modified": "2026-09-18"
+      },
+      {
+        "title": "Flyer",
+        "url": "https://www.aa.org/sites/default/files/literature/EN-2026-Southeast-RF-Flyer-072426.pdf",
+        "item_code": "",
+        "category": "Regional Forums",
+        "language": "English",
+        "previous_modified": "2026-07-24",
+        "last_modified": "2026-09-18"
+      }
+    ]
   },
   "runs": [
+    {
+      "generated_utc": "2026-09-19T04:11:43Z",
+      "total": 2921,
+      "first_run": false,
+      "added_count": 2,
+      "removed_count": 0,
+      "revised_count": 2,
+      "added": [
+        {
+          "title": "Program",
+          "url": "https://www.aa.org/sites/default/files/literature/2026-SERF-Program-Final-EN.pdf",
+          "item_code": "",
+          "category": "Other Documents",
+          "language": "English"
+        },
+        {
+          "title": "Programa",
+          "url": "https://www.aa.org/sites/default/files/literature/2026-SERF-Program-Final-SP.pdf",
+          "item_code": "",
+          "category": "Other Documents",
+          "language": "Spanish"
+        }
+      ],
+      "removed": [],
+      "revised": [
+        {
+          "title": "Volante",
+          "url": "https://www.aa.org/sites/default/files/literature/SP-2026-Southeast-RF-Flyer-072426.pdf",
+          "item_code": "",
+          "category": "Regional Forums",
+          "language": "Spanish",
+          "previous_modified": "2026-07-24",
+          "last_modified": "2026-09-18"
+        },
+        {
+          "title": "Flyer",
+          "url": "https://www.aa.org/sites/default/files/literature/EN-2026-Southeast-RF-Flyer-072426.pdf",
+          "item_code": "",
+          "category": "Regional Forums",
+          "language": "English",
+          "previous_modified": "2026-07-24",
+          "last_modified": "2026-09-18"
+        }
+      ]
+    },
     {
       "generated_utc": "2026-09-17T21:19:45Z",
       "total": 2919,

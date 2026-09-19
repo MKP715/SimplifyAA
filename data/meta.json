@@ -1,11 +1,11 @@
 {
-  "generated_utc": "2026-09-17T21:19:45Z",
-  "generated_date": "September 17, 2026",
+  "generated_utc": "2026-09-19T04:11:43Z",
+  "generated_date": "September 19, 2026",
   "source": "https://www.aa.org",
-  "total_pdfs": 2919,
+  "total_pdfs": 2921,
   "pages_crawled": 5432,
   "broken_links": 29,
-  "total_bytes": 2902644019,
+  "total_bytes": 2903021788,
   "categories": {
     "Newsletter: Box 4-5-9": 1037,
     "Corrections": 237,
@@ -20,8 +20,8 @@
     "Service Material": 64,
     "Group, District & Area Service": 41,
     "Newsletter: AAWS Highlights": 39,
+    "Other Documents": 38,
     "Forms, Catalogs & Order Blanks": 36,
-    "Other Documents": 36,
     "Treatment & Accessibilities": 36,
     "Members & Outreach": 30,
     "A.A. Guidelines": 29,
@@ -55,14 +55,14 @@
     "Service Structure": 79,
     "For Members": 74,
     "Service Material": 64,
-    "Resources": 45,
+    "Resources": 47,
     "A.A. Guidelines": 29,
     "Archives & History": 26,
     "Finance": 19
   },
   "languages": {
-    "English": 1124,
-    "Spanish": 922,
+    "English": 1125,
+    "Spanish": 923,
     "French": 873
   },
   "topics": {
@@ -73,7 +73,7 @@
     "Twelve Traditions": 145,
     "Conference": 119,
     "Workbook / Kit": 117,
-    "Regional Forum": 97,
+    "Regional Forum": 98,
     "Twelve Steps": 96,
     "Public Information": 74,
     "Professionals": 67,
@@ -104,11 +104,11 @@
     "Family": 7,
     "Military": 4
   },
-  "translation_groups": 843,
-  "translated_documents": 2481,
-  "added_since_last_run": 0,
+  "translation_groups": 844,
+  "translated_documents": 2483,
+  "added_since_last_run": 2,
   "removed_since_last_run": 0,
-  "revised_since_last_run": 0,
+  "revised_since_last_run": 2,
   "item_code_families": {
     "Forms, Catalogs & Order Blanks": 743,
     "Pamphlets & Booklets": 184,
@@ -121,13 +121,13 @@
     "Newsletters & Bulletins": 1
   },
   "http": {
-    "http_ok": 8385,
+    "http_ok": 8387,
     "http_403": 10,
     "http_404": 12,
     "http_fail": 5
   },
   "pdf_hosts_seen": {
-    "www.aa.org": 5777,
+    "www.aa.org": 5781,
     "aaws.widen.net": 2972,
     "www.aagrapevine.org": 6
   },
