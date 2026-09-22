@@ -1,16 +1,71 @@
 {
   "latest": {
-    "generated_utc": "2026-09-21T12:35:59Z",
-    "total": 2921,
+    "generated_utc": "2026-09-22T16:47:23Z",
+    "total": 2924,
     "first_run": false,
-    "added_count": 0,
+    "added_count": 3,
     "removed_count": 0,
     "revised_count": 0,
-    "added": [],
+    "added": [
+      {
+        "title": "GSO to Launch New Contributions Platform",
+        "url": "https://www.aa.org/sites/default/files/literature/Announcing_launch_of_new_contributions_platform.pdf",
+        "item_code": "",
+        "category": "Finance & Self-Support",
+        "language": "English"
+      },
+      {
+        "title": "La OSG lanzar\u00e1 una nueva plataforma de contribuciones",
+        "url": "https://www.aa.org/sites/default/files/literature/SP_Announcing_launch_of_new_contributions_platform.pdf",
+        "item_code": "",
+        "category": "Finance & Self-Support",
+        "language": "Spanish"
+      },
+      {
+        "title": "Le BSG va lancer une nouvelle plateforme pour les contributions",
+        "url": "https://www.aa.org/sites/default/files/literature/FR_Announcing_launch_of_new_contributions_platform.pdf",
+        "item_code": "",
+        "category": "Finance & Self-Support",
+        "language": "French"
+      }
+    ],
     "removed": [],
     "revised": []
   },
   "runs": [
+    {
+      "generated_utc": "2026-09-22T16:47:23Z",
+      "total": 2924,
+      "first_run": false,
+      "added_count": 3,
+      "removed_count": 0,
+      "revised_count": 0,
+      "added": [
+        {
+          "title": "GSO to Launch New Contributions Platform",
+          "url": "https://www.aa.org/sites/default/files/literature/Announcing_launch_of_new_contributions_platform.pdf",
+          "item_code": "",
+          "category": "Finance & Self-Support",
+          "language": "English"
+        },
+        {
+          "title": "La OSG lanzar\u00e1 una nueva plataforma de contribuciones",
+          "url": "https://www.aa.org/sites/default/files/literature/SP_Announcing_launch_of_new_contributions_platform.pdf",
+          "item_code": "",
+          "category": "Finance & Self-Support",
+          "language": "Spanish"
+        },
+        {
+          "title": "Le BSG va lancer une nouvelle plateforme pour les contributions",
+          "url": "https://www.aa.org/sites/default/files/literature/FR_Announcing_launch_of_new_contributions_platform.pdf",
+          "item_code": "",
+          "category": "Finance & Self-Support",
+          "language": "French"
+        }
+      ],
+      "removed": [],
+      "revised": []
+    },
     {
       "generated_utc": "2026-09-21T12:35:59Z",
       "total": 2921,
