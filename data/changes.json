@@ -1,38 +1,119 @@
 {
   "latest": {
-    "generated_utc": "2026-09-22T16:47:23Z",
-    "total": 2924,
+    "generated_utc": "2026-09-23T16:43:01Z",
+    "total": 2919,
     "first_run": false,
-    "added_count": 3,
-    "removed_count": 0,
-    "revised_count": 0,
-    "added": [
+    "added_count": 0,
+    "removed_count": 5,
+    "revised_count": 1,
+    "added": [],
+    "removed": [
       {
-        "title": "GSO to Launch New Contributions Platform",
-        "url": "https://www.aa.org/sites/default/files/literature/Announcing_launch_of_new_contributions_platform.pdf",
+        "title": "Feuillet",
+        "url": "https://www.aa.org/sites/default/files/literature/FR-2026-Southeast-RF-Flyer-072426.pdf",
         "item_code": "",
-        "category": "Finance & Self-Support",
+        "category": "Regional Forums",
+        "language": "French"
+      },
+      {
+        "title": "Flyer",
+        "url": "https://www.aa.org/sites/default/files/literature/EN-2026-Southeast-RF-Flyer-072426.pdf",
+        "item_code": "",
+        "category": "Regional Forums",
         "language": "English"
       },
       {
-        "title": "La OSG lanzar\u00e1 una nueva plataforma de contribuciones",
-        "url": "https://www.aa.org/sites/default/files/literature/SP_Announcing_launch_of_new_contributions_platform.pdf",
+        "title": "Program",
+        "url": "https://www.aa.org/sites/default/files/literature/2026-SERF-Program-Final-EN.pdf",
         "item_code": "",
-        "category": "Finance & Self-Support",
+        "category": "Regional Forums",
+        "language": "English"
+      },
+      {
+        "title": "Programa",
+        "url": "https://www.aa.org/sites/default/files/literature/2026-SERF-Program-Final-SP.pdf",
+        "item_code": "",
+        "category": "Other Documents",
         "language": "Spanish"
       },
       {
-        "title": "Le BSG va lancer une nouvelle plateforme pour les contributions",
-        "url": "https://www.aa.org/sites/default/files/literature/FR_Announcing_launch_of_new_contributions_platform.pdf",
+        "title": "Volante",
+        "url": "https://www.aa.org/sites/default/files/literature/SP-2026-Southeast-RF-Flyer-072426.pdf",
         "item_code": "",
-        "category": "Finance & Self-Support",
-        "language": "French"
+        "category": "Regional Forums",
+        "language": "Spanish"
       }
     ],
-    "removed": [],
-    "revised": []
+    "revised": [
+      {
+        "title": "Gu\u00edas de AA: Intergrupos u oficinas centrales",
+        "url": "https://aaws.widen.net/content/a0039rapgs/pdf/smg-2_intergroup_or_central_offices_online.pdf",
+        "item_code": "SMG-2",
+        "category": "Group, District & Area Service",
+        "language": "Spanish",
+        "previous_modified": "2026-09-14",
+        "last_modified": "2026-09-23"
+      }
+    ]
   },
   "runs": [
+    {
+      "generated_utc": "2026-09-23T16:43:01Z",
+      "total": 2919,
+      "first_run": false,
+      "added_count": 0,
+      "removed_count": 5,
+      "revised_count": 1,
+      "added": [],
+      "removed": [
+        {
+          "title": "Feuillet",
+          "url": "https://www.aa.org/sites/default/files/literature/FR-2026-Southeast-RF-Flyer-072426.pdf",
+          "item_code": "",
+          "category": "Regional Forums",
+          "language": "French"
+        },
+        {
+          "title": "Flyer",
+          "url": "https://www.aa.org/sites/default/files/literature/EN-2026-Southeast-RF-Flyer-072426.pdf",
+          "item_code": "",
+          "category": "Regional Forums",
+          "language": "English"
+        },
+        {
+          "title": "Program",
+          "url": "https://www.aa.org/sites/default/files/literature/2026-SERF-Program-Final-EN.pdf",
+          "item_code": "",
+          "category": "Regional Forums",
+          "language": "English"
+        },
+        {
+          "title": "Programa",
+          "url": "https://www.aa.org/sites/default/files/literature/2026-SERF-Program-Final-SP.pdf",
+          "item_code": "",
+          "category": "Other Documents",
+          "language": "Spanish"
+        },
+        {
+          "title": "Volante",
+          "url": "https://www.aa.org/sites/default/files/literature/SP-2026-Southeast-RF-Flyer-072426.pdf",
+          "item_code": "",
+          "category": "Regional Forums",
+          "language": "Spanish"
+        }
+      ],
+      "revised": [
+        {
+          "title": "Gu\u00edas de AA: Intergrupos u oficinas centrales",
+          "url": "https://aaws.widen.net/content/a0039rapgs/pdf/smg-2_intergroup_or_central_offices_online.pdf",
+          "item_code": "SMG-2",
+          "category": "Group, District & Area Service",
+          "language": "Spanish",
+          "previous_modified": "2026-09-14",
+          "last_modified": "2026-09-23"
+        }
+      ]
+    },
     {
       "generated_utc": "2026-09-22T16:47:23Z",
       "total": 2924,
