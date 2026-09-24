@@ -1,16 +1,57 @@
 {
   "latest": {
-    "generated_utc": "2026-09-24T04:17:46Z",
-    "total": 2919,
+    "generated_utc": "2026-09-24T17:03:51Z",
+    "total": 2921,
     "first_run": false,
-    "added_count": 0,
+    "added_count": 2,
     "removed_count": 0,
     "revised_count": 0,
-    "added": [],
+    "added": [
+      {
+        "title": "Foro Regional del Este Central",
+        "url": "https://www.aa.org/sites/default/files/literature/sp_2025_ecrf_final_report.pdf",
+        "item_code": "",
+        "category": "Regional Forums",
+        "language": "Spanish"
+      },
+      {
+        "title": "Regional Forum Report 2025 East Central",
+        "url": "https://www.aa.org/sites/default/files/literature/en_2025_ecrf_final_report.pdf",
+        "item_code": "",
+        "category": "Regional Forums",
+        "language": "English"
+      }
+    ],
     "removed": [],
     "revised": []
   },
   "runs": [
+    {
+      "generated_utc": "2026-09-24T17:03:51Z",
+      "total": 2921,
+      "first_run": false,
+      "added_count": 2,
+      "removed_count": 0,
+      "revised_count": 0,
+      "added": [
+        {
+          "title": "Foro Regional del Este Central",
+          "url": "https://www.aa.org/sites/default/files/literature/sp_2025_ecrf_final_report.pdf",
+          "item_code": "",
+          "category": "Regional Forums",
+          "language": "Spanish"
+        },
+        {
+          "title": "Regional Forum Report 2025 East Central",
+          "url": "https://www.aa.org/sites/default/files/literature/en_2025_ecrf_final_report.pdf",
+          "item_code": "",
+          "category": "Regional Forums",
+          "language": "English"
+        }
+      ],
+      "removed": [],
+      "revised": []
+    },
     {
       "generated_utc": "2026-09-24T04:17:46Z",
       "total": 2919,
