@@ -1,6 +1,6 @@
 {
-  "generated_utc": "2026-09-24T17:03:51Z",
-  "generated_date": "September 24, 2026",
+  "generated_utc": "2026-09-25T17:04:44Z",
+  "generated_date": "September 25, 2026",
   "source": "https://www.aa.org",
   "total_pdfs": 2921,
   "pages_crawled": 5430,
@@ -106,7 +106,7 @@
   },
   "translation_groups": 844,
   "translated_documents": 2483,
-  "added_since_last_run": 2,
+  "added_since_last_run": 0,
   "removed_since_last_run": 0,
   "revised_since_last_run": 0,
   "item_code_families": {
