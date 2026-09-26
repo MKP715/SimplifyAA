@@ -1,16 +1,47 @@
 {
   "latest": {
-    "generated_utc": "2026-09-25T17:04:44Z",
+    "generated_utc": "2026-09-26T21:00:13Z",
     "total": 2921,
     "first_run": false,
     "added_count": 0,
     "removed_count": 0,
-    "revised_count": 0,
+    "revised_count": 1,
     "added": [],
     "removed": [],
-    "revised": []
+    "revised": [
+      {
+        "title": "Ligne de conduite des AA pour les Membres des AA oeuvrant en milieu alcoolique",
+        "url": "https://aaws.widen.net/content/zliticrsgy/pdf/fmg-10_for_aa_members_online.pdf",
+        "item_code": "FMG-10",
+        "category": "A.A. Guidelines",
+        "language": "French",
+        "previous_modified": "2026-03-10",
+        "last_modified": "2026-09-25"
+      }
+    ]
   },
   "runs": [
+    {
+      "generated_utc": "2026-09-26T21:00:13Z",
+      "total": 2921,
+      "first_run": false,
+      "added_count": 0,
+      "removed_count": 0,
+      "revised_count": 1,
+      "added": [],
+      "removed": [],
+      "revised": [
+        {
+          "title": "Ligne de conduite des AA pour les Membres des AA oeuvrant en milieu alcoolique",
+          "url": "https://aaws.widen.net/content/zliticrsgy/pdf/fmg-10_for_aa_members_online.pdf",
+          "item_code": "FMG-10",
+          "category": "A.A. Guidelines",
+          "language": "French",
+          "previous_modified": "2026-03-10",
+          "last_modified": "2026-09-25"
+        }
+      ]
+    },
     {
       "generated_utc": "2026-09-25T17:04:44Z",
       "total": 2921,
