@@ -1,16 +1,65 @@
 {
   "latest": {
-    "generated_utc": "2026-09-27T21:16:00Z",
+    "generated_utc": "2026-09-28T23:18:04Z",
     "total": 2921,
     "first_run": false,
     "added_count": 0,
     "removed_count": 0,
-    "revised_count": 0,
+    "revised_count": 2,
     "added": [],
     "removed": [],
-    "revised": []
+    "revised": [
+      {
+        "title": "Le Tr\u00e9sorier du Groupe AA",
+        "url": "https://aaws.widen.net/content/p5qhi358py/pdf/ff-96_the_aa_group_treasurer_online.pdf",
+        "item_code": "FF-96",
+        "category": "Finance & Self-Support",
+        "language": "French",
+        "previous_modified": "2024-08-29",
+        "last_modified": "2026-09-28"
+      },
+      {
+        "title": "A.A. Guidelines on Safety and A.A. Groups",
+        "url": "https://aaws.widen.net/content/uqwwqmncqc/pdf/mg-25_safety_and_aa_groups_online.pdf",
+        "item_code": "MG-25",
+        "category": "A.A. Guidelines",
+        "language": "English",
+        "previous_modified": "2025-07-17",
+        "last_modified": "2026-09-28"
+      }
+    ]
   },
   "runs": [
+    {
+      "generated_utc": "2026-09-28T23:18:04Z",
+      "total": 2921,
+      "first_run": false,
+      "added_count": 0,
+      "removed_count": 0,
+      "revised_count": 2,
+      "added": [],
+      "removed": [],
+      "revised": [
+        {
+          "title": "Le Tr\u00e9sorier du Groupe AA",
+          "url": "https://aaws.widen.net/content/p5qhi358py/pdf/ff-96_the_aa_group_treasurer_online.pdf",
+          "item_code": "FF-96",
+          "category": "Finance & Self-Support",
+          "language": "French",
+          "previous_modified": "2024-08-29",
+          "last_modified": "2026-09-28"
+        },
+        {
+          "title": "A.A. Guidelines on Safety and A.A. Groups",
+          "url": "https://aaws.widen.net/content/uqwwqmncqc/pdf/mg-25_safety_and_aa_groups_online.pdf",
+          "item_code": "MG-25",
+          "category": "A.A. Guidelines",
+          "language": "English",
+          "previous_modified": "2025-07-17",
+          "last_modified": "2026-09-28"
+        }
+      ]
+    },
     {
       "generated_utc": "2026-09-27T21:16:00Z",
       "total": 2921,
