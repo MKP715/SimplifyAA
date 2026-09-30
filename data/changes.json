@@ -1,42 +1,153 @@
 {
   "latest": {
-    "generated_utc": "2026-09-29T22:09:44Z",
+    "generated_utc": "2026-09-30T22:14:32Z",
     "total": 2921,
     "first_run": false,
-    "added_count": 1,
-    "removed_count": 1,
-    "revised_count": 1,
+    "added_count": 3,
+    "removed_count": 3,
+    "revised_count": 2,
     "added": [
       {
-        "title": "Gu\u00edas de AA - Participaci\u00f3n de los grupos en l\u00ednea",
-        "url": "https://aaws.widen.net/content/1ohn3cokqq/pdf/smg-26_participation_of_online_groups_online.pdf",
-        "item_code": "SMG-26",
-        "category": "Anonymity, Internet & Online Groups",
+        "title": "A.A. Service Manual/Twelve Concepts for World Services",
+        "url": "https://aaws.widen.net/content/wbktsxdemg/pdf/bm-31_aa_service_manual_online.pdf",
+        "item_code": "BM-31",
+        "category": "Service Manual & Concepts",
+        "language": "English"
+      },
+      {
+        "title": "El Manual de Servicio de AA y Doce Conceptos para el servicio mundial",
+        "url": "https://aaws.widen.net/content/zy5cybqdua/pdf/sbm-31_aa_service_manual_online.pdf",
+        "item_code": "",
+        "category": "Service Manual & Concepts",
         "language": "Spanish"
+      },
+      {
+        "title": "Le Manuel du Service chez les AA et les Douze Concepts des Services mondiaux",
+        "url": "https://aaws.widen.net/content/kl4uqewdnc/pdf/fbm-31_aa_service_manual_online.pdf",
+        "item_code": "",
+        "category": "Service Manual & Concepts",
+        "language": "French"
       }
     ],
     "removed": [
       {
-        "title": "Gu\u00edas de AA - Participaci\u00f3n de los grupos en l\u00ednea",
-        "url": "https://aaws.widen.net/content/1ohn3cokqq/pdf/SMG-26_Participation_of_Online_Groups_ONLINE.pdf",
-        "item_code": "SMG-26",
-        "category": "Anonymity, Internet & Online Groups",
+        "title": "A.A. Service Manual/Twelve Concepts for World Services",
+        "url": "https://aaws.widen.net/content/wbktsxdemg/pdf/bm-31_2024-2026_aa_service_manual_online.pdf",
+        "item_code": "BM-31",
+        "category": "Service Manual & Concepts",
+        "language": "English"
+      },
+      {
+        "title": "El Manual de Servicio de AA y Doce Conceptos para el servicio mundial",
+        "url": "https://aaws.widen.net/content/zy5cybqdua/pdf/sbm-31_2024-2026_aa_service_manual_online.pdf",
+        "item_code": "",
+        "category": "Service Manual & Concepts",
         "language": "Spanish"
+      },
+      {
+        "title": "Le Manuel du Service chez les AA et les Douze Concepts des Services mondiaux",
+        "url": "https://aaws.widen.net/content/kl4uqewdnc/pdf/fbm-31_2024-2026_aa_service_manual_online.pdf",
+        "item_code": "",
+        "category": "Service Manual & Concepts",
+        "language": "French"
       }
     ],
     "revised": [
       {
-        "title": "Anonymity \u2014 Our Spiritual Foundation",
-        "url": "https://aaws.widen.net/content/y60sj8tn4r/pdf/p-47_anonymity_our_spiritual_foundation_online.pdf",
-        "item_code": "P-47",
-        "category": "Anonymity, Internet & Online Groups",
-        "language": "English",
-        "previous_modified": "2026-09-16",
-        "last_modified": "2026-09-29"
+        "title": "Libro de trabajo de Accesibilidad",
+        "url": "https://aaws.widen.net/content/wypdf2abkd/pdf/sm-48i_accessibilities_workbook_online.pdf",
+        "item_code": "SM-48I",
+        "category": "Treatment & Accessibilities",
+        "language": "Spanish",
+        "previous_modified": "2026-09-11",
+        "last_modified": "2026-09-30"
+      },
+      {
+        "title": "Gu\u00edas de AA: Finanzas",
+        "url": "https://aaws.widen.net/content/gzgpjtvbed/pdf/smg-15_finance_online.pdf",
+        "item_code": "SMG-15",
+        "category": "Finance & Self-Support",
+        "language": "Spanish",
+        "previous_modified": "2026-01-05",
+        "last_modified": "2026-09-30"
       }
     ]
   },
   "runs": [
+    {
+      "generated_utc": "2026-09-30T22:14:32Z",
+      "total": 2921,
+      "first_run": false,
+      "added_count": 3,
+      "removed_count": 3,
+      "revised_count": 2,
+      "added": [
+        {
+          "title": "A.A. Service Manual/Twelve Concepts for World Services",
+          "url": "https://aaws.widen.net/content/wbktsxdemg/pdf/bm-31_aa_service_manual_online.pdf",
+          "item_code": "BM-31",
+          "category": "Service Manual & Concepts",
+          "language": "English"
+        },
+        {
+          "title": "El Manual de Servicio de AA y Doce Conceptos para el servicio mundial",
+          "url": "https://aaws.widen.net/content/zy5cybqdua/pdf/sbm-31_aa_service_manual_online.pdf",
+          "item_code": "",
+          "category": "Service Manual & Concepts",
+          "language": "Spanish"
+        },
+        {
+          "title": "Le Manuel du Service chez les AA et les Douze Concepts des Services mondiaux",
+          "url": "https://aaws.widen.net/content/kl4uqewdnc/pdf/fbm-31_aa_service_manual_online.pdf",
+          "item_code": "",
+          "category": "Service Manual & Concepts",
+          "language": "French"
+        }
+      ],
+      "removed": [
+        {
+          "title": "A.A. Service Manual/Twelve Concepts for World Services",
+          "url": "https://aaws.widen.net/content/wbktsxdemg/pdf/bm-31_2024-2026_aa_service_manual_online.pdf",
+          "item_code": "BM-31",
+          "category": "Service Manual & Concepts",
+          "language": "English"
+        },
+        {
+          "title": "El Manual de Servicio de AA y Doce Conceptos para el servicio mundial",
+          "url": "https://aaws.widen.net/content/zy5cybqdua/pdf/sbm-31_2024-2026_aa_service_manual_online.pdf",
+          "item_code": "",
+          "category": "Service Manual & Concepts",
+          "language": "Spanish"
+        },
+        {
+          "title": "Le Manuel du Service chez les AA et les Douze Concepts des Services mondiaux",
+          "url": "https://aaws.widen.net/content/kl4uqewdnc/pdf/fbm-31_2024-2026_aa_service_manual_online.pdf",
+          "item_code": "",
+          "category": "Service Manual & Concepts",
+          "language": "French"
+        }
+      ],
+      "revised": [
+        {
+          "title": "Libro de trabajo de Accesibilidad",
+          "url": "https://aaws.widen.net/content/wypdf2abkd/pdf/sm-48i_accessibilities_workbook_online.pdf",
+          "item_code": "SM-48I",
+          "category": "Treatment & Accessibilities",
+          "language": "Spanish",
+          "previous_modified": "2026-09-11",
+          "last_modified": "2026-09-30"
+        },
+        {
+          "title": "Gu\u00edas de AA: Finanzas",
+          "url": "https://aaws.widen.net/content/gzgpjtvbed/pdf/smg-15_finance_online.pdf",
+          "item_code": "SMG-15",
+          "category": "Finance & Self-Support",
+          "language": "Spanish",
+          "previous_modified": "2026-01-05",
+          "last_modified": "2026-09-30"
+        }
+      ]
+    },
     {
       "generated_utc": "2026-09-29T22:09:44Z",
       "total": 2921,
