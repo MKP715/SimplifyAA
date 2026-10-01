@@ -1,79 +1,47 @@
 {
   "latest": {
-    "generated_utc": "2026-09-30T22:14:32Z",
+    "generated_utc": "2026-10-01T22:41:06Z",
     "total": 2921,
     "first_run": false,
-    "added_count": 3,
-    "removed_count": 3,
-    "revised_count": 2,
-    "added": [
-      {
-        "title": "A.A. Service Manual/Twelve Concepts for World Services",
-        "url": "https://aaws.widen.net/content/wbktsxdemg/pdf/bm-31_aa_service_manual_online.pdf",
-        "item_code": "BM-31",
-        "category": "Service Manual & Concepts",
-        "language": "English"
-      },
-      {
-        "title": "El Manual de Servicio de AA y Doce Conceptos para el servicio mundial",
-        "url": "https://aaws.widen.net/content/zy5cybqdua/pdf/sbm-31_aa_service_manual_online.pdf",
-        "item_code": "",
-        "category": "Service Manual & Concepts",
-        "language": "Spanish"
-      },
-      {
-        "title": "Le Manuel du Service chez les AA et les Douze Concepts des Services mondiaux",
-        "url": "https://aaws.widen.net/content/kl4uqewdnc/pdf/fbm-31_aa_service_manual_online.pdf",
-        "item_code": "",
-        "category": "Service Manual & Concepts",
-        "language": "French"
-      }
-    ],
-    "removed": [
-      {
-        "title": "A.A. Service Manual/Twelve Concepts for World Services",
-        "url": "https://aaws.widen.net/content/wbktsxdemg/pdf/bm-31_2024-2026_aa_service_manual_online.pdf",
-        "item_code": "BM-31",
-        "category": "Service Manual & Concepts",
-        "language": "English"
-      },
-      {
-        "title": "El Manual de Servicio de AA y Doce Conceptos para el servicio mundial",
-        "url": "https://aaws.widen.net/content/zy5cybqdua/pdf/sbm-31_2024-2026_aa_service_manual_online.pdf",
-        "item_code": "",
-        "category": "Service Manual & Concepts",
-        "language": "Spanish"
-      },
-      {
-        "title": "Le Manuel du Service chez les AA et les Douze Concepts des Services mondiaux",
-        "url": "https://aaws.widen.net/content/kl4uqewdnc/pdf/fbm-31_2024-2026_aa_service_manual_online.pdf",
-        "item_code": "",
-        "category": "Service Manual & Concepts",
-        "language": "French"
-      }
-    ],
+    "added_count": 0,
+    "removed_count": 0,
+    "revised_count": 1,
+    "added": [],
+    "removed": [],
     "revised": [
       {
-        "title": "Libro de trabajo de Accesibilidad",
-        "url": "https://aaws.widen.net/content/wypdf2abkd/pdf/sm-48i_accessibilities_workbook_online.pdf",
-        "item_code": "SM-48I",
-        "category": "Treatment & Accessibilities",
+        "title": "A.A. de un Vistazo",
+        "url": "https://aaws.widen.net/content/v9cvi20jme/pdf/sf-1_aa_at_a_glance_online.pdf",
+        "item_code": "SF-1",
+        "category": "Public Information",
         "language": "Spanish",
-        "previous_modified": "2026-09-11",
-        "last_modified": "2026-09-30"
-      },
-      {
-        "title": "Gu\u00edas de AA: Finanzas",
-        "url": "https://aaws.widen.net/content/gzgpjtvbed/pdf/smg-15_finance_online.pdf",
-        "item_code": "SMG-15",
-        "category": "Finance & Self-Support",
-        "language": "Spanish",
-        "previous_modified": "2026-01-05",
-        "last_modified": "2026-09-30"
+        "previous_modified": "2025-11-06",
+        "last_modified": "2026-10-01"
       }
     ]
   },
   "runs": [
+    {
+      "generated_utc": "2026-10-01T22:41:06Z",
+      "total": 2921,
+      "first_run": false,
+      "added_count": 0,
+      "removed_count": 0,
+      "revised_count": 1,
+      "added": [],
+      "removed": [],
+      "revised": [
+        {
+          "title": "A.A. de un Vistazo",
+          "url": "https://aaws.widen.net/content/v9cvi20jme/pdf/sf-1_aa_at_a_glance_online.pdf",
+          "item_code": "SF-1",
+          "category": "Public Information",
+          "language": "Spanish",
+          "previous_modified": "2025-11-06",
+          "last_modified": "2026-10-01"
+        }
+      ]
+    },
     {
       "generated_utc": "2026-09-30T22:14:32Z",
       "total": 2921,
