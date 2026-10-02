@@ -1,26 +1,27 @@
 {
   "latest": {
-    "generated_utc": "2026-10-01T22:41:06Z",
+    "generated_utc": "2026-10-02T22:10:00Z",
     "total": 2921,
     "first_run": false,
     "added_count": 0,
     "removed_count": 0,
-    "revised_count": 1,
+    "revised_count": 0,
     "added": [],
     "removed": [],
-    "revised": [
-      {
-        "title": "A.A. de un Vistazo",
-        "url": "https://aaws.widen.net/content/v9cvi20jme/pdf/sf-1_aa_at_a_glance_online.pdf",
-        "item_code": "SF-1",
-        "category": "Public Information",
-        "language": "Spanish",
-        "previous_modified": "2025-11-06",
-        "last_modified": "2026-10-01"
-      }
-    ]
+    "revised": []
   },
   "runs": [
+    {
+      "generated_utc": "2026-10-02T22:10:00Z",
+      "total": 2921,
+      "first_run": false,
+      "added_count": 0,
+      "removed_count": 0,
+      "revised_count": 0,
+      "added": [],
+      "removed": [],
+      "revised": []
+    },
     {
       "generated_utc": "2026-10-01T22:41:06Z",
       "total": 2921,

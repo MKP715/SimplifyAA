@@ -1,6 +1,6 @@
 {
-  "generated_utc": "2026-10-01T22:41:06Z",
-  "generated_date": "October 01, 2026",
+  "generated_utc": "2026-10-02T22:10:00Z",
+  "generated_date": "October 02, 2026",
   "source": "https://www.aa.org",
   "total_pdfs": 2921,
   "pages_crawled": 5430,
@@ -108,7 +108,7 @@
   "translated_documents": 2483,
   "added_since_last_run": 0,
   "removed_since_last_run": 0,
-  "revised_since_last_run": 1,
+  "revised_since_last_run": 0,
   "item_code_families": {
     "Forms, Catalogs & Order Blanks": 743,
     "Pamphlets & Booklets": 184,
