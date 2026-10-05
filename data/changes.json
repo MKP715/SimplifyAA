@@ -1,16 +1,83 @@
 {
   "latest": {
-    "generated_utc": "2026-10-04T05:26:29Z",
+    "generated_utc": "2026-10-05T14:15:43Z",
     "total": 2921,
     "first_run": false,
     "added_count": 0,
     "removed_count": 0,
-    "revised_count": 0,
+    "revised_count": 3,
     "added": [],
     "removed": [],
-    "revised": []
+    "revised": [
+      {
+        "title": "Le Manuel du Service chez les AA et les Douze Concepts des Services mondiaux",
+        "url": "https://aaws.widen.net/content/kl4uqewdnc/pdf/fbm-31_aa_service_manual_online.pdf",
+        "item_code": "",
+        "category": "Service Manual & Concepts",
+        "language": "French",
+        "previous_modified": "2026-09-30",
+        "last_modified": "2026-10-05"
+      },
+      {
+        "title": "El Manual de Servicio de AA y Doce Conceptos para el servicio mundial",
+        "url": "https://aaws.widen.net/content/zy5cybqdua/pdf/sbm-31_aa_service_manual_online.pdf",
+        "item_code": "",
+        "category": "Service Manual & Concepts",
+        "language": "Spanish",
+        "previous_modified": "2026-09-30",
+        "last_modified": "2026-10-05"
+      },
+      {
+        "title": "A.A. Service Manual/Twelve Concepts for World Services",
+        "url": "https://aaws.widen.net/content/wbktsxdemg/pdf/bm-31_aa_service_manual_online.pdf",
+        "item_code": "BM-31",
+        "category": "Service Manual & Concepts",
+        "language": "English",
+        "previous_modified": "2026-09-30",
+        "last_modified": "2026-10-05"
+      }
+    ]
   },
   "runs": [
+    {
+      "generated_utc": "2026-10-05T14:15:43Z",
+      "total": 2921,
+      "first_run": false,
+      "added_count": 0,
+      "removed_count": 0,
+      "revised_count": 3,
+      "added": [],
+      "removed": [],
+      "revised": [
+        {
+          "title": "Le Manuel du Service chez les AA et les Douze Concepts des Services mondiaux",
+          "url": "https://aaws.widen.net/content/kl4uqewdnc/pdf/fbm-31_aa_service_manual_online.pdf",
+          "item_code": "",
+          "category": "Service Manual & Concepts",
+          "language": "French",
+          "previous_modified": "2026-09-30",
+          "last_modified": "2026-10-05"
+        },
+        {
+          "title": "El Manual de Servicio de AA y Doce Conceptos para el servicio mundial",
+          "url": "https://aaws.widen.net/content/zy5cybqdua/pdf/sbm-31_aa_service_manual_online.pdf",
+          "item_code": "",
+          "category": "Service Manual & Concepts",
+          "language": "Spanish",
+          "previous_modified": "2026-09-30",
+          "last_modified": "2026-10-05"
+        },
+        {
+          "title": "A.A. Service Manual/Twelve Concepts for World Services",
+          "url": "https://aaws.widen.net/content/wbktsxdemg/pdf/bm-31_aa_service_manual_online.pdf",
+          "item_code": "BM-31",
+          "category": "Service Manual & Concepts",
+          "language": "English",
+          "previous_modified": "2026-09-30",
+          "last_modified": "2026-10-05"
+        }
+      ]
+    },
     {
       "generated_utc": "2026-10-04T05:26:29Z",
       "total": 2921,
