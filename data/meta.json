@@ -1,11 +1,11 @@
 {
-  "generated_utc": "2026-10-06T22:40:57Z",
-  "generated_date": "October 06, 2026",
+  "generated_utc": "2026-10-07T23:04:02Z",
+  "generated_date": "October 07, 2026",
   "source": "https://www.aa.org",
-  "total_pdfs": 2921,
-  "pages_crawled": 5430,
+  "total_pdfs": 2923,
+  "pages_crawled": 5431,
   "broken_links": 29,
-  "total_bytes": 2899874528,
+  "total_bytes": 2901157405,
   "categories": {
     "Newsletter: Box 4-5-9": 1037,
     "Corrections": 237,
@@ -15,7 +15,7 @@
     "Regional Forums": 98,
     "Pamphlets & Booklets": 96,
     "Public Information": 92,
-    "G.S.O. Quarterly Report": 87,
+    "G.S.O. Quarterly Report": 89,
     "Newsletter: Markings (Archives)": 87,
     "Service Material": 64,
     "Group, District & Area Service": 41,
@@ -47,7 +47,7 @@
     "Loners & Internationalists": 1
   },
   "sections": {
-    "Newsletters": 1469,
+    "Newsletters": 1471,
     "Carrying the Message": 420,
     "Literature": 350,
     "Forms & Catalogs": 207,
@@ -62,14 +62,14 @@
   },
   "languages": {
     "English": 1125,
-    "Spanish": 923,
-    "French": 873
+    "Spanish": 924,
+    "French": 874
   },
   "topics": {
     "Newsletter": 1166,
     "Flyer / Poster": 309,
-    "Form / Application": 231,
-    "Report": 173,
+    "Form / Application": 232,
+    "Report": 175,
     "Twelve Traditions": 145,
     "Conference": 119,
     "Workbook / Kit": 117,
@@ -104,13 +104,13 @@
     "Family": 7,
     "Military": 4
   },
-  "translation_groups": 844,
-  "translated_documents": 2483,
-  "added_since_last_run": 0,
+  "translation_groups": 845,
+  "translated_documents": 2485,
+  "added_since_last_run": 2,
   "removed_since_last_run": 0,
-  "revised_since_last_run": 6,
+  "revised_since_last_run": 0,
   "item_code_families": {
-    "Forms, Catalogs & Order Blanks": 743,
+    "Forms, Catalogs & Order Blanks": 745,
     "Pamphlets & Booklets": 184,
     "Service Material": 136,
     "A.A. Guidelines": 62,
@@ -121,13 +121,13 @@
     "Newsletters & Bulletins": 1
   },
   "http": {
-    "http_ok": 8385,
+    "http_ok": 8388,
     "http_403": 10,
     "http_404": 12,
     "http_fail": 5
   },
   "pdf_hosts_seen": {
-    "www.aa.org": 5779,
+    "www.aa.org": 5783,
     "aaws.widen.net": 2972,
     "www.aagrapevine.org": 6
   },

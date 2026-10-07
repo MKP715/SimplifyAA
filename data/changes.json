@@ -1,71 +1,57 @@
 {
   "latest": {
-    "generated_utc": "2026-10-06T22:40:56Z",
-    "total": 2921,
+    "generated_utc": "2026-10-07T23:04:02Z",
+    "total": 2923,
     "first_run": false,
-    "added_count": 0,
+    "added_count": 2,
     "removed_count": 0,
-    "revised_count": 6,
-    "added": [],
-    "removed": [],
-    "revised": [
+    "revised_count": 0,
+    "added": [
       {
-        "title": "Libro de trabajo de Accesibilidad",
-        "url": "https://aaws.widen.net/content/wypdf2abkd/pdf/sm-48i_accessibilities_workbook_online.pdf",
-        "item_code": "SM-48I",
-        "category": "Treatment & Accessibilities",
-        "language": "Spanish",
-        "previous_modified": "2026-09-30",
-        "last_modified": "2026-10-06"
+        "title": "Informe Trimestral de la OSG - Tercer trimestre de 2026",
+        "url": "https://www.aa.org/sites/default/files/newsletters/SF-14_Quarterly_Report_2026_Third_Quarter.pdf",
+        "item_code": "SF-14",
+        "category": "G.S.O. Quarterly Report",
+        "language": "Spanish"
       },
       {
-        "title": "Is There an Alcoholic in Your Life?",
-        "url": "https://aaws.widen.net/content/txdtj2ld2d/pdf/p-30_is_there_an_alcoholic_in_your_life_online.pdf",
-        "item_code": "P-30",
-        "category": "Pamphlets & Booklets",
-        "language": "English",
-        "previous_modified": "2025-11-05",
-        "last_modified": "2026-10-06"
-      },
-      {
-        "title": "G.S.R. General Service Representative",
-        "url": "https://aaws.widen.net/content/s4mowz4oh4/pdf/p-19_gsr_online.pdf",
-        "item_code": "P-19",
-        "category": "Group, District & Area Service",
-        "language": "English",
-        "previous_modified": "2025-08-13",
-        "last_modified": "2026-10-06"
-      },
-      {
-        "title": "Frequently Asked Questions About A.A. - (Formerly 44 Questions)",
-        "url": "https://aaws.widen.net/content/qbwy1oqmao/pdf/p-2_frequently_asked_questions_online.pdf",
-        "item_code": "P-2",
-        "category": "Pamphlets & Booklets",
-        "language": "English",
-        "previous_modified": "2024-07-17",
-        "last_modified": "2026-10-06"
-      },
-      {
-        "title": "Esto es AA \u2014 Una introducci\u00f3n al programa de recuperaci\u00f3n de AA",
-        "url": "https://aaws.widen.net/content/bmtsbtepw9/pdf/sp-1_this_is_aa_online.pdf",
-        "item_code": "SP-1",
-        "category": "Pamphlets & Booklets",
-        "language": "Spanish",
-        "previous_modified": "2025-11-05",
-        "last_modified": "2026-10-06"
-      },
-      {
-        "title": "AA para el alcoh\u00f3lico de edad avanzada",
-        "url": "https://aaws.widen.net/content/1q02wpbupr/pdf/sb-28_aa_older_alcoholic_large_online.pdf",
-        "item_code": "SB-28",
-        "category": "Members & Outreach",
-        "language": "Spanish",
-        "previous_modified": "2025-10-02",
-        "last_modified": "2026-10-06"
+        "title": "Rapport Trimestriel du BSG - Troisi\u00e8me trimestre de 2026",
+        "url": "https://www.aa.org/sites/default/files/newsletters/FF-14_Quarterly_Report_2026_Third_Quarter.pdf",
+        "item_code": "FF-14",
+        "category": "G.S.O. Quarterly Report",
+        "language": "French"
       }
-    ]
+    ],
+    "removed": [],
+    "revised": []
   },
   "runs": [
+    {
+      "generated_utc": "2026-10-07T23:04:02Z",
+      "total": 2923,
+      "first_run": false,
+      "added_count": 2,
+      "removed_count": 0,
+      "revised_count": 0,
+      "added": [
+        {
+          "title": "Informe Trimestral de la OSG - Tercer trimestre de 2026",
+          "url": "https://www.aa.org/sites/default/files/newsletters/SF-14_Quarterly_Report_2026_Third_Quarter.pdf",
+          "item_code": "SF-14",
+          "category": "G.S.O. Quarterly Report",
+          "language": "Spanish"
+        },
+        {
+          "title": "Rapport Trimestriel du BSG - Troisi\u00e8me trimestre de 2026",
+          "url": "https://www.aa.org/sites/default/files/newsletters/FF-14_Quarterly_Report_2026_Third_Quarter.pdf",
+          "item_code": "FF-14",
+          "category": "G.S.O. Quarterly Report",
+          "language": "French"
+        }
+      ],
+      "removed": [],
+      "revised": []
+    },
     {
       "generated_utc": "2026-10-06T22:40:56Z",
       "total": 2921,
