@@ -1,43 +1,27 @@
 {
   "latest": {
-    "generated_utc": "2026-10-08T13:21:31Z",
+    "generated_utc": "2026-10-09T22:34:05Z",
     "total": 2924,
     "first_run": false,
-    "added_count": 1,
+    "added_count": 0,
     "removed_count": 0,
-    "revised_count": 2,
-    "added": [
-      {
-        "title": "Quarterly Report from GSO - Third Quarter, 2026",
-        "url": "https://www.aa.org/sites/default/files/newsletters/F-14_Quarterly_Report_2026_Third_Quarter.pdf",
-        "item_code": "F-14",
-        "category": "G.S.O. Quarterly Report",
-        "language": "English"
-      }
-    ],
+    "revised_count": 0,
+    "added": [],
     "removed": [],
-    "revised": [
-      {
-        "title": "Rapport Trimestriel du B.S.G.",
-        "url": "https://www.aa.org/sites/default/files/newsletters/FF-14_Quarterly_Report_2026_Third_Quarter.pdf",
-        "item_code": "FF-14",
-        "category": "G.S.O. Quarterly Report",
-        "language": "French",
-        "previous_modified": "2026-10-07",
-        "last_modified": "2026-10-08"
-      },
-      {
-        "title": "Informe Trimestral de la OSG",
-        "url": "https://www.aa.org/sites/default/files/newsletters/SF-14_Quarterly_Report_2026_Third_Quarter.pdf",
-        "item_code": "SF-14",
-        "category": "G.S.O. Quarterly Report",
-        "language": "Spanish",
-        "previous_modified": "2026-10-07",
-        "last_modified": "2026-10-08"
-      }
-    ]
+    "revised": []
   },
   "runs": [
+    {
+      "generated_utc": "2026-10-09T22:34:05Z",
+      "total": 2924,
+      "first_run": false,
+      "added_count": 0,
+      "removed_count": 0,
+      "revised_count": 0,
+      "added": [],
+      "removed": [],
+      "revised": []
+    },
     {
       "generated_utc": "2026-10-08T13:21:31Z",
       "total": 2924,

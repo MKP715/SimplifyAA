@@ -1,9 +1,9 @@
 {
-  "generated_utc": "2026-10-08T13:21:31Z",
-  "generated_date": "October 08, 2026",
+  "generated_utc": "2026-10-09T22:34:05Z",
+  "generated_date": "October 09, 2026",
   "source": "https://www.aa.org",
   "total_pdfs": 2924,
-  "pages_crawled": 5432,
+  "pages_crawled": 5429,
   "broken_links": 29,
   "total_bytes": 2901774896,
   "categories": {
@@ -106,9 +106,9 @@
   },
   "translation_groups": 845,
   "translated_documents": 2486,
-  "added_since_last_run": 1,
+  "added_since_last_run": 0,
   "removed_since_last_run": 0,
-  "revised_since_last_run": 2,
+  "revised_since_last_run": 0,
   "item_code_families": {
     "Forms, Catalogs & Order Blanks": 746,
     "Pamphlets & Booklets": 184,
@@ -121,7 +121,7 @@
     "Newsletters & Bulletins": 1
   },
   "http": {
-    "http_ok": 8390,
+    "http_ok": 8387,
     "http_403": 10,
     "http_404": 12,
     "http_fail": 5
