@@ -1,9 +1,9 @@
 {
-  "generated_utc": "2026-10-12T05:30:37Z",
-  "generated_date": "October 12, 2026",
+  "generated_utc": "2026-10-13T14:02:36Z",
+  "generated_date": "October 13, 2026",
   "source": "https://www.aa.org",
   "total_pdfs": 2924,
-  "pages_crawled": 5429,
+  "pages_crawled": 5426,
   "broken_links": 29,
   "total_bytes": 2901774896,
   "categories": {
@@ -121,7 +121,7 @@
     "Newsletters & Bulletins": 1
   },
   "http": {
-    "http_ok": 8387,
+    "http_ok": 8384,
     "http_403": 10,
     "http_404": 12,
     "http_fail": 5
