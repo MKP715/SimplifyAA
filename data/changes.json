@@ -1,396 +1,115 @@
 {
   "latest": {
-    "generated_utc": "2026-10-15T04:14:23Z",
+    "generated_utc": "2026-10-15T16:48:33Z",
     "total": 2880,
     "first_run": false,
-    "added_count": 4,
-    "removed_count": 50,
+    "added_count": 3,
+    "removed_count": 3,
     "revised_count": 0,
     "added": [
       {
-        "title": "Les Douze Traditions",
-        "url": "https://www.aa.org/sites/default/files/literature/smf-122_fr%201221.pdf",
-        "item_code": "SMF-122",
-        "category": "Big Book, Steps & Traditions",
-        "language": "French"
-      },
-      {
-        "title": "La nueva plataforma de contribuciones entrar\u00e1 en funcionamiento a partir del 21 de octubre",
-        "url": "https://www.aa.org/sites/default/files/literature/SP_Reminder_Announcing_launch_of_new_contributions_platform.pdf",
-        "item_code": "",
-        "category": "Finance & Self-Support",
+        "title": "El Manual de Servicio de AA",
+        "url": "https://www.aa.org/sites/default/files/literature/SF-236_Service_Manual_Flyer.pdf",
+        "item_code": "SF-236",
+        "category": "Service Manual & Concepts",
         "language": "Spanish"
       },
       {
-        "title": "Lancement de la nouvelle plateforme des contributions le 21 octobre",
-        "url": "https://www.aa.org/sites/default/files/literature/FR_Reminder_Announcing_launch_of_new_contributions_platform.pdf",
-        "item_code": "",
-        "category": "Finance & Self-Support",
+        "title": "Manuel du Service chez les AA",
+        "url": "https://www.aa.org/sites/default/files/literature/FF-236_Service_Manual_Flyer.pdf",
+        "item_code": "FF-236",
+        "category": "Service Manual & Concepts",
         "language": "French"
       },
       {
-        "title": "New Contributions Platform Launches October 21",
-        "url": "https://www.aa.org/sites/default/files/literature/Reminder_Announcing_launch_of_new_contributions_platform.pdf",
-        "item_code": "",
-        "category": "Finance & Self-Support",
+        "title": "The A.A. Service Manual",
+        "url": "https://www.aa.org/sites/default/files/literature/F-236_Service_Manual_Flyer.pdf",
+        "item_code": "F-236",
+        "category": "Service Manual & Concepts",
         "language": "English"
       }
     ],
     "removed": [
       {
-        "title": "A Message to Corrections Professionals...",
-        "url": "https://aaws.widen.net/content/vpwdxfhvkl/pdf/p-20_a_message_correction_professionals_online.pdf",
-        "item_code": "P-20",
-        "category": "Corrections",
-        "language": "English"
-      },
-      {
-        "title": "A.A. at a Glance",
-        "url": "https://aaws.widen.net/content/uufoysuuvn/pdf/f-1_aa_at_a_glance_online.pdf",
-        "item_code": "F-1",
-        "category": "Public Information",
-        "language": "English"
-      },
-      {
-        "title": "A.A. Corrections Prerelease Contact Information - Inside",
-        "url": "https://aaws.widen.net/content/w0kzolb0mk/pdf/f-163_corrections_prerelease_for_aa_inmates_inside_online.pdf",
-        "item_code": "F-163",
-        "category": "Corrections",
-        "language": "English"
-      },
-      {
-        "title": "A.A. for Alcoholics with Mental Health Issues \u2013 and their sponsors",
-        "url": "https://aaws.widen.net/content/mkhniveafs/pdf/p-87_aa_alcoholics_w_mental_health_issues_online.pdf",
-        "item_code": "P-87",
-        "category": "Sponsorship",
-        "language": "English"
-      },
-      {
-        "title": "A.A. for the Older Alcoholic",
-        "url": "https://aaws.widen.net/content/igxtocutug/pdf/b-28_aa_older_alcoholic_large_online.pdf",
-        "item_code": "B-28",
-        "category": "Members & Outreach",
-        "language": "English"
-      },
-      {
-        "title": "A.A. Guidelines on Relationship Between A.A. and Al-Anon",
-        "url": "https://aaws.widen.net/content/ves6jr5v7a/pdf/mg-8_relationship_aa__al_anon_online.pdf",
-        "item_code": "MG-8",
-        "category": "A.A. Guidelines",
-        "language": "English"
-      },
-      {
-        "title": "A.A. Guidelines on Sharing the A.A. Message with the Alcoholic Who Is Deaf",
-        "url": "https://aaws.widen.net/content/hghzf91m9e/pdf/mg-13_sharing_the_message_with_deaf_alcoholics_online.pdf",
-        "item_code": "MG-13",
-        "category": "A.A. Guidelines",
-        "language": "English"
-      },
-      {
-        "title": "Behind the Walls: A Message of Hope",
-        "url": "https://aaws.widen.net/content/cslrsdhgw1/pdf/p-9_behind_the_walls_a_message_of_hope_online.pdf",
-        "item_code": "P-9",
-        "category": "Corrections",
-        "language": "English"
-      },
-      {
-        "title": "Carrying the Message Behind These Walls",
-        "url": "https://aaws.widen.net/content/sshboqwoxu/pdf/f-108_carrying_the_message_behind_these_walls_online.pdf",
-        "item_code": "F-108",
-        "category": "Forms, Catalogs & Order Blanks",
-        "language": "English"
-      },
-      {
-        "title": "Conference-Approved Literature",
-        "url": "https://aaws.widen.net/content/hfzsojoohs/pdf/smf-29_conference_approved_literature.pdf",
-        "item_code": "SMF-29",
-        "category": "Literature & Committees",
-        "language": "English"
-      },
-      {
-        "title": "Contenu de la pochette de l\u2019Accessibilit\u00e9",
-        "url": "https://aaws.widen.net/content/irbmjm3pk3/pdf/ff-182_accessibility_kit_online.pdf",
-        "item_code": "FF-182",
-        "category": "Treatment & Accessibilities",
-        "language": "French"
-      },
-      {
-        "title": "Experiencia compartida sobre c\u00f3mo acercarse a las personas nuevas enviadas a AA por instituciones de tratamiento",
-        "url": "https://aaws.widen.net/content/m75xymbr7a/pdf/smfs-142_sharing_experience_on_approaching_new_people_referred_to_tf.pdf",
-        "item_code": "SMFS-142",
-        "category": "Service Material",
+        "title": "El Manual de Servicio de AA",
+        "url": "https://www.aa.org/sites/default/files/literature/sp-236-service-manual-flyer-122024.pdf",
+        "item_code": "SP-236",
+        "category": "Service Manual & Concepts",
         "language": "Spanish"
       },
       {
-        "title": "FM-39 R\u00e9solutions de la Conf\u00e9rence",
-        "url": "https://aaws.widen.net/content/dhhosivo1x/pdf/fm-39_advisory_actions_online.pdf",
-        "item_code": "FM-39",
-        "category": "Displays & Wallet Cards",
+        "title": "Manuel du Service chez les AA",
+        "url": "https://www.aa.org/sites/default/files/literature/fp-236-service-manual-flyer-122024.pdf",
+        "item_code": "FP-236",
+        "category": "Service Manual & Concepts",
         "language": "French"
       },
       {
-        "title": "For Volunteers Staffing an A.A. Exhibit",
-        "url": "https://aaws.widen.net/content/pavgo8rw9x/pdf/smf-201_for_volunteers_staffing_an_aa_exhibit.pdf",
-        "item_code": "SMF-201",
-        "category": "Service Material",
+        "title": "The A.A. Service Manual",
+        "url": "https://www.aa.org/sites/default/files/literature/F-236_AA_Service_Manual_flyer.pdf",
+        "item_code": "F-236",
+        "category": "Service Manual & Concepts",
         "language": "English"
-      },
-      {
-        "title": "Frequently Asked Questions About A.A. Websites",
-        "url": "https://aaws.widen.net/content/shioesezjk/pdf/smf-101_frequently_ask_questions_about_aa_websites.pdf",
-        "item_code": "SMF-101",
-        "category": "Newsletter: About A.A.",
-        "language": "English"
-      },
-      {
-        "title": "Gu\u00edas de AA acerca de comit\u00e9s de Tratamiento",
-        "url": "https://aaws.widen.net/content/a9ijkvep7j/pdf/smg-14_treatment_online.pdf",
-        "item_code": "SMG-14",
-        "category": "Treatment & Accessibilities",
-        "language": "Spanish"
-      },
-      {
-        "title": "Gu\u00edas de AA: Finanzas",
-        "url": "https://aaws.widen.net/content/gzgpjtvbed/pdf/smg-15_finance_online.pdf",
-        "item_code": "SMG-15",
-        "category": "Finance & Self-Support",
-        "language": "Spanish"
-      },
-      {
-        "title": "Is there a Problem Drinker in the Workplace?",
-        "url": "https://aaws.widen.net/content/m00yaozcgl/pdf/p-54_is_there_a_problem_drinker_in_the_workplace_online.pdf",
-        "item_code": "P-54",
-        "category": "Pamphlets & Booklets",
-        "language": "English"
-      },
-      {
-        "title": "It Sure Beats Sitting in a Cell",
-        "url": "https://aaws.widen.net/content/j7x4gmadkp/pdf/p-33_it_sure_beats_sitting_in_a_cell_online.pdf",
-        "item_code": "P-33",
-        "category": "Pamphlets & Booklets",
-        "language": "English"
-      },
-      {
-        "title": "La structure de la Conf\u00e9rence des Services g\u00e9n\u00e9raux (\u00c9.-U. et Canada)",
-        "url": "https://aaws.widen.net/content/gaqqttaucb/pdf/smff-116_the_general_service_conference_structure.pdf",
-        "item_code": "SMFF-116",
-        "category": "General Service Conference",
-        "language": "French"
-      },
-      {
-        "title": "La structure des AA - Comprendre le Mouvement et ses services",
-        "url": "https://aaws.widen.net/content/zmypcohud2/pdf/fp-18_inside_aa_online.pdf",
-        "item_code": "FP-18",
-        "category": "Pamphlets & Booklets",
-        "language": "French"
-      },
-      {
-        "title": "Le parrainage d'un pays \u00e0 l'autre: Transmettre le Message des AA dans le monde entier",
-        "url": "https://aaws.widen.net/content/jeeclqcono/pdf/ff-168_country_to_country.pdf",
-        "item_code": "FF-168",
-        "category": "Forms, Catalogs & Order Blanks",
-        "language": "French"
-      },
-      {
-        "title": "Le programme des AA de contact avant lib\u00e9ration dans les centres correctionnels - l\u2019int\u00e9rieur",
-        "url": "https://aaws.widen.net/content/5qluh87u6f/pdf/ff-163_corrections_prerelease_for_aa_inmates_inside_online.pdf",
-        "item_code": "FF-163",
-        "category": "Corrections",
-        "language": "French"
-      },
-      {
-        "title": "Les AA sont-ils pour moi?",
-        "url": "https://aaws.widen.net/content/ph6vmpqncj/pdf/fp-36_is_aa_for_me_online.pdf",
-        "item_code": "FP-36",
-        "category": "Pamphlets & Booklets",
-        "language": "French"
-      },
-      {
-        "title": "Les Douze Traditions",
-        "url": "https://aaws.widen.net/content/z80l4mhbog/pdf/smff-122_the_twelve_traditions_for_world_service_short_form.pdf",
-        "item_code": "SMFF-122",
-        "category": "Big Book, Steps & Traditions",
-        "language": "French"
-      },
-      {
-        "title": "Les femmes hispaniques chez les AA",
-        "url": "https://aaws.widen.net/content/eot4hllhgx/pdf/fp-90_hispanic_women_in_aa_online.pdf",
-        "item_code": "FP-90",
-        "category": "Members & Outreach",
-        "language": "French"
-      },
-      {
-        "title": "Les jeunes chez les AA",
-        "url": "https://aaws.widen.net/content/nfy1amaiag/pdf/fp-4_young_people_in_aa_online.pdf",
-        "item_code": "FP-4",
-        "category": "Young People in A.A.",
-        "language": "French"
-      },
-      {
-        "title": "Les Noirs chez les AA \u2013 Exp\u00e9rience, force et espoir",
-        "url": "https://aaws.widen.net/content/himxbgu6jz/pdf/fp-51_black_in_aa_online.pdf",
-        "item_code": "FP-51",
-        "category": "Members & Outreach",
-        "language": "French"
-      },
-      {
-        "title": "Libro de trabajo de Accesibilidad",
-        "url": "https://aaws.widen.net/content/wypdf2abkd/pdf/sm-48i_accessibilities_workbook_online.pdf",
-        "item_code": "SM-48I",
-        "category": "Treatment & Accessibilities",
-        "language": "Spanish"
-      },
-      {
-        "title": "Ligne de conduite des AA sur les Comit\u00e9 des publications",
-        "url": "https://aaws.widen.net/content/ymdg2da67h/pdf/fmg-9_literature_online.pdf",
-        "item_code": "FMG-9",
-        "category": "Literature & Committees",
-        "language": "French"
-      },
-      {
-        "title": "Lignes de Conduite Pour la R\u00e9alisation D\u2019histoires Orales",
-        "url": "https://aaws.widen.net/content/woz2ppu6mp/pdf/archives_guidelines_conducting_oral_histories_fr_online.pdf",
-        "item_code": "",
-        "category": "Archives & A.A. History",
-        "language": "French"
-      },
-      {
-        "title": "Lignes de conduite sur la numerisation des documents d\u2019archives",
-        "url": "https://aaws.widen.net/content/andsi10jjz/pdf/archives_digitization_guidelines_fr_online.pdf",
-        "item_code": "",
-        "category": "Archives & A.A. History",
-        "language": "French"
-      },
-      {
-        "title": "Liste de Contr\u00f4le des archives",
-        "url": "https://aaws.widen.net/content/qspa7suzls/pdf/ff-221_archives_services_checklist_online.pdf",
-        "item_code": "FF-221",
-        "category": "Archives & A.A. History",
-        "language": "French"
-      },
-      {
-        "title": "Los alcoh\u00f3licos LGBTQ en AA",
-        "url": "https://aaws.widen.net/content/wcgpbsidfd/pdf/sp-32_lgbtq_online.pdf",
-        "item_code": "SP-32",
-        "category": "Members & Outreach",
-        "language": "Spanish"
-      },
-      {
-        "title": "Los l\u00edderes religiosos preguntan acerca de A.A.",
-        "url": "https://aaws.widen.net/content/0z7los6lro/pdf/sp-25_faith_leaders_ask_about_aa_online.pdf",
-        "item_code": "SP-25",
-        "category": "Newsletter: About A.A.",
-        "language": "Spanish"
-      },
-      {
-        "title": "L\u2019anonymat \u00e0 l\u2019\u00e8re du num\u00e9rique",
-        "url": "https://aaws.widen.net/content/jnebdhq0ao/pdf/fm-77_anonymity_fragile_11x17_online.pdf",
-        "item_code": "FM-77",
-        "category": "Anonymity, Internet & Online Groups",
-        "language": "French"
-      },
-      {
-        "title": "Making the A.A. Message Accessible",
-        "url": "https://aaws.widen.net/content/xkhfjltxc3/pdf/f-107_making_the_aa_message_accessible_online.pdf",
-        "item_code": "F-107",
-        "category": "Treatment & Accessibilities",
-        "language": "English"
-      },
-      {
-        "title": "Manuel de l'Information publique",
-        "url": "https://aaws.widen.net/content/b36pwf0cga/pdf/fm-27i_public_information_workbook_online.pdf",
-        "item_code": "FM-27I",
-        "category": "Public Information",
-        "language": "French"
-      },
-      {
-        "title": "Partage des RDR \u00e0 un Nouveau RDR",
-        "url": "https://aaws.widen.net/content/dcviwapf62/pdf/smff-174_sharing_from_dcms_to_a_new_dcm.pdf",
-        "item_code": "SMFF-174",
-        "category": "Service Material",
-        "language": "French"
-      },
-      {
-        "title": "Petit guide pratique sur les AA",
-        "url": "https://aaws.widen.net/content/btbeckyia1/pdf/fp-42_a_brief_guide_to_aa_online.pdf",
-        "item_code": "FP-42",
-        "category": "Pamphlets & Booklets",
-        "language": "French"
-      },
-      {
-        "title": "Point de vue d\u2019un membre sur les A.A.",
-        "url": "https://aaws.widen.net/content/caofgxpl3v/pdf/fp-41_a_member_eyeview_of_aa_online.pdf",
-        "item_code": "FP-41",
-        "category": "Pamphlets & Booklets",
-        "language": "French"
-      },
-      {
-        "title": "Safety Card for A.A. Groups",
-        "url": "https://aaws.widen.net/content/5gowq4gqos/pdf/f-211_safety_card_online.pdf",
-        "item_code": "F-211",
-        "category": "Safety in A.A.",
-        "language": "English"
-      },
-      {
-        "title": "Sponsorship-A Vital Stepping Stone to Service & Sobriety",
-        "url": "https://aaws.widen.net/content/rlzf2lfitq/pdf/smf-110_sponsorship_a_vital_stepping_stone_to_service_and_sobriety.pdf",
-        "item_code": "SMF-110",
-        "category": "Sponsorship",
-        "language": "English"
-      },
-      {
-        "title": "Suggestions pour l'animation de r\u00e9unions de d\u00e9butants",
-        "url": "https://aaws.widen.net/content/dariyj02yk/pdf/fmu-1_suggestions_for_leading_beginners_meetings_online.pdf",
-        "item_code": "",
-        "category": "Other Documents",
-        "language": "French"
-      },
-      {
-        "title": "The A.A. Member\u2014Medications and Other Drugs",
-        "url": "https://aaws.widen.net/content/gya6qlm3px/pdf/p-11_aa_member_medication__other_drugs_online.pdf",
-        "item_code": "P-11",
-        "category": "Pamphlets & Booklets",
-        "language": "English"
-      },
-      {
-        "title": "Traditions Checklist from the A.A. Grapevine",
-        "url": "https://aaws.widen.net/content/7w4movk5ut/pdf/smf-131_traditions_checklist.pdf",
-        "item_code": "SMF-131",
-        "category": "Grapevine & La Vi\u00f1a",
-        "language": "English"
-      },
-      {
-        "title": "Twelve Steps Illustrated",
-        "url": "https://aaws.widen.net/content/phnymemmwg/pdf/p-55_twelve_steps_illustrated_online.pdf",
-        "item_code": "P-55",
-        "category": "Big Book, Steps & Traditions",
-        "language": "English"
-      },
-      {
-        "title": "Un chequeo de las tradiciones de la revista AA Grapevine",
-        "url": "https://aaws.widen.net/content/xmavzgbkmr/pdf/smfs-131_traditions_checklist.pdf",
-        "item_code": "SMFS-131",
-        "category": "Grapevine & La Vi\u00f1a",
-        "language": "Spanish"
-      },
-      {
-        "title": "Women in A.A.",
-        "url": "https://aaws.widen.net/content/0cdf36r7zu/pdf/p-5_women_in_aa_online.pdf",
-        "item_code": "P-5",
-        "category": "Members & Outreach",
-        "language": "English"
-      },
-      {
-        "title": "Y a-t-il un buveur \u00e0 probl\u00e8me dans votre milieu de travail?",
-        "url": "https://aaws.widen.net/content/eupe56pl0o/pdf/fp-54_is_there_a_problem_drinker_in_the_workplace_online.pdf",
-        "item_code": "FP-54",
-        "category": "Pamphlets & Booklets",
-        "language": "French"
       }
     ],
     "revised": []
   },
   "runs": [
+    {
+      "generated_utc": "2026-10-15T16:48:33Z",
+      "total": 2880,
+      "first_run": false,
+      "added_count": 3,
+      "removed_count": 3,
+      "revised_count": 0,
+      "added": [
+        {
+          "title": "El Manual de Servicio de AA",
+          "url": "https://www.aa.org/sites/default/files/literature/SF-236_Service_Manual_Flyer.pdf",
+          "item_code": "SF-236",
+          "category": "Service Manual & Concepts",
+          "language": "Spanish"
+        },
+        {
+          "title": "Manuel du Service chez les AA",
+          "url": "https://www.aa.org/sites/default/files/literature/FF-236_Service_Manual_Flyer.pdf",
+          "item_code": "FF-236",
+          "category": "Service Manual & Concepts",
+          "language": "French"
+        },
+        {
+          "title": "The A.A. Service Manual",
+          "url": "https://www.aa.org/sites/default/files/literature/F-236_Service_Manual_Flyer.pdf",
+          "item_code": "F-236",
+          "category": "Service Manual & Concepts",
+          "language": "English"
+        }
+      ],
+      "removed": [
+        {
+          "title": "El Manual de Servicio de AA",
+          "url": "https://www.aa.org/sites/default/files/literature/sp-236-service-manual-flyer-122024.pdf",
+          "item_code": "SP-236",
+          "category": "Service Manual & Concepts",
+          "language": "Spanish"
+        },
+        {
+          "title": "Manuel du Service chez les AA",
+          "url": "https://www.aa.org/sites/default/files/literature/fp-236-service-manual-flyer-122024.pdf",
+          "item_code": "FP-236",
+          "category": "Service Manual & Concepts",
+          "language": "French"
+        },
+        {
+          "title": "The A.A. Service Manual",
+          "url": "https://www.aa.org/sites/default/files/literature/F-236_AA_Service_Manual_flyer.pdf",
+          "item_code": "F-236",
+          "category": "Service Manual & Concepts",
+          "language": "English"
+        }
+      ],
+      "revised": []
+    },
     {
       "generated_utc": "2026-10-15T04:14:23Z",
       "total": 2880,
@@ -1372,17 +1091,6 @@
           "language": "French"
         }
       ],
-      "removed": [],
-      "revised": []
-    },
-    {
-      "generated_utc": "2026-09-21T12:35:59Z",
-      "total": 2921,
-      "first_run": false,
-      "added_count": 0,
-      "removed_count": 0,
-      "revised_count": 0,
-      "added": [],
       "removed": [],
       "revised": []
     }
