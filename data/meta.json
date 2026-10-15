@@ -1,11 +1,11 @@
 {
-  "generated_utc": "2026-10-15T16:48:33Z",
+  "generated_utc": "2026-10-15T21:16:15Z",
   "generated_date": "October 15, 2026",
   "source": "https://www.aa.org",
-  "total_pdfs": 2880,
+  "total_pdfs": 2882,
   "pages_crawled": 5430,
   "broken_links": 29,
-  "total_bytes": 2856716377,
+  "total_bytes": 2856905839,
   "categories": {
     "Newsletter: Box 4-5-9": 1037,
     "Corrections": 233,
@@ -30,7 +30,7 @@
     "Cooperation with the Professional Community": 24,
     "Finance & Self-Support": 24,
     "Archives & A.A. History": 23,
-    "Literature & Committees": 20,
+    "Literature & Committees": 21,
     "Anonymity, Internet & Online Groups": 17,
     "Military & Remote Communities": 17,
     "Grapevine & La Vi\u00f1a": 16,
@@ -38,8 +38,8 @@
     "Surveys & Membership Data": 13,
     "Audio & Video Resources": 9,
     "Sponsorship": 9,
+    "Safety in A.A.": 8,
     "General Service Conference": 7,
-    "Safety in A.A.": 7,
     "World Service Meeting": 6,
     "Young People in A.A.": 6,
     "Displays & Wallet Cards": 5,
@@ -49,11 +49,11 @@
   "sections": {
     "Newsletters": 1468,
     "Carrying the Message": 410,
-    "Literature": 339,
+    "Literature": 340,
     "Forms & Catalogs": 204,
     "Conference & Events": 137,
     "Service Structure": 79,
-    "For Members": 64,
+    "For Members": 65,
     "Service Material": 61,
     "Resources": 44,
     "A.A. Guidelines": 27,
@@ -61,7 +61,7 @@
     "Archives & History": 23
   },
   "languages": {
-    "English": 1106,
+    "English": 1108,
     "Spanish": 920,
     "French": 854
   },
@@ -71,7 +71,7 @@
     "Form / Application": 233,
     "Report": 178,
     "Twelve Traditions": 143,
-    "Conference": 116,
+    "Conference": 117,
     "Workbook / Kit": 106,
     "Regional Forum": 97,
     "Twelve Steps": 95,
@@ -97,22 +97,22 @@
     "Young People": 15,
     "Medical": 13,
     "Newcomer": 13,
+    "Safety": 9,
     "LGBTQ+": 8,
-    "Safety": 8,
     "Women": 7,
     "Black & African American": 6,
     "Family": 6,
     "Military": 4
   },
   "translation_groups": 843,
-  "translated_documents": 2441,
-  "added_since_last_run": 3,
-  "removed_since_last_run": 3,
+  "translated_documents": 2443,
+  "added_since_last_run": 4,
+  "removed_since_last_run": 2,
   "revised_since_last_run": 0,
   "item_code_families": {
-    "Forms, Catalogs & Order Blanks": 739,
+    "Forms, Catalogs & Order Blanks": 740,
     "Pamphlets & Booklets": 164,
-    "Service Material": 127,
+    "Service Material": 128,
     "A.A. Guidelines": 57,
     "Books & Big Book": 27,
     "Committee Workbooks": 19,
@@ -121,14 +121,14 @@
     "Newsletters & Bulletins": 1
   },
   "http": {
-    "http_ok": 8343,
+    "http_ok": 8345,
     "http_403": 10,
     "http_404": 12,
     "http_fail": 5
   },
   "pdf_hosts_seen": {
-    "www.aa.org": 5821,
-    "aaws.widen.net": 2736,
+    "www.aa.org": 5837,
+    "aaws.widen.net": 2728,
     "www.aagrapevine.org": 6
   },
   "pdf_hosts_skipped": {}

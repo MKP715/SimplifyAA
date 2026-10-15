@@ -1,60 +1,115 @@
 {
   "latest": {
-    "generated_utc": "2026-10-15T16:48:33Z",
-    "total": 2880,
+    "generated_utc": "2026-10-15T21:16:15Z",
+    "total": 2882,
     "first_run": false,
-    "added_count": 3,
-    "removed_count": 3,
+    "added_count": 4,
+    "removed_count": 2,
     "revised_count": 0,
     "added": [
       {
-        "title": "El Manual de Servicio de AA",
-        "url": "https://www.aa.org/sites/default/files/literature/SF-236_Service_Manual_Flyer.pdf",
-        "item_code": "SF-236",
-        "category": "Service Manual & Concepts",
+        "title": "Conference-Approved Literature",
+        "url": "https://www.aa.org/sites/default/files/literature/SMF-29_Conference_Approved_Literature.pdf",
+        "item_code": "SMF-29",
+        "category": "Literature & Committees",
+        "language": "English"
+      },
+      {
+        "title": "Literatura aprobada por la conferencia",
+        "url": "https://www.aa.org/sites/default/files/literature/SMFS-29_Conference_Approved_Literature.pdf",
+        "item_code": "SMFS-29",
+        "category": "Literature & Committees",
         "language": "Spanish"
       },
       {
-        "title": "Manuel du Service chez les AA",
-        "url": "https://www.aa.org/sites/default/files/literature/FF-236_Service_Manual_Flyer.pdf",
-        "item_code": "FF-236",
-        "category": "Service Manual & Concepts",
+        "title": "Publications approuv\u00e9es par la Conf\u00e9rence",
+        "url": "https://www.aa.org/sites/default/files/literature/SMFF-29_Conference_Approved_Literature.pdf",
+        "item_code": "SMFF-29",
+        "category": "Literature & Committees",
         "language": "French"
       },
       {
-        "title": "The A.A. Service Manual",
-        "url": "https://www.aa.org/sites/default/files/literature/F-236_Service_Manual_Flyer.pdf",
-        "item_code": "F-236",
-        "category": "Service Manual & Concepts",
+        "title": "Safety Card for A.A. Groups",
+        "url": "https://www.aa.org/sites/default/files/literature/F-211_Safety_Card.pdf",
+        "item_code": "F-211",
+        "category": "Safety in A.A.",
         "language": "English"
       }
     ],
     "removed": [
       {
-        "title": "El Manual de Servicio de AA",
-        "url": "https://www.aa.org/sites/default/files/literature/sp-236-service-manual-flyer-122024.pdf",
-        "item_code": "SP-236",
-        "category": "Service Manual & Concepts",
+        "title": "Literatura aprobada por la conferencia",
+        "url": "https://aaws.widen.net/content/eojpoe9mww/pdf/smfs-29_conference_approved_literature.pdf",
+        "item_code": "SMFS-29",
+        "category": "Literature & Committees",
         "language": "Spanish"
       },
       {
-        "title": "Manuel du Service chez les AA",
-        "url": "https://www.aa.org/sites/default/files/literature/fp-236-service-manual-flyer-122024.pdf",
-        "item_code": "FP-236",
-        "category": "Service Manual & Concepts",
+        "title": "Publications approuv\u00e9es par la Conf\u00e9rence",
+        "url": "https://aaws.widen.net/content/8aqokddm5b/pdf/smff-29_conference_approved_literature.pdf",
+        "item_code": "SMFF-29",
+        "category": "Literature & Committees",
         "language": "French"
-      },
-      {
-        "title": "The A.A. Service Manual",
-        "url": "https://www.aa.org/sites/default/files/literature/F-236_AA_Service_Manual_flyer.pdf",
-        "item_code": "F-236",
-        "category": "Service Manual & Concepts",
-        "language": "English"
       }
     ],
     "revised": []
   },
   "runs": [
+    {
+      "generated_utc": "2026-10-15T21:16:15Z",
+      "total": 2882,
+      "first_run": false,
+      "added_count": 4,
+      "removed_count": 2,
+      "revised_count": 0,
+      "added": [
+        {
+          "title": "Conference-Approved Literature",
+          "url": "https://www.aa.org/sites/default/files/literature/SMF-29_Conference_Approved_Literature.pdf",
+          "item_code": "SMF-29",
+          "category": "Literature & Committees",
+          "language": "English"
+        },
+        {
+          "title": "Literatura aprobada por la conferencia",
+          "url": "https://www.aa.org/sites/default/files/literature/SMFS-29_Conference_Approved_Literature.pdf",
+          "item_code": "SMFS-29",
+          "category": "Literature & Committees",
+          "language": "Spanish"
+        },
+        {
+          "title": "Publications approuv\u00e9es par la Conf\u00e9rence",
+          "url": "https://www.aa.org/sites/default/files/literature/SMFF-29_Conference_Approved_Literature.pdf",
+          "item_code": "SMFF-29",
+          "category": "Literature & Committees",
+          "language": "French"
+        },
+        {
+          "title": "Safety Card for A.A. Groups",
+          "url": "https://www.aa.org/sites/default/files/literature/F-211_Safety_Card.pdf",
+          "item_code": "F-211",
+          "category": "Safety in A.A.",
+          "language": "English"
+        }
+      ],
+      "removed": [
+        {
+          "title": "Literatura aprobada por la conferencia",
+          "url": "https://aaws.widen.net/content/eojpoe9mww/pdf/smfs-29_conference_approved_literature.pdf",
+          "item_code": "SMFS-29",
+          "category": "Literature & Committees",
+          "language": "Spanish"
+        },
+        {
+          "title": "Publications approuv\u00e9es par la Conf\u00e9rence",
+          "url": "https://aaws.widen.net/content/8aqokddm5b/pdf/smff-29_conference_approved_literature.pdf",
+          "item_code": "SMFF-29",
+          "category": "Literature & Committees",
+          "language": "French"
+        }
+      ],
+      "revised": []
+    },
     {
       "generated_utc": "2026-10-15T16:48:33Z",
       "total": 2880,
@@ -1060,39 +1115,6 @@
           "last_modified": "2026-09-23"
         }
       ]
-    },
-    {
-      "generated_utc": "2026-09-22T16:47:23Z",
-      "total": 2924,
-      "first_run": false,
-      "added_count": 3,
-      "removed_count": 0,
-      "revised_count": 0,
-      "added": [
-        {
-          "title": "GSO to Launch New Contributions Platform",
-          "url": "https://www.aa.org/sites/default/files/literature/Announcing_launch_of_new_contributions_platform.pdf",
-          "item_code": "",
-          "category": "Finance & Self-Support",
-          "language": "English"
-        },
-        {
-          "title": "La OSG lanzar\u00e1 una nueva plataforma de contribuciones",
-          "url": "https://www.aa.org/sites/default/files/literature/SP_Announcing_launch_of_new_contributions_platform.pdf",
-          "item_code": "",
-          "category": "Finance & Self-Support",
-          "language": "Spanish"
-        },
-        {
-          "title": "Le BSG va lancer une nouvelle plateforme pour les contributions",
-          "url": "https://www.aa.org/sites/default/files/literature/FR_Announcing_launch_of_new_contributions_platform.pdf",
-          "item_code": "",
-          "category": "Finance & Self-Support",
-          "language": "French"
-        }
-      ],
-      "removed": [],
-      "revised": []
     }
   ]
 }
