@@ -1,16 +1,885 @@
 {
   "latest": {
-    "generated_utc": "2026-10-19T04:14:18Z",
-    "total": 2929,
+    "generated_utc": "2026-10-20T21:32:59Z",
+    "total": 2798,
     "first_run": false,
-    "added_count": 0,
-    "removed_count": 0,
+    "added_count": 1,
+    "removed_count": 132,
     "revised_count": 0,
-    "added": [],
-    "removed": [],
+    "added": [
+      {
+        "title": "Regional Forum Report 2025 West Central",
+        "url": "https://www.aa.org/sites/default/files/literature/2025-WestCentral-Final-Forum-Report_0.pdf",
+        "item_code": "",
+        "category": "Regional Forums",
+        "language": "English"
+      }
+    ],
+    "removed": [
+      {
+        "title": "Box 4-5-9 - Conference 1969",
+        "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_conference69.pdf",
+        "item_code": "",
+        "category": "Newsletter: Box 4-5-9",
+        "language": "Spanish"
+      },
+      {
+        "title": "Box 4-5-9 - January-February 1966",
+        "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_jan-feb66.pdf",
+        "item_code": "",
+        "category": "Newsletter: Box 4-5-9",
+        "language": "Spanish"
+      },
+      {
+        "title": "Box 459 - \"La Voz de A.A.\" Ser\u00e1 Escuchada",
+        "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_april-may67.pdf",
+        "item_code": "",
+        "category": "Newsletter: Box 4-5-9",
+        "language": "Spanish"
+      },
+      {
+        "title": "Box 459 - 'Nuestro Bienestar Comun' Tema de la 13ava Conferencia",
+        "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_jun63.pdf",
+        "item_code": "",
+        "category": "Newsletter: Box 4-5-9",
+        "language": "Spanish"
+      },
+      {
+        "title": "Box 459 - 11,000 Personas en la Convenci\u00f3n de Miami se Comprometieron a Preservar la Unidad de A.A.",
+        "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_aug-sept70.pdf",
+        "item_code": "",
+        "category": "Newsletter: Box 4-5-9",
+        "language": "Spanish"
+      },
+      {
+        "title": "Box 459 - 27ma. Conferencia Tomar\u00e1 como Tema de Discusi\u00f3n el Grupo A.A.",
+        "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_feb-mar77.pdf",
+        "item_code": "",
+        "category": "Newsletter: Box 4-5-9",
+        "language": "Spanish"
+      },
+      {
+        "title": "Box 459 - A.A. Mundial Planea Reunirse en Guatemala",
+        "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_aug-sept86.pdf",
+        "item_code": "",
+        "category": "Newsletter: Box 4-5-9",
+        "language": "Spanish"
+      },
+      {
+        "title": "Box 459 - Acontecimiento en la Historia de A.A. - 19,300 Registrandos en la Convencion International",
+        "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_oct-nov75.pdf",
+        "item_code": "",
+        "category": "Newsletter: Box 4-5-9",
+        "language": "Spanish"
+      },
+      {
+        "title": "Box 459 - Alcoh\u00f3licos An\u00f3nimos Llega a su Mayor\u00eda de Edad",
+        "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_april_may05_0.pdf",
+        "item_code": "",
+        "category": "Newsletter: Box 4-5-9",
+        "language": "Spanish"
+      },
+      {
+        "title": "Box 459 - Aqu\u00ed se Habla A.A.",
+        "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_oct-nov79.pdf",
+        "item_code": "",
+        "category": "Newsletter: Box 4-5-9",
+        "language": "Spanish"
+      },
+      {
+        "title": "Box 459 - Bernard Smith, Custodio no A.A. Muere de un Ataque al Coraz\u00f3n en Nueva York",
+        "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_oct-nov70.pdf",
+        "item_code": "",
+        "category": "Newsletter: Box 4-5-9",
+        "language": "Spanish"
+      },
+      {
+        "title": "Box 459 - Bienvenida a Cora Louise",
+        "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_aug-sept67.pdf",
+        "item_code": "",
+        "category": "Newsletter: Box 4-5-9",
+        "language": "Spanish"
+      },
+      {
+        "title": "Box 459 - Ceremonia de Apertura de los Archivos de A.A.",
+        "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_feb-mar76.pdf",
+        "item_code": "",
+        "category": "Newsletter: Box 4-5-9",
+        "language": "Spanish"
+      },
+      {
+        "title": "Box 459 - Como dan la vuelta al mundo las publicaciones de A.A.",
+        "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_aug-sept80.pdf",
+        "item_code": "",
+        "category": "Newsletter: Box 4-5-9",
+        "language": "Spanish"
+      },
+      {
+        "title": "Box 459 - Como Puede Cambiar Nuestras Vidas el Folleto de A.A. 'Llegue a Creer...'",
+        "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_oct-nov77.pdf",
+        "item_code": "",
+        "category": "Newsletter: Box 4-5-9",
+        "language": "Spanish"
+      },
+      {
+        "title": "Box 459 - Como Recibir la Literatura a Tiempo",
+        "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_nov62.pdf",
+        "item_code": "",
+        "category": "Newsletter: Box 4-5-9",
+        "language": "Spanish"
+      },
+      {
+        "title": "Box 459 - Como Viajar... en el Estilo de A.A.",
+        "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_april-may68.pdf",
+        "item_code": "",
+        "category": "Newsletter: Box 4-5-9",
+        "language": "Spanish"
+      },
+      {
+        "title": "Box 459 - Compartiendo sus Pensamientos Acerca de Literatura que no es A.A.",
+        "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_april-may74.pdf",
+        "item_code": "",
+        "category": "Newsletter: Box 4-5-9",
+        "language": "Spanish"
+      },
+      {
+        "title": "Box 459 - Comunicaci\u00f3n Llave del Crecimiento de A.A. Continua el Trabajo de Bill",
+        "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_june-july71.pdf",
+        "item_code": "",
+        "category": "Newsletter: Box 4-5-9",
+        "language": "Spanish"
+      },
+      {
+        "title": "Box 459 - Conferencia de 1979 Repasara Tres Sencillas Ideas de A.A.",
+        "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_april-may79.pdf",
+        "item_code": "",
+        "category": "Newsletter: Box 4-5-9",
+        "language": "Spanish"
+      },
+      {
+        "title": "Box 459 - Conferencia de Servicios Generales",
+        "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_may62.pdf",
+        "item_code": "",
+        "category": "Newsletter: Box 4-5-9",
+        "language": "Spanish"
+      },
+      {
+        "title": "Box 459 - Conferencia de Servicios Generales de 1973",
+        "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_april-may73.pdf",
+        "item_code": "",
+        "category": "Newsletter: Box 4-5-9",
+        "language": "Spanish"
+      },
+      {
+        "title": "Box 459 - Convenci\u00f3n Internacional Celebra en Toronto, Canada",
+        "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_aug-sept65.pdf",
+        "item_code": "",
+        "category": "Newsletter: Box 4-5-9",
+        "language": "Spanish"
+      },
+      {
+        "title": "Box 459 - Convenci\u00f3n Internacional del 50 Aniversario",
+        "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_aug-sept85.pdf",
+        "item_code": "",
+        "category": "Newsletter: Box 4-5-9",
+        "language": "Spanish"
+      },
+      {
+        "title": "Box 459 - Convenci\u00f3n para Celebrar Trig\u00e9simo Quinto Aniversario de A.A. en Miami, Julio 3-5",
+        "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_feb-mar70.pdf",
+        "item_code": "",
+        "category": "Newsletter: Box 4-5-9",
+        "language": "Spanish"
+      },
+      {
+        "title": "Box 459 - Crecen en N\u00famero y Popularidad los Grupos de Estudio de el Libro Grande",
+        "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_oct-nov74.pdf",
+        "item_code": "",
+        "category": "Newsletter: Box 4-5-9",
+        "language": "Spanish"
+      },
+      {
+        "title": "Box 459 - Creciente Necesidad para los Servicios de A.A.",
+        "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_june-july70.pdf",
+        "item_code": "",
+        "category": "Newsletter: Box 4-5-9",
+        "language": "Spanish"
+      },
+      {
+        "title": "Box 459 - Delegados de 15 Pa\u00edses en la Segunda Reuni\u00f3n de Servicios Mundiales",
+        "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_oct-nov72.pdf",
+        "item_code": "",
+        "category": "Newsletter: Box 4-5-9",
+        "language": "Spanish"
+      },
+      {
+        "title": "Box 459 - Departamento de Buenas Noticias",
+        "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_feb-mar67.pdf",
+        "item_code": "",
+        "category": "Newsletter: Box 4-5-9",
+        "language": "Spanish"
+      },
+      {
+        "title": "Box 459 - Diferentes Maneras de Animar sus Reuniones",
+        "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_feb-mar69.pdf",
+        "item_code": "",
+        "category": "Newsletter: Box 4-5-9",
+        "language": "Spanish"
+      },
+      {
+        "title": "Box 459 - Donde Entra la Fuerza de Voluntad",
+        "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_jan63.pdf",
+        "item_code": "",
+        "category": "Newsletter: Box 4-5-9",
+        "language": "Spanish"
+      },
+      {
+        "title": "Box 459 - Edici\u00f3n Navide\u00f1a",
+        "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_dec-jan66.pdf",
+        "item_code": "",
+        "category": "Newsletter: Box 4-5-9",
+        "language": "Spanish"
+      },
+      {
+        "title": "Box 459 - Edici\u00f3n Navide\u00f1a 1968",
+        "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_holiday68.pdf",
+        "item_code": "",
+        "category": "Newsletter: Box 4-5-9",
+        "language": "Spanish"
+      },
+      {
+        "title": "Box 459 - Edici\u00f3n Navide\u00f1a 1969 - El Lenguaje del Coraz\u00f3n Alrededor del Mundo",
+        "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_holiday69.pdf",
+        "item_code": "",
+        "category": "Newsletter: Box 4-5-9",
+        "language": "Spanish"
+      },
+      {
+        "title": "Box 459 - Edici\u00f3n Navide\u00f1a 1971",
+        "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_holiday71.pdf",
+        "item_code": "",
+        "category": "Newsletter: Box 4-5-9",
+        "language": "Spanish"
+      },
+      {
+        "title": "Box 459 - Edici\u00f3n Navide\u00f1a 1972",
+        "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_holiday72.pdf",
+        "item_code": "",
+        "category": "Newsletter: Box 4-5-9",
+        "language": "Spanish"
+      },
+      {
+        "title": "Box 459 - Edici\u00f3n Navide\u00f1a 1973",
+        "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_holiday73.pdf",
+        "item_code": "",
+        "category": "Newsletter: Box 4-5-9",
+        "language": "Spanish"
+      },
+      {
+        "title": "Box 459 - Edici\u00f3n Navide\u00f1a 1974",
+        "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_holiday74.pdf",
+        "item_code": "",
+        "category": "Newsletter: Box 4-5-9",
+        "language": "Spanish"
+      },
+      {
+        "title": "Box 459 - Edici\u00f3n Navide\u00f1a 1975",
+        "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_holiday75.pdf",
+        "item_code": "",
+        "category": "Newsletter: Box 4-5-9",
+        "language": "Spanish"
+      },
+      {
+        "title": "Box 459 - Edici\u00f3n Navide\u00f1a 1976",
+        "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_holiday76.pdf",
+        "item_code": "",
+        "category": "Newsletter: Box 4-5-9",
+        "language": "Spanish"
+      },
+      {
+        "title": "Box 459 - Edici\u00f3n Navide\u00f1a 1978",
+        "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_holiday78.pdf",
+        "item_code": "",
+        "category": "Newsletter: Box 4-5-9",
+        "language": "Spanish"
+      },
+      {
+        "title": "Box 459 - Edici\u00f3n Navide\u00f1a 1979",
+        "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_holiday79.pdf",
+        "item_code": "",
+        "category": "Newsletter: Box 4-5-9",
+        "language": "Spanish"
+      },
+      {
+        "title": "Box 459 - Edici\u00f3n Navide\u00f1a 1980",
+        "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_holiday80.pdf",
+        "item_code": "",
+        "category": "Newsletter: Box 4-5-9",
+        "language": "Spanish"
+      },
+      {
+        "title": "Box 459 - Edici\u00f3n Navide\u00f1a 1982",
+        "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_holiday82.pdf",
+        "item_code": "",
+        "category": "Newsletter: Box 4-5-9",
+        "language": "Spanish"
+      },
+      {
+        "title": "Box 459 - Edici\u00f3n Navide\u00f1a 1984",
+        "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_holiday84.pdf",
+        "item_code": "",
+        "category": "Newsletter: Box 4-5-9",
+        "language": "Spanish"
+      },
+      {
+        "title": "Box 459 - Edici\u00f3n Navide\u00f1a 1985",
+        "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_holiday85.pdf",
+        "item_code": "",
+        "category": "Newsletter: Box 4-5-9",
+        "language": "Spanish"
+      },
+      {
+        "title": "Box 459 - Edici\u00f4n Navide\u00f1a 1967",
+        "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_holiday67.pdf",
+        "item_code": "",
+        "category": "Newsletter: Box 4-5-9",
+        "language": "Spanish"
+      },
+      {
+        "title": "Box 459 - El Comit\u00e9 Internacional Comparte Experiencias de A.A.",
+        "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_aug-sept68.pdf",
+        "item_code": "",
+        "category": "Newsletter: Box 4-5-9",
+        "language": "Spanish"
+      },
+      {
+        "title": "Box 459 - El Crecimiento de A.A. es de 990% en los Pa\u00edses Latinos",
+        "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_april-may76.pdf",
+        "item_code": "",
+        "category": "Newsletter: Box 4-5-9",
+        "language": "Spanish"
+      },
+      {
+        "title": "Box 459 - El Mensaje de A.A. Alcanza 114 Pa\u00edses en",
+        "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_aug-sept84_0.pdf",
+        "item_code": "",
+        "category": "Newsletter: Box 4-5-9",
+        "language": "Spanish"
+      },
+      {
+        "title": "Box 459 - El Plan de Cumplea\u00f1os",
+        "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_aug62.pdf",
+        "item_code": "",
+        "category": "Newsletter: Box 4-5-9",
+        "language": "Spanish"
+      },
+      {
+        "title": "Box 459 - El Servicio A.A.: De las Tazas de Cafe Hasta la Conferencia",
+        "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_aug-sept82.pdf",
+        "item_code": "",
+        "category": "Newsletter: Box 4-5-9",
+        "language": "Spanish"
+      },
+      {
+        "title": "Box 459 - En Memoria de Nuestro Querido Bill",
+        "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_january_billmemorial71.pdf",
+        "item_code": "",
+        "category": "Newsletter: Box 4-5-9",
+        "language": "Spanish"
+      },
+      {
+        "title": "Box 459 - Encuesta Revela: Hoy D\u00eda M\u00e1s J\u00f3venes y Dobleadictos en A.A.",
+        "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_oct-nov84.pdf",
+        "item_code": "",
+        "category": "Newsletter: Box 4-5-9",
+        "language": "Spanish"
+      },
+      {
+        "title": "Box 459 - Escogido el Lugar para la Conferencia Internacional de 1980",
+        "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_june-july76.pdf",
+        "item_code": "",
+        "category": "Newsletter: Box 4-5-9",
+        "language": "Spanish"
+      },
+      {
+        "title": "Box 459 - Esperando que Hayan Disfrutado de una Feliz Nochebuena...",
+        "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_feb65.pdf",
+        "item_code": "",
+        "category": "Newsletter: Box 4-5-9",
+        "language": "Spanish"
+      },
+      {
+        "title": "Box 459 - Estudio de A.A. Hecho en 1974, Paso Doce en Forma Masiva, Comprueba que \"A.A. Funciona\"",
+        "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_feb-mar75.pdf",
+        "item_code": "",
+        "category": "Newsletter: Box 4-5-9",
+        "language": "Spanish"
+      },
+      {
+        "title": "Box 459 - Exitoso Resultado de la Segunda Reuni\u00f3n Ibero-Americana de Servicios de A.A.",
+        "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_oct-nov81.pdf",
+        "item_code": "",
+        "category": "Newsletter: Box 4-5-9",
+        "language": "Spanish"
+      },
+      {
+        "title": "Box 459 - Gigantyesco Paso Hacia Adelante para A.A. en Iberoam\u00e9rica",
+        "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_feb-mar80.pdf",
+        "item_code": "",
+        "category": "Newsletter: Box 4-5-9",
+        "language": "Spanish"
+      },
+      {
+        "title": "Box 459 - Grandes Cosas se Cuecen Dentro y Fuera de A.A.",
+        "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_feb-mar73.pdf",
+        "item_code": "",
+        "category": "Newsletter: Box 4-5-9",
+        "language": "Spanish"
+      }
+    ],
     "revised": []
   },
   "runs": [
+    {
+      "generated_utc": "2026-10-20T21:32:59Z",
+      "total": 2798,
+      "first_run": false,
+      "added_count": 1,
+      "removed_count": 132,
+      "revised_count": 0,
+      "added": [
+        {
+          "title": "Regional Forum Report 2025 West Central",
+          "url": "https://www.aa.org/sites/default/files/literature/2025-WestCentral-Final-Forum-Report_0.pdf",
+          "item_code": "",
+          "category": "Regional Forums",
+          "language": "English"
+        }
+      ],
+      "removed": [
+        {
+          "title": "Box 4-5-9 - Conference 1969",
+          "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_conference69.pdf",
+          "item_code": "",
+          "category": "Newsletter: Box 4-5-9",
+          "language": "Spanish"
+        },
+        {
+          "title": "Box 4-5-9 - January-February 1966",
+          "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_jan-feb66.pdf",
+          "item_code": "",
+          "category": "Newsletter: Box 4-5-9",
+          "language": "Spanish"
+        },
+        {
+          "title": "Box 459 - \"La Voz de A.A.\" Ser\u00e1 Escuchada",
+          "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_april-may67.pdf",
+          "item_code": "",
+          "category": "Newsletter: Box 4-5-9",
+          "language": "Spanish"
+        },
+        {
+          "title": "Box 459 - 'Nuestro Bienestar Comun' Tema de la 13ava Conferencia",
+          "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_jun63.pdf",
+          "item_code": "",
+          "category": "Newsletter: Box 4-5-9",
+          "language": "Spanish"
+        },
+        {
+          "title": "Box 459 - 11,000 Personas en la Convenci\u00f3n de Miami se Comprometieron a Preservar la Unidad de A.A.",
+          "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_aug-sept70.pdf",
+          "item_code": "",
+          "category": "Newsletter: Box 4-5-9",
+          "language": "Spanish"
+        },
+        {
+          "title": "Box 459 - 27ma. Conferencia Tomar\u00e1 como Tema de Discusi\u00f3n el Grupo A.A.",
+          "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_feb-mar77.pdf",
+          "item_code": "",
+          "category": "Newsletter: Box 4-5-9",
+          "language": "Spanish"
+        },
+        {
+          "title": "Box 459 - A.A. Mundial Planea Reunirse en Guatemala",
+          "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_aug-sept86.pdf",
+          "item_code": "",
+          "category": "Newsletter: Box 4-5-9",
+          "language": "Spanish"
+        },
+        {
+          "title": "Box 459 - Acontecimiento en la Historia de A.A. - 19,300 Registrandos en la Convencion International",
+          "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_oct-nov75.pdf",
+          "item_code": "",
+          "category": "Newsletter: Box 4-5-9",
+          "language": "Spanish"
+        },
+        {
+          "title": "Box 459 - Alcoh\u00f3licos An\u00f3nimos Llega a su Mayor\u00eda de Edad",
+          "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_april_may05_0.pdf",
+          "item_code": "",
+          "category": "Newsletter: Box 4-5-9",
+          "language": "Spanish"
+        },
+        {
+          "title": "Box 459 - Aqu\u00ed se Habla A.A.",
+          "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_oct-nov79.pdf",
+          "item_code": "",
+          "category": "Newsletter: Box 4-5-9",
+          "language": "Spanish"
+        },
+        {
+          "title": "Box 459 - Bernard Smith, Custodio no A.A. Muere de un Ataque al Coraz\u00f3n en Nueva York",
+          "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_oct-nov70.pdf",
+          "item_code": "",
+          "category": "Newsletter: Box 4-5-9",
+          "language": "Spanish"
+        },
+        {
+          "title": "Box 459 - Bienvenida a Cora Louise",
+          "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_aug-sept67.pdf",
+          "item_code": "",
+          "category": "Newsletter: Box 4-5-9",
+          "language": "Spanish"
+        },
+        {
+          "title": "Box 459 - Ceremonia de Apertura de los Archivos de A.A.",
+          "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_feb-mar76.pdf",
+          "item_code": "",
+          "category": "Newsletter: Box 4-5-9",
+          "language": "Spanish"
+        },
+        {
+          "title": "Box 459 - Como dan la vuelta al mundo las publicaciones de A.A.",
+          "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_aug-sept80.pdf",
+          "item_code": "",
+          "category": "Newsletter: Box 4-5-9",
+          "language": "Spanish"
+        },
+        {
+          "title": "Box 459 - Como Puede Cambiar Nuestras Vidas el Folleto de A.A. 'Llegue a Creer...'",
+          "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_oct-nov77.pdf",
+          "item_code": "",
+          "category": "Newsletter: Box 4-5-9",
+          "language": "Spanish"
+        },
+        {
+          "title": "Box 459 - Como Recibir la Literatura a Tiempo",
+          "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_nov62.pdf",
+          "item_code": "",
+          "category": "Newsletter: Box 4-5-9",
+          "language": "Spanish"
+        },
+        {
+          "title": "Box 459 - Como Viajar... en el Estilo de A.A.",
+          "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_april-may68.pdf",
+          "item_code": "",
+          "category": "Newsletter: Box 4-5-9",
+          "language": "Spanish"
+        },
+        {
+          "title": "Box 459 - Compartiendo sus Pensamientos Acerca de Literatura que no es A.A.",
+          "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_april-may74.pdf",
+          "item_code": "",
+          "category": "Newsletter: Box 4-5-9",
+          "language": "Spanish"
+        },
+        {
+          "title": "Box 459 - Comunicaci\u00f3n Llave del Crecimiento de A.A. Continua el Trabajo de Bill",
+          "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_june-july71.pdf",
+          "item_code": "",
+          "category": "Newsletter: Box 4-5-9",
+          "language": "Spanish"
+        },
+        {
+          "title": "Box 459 - Conferencia de 1979 Repasara Tres Sencillas Ideas de A.A.",
+          "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_april-may79.pdf",
+          "item_code": "",
+          "category": "Newsletter: Box 4-5-9",
+          "language": "Spanish"
+        },
+        {
+          "title": "Box 459 - Conferencia de Servicios Generales",
+          "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_may62.pdf",
+          "item_code": "",
+          "category": "Newsletter: Box 4-5-9",
+          "language": "Spanish"
+        },
+        {
+          "title": "Box 459 - Conferencia de Servicios Generales de 1973",
+          "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_april-may73.pdf",
+          "item_code": "",
+          "category": "Newsletter: Box 4-5-9",
+          "language": "Spanish"
+        },
+        {
+          "title": "Box 459 - Convenci\u00f3n Internacional Celebra en Toronto, Canada",
+          "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_aug-sept65.pdf",
+          "item_code": "",
+          "category": "Newsletter: Box 4-5-9",
+          "language": "Spanish"
+        },
+        {
+          "title": "Box 459 - Convenci\u00f3n Internacional del 50 Aniversario",
+          "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_aug-sept85.pdf",
+          "item_code": "",
+          "category": "Newsletter: Box 4-5-9",
+          "language": "Spanish"
+        },
+        {
+          "title": "Box 459 - Convenci\u00f3n para Celebrar Trig\u00e9simo Quinto Aniversario de A.A. en Miami, Julio 3-5",
+          "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_feb-mar70.pdf",
+          "item_code": "",
+          "category": "Newsletter: Box 4-5-9",
+          "language": "Spanish"
+        },
+        {
+          "title": "Box 459 - Crecen en N\u00famero y Popularidad los Grupos de Estudio de el Libro Grande",
+          "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_oct-nov74.pdf",
+          "item_code": "",
+          "category": "Newsletter: Box 4-5-9",
+          "language": "Spanish"
+        },
+        {
+          "title": "Box 459 - Creciente Necesidad para los Servicios de A.A.",
+          "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_june-july70.pdf",
+          "item_code": "",
+          "category": "Newsletter: Box 4-5-9",
+          "language": "Spanish"
+        },
+        {
+          "title": "Box 459 - Delegados de 15 Pa\u00edses en la Segunda Reuni\u00f3n de Servicios Mundiales",
+          "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_oct-nov72.pdf",
+          "item_code": "",
+          "category": "Newsletter: Box 4-5-9",
+          "language": "Spanish"
+        },
+        {
+          "title": "Box 459 - Departamento de Buenas Noticias",
+          "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_feb-mar67.pdf",
+          "item_code": "",
+          "category": "Newsletter: Box 4-5-9",
+          "language": "Spanish"
+        },
+        {
+          "title": "Box 459 - Diferentes Maneras de Animar sus Reuniones",
+          "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_feb-mar69.pdf",
+          "item_code": "",
+          "category": "Newsletter: Box 4-5-9",
+          "language": "Spanish"
+        },
+        {
+          "title": "Box 459 - Donde Entra la Fuerza de Voluntad",
+          "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_jan63.pdf",
+          "item_code": "",
+          "category": "Newsletter: Box 4-5-9",
+          "language": "Spanish"
+        },
+        {
+          "title": "Box 459 - Edici\u00f3n Navide\u00f1a",
+          "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_dec-jan66.pdf",
+          "item_code": "",
+          "category": "Newsletter: Box 4-5-9",
+          "language": "Spanish"
+        },
+        {
+          "title": "Box 459 - Edici\u00f3n Navide\u00f1a 1968",
+          "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_holiday68.pdf",
+          "item_code": "",
+          "category": "Newsletter: Box 4-5-9",
+          "language": "Spanish"
+        },
+        {
+          "title": "Box 459 - Edici\u00f3n Navide\u00f1a 1969 - El Lenguaje del Coraz\u00f3n Alrededor del Mundo",
+          "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_holiday69.pdf",
+          "item_code": "",
+          "category": "Newsletter: Box 4-5-9",
+          "language": "Spanish"
+        },
+        {
+          "title": "Box 459 - Edici\u00f3n Navide\u00f1a 1971",
+          "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_holiday71.pdf",
+          "item_code": "",
+          "category": "Newsletter: Box 4-5-9",
+          "language": "Spanish"
+        },
+        {
+          "title": "Box 459 - Edici\u00f3n Navide\u00f1a 1972",
+          "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_holiday72.pdf",
+          "item_code": "",
+          "category": "Newsletter: Box 4-5-9",
+          "language": "Spanish"
+        },
+        {
+          "title": "Box 459 - Edici\u00f3n Navide\u00f1a 1973",
+          "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_holiday73.pdf",
+          "item_code": "",
+          "category": "Newsletter: Box 4-5-9",
+          "language": "Spanish"
+        },
+        {
+          "title": "Box 459 - Edici\u00f3n Navide\u00f1a 1974",
+          "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_holiday74.pdf",
+          "item_code": "",
+          "category": "Newsletter: Box 4-5-9",
+          "language": "Spanish"
+        },
+        {
+          "title": "Box 459 - Edici\u00f3n Navide\u00f1a 1975",
+          "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_holiday75.pdf",
+          "item_code": "",
+          "category": "Newsletter: Box 4-5-9",
+          "language": "Spanish"
+        },
+        {
+          "title": "Box 459 - Edici\u00f3n Navide\u00f1a 1976",
+          "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_holiday76.pdf",
+          "item_code": "",
+          "category": "Newsletter: Box 4-5-9",
+          "language": "Spanish"
+        },
+        {
+          "title": "Box 459 - Edici\u00f3n Navide\u00f1a 1978",
+          "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_holiday78.pdf",
+          "item_code": "",
+          "category": "Newsletter: Box 4-5-9",
+          "language": "Spanish"
+        },
+        {
+          "title": "Box 459 - Edici\u00f3n Navide\u00f1a 1979",
+          "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_holiday79.pdf",
+          "item_code": "",
+          "category": "Newsletter: Box 4-5-9",
+          "language": "Spanish"
+        },
+        {
+          "title": "Box 459 - Edici\u00f3n Navide\u00f1a 1980",
+          "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_holiday80.pdf",
+          "item_code": "",
+          "category": "Newsletter: Box 4-5-9",
+          "language": "Spanish"
+        },
+        {
+          "title": "Box 459 - Edici\u00f3n Navide\u00f1a 1982",
+          "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_holiday82.pdf",
+          "item_code": "",
+          "category": "Newsletter: Box 4-5-9",
+          "language": "Spanish"
+        },
+        {
+          "title": "Box 459 - Edici\u00f3n Navide\u00f1a 1984",
+          "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_holiday84.pdf",
+          "item_code": "",
+          "category": "Newsletter: Box 4-5-9",
+          "language": "Spanish"
+        },
+        {
+          "title": "Box 459 - Edici\u00f3n Navide\u00f1a 1985",
+          "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_holiday85.pdf",
+          "item_code": "",
+          "category": "Newsletter: Box 4-5-9",
+          "language": "Spanish"
+        },
+        {
+          "title": "Box 459 - Edici\u00f4n Navide\u00f1a 1967",
+          "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_holiday67.pdf",
+          "item_code": "",
+          "category": "Newsletter: Box 4-5-9",
+          "language": "Spanish"
+        },
+        {
+          "title": "Box 459 - El Comit\u00e9 Internacional Comparte Experiencias de A.A.",
+          "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_aug-sept68.pdf",
+          "item_code": "",
+          "category": "Newsletter: Box 4-5-9",
+          "language": "Spanish"
+        },
+        {
+          "title": "Box 459 - El Crecimiento de A.A. es de 990% en los Pa\u00edses Latinos",
+          "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_april-may76.pdf",
+          "item_code": "",
+          "category": "Newsletter: Box 4-5-9",
+          "language": "Spanish"
+        },
+        {
+          "title": "Box 459 - El Mensaje de A.A. Alcanza 114 Pa\u00edses en",
+          "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_aug-sept84_0.pdf",
+          "item_code": "",
+          "category": "Newsletter: Box 4-5-9",
+          "language": "Spanish"
+        },
+        {
+          "title": "Box 459 - El Plan de Cumplea\u00f1os",
+          "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_aug62.pdf",
+          "item_code": "",
+          "category": "Newsletter: Box 4-5-9",
+          "language": "Spanish"
+        },
+        {
+          "title": "Box 459 - El Servicio A.A.: De las Tazas de Cafe Hasta la Conferencia",
+          "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_aug-sept82.pdf",
+          "item_code": "",
+          "category": "Newsletter: Box 4-5-9",
+          "language": "Spanish"
+        },
+        {
+          "title": "Box 459 - En Memoria de Nuestro Querido Bill",
+          "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_january_billmemorial71.pdf",
+          "item_code": "",
+          "category": "Newsletter: Box 4-5-9",
+          "language": "Spanish"
+        },
+        {
+          "title": "Box 459 - Encuesta Revela: Hoy D\u00eda M\u00e1s J\u00f3venes y Dobleadictos en A.A.",
+          "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_oct-nov84.pdf",
+          "item_code": "",
+          "category": "Newsletter: Box 4-5-9",
+          "language": "Spanish"
+        },
+        {
+          "title": "Box 459 - Escogido el Lugar para la Conferencia Internacional de 1980",
+          "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_june-july76.pdf",
+          "item_code": "",
+          "category": "Newsletter: Box 4-5-9",
+          "language": "Spanish"
+        },
+        {
+          "title": "Box 459 - Esperando que Hayan Disfrutado de una Feliz Nochebuena...",
+          "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_feb65.pdf",
+          "item_code": "",
+          "category": "Newsletter: Box 4-5-9",
+          "language": "Spanish"
+        },
+        {
+          "title": "Box 459 - Estudio de A.A. Hecho en 1974, Paso Doce en Forma Masiva, Comprueba que \"A.A. Funciona\"",
+          "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_feb-mar75.pdf",
+          "item_code": "",
+          "category": "Newsletter: Box 4-5-9",
+          "language": "Spanish"
+        },
+        {
+          "title": "Box 459 - Exitoso Resultado de la Segunda Reuni\u00f3n Ibero-Americana de Servicios de A.A.",
+          "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_oct-nov81.pdf",
+          "item_code": "",
+          "category": "Newsletter: Box 4-5-9",
+          "language": "Spanish"
+        },
+        {
+          "title": "Box 459 - Gigantyesco Paso Hacia Adelante para A.A. en Iberoam\u00e9rica",
+          "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_feb-mar80.pdf",
+          "item_code": "",
+          "category": "Newsletter: Box 4-5-9",
+          "language": "Spanish"
+        },
+        {
+          "title": "Box 459 - Grandes Cosas se Cuecen Dentro y Fuera de A.A.",
+          "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_feb-mar73.pdf",
+          "item_code": "",
+          "category": "Newsletter: Box 4-5-9",
+          "language": "Spanish"
+        }
+      ],
+      "revised": []
+    },
     {
       "generated_utc": "2026-10-19T04:14:18Z",
       "total": 2929,
@@ -1442,17 +2311,6 @@
           "last_modified": "2026-09-25"
         }
       ]
-    },
-    {
-      "generated_utc": "2026-09-25T17:04:44Z",
-      "total": 2921,
-      "first_run": false,
-      "added_count": 0,
-      "removed_count": 0,
-      "revised_count": 0,
-      "added": [],
-      "removed": [],
-      "revised": []
     }
   ]
 }

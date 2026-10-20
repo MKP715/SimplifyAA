@@ -1,18 +1,18 @@
 {
-  "generated_utc": "2026-10-19T04:14:18Z",
-  "generated_date": "October 19, 2026",
+  "generated_utc": "2026-10-20T21:32:59Z",
+  "generated_date": "October 20, 2026",
   "source": "https://www.aa.org",
-  "total_pdfs": 2929,
-  "pages_crawled": 5430,
+  "total_pdfs": 2798,
+  "pages_crawled": 5421,
   "broken_links": 29,
-  "total_bytes": 2904424489,
+  "total_bytes": 2765333701,
   "categories": {
-    "Newsletter: Box 4-5-9": 1037,
+    "Newsletter: Box 4-5-9": 905,
     "Corrections": 237,
     "Big Book, Steps & Traditions": 231,
     "Newsletter: About A.A.": 200,
     "Flyers & Announcements": 165,
-    "Regional Forums": 100,
+    "Regional Forums": 101,
     "Pamphlets & Booklets": 96,
     "Public Information": 92,
     "G.S.O. Quarterly Report": 90,
@@ -47,11 +47,11 @@
     "Loners & Internationalists": 1
   },
   "sections": {
-    "Newsletters": 1472,
+    "Newsletters": 1340,
     "Carrying the Message": 420,
     "Literature": 350,
     "Forms & Catalogs": 207,
-    "Conference & Events": 138,
+    "Conference & Events": 139,
     "Service Structure": 79,
     "For Members": 74,
     "Service Material": 64,
@@ -61,19 +61,19 @@
     "Finance": 25
   },
   "languages": {
-    "English": 1128,
-    "Spanish": 926,
-    "French": 875
+    "English": 1129,
+    "French": 875,
+    "Spanish": 794
   },
   "topics": {
-    "Newsletter": 1166,
+    "Newsletter": 1034,
     "Flyer / Poster": 312,
-    "Form / Application": 236,
+    "Form / Application": 232,
     "Report": 178,
     "Twelve Traditions": 145,
-    "Conference": 119,
+    "Conference": 118,
     "Workbook / Kit": 117,
-    "Regional Forum": 97,
+    "Regional Forum": 98,
     "Twelve Steps": 96,
     "Public Information": 74,
     "Professionals": 67,
@@ -104,10 +104,10 @@
     "Family": 7,
     "Military": 4
   },
-  "translation_groups": 847,
-  "translated_documents": 2492,
-  "added_since_last_run": 0,
-  "removed_since_last_run": 0,
+  "translation_groups": 826,
+  "translated_documents": 2355,
+  "added_since_last_run": 1,
+  "removed_since_last_run": 132,
   "revised_since_last_run": 0,
   "item_code_families": {
     "Forms, Catalogs & Order Blanks": 748,
@@ -121,14 +121,14 @@
     "Newsletters & Bulletins": 1
   },
   "http": {
-    "http_ok": 8393,
+    "http_ok": 8250,
+    "http_fail": 8,
     "http_403": 10,
-    "http_404": 12,
-    "http_fail": 5
+    "http_404": 12
   },
   "pdf_hosts_seen": {
-    "www.aa.org": 5809,
-    "aaws.widen.net": 2984,
+    "www.aa.org": 5967,
+    "aaws.widen.net": 2980,
     "www.aagrapevine.org": 6
   },
   "pdf_hosts_skipped": {}
