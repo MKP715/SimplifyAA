@@ -1,11 +1,11 @@
 {
-  "generated_utc": "2026-10-21T17:02:29Z",
+  "generated_utc": "2026-10-21T21:33:45Z",
   "generated_date": "October 21, 2026",
   "source": "https://www.aa.org",
   "total_pdfs": 2609,
-  "pages_crawled": 5319,
+  "pages_crawled": 5456,
   "broken_links": 29,
-  "total_bytes": 2561181965,
+  "total_bytes": 2561212901,
   "categories": {
     "Newsletter: Box 4-5-9": 713,
     "Corrections": 237,
@@ -106,9 +106,9 @@
   },
   "translation_groups": 724,
   "translated_documents": 2144,
-  "added_since_last_run": 3,
-  "removed_since_last_run": 192,
-  "revised_since_last_run": 1,
+  "added_since_last_run": 1,
+  "removed_since_last_run": 1,
+  "revised_since_last_run": 0,
   "item_code_families": {
     "Forms, Catalogs & Order Blanks": 748,
     "Pamphlets & Booklets": 182,
@@ -121,13 +121,13 @@
     "Newsletters & Bulletins": 1
   },
   "http": {
-    "http_ok": 7959,
+    "http_ok": 8096,
     "http_fail": 8,
     "http_403": 10,
     "http_404": 12
   },
   "pdf_hosts_seen": {
-    "www.aa.org": 5188,
+    "www.aa.org": 5390,
     "aaws.widen.net": 2984,
     "www.aagrapevine.org": 6
   },
