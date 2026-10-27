@@ -1,16 +1,83 @@
 {
   "latest": {
-    "generated_utc": "2026-10-26T12:42:59Z",
+    "generated_utc": "2026-10-27T17:54:21Z",
     "total": 2811,
     "first_run": false,
     "added_count": 0,
     "removed_count": 0,
-    "revised_count": 0,
+    "revised_count": 3,
     "added": [],
     "removed": [],
-    "revised": []
+    "revised": [
+      {
+        "title": "Where Do I Go From Here?",
+        "url": "https://aaws.widen.net/content/goqsoadb08/pdf/f-4_where_do_i_go_from_here_online.pdf",
+        "item_code": "F-4",
+        "category": "Forms, Catalogs & Order Blanks",
+        "language": "English",
+        "previous_modified": "2026-02-16",
+        "last_modified": "2026-10-27"
+      },
+      {
+        "title": "Carrying the Message into Correctional Facilities",
+        "url": "https://aaws.widen.net/content/hldp4cm8zf/pdf/f-5_carrying_message_into_correctional_facilities_online.pdf",
+        "item_code": "F-5",
+        "category": "Corrections",
+        "language": "English",
+        "previous_modified": "2025-01-09",
+        "last_modified": "2026-10-27"
+      },
+      {
+        "title": "Vous croyez-vous diff\u00e9rent?",
+        "url": "https://aaws.widen.net/content/deeq1m3t19/pdf/fp-13_do_you_think_you_are_different_online.pdf",
+        "item_code": "FP-13",
+        "category": "Pamphlets & Booklets",
+        "language": "French",
+        "previous_modified": "2024-09-18",
+        "last_modified": "2026-10-26"
+      }
+    ]
   },
   "runs": [
+    {
+      "generated_utc": "2026-10-27T17:54:21Z",
+      "total": 2811,
+      "first_run": false,
+      "added_count": 0,
+      "removed_count": 0,
+      "revised_count": 3,
+      "added": [],
+      "removed": [],
+      "revised": [
+        {
+          "title": "Where Do I Go From Here?",
+          "url": "https://aaws.widen.net/content/goqsoadb08/pdf/f-4_where_do_i_go_from_here_online.pdf",
+          "item_code": "F-4",
+          "category": "Forms, Catalogs & Order Blanks",
+          "language": "English",
+          "previous_modified": "2026-02-16",
+          "last_modified": "2026-10-27"
+        },
+        {
+          "title": "Carrying the Message into Correctional Facilities",
+          "url": "https://aaws.widen.net/content/hldp4cm8zf/pdf/f-5_carrying_message_into_correctional_facilities_online.pdf",
+          "item_code": "F-5",
+          "category": "Corrections",
+          "language": "English",
+          "previous_modified": "2025-01-09",
+          "last_modified": "2026-10-27"
+        },
+        {
+          "title": "Vous croyez-vous diff\u00e9rent?",
+          "url": "https://aaws.widen.net/content/deeq1m3t19/pdf/fp-13_do_you_think_you_are_different_online.pdf",
+          "item_code": "FP-13",
+          "category": "Pamphlets & Booklets",
+          "language": "French",
+          "previous_modified": "2024-09-18",
+          "last_modified": "2026-10-26"
+        }
+      ]
+    },
     {
       "generated_utc": "2026-10-26T12:42:59Z",
       "total": 2811,
@@ -3013,32 +3080,6 @@
           "last_modified": "2026-10-08"
         }
       ]
-    },
-    {
-      "generated_utc": "2026-10-07T23:04:02Z",
-      "total": 2923,
-      "first_run": false,
-      "added_count": 2,
-      "removed_count": 0,
-      "revised_count": 0,
-      "added": [
-        {
-          "title": "Informe Trimestral de la OSG - Tercer trimestre de 2026",
-          "url": "https://www.aa.org/sites/default/files/newsletters/SF-14_Quarterly_Report_2026_Third_Quarter.pdf",
-          "item_code": "SF-14",
-          "category": "G.S.O. Quarterly Report",
-          "language": "Spanish"
-        },
-        {
-          "title": "Rapport Trimestriel du BSG - Troisi\u00e8me trimestre de 2026",
-          "url": "https://www.aa.org/sites/default/files/newsletters/FF-14_Quarterly_Report_2026_Third_Quarter.pdf",
-          "item_code": "FF-14",
-          "category": "G.S.O. Quarterly Report",
-          "language": "French"
-        }
-      ],
-      "removed": [],
-      "revised": []
     }
   ]
 }
