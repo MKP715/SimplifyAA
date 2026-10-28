@@ -1,13 +1,442 @@
 {
   "latest": {
-    "generated_utc": "2026-10-27T17:54:21Z",
-    "total": 2811,
+    "generated_utc": "2026-10-28T22:29:40Z",
+    "total": 2167,
     "first_run": false,
-    "added_count": 0,
-    "removed_count": 0,
-    "revised_count": 3,
-    "added": [],
-    "removed": [],
+    "added_count": 1,
+    "removed_count": 645,
+    "revised_count": 2,
+    "added": [
+      {
+        "title": "Regional Forum Report 2025 West Central",
+        "url": "https://www.aa.org/sites/default/files/literature/2025-WestCentral-Final-Forum-Report3.pdf",
+        "item_code": "",
+        "category": "Regional Forums",
+        "language": "English"
+      }
+    ],
+    "removed": [
+      {
+        "title": "About A.A. - About the Committee on Professional Relations\u2026",
+        "url": "https://www.aa.org/sites/default/files/newsletters/f-13_summer1972.pdf",
+        "item_code": "F-13",
+        "category": "Newsletter: About A.A.",
+        "language": "English"
+      },
+      {
+        "title": "About A.A. - This is No. 2 \u2026",
+        "url": "https://www.aa.org/sites/default/files/newsletters/f-13_fall1973.pdf",
+        "item_code": "F-13",
+        "category": "Newsletter: About A.A.",
+        "language": "English"
+      },
+      {
+        "title": "Box 4-5-9 - Conference 1969",
+        "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_conference69.pdf",
+        "item_code": "",
+        "category": "Newsletter: Box 4-5-9",
+        "language": "Spanish"
+      },
+      {
+        "title": "Box 4-5-9 - February-March 1969",
+        "url": "https://www.aa.org/sites/default/files/newsletters/fr_box459_feb-mar69.pdf",
+        "item_code": "",
+        "category": "Newsletter: Box 4-5-9",
+        "language": "French"
+      },
+      {
+        "title": "Box 4-5-9 - February-March 1993",
+        "url": "https://www.aa.org/sites/default/files/newsletters/fr_box459_feb-mar93.pdf",
+        "item_code": "",
+        "category": "Newsletter: Box 4-5-9",
+        "language": "French"
+      },
+      {
+        "title": "Box 4-5-9 - February-March 1993",
+        "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_feb-mar93.pdf",
+        "item_code": "",
+        "category": "Newsletter: Box 4-5-9",
+        "language": "Spanish"
+      },
+      {
+        "title": "Box 4-5-9 - February-March 1998",
+        "url": "https://www.aa.org/sites/default/files/newsletters/fr_box459_feb-mar98.pdf",
+        "item_code": "",
+        "category": "Newsletter: Box 4-5-9",
+        "language": "French"
+      },
+      {
+        "title": "Box 4-5-9 - October-November 1969",
+        "url": "https://www.aa.org/sites/default/files/newsletters/fr_box459_oct-nov69_0.pdf",
+        "item_code": "",
+        "category": "Newsletter: Box 4-5-9",
+        "language": "French"
+      },
+      {
+        "title": "Box 4-5-9 - September 2004",
+        "url": "https://www.aa.org/sites/default/files/newsletters/fr_box459augsept04.pdf",
+        "item_code": "",
+        "category": "Newsletter: Box 4-5-9",
+        "language": "French"
+      },
+      {
+        "title": "Box 459 - \"48,000 A.A.s Meet in Seattle\"",
+        "url": "https://www.aa.org/sites/default/files/newsletters/en_box459_aug-sept90.pdf",
+        "item_code": "",
+        "category": "Newsletter: Box 4-5-9",
+        "language": "English"
+      },
+      {
+        "title": "Box 459 - \"El Grupo Base: El Latido del Coraz\u00f3n de A.A.\" Nuevo Librillo del Grapevine",
+        "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_aug-sept93.pdf",
+        "item_code": "",
+        "category": "Newsletter: Box 4-5-9",
+        "language": "Spanish"
+      },
+      {
+        "title": "Box 459 - \"Espiritu de Sacrificio\" da el tono de la Conferencia de la Conferencia de Servicios Generales",
+        "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_april-may94.pdf",
+        "item_code": "",
+        "category": "Newsletter: Box 4-5-9",
+        "language": "Spanish"
+      },
+      {
+        "title": "Box 459 - \"Nueva apariencia\" para la literatura de A.A.",
+        "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_feb-mar89.pdf",
+        "item_code": "",
+        "category": "Newsletter: Box 4-5-9",
+        "language": "Spanish"
+      },
+      {
+        "title": "Box 459 - \"Transm\u00edtelo: hacia el Siglo XXI\" una celebraci\u00f3n de 65 a\u00f1os de libertad",
+        "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_aug-sept00.pdf",
+        "item_code": "",
+        "category": "Newsletter: Box 4-5-9",
+        "language": "Spanish"
+      },
+      {
+        "title": "Box 459 - ' L'esprit de sacrifice ' donne le ton \u00e0 la Conf\u00e9rence des Services g\u00e9n\u00e9raux",
+        "url": "https://www.aa.org/sites/default/files/newsletters/fr_box459_april-may94.pdf",
+        "item_code": "",
+        "category": "Newsletter: Box 4-5-9",
+        "language": "French"
+      },
+      {
+        "title": "Box 459 - '73 Conference: Which Will Be Hottest Topic?",
+        "url": "https://www.aa.org/sites/default/files/newsletters/en_box459_april-may73.pdf",
+        "item_code": "",
+        "category": "Newsletter: Box 4-5-9",
+        "language": "English"
+      },
+      {
+        "title": "Box 459 - 'A.A. Meeting' - in the Park, Past the Lua Lounge",
+        "url": "https://www.aa.org/sites/default/files/newsletters/1998_FebruaryMarch_Box459.pdf",
+        "item_code": "",
+        "category": "Newsletter: Box 4-5-9",
+        "language": "English"
+      },
+      {
+        "title": "Box 459 - 'Let Go' to Grow \u2014 The Spirit of Rotation Keeps A.A. Alive",
+        "url": "https://www.aa.org/sites/default/files/newsletters/en_box459_oct-nov83.pdf",
+        "item_code": "",
+        "category": "Newsletter: Box 4-5-9",
+        "language": "English"
+      },
+      {
+        "title": "Box 459 - 'Pass It On-Into the 21st Century' Celebrating 65 Years of Freedom",
+        "url": "https://www.aa.org/sites/default/files/newsletters/en_box459_aug-sept00.pdf",
+        "item_code": "",
+        "category": "Newsletter: Box 4-5-9",
+        "language": "English"
+      },
+      {
+        "title": "Box 459 - 'Reuni\u00f3n de A.A.' en el parque, justo detr\u00e1s del Lua Lounge",
+        "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_feb-mar98.pdf",
+        "item_code": "",
+        "category": "Newsletter: Box 4-5-9",
+        "language": "Spanish"
+      },
+      {
+        "title": "Box 459 - 'Spirit of Sacrifice' Sets the Tone of the General Service Conference",
+        "url": "https://www.aa.org/sites/default/files/newsletters/en_box459_april-may94.pdf",
+        "item_code": "",
+        "category": "Newsletter: Box 4-5-9",
+        "language": "English"
+      },
+      {
+        "title": "Box 459 - 'Twelve Concepts Illustrated'",
+        "url": "https://www.aa.org/sites/default/files/newsletters/en_box459_feb-mar87.pdf",
+        "item_code": "",
+        "category": "Newsletter: Box 4-5-9",
+        "language": "English"
+      },
+      {
+        "title": "Box 459 - 11,000 Personas en la Convenci\u00f3n de Miami se Comprometieron a Preservar la Unidad de A.A.",
+        "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_aug-sept70.pdf",
+        "item_code": "",
+        "category": "Newsletter: Box 4-5-9",
+        "language": "Spanish"
+      },
+      {
+        "title": "Box 459 - 13 Reunion de Servicio Mundial: Volver a lo b\u00e1sico",
+        "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_feb-mar95.pdf",
+        "item_code": "",
+        "category": "Newsletter: Box 4-5-9",
+        "language": "Spanish"
+      },
+      {
+        "title": "Box 459 - 13th World Service Meeting Delegates Plug In to Unity",
+        "url": "https://www.aa.org/sites/default/files/newsletters/en_box459_feb-mar95.pdf",
+        "item_code": "",
+        "category": "Newsletter: Box 4-5-9",
+        "language": "English"
+      },
+      {
+        "title": "Box 459 - 15 Pays enverront des delegues a la 2e Assemblee de Service Mondial",
+        "url": "https://www.aa.org/sites/default/files/newsletters/fr_box459_oct-nov72.pdf",
+        "item_code": "",
+        "category": "Newsletter: Box 4-5-9",
+        "language": "French"
+      },
+      {
+        "title": "Box 459 - 15 Reuni\u00f3n de Servicio Mundial",
+        "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_feb-mar99_0.pdf",
+        "item_code": "",
+        "category": "Newsletter: Box 4-5-9",
+        "language": "Spanish"
+      },
+      {
+        "title": "Box 459 - 15th World Service Meeting",
+        "url": "https://www.aa.org/sites/default/files/newsletters/en_box459_feb-mar99.pdf",
+        "item_code": "",
+        "category": "Newsletter: Box 4-5-9",
+        "language": "English"
+      },
+      {
+        "title": "Box 459 - 19,300 Hail A.A.'s 40 Years\u2026",
+        "url": "https://www.aa.org/sites/default/files/newsletters/en_box459_oct-nov75.pdf",
+        "item_code": "",
+        "category": "Newsletter: Box 4-5-9",
+        "language": "English"
+      },
+      {
+        "title": "Box 459 - 1974 A.A. Survey Does Massive Twelfth Step Job, Proves Again That 'A.A. Works'",
+        "url": "https://www.aa.org/sites/default/files/newsletters/en_box459_feb-mar75.pdf",
+        "item_code": "",
+        "category": "Newsletter: Box 4-5-9",
+        "language": "English"
+      },
+      {
+        "title": "Box 459 - 1979 Conference to Review the Three Legacies",
+        "url": "https://www.aa.org/sites/default/files/newsletters/en_box459_april-may79.pdf",
+        "item_code": "",
+        "category": "Newsletter: Box 4-5-9",
+        "language": "English"
+      },
+      {
+        "title": "Box 459 - 1980 Convention Enriches Our Store of A.A. Memories",
+        "url": "https://www.aa.org/sites/default/files/newsletters/en_box459_oct-nov80.pdf",
+        "item_code": "",
+        "category": "Newsletter: Box 4-5-9",
+        "language": "English"
+      },
+      {
+        "title": "Box 459 - 1982-Year of Changes; Gordon Patrick Set to Chair Board of Trustees",
+        "url": "https://www.aa.org/sites/default/files/newsletters/en_box459_june-july82.pdf",
+        "item_code": "",
+        "category": "Newsletter: Box 4-5-9",
+        "language": "English"
+      },
+      {
+        "title": "Box 459 - 1986 Conference Spotlights A.A. Responsibility",
+        "url": "https://www.aa.org/sites/default/files/newsletters/en_box459_april-may86_0.pdf",
+        "item_code": "",
+        "category": "Newsletter: Box 4-5-9",
+        "language": "English"
+      },
+      {
+        "title": "Box 459 - 1990 Convention: Seattle, Here We Come!",
+        "url": "https://www.aa.org/sites/default/files/newsletters/en_box459_oct-nov86.pdf",
+        "item_code": "",
+        "category": "Newsletter: Box 4-5-9",
+        "language": "English"
+      },
+      {
+        "title": "Box 459 - 1992 Membership Survey Form Gets a Facelift",
+        "url": "https://www.aa.org/sites/default/files/newsletters/en_box459_feb-mar92.pdf",
+        "item_code": "",
+        "category": "Newsletter: Box 4-5-9",
+        "language": "English"
+      },
+      {
+        "title": "Box 459 - 1995 International Convention Most Frequently Asked Questions",
+        "url": "https://www.aa.org/sites/default/files/newsletters/en_box459_feb-mar94.pdf",
+        "item_code": "",
+        "category": "Newsletter: Box 4-5-9",
+        "language": "English"
+      },
+      {
+        "title": "Box 459 - 25 Years' Experience With Traditions and\u2026",
+        "url": "https://www.aa.org/sites/default/files/newsletters/en_box459_june-july75.pdf",
+        "item_code": "",
+        "category": "Newsletter: Box 4-5-9",
+        "language": "English"
+      },
+      {
+        "title": "Box 459 - 27ma. Conferencia Tomar\u00e1 como Tema de Discusi\u00f3n el Grupo A.A.",
+        "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_feb-mar77.pdf",
+        "item_code": "",
+        "category": "Newsletter: Box 4-5-9",
+        "language": "Spanish"
+      },
+      {
+        "title": "Box 459 - 28th Conference Approves A.A. Film Project",
+        "url": "https://www.aa.org/sites/default/files/newsletters/en_box459_june-july78.pdf",
+        "item_code": "",
+        "category": "Newsletter: Box 4-5-9",
+        "language": "English"
+      },
+      {
+        "title": "Box 459 - 29th Conference Approves Film 'A.A. - An Inside View'",
+        "url": "https://www.aa.org/sites/default/files/newsletters/en_box459_june-july79.pdf",
+        "item_code": "",
+        "category": "Newsletter: Box 4-5-9",
+        "language": "English"
+      },
+      {
+        "title": "Box 459 - 30th Conference Probes Procedures for Approval of A.A. Literature",
+        "url": "https://www.aa.org/sites/default/files/newsletters/en_box459_june-july80.pdf",
+        "item_code": "",
+        "category": "Newsletter: Box 4-5-9",
+        "language": "English"
+      },
+      {
+        "title": "Box 459 - 31st Conference to Choose 1985 Convention Site",
+        "url": "https://www.aa.org/sites/default/files/newsletters/en_box459_april-may81.pdf",
+        "item_code": "",
+        "category": "Newsletter: Box 4-5-9",
+        "language": "English"
+      },
+      {
+        "title": "Box 459 - 32nd Conference to See Rotation at the General Service Board Helm",
+        "url": "https://www.aa.org/sites/default/files/newsletters/en_box459_april-may82.pdf",
+        "item_code": "",
+        "category": "Newsletter: Box 4-5-9",
+        "language": "English"
+      },
+      {
+        "title": "Box 459 - 33rd Conference Explores the Twelfth Tradition",
+        "url": "https://www.aa.org/sites/default/files/newsletters/en_box459_april-may83.pdf",
+        "item_code": "",
+        "category": "Newsletter: Box 4-5-9",
+        "language": "English"
+      },
+      {
+        "title": "Box 459 - 34th Conference Will Hear the Many Voices of Gratitude",
+        "url": "https://www.aa.org/sites/default/files/newsletters/en_box459_april-may84.pdf",
+        "item_code": "",
+        "category": "Newsletter: Box 4-5-9",
+        "language": "English"
+      },
+      {
+        "title": "Box 459 - 35th Conference Celebrates Gratitude and Responsibility",
+        "url": "https://www.aa.org/sites/default/files/newsletters/en_box459_june-july85_0.pdf",
+        "item_code": "",
+        "category": "Newsletter: Box 4-5-9",
+        "language": "English"
+      },
+      {
+        "title": "Box 459 - 35\u00e8me convention anniversaire internationale, Miami Beach, juillet 1970",
+        "url": "https://www.aa.org/sites/default/files/newsletters/fr_box459_feb-mar70.pdf",
+        "item_code": "",
+        "category": "Newsletter: Box 4-5-9",
+        "language": "French"
+      },
+      {
+        "title": "Box 459 - 36th Conference Looks Ahead",
+        "url": "https://www.aa.org/sites/default/files/newsletters/en_box459_june-july86.pdf",
+        "item_code": "",
+        "category": "Newsletter: Box 4-5-9",
+        "language": "English"
+      },
+      {
+        "title": "Box 459 - 37th General Service Conference \"The Seventh Tradition \u2014 A Turning Point\"",
+        "url": "https://www.aa.org/sites/default/files/newsletters/en_box459_june-july87.pdf",
+        "item_code": "",
+        "category": "Newsletter: Box 4-5-9",
+        "language": "English"
+      },
+      {
+        "title": "Box 459 - 38th \"Singleness of Purpose...\"",
+        "url": "https://www.aa.org/sites/default/files/newsletters/en_box459_april-may88.pdf",
+        "item_code": "",
+        "category": "Newsletter: Box 4-5-9",
+        "language": "English"
+      },
+      {
+        "title": "Box 459 - 38th General Service Conference - \"Our Singleness of Purpose - Key to Unity\"",
+        "url": "https://www.aa.org/sites/default/files/newsletters/en_box459_june-july88.pdf",
+        "item_code": "",
+        "category": "Newsletter: Box 4-5-9",
+        "language": "English"
+      },
+      {
+        "title": "Box 459 - 39th General Service Conference \u2014 \"Anonymity \u2014 Living Our Traditions\"",
+        "url": "https://www.aa.org/sites/default/files/newsletters/en_box459_june-july89.pdf",
+        "item_code": "",
+        "category": "Newsletter: Box 4-5-9",
+        "language": "English"
+      },
+      {
+        "title": "Box 459 - 40th General Service Conference \u2014 \"The Home Group \u2014 Our Responsibility and Link to A.A.'s Future\"",
+        "url": "https://www.aa.org/sites/default/files/newsletters/en_box459_june-july90.pdf",
+        "item_code": "",
+        "category": "Newsletter: Box 4-5-9",
+        "language": "English"
+      },
+      {
+        "title": "Box 459 - 41 Conferencia de Servicios Generales \u2014 \"El Apadrinamiento: Gratitud en Acci\u00f3n\"",
+        "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_june-july91.pdf",
+        "item_code": "",
+        "category": "Newsletter: Box 4-5-9",
+        "language": "Spanish"
+      },
+      {
+        "title": "Box 459 - 41st General Service Conference \u2014 \"Sponsorship: Gratitude in Action\"",
+        "url": "https://www.aa.org/sites/default/files/newsletters/en_box459_june-july91.pdf",
+        "item_code": "",
+        "category": "Newsletter: Box 4-5-9",
+        "language": "English"
+      },
+      {
+        "title": "Box 459 - 42nd General Service Conference \u2014 \"The A.A. Message in a Changing World\"",
+        "url": "https://www.aa.org/sites/default/files/newsletters/en_box459_june-july92.pdf",
+        "item_code": "",
+        "category": "Newsletter: Box 4-5-9",
+        "language": "English"
+      },
+      {
+        "title": "Box 459 - 43rd General Service Conference \"A.A. Takes Its Inventory \u2014 The General Service Conference Structure\"",
+        "url": "https://www.aa.org/sites/default/files/newsletters/en_box459_june-july93.pdf",
+        "item_code": "",
+        "category": "Newsletter: Box 4-5-9",
+        "language": "English"
+      },
+      {
+        "title": "Box 459 - 43\u2019 Conferencia de Servicios Generales \"A.A. Hace su Inventario o - la Estructura de la Conferencia de Servicios Generales\"",
+        "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_june-july93.pdf",
+        "item_code": "",
+        "category": "Newsletter: Box 4-5-9",
+        "language": "Spanish"
+      },
+      {
+        "title": "Box 459 - 44a Conferencia de Servicios Generales \"El Esp\u00edritu de Sacrificio\"",
+        "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_june-july94.pdf",
+        "item_code": "",
+        "category": "Newsletter: Box 4-5-9",
+        "language": "Spanish"
+      }
+    ],
     "revised": [
       {
         "title": "Where Do I Go From Here?",
@@ -15,30 +444,480 @@
         "item_code": "F-4",
         "category": "Forms, Catalogs & Order Blanks",
         "language": "English",
-        "previous_modified": "2026-02-16",
-        "last_modified": "2026-10-27"
+        "previous_modified": "2026-10-27",
+        "last_modified": "2026-10-28"
       },
       {
-        "title": "Carrying the Message into Correctional Facilities",
-        "url": "https://aaws.widen.net/content/hldp4cm8zf/pdf/f-5_carrying_message_into_correctional_facilities_online.pdf",
-        "item_code": "F-5",
-        "category": "Corrections",
-        "language": "English",
-        "previous_modified": "2025-01-09",
-        "last_modified": "2026-10-27"
-      },
-      {
-        "title": "Vous croyez-vous diff\u00e9rent?",
-        "url": "https://aaws.widen.net/content/deeq1m3t19/pdf/fp-13_do_you_think_you_are_different_online.pdf",
-        "item_code": "FP-13",
+        "title": "Is There an Alcoholic in Your Life?",
+        "url": "https://aaws.widen.net/content/txdtj2ld2d/pdf/p-30_is_there_an_alcoholic_in_your_life_online.pdf",
+        "item_code": "P-30",
         "category": "Pamphlets & Booklets",
-        "language": "French",
-        "previous_modified": "2024-09-18",
-        "last_modified": "2026-10-26"
+        "language": "English",
+        "previous_modified": "2026-10-06",
+        "last_modified": "2026-10-27"
       }
     ]
   },
   "runs": [
+    {
+      "generated_utc": "2026-10-28T22:29:40Z",
+      "total": 2167,
+      "first_run": false,
+      "added_count": 1,
+      "removed_count": 645,
+      "revised_count": 2,
+      "added": [
+        {
+          "title": "Regional Forum Report 2025 West Central",
+          "url": "https://www.aa.org/sites/default/files/literature/2025-WestCentral-Final-Forum-Report3.pdf",
+          "item_code": "",
+          "category": "Regional Forums",
+          "language": "English"
+        }
+      ],
+      "removed": [
+        {
+          "title": "About A.A. - About the Committee on Professional Relations\u2026",
+          "url": "https://www.aa.org/sites/default/files/newsletters/f-13_summer1972.pdf",
+          "item_code": "F-13",
+          "category": "Newsletter: About A.A.",
+          "language": "English"
+        },
+        {
+          "title": "About A.A. - This is No. 2 \u2026",
+          "url": "https://www.aa.org/sites/default/files/newsletters/f-13_fall1973.pdf",
+          "item_code": "F-13",
+          "category": "Newsletter: About A.A.",
+          "language": "English"
+        },
+        {
+          "title": "Box 4-5-9 - Conference 1969",
+          "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_conference69.pdf",
+          "item_code": "",
+          "category": "Newsletter: Box 4-5-9",
+          "language": "Spanish"
+        },
+        {
+          "title": "Box 4-5-9 - February-March 1969",
+          "url": "https://www.aa.org/sites/default/files/newsletters/fr_box459_feb-mar69.pdf",
+          "item_code": "",
+          "category": "Newsletter: Box 4-5-9",
+          "language": "French"
+        },
+        {
+          "title": "Box 4-5-9 - February-March 1993",
+          "url": "https://www.aa.org/sites/default/files/newsletters/fr_box459_feb-mar93.pdf",
+          "item_code": "",
+          "category": "Newsletter: Box 4-5-9",
+          "language": "French"
+        },
+        {
+          "title": "Box 4-5-9 - February-March 1993",
+          "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_feb-mar93.pdf",
+          "item_code": "",
+          "category": "Newsletter: Box 4-5-9",
+          "language": "Spanish"
+        },
+        {
+          "title": "Box 4-5-9 - February-March 1998",
+          "url": "https://www.aa.org/sites/default/files/newsletters/fr_box459_feb-mar98.pdf",
+          "item_code": "",
+          "category": "Newsletter: Box 4-5-9",
+          "language": "French"
+        },
+        {
+          "title": "Box 4-5-9 - October-November 1969",
+          "url": "https://www.aa.org/sites/default/files/newsletters/fr_box459_oct-nov69_0.pdf",
+          "item_code": "",
+          "category": "Newsletter: Box 4-5-9",
+          "language": "French"
+        },
+        {
+          "title": "Box 4-5-9 - September 2004",
+          "url": "https://www.aa.org/sites/default/files/newsletters/fr_box459augsept04.pdf",
+          "item_code": "",
+          "category": "Newsletter: Box 4-5-9",
+          "language": "French"
+        },
+        {
+          "title": "Box 459 - \"48,000 A.A.s Meet in Seattle\"",
+          "url": "https://www.aa.org/sites/default/files/newsletters/en_box459_aug-sept90.pdf",
+          "item_code": "",
+          "category": "Newsletter: Box 4-5-9",
+          "language": "English"
+        },
+        {
+          "title": "Box 459 - \"El Grupo Base: El Latido del Coraz\u00f3n de A.A.\" Nuevo Librillo del Grapevine",
+          "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_aug-sept93.pdf",
+          "item_code": "",
+          "category": "Newsletter: Box 4-5-9",
+          "language": "Spanish"
+        },
+        {
+          "title": "Box 459 - \"Espiritu de Sacrificio\" da el tono de la Conferencia de la Conferencia de Servicios Generales",
+          "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_april-may94.pdf",
+          "item_code": "",
+          "category": "Newsletter: Box 4-5-9",
+          "language": "Spanish"
+        },
+        {
+          "title": "Box 459 - \"Nueva apariencia\" para la literatura de A.A.",
+          "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_feb-mar89.pdf",
+          "item_code": "",
+          "category": "Newsletter: Box 4-5-9",
+          "language": "Spanish"
+        },
+        {
+          "title": "Box 459 - \"Transm\u00edtelo: hacia el Siglo XXI\" una celebraci\u00f3n de 65 a\u00f1os de libertad",
+          "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_aug-sept00.pdf",
+          "item_code": "",
+          "category": "Newsletter: Box 4-5-9",
+          "language": "Spanish"
+        },
+        {
+          "title": "Box 459 - ' L'esprit de sacrifice ' donne le ton \u00e0 la Conf\u00e9rence des Services g\u00e9n\u00e9raux",
+          "url": "https://www.aa.org/sites/default/files/newsletters/fr_box459_april-may94.pdf",
+          "item_code": "",
+          "category": "Newsletter: Box 4-5-9",
+          "language": "French"
+        },
+        {
+          "title": "Box 459 - '73 Conference: Which Will Be Hottest Topic?",
+          "url": "https://www.aa.org/sites/default/files/newsletters/en_box459_april-may73.pdf",
+          "item_code": "",
+          "category": "Newsletter: Box 4-5-9",
+          "language": "English"
+        },
+        {
+          "title": "Box 459 - 'A.A. Meeting' - in the Park, Past the Lua Lounge",
+          "url": "https://www.aa.org/sites/default/files/newsletters/1998_FebruaryMarch_Box459.pdf",
+          "item_code": "",
+          "category": "Newsletter: Box 4-5-9",
+          "language": "English"
+        },
+        {
+          "title": "Box 459 - 'Let Go' to Grow \u2014 The Spirit of Rotation Keeps A.A. Alive",
+          "url": "https://www.aa.org/sites/default/files/newsletters/en_box459_oct-nov83.pdf",
+          "item_code": "",
+          "category": "Newsletter: Box 4-5-9",
+          "language": "English"
+        },
+        {
+          "title": "Box 459 - 'Pass It On-Into the 21st Century' Celebrating 65 Years of Freedom",
+          "url": "https://www.aa.org/sites/default/files/newsletters/en_box459_aug-sept00.pdf",
+          "item_code": "",
+          "category": "Newsletter: Box 4-5-9",
+          "language": "English"
+        },
+        {
+          "title": "Box 459 - 'Reuni\u00f3n de A.A.' en el parque, justo detr\u00e1s del Lua Lounge",
+          "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_feb-mar98.pdf",
+          "item_code": "",
+          "category": "Newsletter: Box 4-5-9",
+          "language": "Spanish"
+        },
+        {
+          "title": "Box 459 - 'Spirit of Sacrifice' Sets the Tone of the General Service Conference",
+          "url": "https://www.aa.org/sites/default/files/newsletters/en_box459_april-may94.pdf",
+          "item_code": "",
+          "category": "Newsletter: Box 4-5-9",
+          "language": "English"
+        },
+        {
+          "title": "Box 459 - 'Twelve Concepts Illustrated'",
+          "url": "https://www.aa.org/sites/default/files/newsletters/en_box459_feb-mar87.pdf",
+          "item_code": "",
+          "category": "Newsletter: Box 4-5-9",
+          "language": "English"
+        },
+        {
+          "title": "Box 459 - 11,000 Personas en la Convenci\u00f3n de Miami se Comprometieron a Preservar la Unidad de A.A.",
+          "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_aug-sept70.pdf",
+          "item_code": "",
+          "category": "Newsletter: Box 4-5-9",
+          "language": "Spanish"
+        },
+        {
+          "title": "Box 459 - 13 Reunion de Servicio Mundial: Volver a lo b\u00e1sico",
+          "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_feb-mar95.pdf",
+          "item_code": "",
+          "category": "Newsletter: Box 4-5-9",
+          "language": "Spanish"
+        },
+        {
+          "title": "Box 459 - 13th World Service Meeting Delegates Plug In to Unity",
+          "url": "https://www.aa.org/sites/default/files/newsletters/en_box459_feb-mar95.pdf",
+          "item_code": "",
+          "category": "Newsletter: Box 4-5-9",
+          "language": "English"
+        },
+        {
+          "title": "Box 459 - 15 Pays enverront des delegues a la 2e Assemblee de Service Mondial",
+          "url": "https://www.aa.org/sites/default/files/newsletters/fr_box459_oct-nov72.pdf",
+          "item_code": "",
+          "category": "Newsletter: Box 4-5-9",
+          "language": "French"
+        },
+        {
+          "title": "Box 459 - 15 Reuni\u00f3n de Servicio Mundial",
+          "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_feb-mar99_0.pdf",
+          "item_code": "",
+          "category": "Newsletter: Box 4-5-9",
+          "language": "Spanish"
+        },
+        {
+          "title": "Box 459 - 15th World Service Meeting",
+          "url": "https://www.aa.org/sites/default/files/newsletters/en_box459_feb-mar99.pdf",
+          "item_code": "",
+          "category": "Newsletter: Box 4-5-9",
+          "language": "English"
+        },
+        {
+          "title": "Box 459 - 19,300 Hail A.A.'s 40 Years\u2026",
+          "url": "https://www.aa.org/sites/default/files/newsletters/en_box459_oct-nov75.pdf",
+          "item_code": "",
+          "category": "Newsletter: Box 4-5-9",
+          "language": "English"
+        },
+        {
+          "title": "Box 459 - 1974 A.A. Survey Does Massive Twelfth Step Job, Proves Again That 'A.A. Works'",
+          "url": "https://www.aa.org/sites/default/files/newsletters/en_box459_feb-mar75.pdf",
+          "item_code": "",
+          "category": "Newsletter: Box 4-5-9",
+          "language": "English"
+        },
+        {
+          "title": "Box 459 - 1979 Conference to Review the Three Legacies",
+          "url": "https://www.aa.org/sites/default/files/newsletters/en_box459_april-may79.pdf",
+          "item_code": "",
+          "category": "Newsletter: Box 4-5-9",
+          "language": "English"
+        },
+        {
+          "title": "Box 459 - 1980 Convention Enriches Our Store of A.A. Memories",
+          "url": "https://www.aa.org/sites/default/files/newsletters/en_box459_oct-nov80.pdf",
+          "item_code": "",
+          "category": "Newsletter: Box 4-5-9",
+          "language": "English"
+        },
+        {
+          "title": "Box 459 - 1982-Year of Changes; Gordon Patrick Set to Chair Board of Trustees",
+          "url": "https://www.aa.org/sites/default/files/newsletters/en_box459_june-july82.pdf",
+          "item_code": "",
+          "category": "Newsletter: Box 4-5-9",
+          "language": "English"
+        },
+        {
+          "title": "Box 459 - 1986 Conference Spotlights A.A. Responsibility",
+          "url": "https://www.aa.org/sites/default/files/newsletters/en_box459_april-may86_0.pdf",
+          "item_code": "",
+          "category": "Newsletter: Box 4-5-9",
+          "language": "English"
+        },
+        {
+          "title": "Box 459 - 1990 Convention: Seattle, Here We Come!",
+          "url": "https://www.aa.org/sites/default/files/newsletters/en_box459_oct-nov86.pdf",
+          "item_code": "",
+          "category": "Newsletter: Box 4-5-9",
+          "language": "English"
+        },
+        {
+          "title": "Box 459 - 1992 Membership Survey Form Gets a Facelift",
+          "url": "https://www.aa.org/sites/default/files/newsletters/en_box459_feb-mar92.pdf",
+          "item_code": "",
+          "category": "Newsletter: Box 4-5-9",
+          "language": "English"
+        },
+        {
+          "title": "Box 459 - 1995 International Convention Most Frequently Asked Questions",
+          "url": "https://www.aa.org/sites/default/files/newsletters/en_box459_feb-mar94.pdf",
+          "item_code": "",
+          "category": "Newsletter: Box 4-5-9",
+          "language": "English"
+        },
+        {
+          "title": "Box 459 - 25 Years' Experience With Traditions and\u2026",
+          "url": "https://www.aa.org/sites/default/files/newsletters/en_box459_june-july75.pdf",
+          "item_code": "",
+          "category": "Newsletter: Box 4-5-9",
+          "language": "English"
+        },
+        {
+          "title": "Box 459 - 27ma. Conferencia Tomar\u00e1 como Tema de Discusi\u00f3n el Grupo A.A.",
+          "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_feb-mar77.pdf",
+          "item_code": "",
+          "category": "Newsletter: Box 4-5-9",
+          "language": "Spanish"
+        },
+        {
+          "title": "Box 459 - 28th Conference Approves A.A. Film Project",
+          "url": "https://www.aa.org/sites/default/files/newsletters/en_box459_june-july78.pdf",
+          "item_code": "",
+          "category": "Newsletter: Box 4-5-9",
+          "language": "English"
+        },
+        {
+          "title": "Box 459 - 29th Conference Approves Film 'A.A. - An Inside View'",
+          "url": "https://www.aa.org/sites/default/files/newsletters/en_box459_june-july79.pdf",
+          "item_code": "",
+          "category": "Newsletter: Box 4-5-9",
+          "language": "English"
+        },
+        {
+          "title": "Box 459 - 30th Conference Probes Procedures for Approval of A.A. Literature",
+          "url": "https://www.aa.org/sites/default/files/newsletters/en_box459_june-july80.pdf",
+          "item_code": "",
+          "category": "Newsletter: Box 4-5-9",
+          "language": "English"
+        },
+        {
+          "title": "Box 459 - 31st Conference to Choose 1985 Convention Site",
+          "url": "https://www.aa.org/sites/default/files/newsletters/en_box459_april-may81.pdf",
+          "item_code": "",
+          "category": "Newsletter: Box 4-5-9",
+          "language": "English"
+        },
+        {
+          "title": "Box 459 - 32nd Conference to See Rotation at the General Service Board Helm",
+          "url": "https://www.aa.org/sites/default/files/newsletters/en_box459_april-may82.pdf",
+          "item_code": "",
+          "category": "Newsletter: Box 4-5-9",
+          "language": "English"
+        },
+        {
+          "title": "Box 459 - 33rd Conference Explores the Twelfth Tradition",
+          "url": "https://www.aa.org/sites/default/files/newsletters/en_box459_april-may83.pdf",
+          "item_code": "",
+          "category": "Newsletter: Box 4-5-9",
+          "language": "English"
+        },
+        {
+          "title": "Box 459 - 34th Conference Will Hear the Many Voices of Gratitude",
+          "url": "https://www.aa.org/sites/default/files/newsletters/en_box459_april-may84.pdf",
+          "item_code": "",
+          "category": "Newsletter: Box 4-5-9",
+          "language": "English"
+        },
+        {
+          "title": "Box 459 - 35th Conference Celebrates Gratitude and Responsibility",
+          "url": "https://www.aa.org/sites/default/files/newsletters/en_box459_june-july85_0.pdf",
+          "item_code": "",
+          "category": "Newsletter: Box 4-5-9",
+          "language": "English"
+        },
+        {
+          "title": "Box 459 - 35\u00e8me convention anniversaire internationale, Miami Beach, juillet 1970",
+          "url": "https://www.aa.org/sites/default/files/newsletters/fr_box459_feb-mar70.pdf",
+          "item_code": "",
+          "category": "Newsletter: Box 4-5-9",
+          "language": "French"
+        },
+        {
+          "title": "Box 459 - 36th Conference Looks Ahead",
+          "url": "https://www.aa.org/sites/default/files/newsletters/en_box459_june-july86.pdf",
+          "item_code": "",
+          "category": "Newsletter: Box 4-5-9",
+          "language": "English"
+        },
+        {
+          "title": "Box 459 - 37th General Service Conference \"The Seventh Tradition \u2014 A Turning Point\"",
+          "url": "https://www.aa.org/sites/default/files/newsletters/en_box459_june-july87.pdf",
+          "item_code": "",
+          "category": "Newsletter: Box 4-5-9",
+          "language": "English"
+        },
+        {
+          "title": "Box 459 - 38th \"Singleness of Purpose...\"",
+          "url": "https://www.aa.org/sites/default/files/newsletters/en_box459_april-may88.pdf",
+          "item_code": "",
+          "category": "Newsletter: Box 4-5-9",
+          "language": "English"
+        },
+        {
+          "title": "Box 459 - 38th General Service Conference - \"Our Singleness of Purpose - Key to Unity\"",
+          "url": "https://www.aa.org/sites/default/files/newsletters/en_box459_june-july88.pdf",
+          "item_code": "",
+          "category": "Newsletter: Box 4-5-9",
+          "language": "English"
+        },
+        {
+          "title": "Box 459 - 39th General Service Conference \u2014 \"Anonymity \u2014 Living Our Traditions\"",
+          "url": "https://www.aa.org/sites/default/files/newsletters/en_box459_june-july89.pdf",
+          "item_code": "",
+          "category": "Newsletter: Box 4-5-9",
+          "language": "English"
+        },
+        {
+          "title": "Box 459 - 40th General Service Conference \u2014 \"The Home Group \u2014 Our Responsibility and Link to A.A.'s Future\"",
+          "url": "https://www.aa.org/sites/default/files/newsletters/en_box459_june-july90.pdf",
+          "item_code": "",
+          "category": "Newsletter: Box 4-5-9",
+          "language": "English"
+        },
+        {
+          "title": "Box 459 - 41 Conferencia de Servicios Generales \u2014 \"El Apadrinamiento: Gratitud en Acci\u00f3n\"",
+          "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_june-july91.pdf",
+          "item_code": "",
+          "category": "Newsletter: Box 4-5-9",
+          "language": "Spanish"
+        },
+        {
+          "title": "Box 459 - 41st General Service Conference \u2014 \"Sponsorship: Gratitude in Action\"",
+          "url": "https://www.aa.org/sites/default/files/newsletters/en_box459_june-july91.pdf",
+          "item_code": "",
+          "category": "Newsletter: Box 4-5-9",
+          "language": "English"
+        },
+        {
+          "title": "Box 459 - 42nd General Service Conference \u2014 \"The A.A. Message in a Changing World\"",
+          "url": "https://www.aa.org/sites/default/files/newsletters/en_box459_june-july92.pdf",
+          "item_code": "",
+          "category": "Newsletter: Box 4-5-9",
+          "language": "English"
+        },
+        {
+          "title": "Box 459 - 43rd General Service Conference \"A.A. Takes Its Inventory \u2014 The General Service Conference Structure\"",
+          "url": "https://www.aa.org/sites/default/files/newsletters/en_box459_june-july93.pdf",
+          "item_code": "",
+          "category": "Newsletter: Box 4-5-9",
+          "language": "English"
+        },
+        {
+          "title": "Box 459 - 43\u2019 Conferencia de Servicios Generales \"A.A. Hace su Inventario o - la Estructura de la Conferencia de Servicios Generales\"",
+          "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_june-july93.pdf",
+          "item_code": "",
+          "category": "Newsletter: Box 4-5-9",
+          "language": "Spanish"
+        },
+        {
+          "title": "Box 459 - 44a Conferencia de Servicios Generales \"El Esp\u00edritu de Sacrificio\"",
+          "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_june-july94.pdf",
+          "item_code": "",
+          "category": "Newsletter: Box 4-5-9",
+          "language": "Spanish"
+        }
+      ],
+      "revised": [
+        {
+          "title": "Where Do I Go From Here?",
+          "url": "https://aaws.widen.net/content/goqsoadb08/pdf/f-4_where_do_i_go_from_here_online.pdf",
+          "item_code": "F-4",
+          "category": "Forms, Catalogs & Order Blanks",
+          "language": "English",
+          "previous_modified": "2026-10-27",
+          "last_modified": "2026-10-28"
+        },
+        {
+          "title": "Is There an Alcoholic in Your Life?",
+          "url": "https://aaws.widen.net/content/txdtj2ld2d/pdf/p-30_is_there_an_alcoholic_in_your_life_online.pdf",
+          "item_code": "P-30",
+          "category": "Pamphlets & Booklets",
+          "language": "English",
+          "previous_modified": "2026-10-06",
+          "last_modified": "2026-10-27"
+        }
+      ]
+    },
     {
       "generated_utc": "2026-10-27T17:54:21Z",
       "total": 2811,
@@ -3042,44 +3921,6 @@
       "added": [],
       "removed": [],
       "revised": []
-    },
-    {
-      "generated_utc": "2026-10-08T13:21:31Z",
-      "total": 2924,
-      "first_run": false,
-      "added_count": 1,
-      "removed_count": 0,
-      "revised_count": 2,
-      "added": [
-        {
-          "title": "Quarterly Report from GSO - Third Quarter, 2026",
-          "url": "https://www.aa.org/sites/default/files/newsletters/F-14_Quarterly_Report_2026_Third_Quarter.pdf",
-          "item_code": "F-14",
-          "category": "G.S.O. Quarterly Report",
-          "language": "English"
-        }
-      ],
-      "removed": [],
-      "revised": [
-        {
-          "title": "Rapport Trimestriel du B.S.G.",
-          "url": "https://www.aa.org/sites/default/files/newsletters/FF-14_Quarterly_Report_2026_Third_Quarter.pdf",
-          "item_code": "FF-14",
-          "category": "G.S.O. Quarterly Report",
-          "language": "French",
-          "previous_modified": "2026-10-07",
-          "last_modified": "2026-10-08"
-        },
-        {
-          "title": "Informe Trimestral de la OSG",
-          "url": "https://www.aa.org/sites/default/files/newsletters/SF-14_Quarterly_Report_2026_Third_Quarter.pdf",
-          "item_code": "SF-14",
-          "category": "G.S.O. Quarterly Report",
-          "language": "Spanish",
-          "previous_modified": "2026-10-07",
-          "last_modified": "2026-10-08"
-        }
-      ]
     }
   ]
 }
