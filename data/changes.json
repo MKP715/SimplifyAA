@@ -1,53 +1,1039 @@
 {
   "latest": {
-    "generated_utc": "2026-10-29T22:42:37Z",
-    "total": 2167,
+    "generated_utc": "2026-10-30T22:12:48Z",
+    "total": 2495,
     "first_run": false,
-    "added_count": 0,
-    "removed_count": 0,
-    "revised_count": 4,
-    "added": [],
-    "removed": [],
-    "revised": [
+    "added_count": 340,
+    "removed_count": 12,
+    "revised_count": 0,
+    "added": [
       {
-        "title": "Libro de trabajo de Literatura",
-        "url": "https://aaws.widen.net/content/psp2mznsgp/pdf/sm-52i_literature_workbook_online.pdf",
-        "item_code": "SM-52I",
-        "category": "Literature & Committees",
-        "language": "Spanish",
-        "previous_modified": "2026-05-15",
-        "last_modified": "2026-10-29"
+        "title": "03. Introduction - (p. 14)",
+        "url": "https://www.aa.org/sites/default/files/2026-10/B-2_03_FM_Introduction_p_14.pdf",
+        "item_code": "B-2",
+        "category": "Big Book, Steps & Traditions",
+        "language": "English"
       },
       {
-        "title": "Libro de trabajo de Accesibilidad",
-        "url": "https://aaws.widen.net/content/wypdf2abkd/pdf/sm-48i_accessibilities_workbook_online.pdf",
-        "item_code": "SM-48I",
-        "category": "Treatment & Accessibilities",
-        "language": "Spanish",
-        "previous_modified": "2026-10-06",
-        "last_modified": "2026-10-29"
+        "title": "03. PART II - They Stopped in Time - (pp. 277-431)",
+        "url": "https://www.aa.org/sites/default/files/2026-10/en_bigbook_personalstories_partII.pdf",
+        "item_code": "",
+        "category": "Big Book, Steps & Traditions",
+        "language": "English"
       },
       {
-        "title": "Accessibilities Checklist for Meetings and Groups",
-        "url": "https://aaws.widen.net/content/w15atxarpi/pdf/smf-208_accessibilities_checklist.pdf",
-        "item_code": "SMF-208",
-        "category": "Treatment & Accessibilities",
-        "language": "English",
-        "previous_modified": "2026-08-28",
-        "last_modified": "2026-10-29"
+        "title": "07. Working With Others - (pp. 89-103)",
+        "url": "https://www.aa.org/sites/default/files/2026-10/en_bigbook_chapt7.pdf",
+        "item_code": "",
+        "category": "Big Book, Steps & Traditions",
+        "language": "English"
       },
       {
-        "title": "A.A. Guidelines on Accessibility",
-        "url": "https://aaws.widen.net/content/ikbgyuaxb5/pdf/mg-16_accessibility_for_all_alcoholics_online.pdf",
-        "item_code": "MG-16",
-        "category": "A.A. Guidelines",
-        "language": "English",
-        "previous_modified": "2025-12-15",
-        "last_modified": "2026-10-29"
+        "title": "08. Tradition Eight - (pp. 168 - 173)",
+        "url": "https://www.aa.org/sites/default/files/2026-10/B-2_08_Trad_Eight_pp_168-173.pdf",
+        "item_code": "B-2",
+        "category": "Big Book, Steps & Traditions",
+        "language": "English"
+      },
+      {
+        "title": "Partages Derri\u00e8re les murs - Automne 2008",
+        "url": "https://www.aa.org/sites/default/files/newsletters/ff-97_fall_2008.pdf",
+        "item_code": "FF-97",
+        "category": "Corrections",
+        "language": "French"
+      },
+      {
+        "title": "Partages Derri\u00e8re les murs - Automne 2009",
+        "url": "https://www.aa.org/sites/default/files/newsletters/ff-97_fall_2009.pdf",
+        "item_code": "FF-97",
+        "category": "Corrections",
+        "language": "French"
+      },
+      {
+        "title": "Partages Derri\u00e8re les murs - Automne 2010",
+        "url": "https://www.aa.org/sites/default/files/newsletters/ff-97_fall_2010.pdf",
+        "item_code": "FF-97",
+        "category": "Corrections",
+        "language": "French"
+      },
+      {
+        "title": "Partages Derri\u00e8re les murs - Automne 2011",
+        "url": "https://www.aa.org/sites/default/files/newsletters/ff-97_fall_2011.pdf",
+        "item_code": "FF-97",
+        "category": "Corrections",
+        "language": "French"
+      },
+      {
+        "title": "Partages Derri\u00e8re les murs - Automne 2012",
+        "url": "https://www.aa.org/sites/default/files/newsletters/ff-97_fall_2012.pdf",
+        "item_code": "FF-97",
+        "category": "Corrections",
+        "language": "French"
+      },
+      {
+        "title": "Partages Derri\u00e8re les murs - Hiver 2008",
+        "url": "https://www.aa.org/sites/default/files/newsletters/ff-97_winter_2008.pdf",
+        "item_code": "FF-97",
+        "category": "Corrections",
+        "language": "French"
+      },
+      {
+        "title": "Partages Derri\u00e8re les murs - Hiver 2009",
+        "url": "https://www.aa.org/sites/default/files/newsletters/ff-97_winter_2009.pdf",
+        "item_code": "FF-97",
+        "category": "Corrections",
+        "language": "French"
+      },
+      {
+        "title": "Partages Derri\u00e8re les murs - Hiver 2011",
+        "url": "https://www.aa.org/sites/default/files/newsletters/ff-97_winter_2011.pdf",
+        "item_code": "FF-97",
+        "category": "Corrections",
+        "language": "French"
+      },
+      {
+        "title": "Partages Derri\u00e8re les murs - Printemps 2008",
+        "url": "https://www.aa.org/sites/default/files/newsletters/ff-97_spring_2008.pdf",
+        "item_code": "FF-97",
+        "category": "Corrections",
+        "language": "French"
+      },
+      {
+        "title": "Partages Derri\u00e8re les murs - Printemps 2009",
+        "url": "https://www.aa.org/sites/default/files/newsletters/ff-97_spring_2009.pdf",
+        "item_code": "FF-97",
+        "category": "Corrections",
+        "language": "French"
+      },
+      {
+        "title": "Partages Derri\u00e8re les murs - Printemps 2010",
+        "url": "https://www.aa.org/sites/default/files/newsletters/ff-97_spring_2010.pdf",
+        "item_code": "FF-97",
+        "category": "Corrections",
+        "language": "French"
+      },
+      {
+        "title": "Partages Derri\u00e8re les murs - Printemps 2011",
+        "url": "https://www.aa.org/sites/default/files/newsletters/ff-97_spring_2011.pdf",
+        "item_code": "FF-97",
+        "category": "Corrections",
+        "language": "French"
+      },
+      {
+        "title": "Partages Derri\u00e8re les murs - Printemps 2012",
+        "url": "https://www.aa.org/sites/default/files/newsletters/ff-97_spring_2012.pdf",
+        "item_code": "FF-97",
+        "category": "Corrections",
+        "language": "French"
+      },
+      {
+        "title": "Partages Derri\u00e8re les murs - \u00c9t\u00e9 2008",
+        "url": "https://www.aa.org/sites/default/files/newsletters/ff-97_summer_2008.pdf",
+        "item_code": "FF-97",
+        "category": "Corrections",
+        "language": "French"
+      },
+      {
+        "title": "Partages Derri\u00e8re les murs - \u00c9t\u00e9 2009",
+        "url": "https://www.aa.org/sites/default/files/newsletters/ff-97_summer_2009.pdf",
+        "item_code": "FF-97",
+        "category": "Corrections",
+        "language": "French"
+      },
+      {
+        "title": "Partages Derri\u00e8re les murs - \u00c9t\u00e9 2011",
+        "url": "https://www.aa.org/sites/default/files/newsletters/ff-97_summer_2011.pdf",
+        "item_code": "FF-97",
+        "category": "Corrections",
+        "language": "French"
+      },
+      {
+        "title": "Partages Derri\u00e8re les murs - \u00c9t\u00e9 2012",
+        "url": "https://www.aa.org/sites/default/files/newsletters/ff-97_summer_2012.pdf",
+        "item_code": "FF-97",
+        "category": "Corrections",
+        "language": "French"
+      },
+      {
+        "title": "Sharing From Behind the Walls - Fall 2008",
+        "url": "https://www.aa.org/sites/default/files/newsletters/f-97_fall_2008.pdf",
+        "item_code": "F-97",
+        "category": "Corrections",
+        "language": "English"
+      },
+      {
+        "title": "Sharing From Behind the Walls - Fall 2009",
+        "url": "https://www.aa.org/sites/default/files/newsletters/f-97_fall_2009.pdf",
+        "item_code": "F-97",
+        "category": "Corrections",
+        "language": "English"
+      },
+      {
+        "title": "Sharing From Behind the Walls - Fall 2010",
+        "url": "https://www.aa.org/sites/default/files/newsletters/f-97_fall_2010.pdf",
+        "item_code": "F-97",
+        "category": "Corrections",
+        "language": "English"
+      },
+      {
+        "title": "Sharing From Behind the Walls - Fall 2011",
+        "url": "https://www.aa.org/sites/default/files/newsletters/f-97_fall_2011.pdf",
+        "item_code": "F-97",
+        "category": "Corrections",
+        "language": "English"
+      },
+      {
+        "title": "Sharing From Behind the Walls - Fall 2012",
+        "url": "https://www.aa.org/sites/default/files/newsletters/f-97_fall_2012.pdf",
+        "item_code": "F-97",
+        "category": "Corrections",
+        "language": "English"
+      },
+      {
+        "title": "Sharing From Behind the Walls - Spring 2008",
+        "url": "https://www.aa.org/sites/default/files/newsletters/f-97_spring_2008.pdf",
+        "item_code": "F-97",
+        "category": "Corrections",
+        "language": "English"
+      },
+      {
+        "title": "Sharing From Behind the Walls - Spring 2009",
+        "url": "https://www.aa.org/sites/default/files/newsletters/f-97_spring_2009.pdf",
+        "item_code": "F-97",
+        "category": "Corrections",
+        "language": "English"
+      },
+      {
+        "title": "Sharing From Behind the Walls - Spring 2010",
+        "url": "https://www.aa.org/sites/default/files/newsletters/f-97_spring_2010.pdf",
+        "item_code": "F-97",
+        "category": "Corrections",
+        "language": "English"
+      },
+      {
+        "title": "Sharing From Behind the Walls - Spring 2011",
+        "url": "https://www.aa.org/sites/default/files/newsletters/f-97_spring_2011.pdf",
+        "item_code": "F-97",
+        "category": "Corrections",
+        "language": "English"
+      },
+      {
+        "title": "Sharing From Behind the Walls - Spring 2012",
+        "url": "https://www.aa.org/sites/default/files/newsletters/f-97_spring_2012.pdf",
+        "item_code": "F-97",
+        "category": "Corrections",
+        "language": "English"
+      },
+      {
+        "title": "Sharing From Behind the Walls - Summer 2008",
+        "url": "https://www.aa.org/sites/default/files/newsletters/f-97_summer_2008.pdf",
+        "item_code": "F-97",
+        "category": "Corrections",
+        "language": "English"
+      },
+      {
+        "title": "Sharing From Behind the Walls - Summer 2009",
+        "url": "https://www.aa.org/sites/default/files/newsletters/f-97_summer_2009.pdf",
+        "item_code": "F-97",
+        "category": "Corrections",
+        "language": "English"
+      },
+      {
+        "title": "Sharing From Behind the Walls - Summer 2010",
+        "url": "https://www.aa.org/sites/default/files/newsletters/f-97_summer_2010.pdf",
+        "item_code": "F-97",
+        "category": "Corrections",
+        "language": "English"
+      },
+      {
+        "title": "Sharing From Behind the Walls - Summer 2011",
+        "url": "https://www.aa.org/sites/default/files/newsletters/f-97_summer_2011.pdf",
+        "item_code": "F-97",
+        "category": "Corrections",
+        "language": "English"
+      },
+      {
+        "title": "Sharing From Behind the Walls - Summer 2012",
+        "url": "https://www.aa.org/sites/default/files/newsletters/f-97_summer_2012.pdf",
+        "item_code": "F-97",
+        "category": "Corrections",
+        "language": "English"
+      },
+      {
+        "title": "Sharing From Behind the Walls - Winter 2008",
+        "url": "https://www.aa.org/sites/default/files/newsletters/f-97_winter_2008.pdf",
+        "item_code": "F-97",
+        "category": "Corrections",
+        "language": "English"
+      },
+      {
+        "title": "Sharing From Behind the Walls - Winter 2009",
+        "url": "https://www.aa.org/sites/default/files/newsletters/f-97_winter_2009.pdf",
+        "item_code": "F-97",
+        "category": "Corrections",
+        "language": "English"
+      },
+      {
+        "title": "Sharing From Behind the Walls - Winter 2011",
+        "url": "https://www.aa.org/sites/default/files/newsletters/f-97_winter_2011.pdf",
+        "item_code": "F-97",
+        "category": "Corrections",
+        "language": "English"
+      },
+      {
+        "title": "About A.A. - About the Committee on Professional Relations\u2026",
+        "url": "https://www.aa.org/sites/default/files/newsletters/f-13_summer1972.pdf",
+        "item_code": "F-13",
+        "category": "Newsletter: About A.A.",
+        "language": "English"
+      },
+      {
+        "title": "About A.A. - This is No. 2 \u2026",
+        "url": "https://www.aa.org/sites/default/files/newsletters/f-13_fall1973.pdf",
+        "item_code": "F-13",
+        "category": "Newsletter: About A.A.",
+        "language": "English"
+      },
+      {
+        "title": "Box 4-5-9 - February-March 1993",
+        "url": "https://www.aa.org/sites/default/files/newsletters/fr_box459_feb-mar93.pdf",
+        "item_code": "",
+        "category": "Newsletter: Box 4-5-9",
+        "language": "French"
+      },
+      {
+        "title": "Box 4-5-9 - February-March 1993",
+        "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_feb-mar93.pdf",
+        "item_code": "",
+        "category": "Newsletter: Box 4-5-9",
+        "language": "Spanish"
+      },
+      {
+        "title": "Box 4-5-9 - February-March 1998",
+        "url": "https://www.aa.org/sites/default/files/newsletters/fr_box459_feb-mar98.pdf",
+        "item_code": "",
+        "category": "Newsletter: Box 4-5-9",
+        "language": "French"
+      },
+      {
+        "title": "Box 4-5-9 - September 2004",
+        "url": "https://www.aa.org/sites/default/files/newsletters/fr_box459augsept04.pdf",
+        "item_code": "",
+        "category": "Newsletter: Box 4-5-9",
+        "language": "French"
+      },
+      {
+        "title": "Box 459 - \"48,000 A.A.s Meet in Seattle\"",
+        "url": "https://www.aa.org/sites/default/files/newsletters/en_box459_aug-sept90.pdf",
+        "item_code": "",
+        "category": "Newsletter: Box 4-5-9",
+        "language": "English"
+      },
+      {
+        "title": "Box 459 - \"El Grupo Base: El Latido del Coraz\u00f3n de A.A.\" Nuevo Librillo del Grapevine",
+        "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_aug-sept93.pdf",
+        "item_code": "",
+        "category": "Newsletter: Box 4-5-9",
+        "language": "Spanish"
+      },
+      {
+        "title": "Box 459 - \"Espiritu de Sacrificio\" da el tono de la Conferencia de la Conferencia de Servicios Generales",
+        "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_april-may94.pdf",
+        "item_code": "",
+        "category": "Newsletter: Box 4-5-9",
+        "language": "Spanish"
+      },
+      {
+        "title": "Box 459 - \"Nueva apariencia\" para la literatura de A.A.",
+        "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_feb-mar89.pdf",
+        "item_code": "",
+        "category": "Newsletter: Box 4-5-9",
+        "language": "Spanish"
+      },
+      {
+        "title": "Box 459 - \"Transm\u00edtelo: hacia el Siglo XXI\" una celebraci\u00f3n de 65 a\u00f1os de libertad",
+        "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_aug-sept00.pdf",
+        "item_code": "",
+        "category": "Newsletter: Box 4-5-9",
+        "language": "Spanish"
+      },
+      {
+        "title": "Box 459 - ' L'esprit de sacrifice ' donne le ton \u00e0 la Conf\u00e9rence des Services g\u00e9n\u00e9raux",
+        "url": "https://www.aa.org/sites/default/files/newsletters/fr_box459_april-may94.pdf",
+        "item_code": "",
+        "category": "Newsletter: Box 4-5-9",
+        "language": "French"
+      },
+      {
+        "title": "Box 459 - 'A.A. Meeting' - in the Park, Past the Lua Lounge",
+        "url": "https://www.aa.org/sites/default/files/newsletters/1998_FebruaryMarch_Box459.pdf",
+        "item_code": "",
+        "category": "Newsletter: Box 4-5-9",
+        "language": "English"
+      },
+      {
+        "title": "Box 459 - 'Pass It On-Into the 21st Century' Celebrating 65 Years of Freedom",
+        "url": "https://www.aa.org/sites/default/files/newsletters/en_box459_aug-sept00.pdf",
+        "item_code": "",
+        "category": "Newsletter: Box 4-5-9",
+        "language": "English"
+      },
+      {
+        "title": "Box 459 - 'Reuni\u00f3n de A.A.' en el parque, justo detr\u00e1s del Lua Lounge",
+        "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_feb-mar98.pdf",
+        "item_code": "",
+        "category": "Newsletter: Box 4-5-9",
+        "language": "Spanish"
+      },
+      {
+        "title": "Box 459 - 'Spirit of Sacrifice' Sets the Tone of the General Service Conference",
+        "url": "https://www.aa.org/sites/default/files/newsletters/en_box459_april-may94.pdf",
+        "item_code": "",
+        "category": "Newsletter: Box 4-5-9",
+        "language": "English"
+      },
+      {
+        "title": "Box 459 - 13 Reunion de Servicio Mundial: Volver a lo b\u00e1sico",
+        "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_feb-mar95.pdf",
+        "item_code": "",
+        "category": "Newsletter: Box 4-5-9",
+        "language": "Spanish"
+      },
+      {
+        "title": "Box 459 - 13th World Service Meeting Delegates Plug In to Unity",
+        "url": "https://www.aa.org/sites/default/files/newsletters/en_box459_feb-mar95.pdf",
+        "item_code": "",
+        "category": "Newsletter: Box 4-5-9",
+        "language": "English"
+      },
+      {
+        "title": "Box 459 - 15 Reuni\u00f3n de Servicio Mundial",
+        "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_feb-mar99_0.pdf",
+        "item_code": "",
+        "category": "Newsletter: Box 4-5-9",
+        "language": "Spanish"
+      },
+      {
+        "title": "Box 459 - 15th World Service Meeting",
+        "url": "https://www.aa.org/sites/default/files/newsletters/en_box459_feb-mar99.pdf",
+        "item_code": "",
+        "category": "Newsletter: Box 4-5-9",
+        "language": "English"
+      },
+      {
+        "title": "Box 459 - 1992 Membership Survey Form Gets a Facelift",
+        "url": "https://www.aa.org/sites/default/files/newsletters/en_box459_feb-mar92.pdf",
+        "item_code": "",
+        "category": "Newsletter: Box 4-5-9",
+        "language": "English"
       }
-    ]
+    ],
+    "removed": [
+      {
+        "title": "03. Introduction - (p. 14)",
+        "url": "https://www.aa.org/sites/default/files/2022-01/en_tt_intro.pdf",
+        "item_code": "",
+        "category": "Big Book, Steps & Traditions",
+        "language": "English"
+      },
+      {
+        "title": "03. PART II - They Stopped in Time - (pp. 277-431)",
+        "url": "https://www.aa.org/sites/default/files/2021-11/en_bigbook_personalstories_partII.pdf",
+        "item_code": "",
+        "category": "Big Book, Steps & Traditions",
+        "language": "English"
+      },
+      {
+        "title": "07. Working With Others - (pp. 89-103)",
+        "url": "https://www.aa.org/sites/default/files/2021-11/en_bigbook_chapt7.pdf",
+        "item_code": "",
+        "category": "Big Book, Steps & Traditions",
+        "language": "English"
+      },
+      {
+        "title": "08. Tradition Eight - (pp. 168 - 173)",
+        "url": "https://www.aa.org/sites/default/files/2022-01/en_tradition8.pdf",
+        "item_code": "",
+        "category": "Big Book, Steps & Traditions",
+        "language": "English"
+      },
+      {
+        "title": "24 El Informe Final de la Reuni\u00f3n de Servicio Mundial",
+        "url": "https://aaws.widen.net/content/tdcimgxayn/pdf/sf-150_24th_wsm_final_report_online.pdf",
+        "item_code": "SF-150",
+        "category": "World Service Meeting",
+        "language": "Spanish"
+      },
+      {
+        "title": "24th Alcoholics Anonymous World Service Meeting - Final Report",
+        "url": "https://aaws.widen.net/content/f4b78dzjfx/pdf/f-150_24th_wsm_final_report_online.pdf",
+        "item_code": "F-150",
+        "category": "World Service Meeting",
+        "language": "English"
+      },
+      {
+        "title": "25.\u00aa Reuni\u00f3n de Servicio Mundial - Reporte Final",
+        "url": "https://aaws.widen.net/content/siaygobfx8/pdf/sf-150_25th_wsm_final_report_online.pdf",
+        "item_code": "SF-150",
+        "category": "World Service Meeting",
+        "language": "Spanish"
+      },
+      {
+        "title": "25th Alcoholics Anonymous World Service Meeting - Final Report",
+        "url": "https://aaws.widen.net/content/4svyaeppvo/pdf/f-150_25th_wsm_final_report_online.pdf",
+        "item_code": "F-150",
+        "category": "World Service Meeting",
+        "language": "English"
+      },
+      {
+        "title": "Feuillet",
+        "url": "https://www.aa.org/sites/default/files/literature/FR-2026-Pacific-RF-Flyer-3.pdf",
+        "item_code": "",
+        "category": "Regional Forums",
+        "language": "French"
+      },
+      {
+        "title": "Flyer",
+        "url": "https://www.aa.org/sites/default/files/literature/2026-Pacific-RF-Flyer-3.pdf",
+        "item_code": "",
+        "category": "Regional Forums",
+        "language": "English"
+      },
+      {
+        "title": "Les AA pour l\u2019alcoolique plus \u00e2g\u00e9",
+        "url": "https://aaws.widen.net/content/2ltxxi9hy4/pdf/fb-28_aa_older_alcoholic_large_online.pdf",
+        "item_code": "FB-28",
+        "category": "Members & Outreach",
+        "language": "French"
+      },
+      {
+        "title": "Volante",
+        "url": "https://www.aa.org/sites/default/files/literature/SP-2026-Pacific-RF-Flyer-3.pdf",
+        "item_code": "",
+        "category": "Regional Forums",
+        "language": "Spanish"
+      }
+    ],
+    "revised": []
   },
   "runs": [
+    {
+      "generated_utc": "2026-10-30T22:12:48Z",
+      "total": 2495,
+      "first_run": false,
+      "added_count": 340,
+      "removed_count": 12,
+      "revised_count": 0,
+      "added": [
+        {
+          "title": "03. Introduction - (p. 14)",
+          "url": "https://www.aa.org/sites/default/files/2026-10/B-2_03_FM_Introduction_p_14.pdf",
+          "item_code": "B-2",
+          "category": "Big Book, Steps & Traditions",
+          "language": "English"
+        },
+        {
+          "title": "03. PART II - They Stopped in Time - (pp. 277-431)",
+          "url": "https://www.aa.org/sites/default/files/2026-10/en_bigbook_personalstories_partII.pdf",
+          "item_code": "",
+          "category": "Big Book, Steps & Traditions",
+          "language": "English"
+        },
+        {
+          "title": "07. Working With Others - (pp. 89-103)",
+          "url": "https://www.aa.org/sites/default/files/2026-10/en_bigbook_chapt7.pdf",
+          "item_code": "",
+          "category": "Big Book, Steps & Traditions",
+          "language": "English"
+        },
+        {
+          "title": "08. Tradition Eight - (pp. 168 - 173)",
+          "url": "https://www.aa.org/sites/default/files/2026-10/B-2_08_Trad_Eight_pp_168-173.pdf",
+          "item_code": "B-2",
+          "category": "Big Book, Steps & Traditions",
+          "language": "English"
+        },
+        {
+          "title": "Partages Derri\u00e8re les murs - Automne 2008",
+          "url": "https://www.aa.org/sites/default/files/newsletters/ff-97_fall_2008.pdf",
+          "item_code": "FF-97",
+          "category": "Corrections",
+          "language": "French"
+        },
+        {
+          "title": "Partages Derri\u00e8re les murs - Automne 2009",
+          "url": "https://www.aa.org/sites/default/files/newsletters/ff-97_fall_2009.pdf",
+          "item_code": "FF-97",
+          "category": "Corrections",
+          "language": "French"
+        },
+        {
+          "title": "Partages Derri\u00e8re les murs - Automne 2010",
+          "url": "https://www.aa.org/sites/default/files/newsletters/ff-97_fall_2010.pdf",
+          "item_code": "FF-97",
+          "category": "Corrections",
+          "language": "French"
+        },
+        {
+          "title": "Partages Derri\u00e8re les murs - Automne 2011",
+          "url": "https://www.aa.org/sites/default/files/newsletters/ff-97_fall_2011.pdf",
+          "item_code": "FF-97",
+          "category": "Corrections",
+          "language": "French"
+        },
+        {
+          "title": "Partages Derri\u00e8re les murs - Automne 2012",
+          "url": "https://www.aa.org/sites/default/files/newsletters/ff-97_fall_2012.pdf",
+          "item_code": "FF-97",
+          "category": "Corrections",
+          "language": "French"
+        },
+        {
+          "title": "Partages Derri\u00e8re les murs - Hiver 2008",
+          "url": "https://www.aa.org/sites/default/files/newsletters/ff-97_winter_2008.pdf",
+          "item_code": "FF-97",
+          "category": "Corrections",
+          "language": "French"
+        },
+        {
+          "title": "Partages Derri\u00e8re les murs - Hiver 2009",
+          "url": "https://www.aa.org/sites/default/files/newsletters/ff-97_winter_2009.pdf",
+          "item_code": "FF-97",
+          "category": "Corrections",
+          "language": "French"
+        },
+        {
+          "title": "Partages Derri\u00e8re les murs - Hiver 2011",
+          "url": "https://www.aa.org/sites/default/files/newsletters/ff-97_winter_2011.pdf",
+          "item_code": "FF-97",
+          "category": "Corrections",
+          "language": "French"
+        },
+        {
+          "title": "Partages Derri\u00e8re les murs - Printemps 2008",
+          "url": "https://www.aa.org/sites/default/files/newsletters/ff-97_spring_2008.pdf",
+          "item_code": "FF-97",
+          "category": "Corrections",
+          "language": "French"
+        },
+        {
+          "title": "Partages Derri\u00e8re les murs - Printemps 2009",
+          "url": "https://www.aa.org/sites/default/files/newsletters/ff-97_spring_2009.pdf",
+          "item_code": "FF-97",
+          "category": "Corrections",
+          "language": "French"
+        },
+        {
+          "title": "Partages Derri\u00e8re les murs - Printemps 2010",
+          "url": "https://www.aa.org/sites/default/files/newsletters/ff-97_spring_2010.pdf",
+          "item_code": "FF-97",
+          "category": "Corrections",
+          "language": "French"
+        },
+        {
+          "title": "Partages Derri\u00e8re les murs - Printemps 2011",
+          "url": "https://www.aa.org/sites/default/files/newsletters/ff-97_spring_2011.pdf",
+          "item_code": "FF-97",
+          "category": "Corrections",
+          "language": "French"
+        },
+        {
+          "title": "Partages Derri\u00e8re les murs - Printemps 2012",
+          "url": "https://www.aa.org/sites/default/files/newsletters/ff-97_spring_2012.pdf",
+          "item_code": "FF-97",
+          "category": "Corrections",
+          "language": "French"
+        },
+        {
+          "title": "Partages Derri\u00e8re les murs - \u00c9t\u00e9 2008",
+          "url": "https://www.aa.org/sites/default/files/newsletters/ff-97_summer_2008.pdf",
+          "item_code": "FF-97",
+          "category": "Corrections",
+          "language": "French"
+        },
+        {
+          "title": "Partages Derri\u00e8re les murs - \u00c9t\u00e9 2009",
+          "url": "https://www.aa.org/sites/default/files/newsletters/ff-97_summer_2009.pdf",
+          "item_code": "FF-97",
+          "category": "Corrections",
+          "language": "French"
+        },
+        {
+          "title": "Partages Derri\u00e8re les murs - \u00c9t\u00e9 2011",
+          "url": "https://www.aa.org/sites/default/files/newsletters/ff-97_summer_2011.pdf",
+          "item_code": "FF-97",
+          "category": "Corrections",
+          "language": "French"
+        },
+        {
+          "title": "Partages Derri\u00e8re les murs - \u00c9t\u00e9 2012",
+          "url": "https://www.aa.org/sites/default/files/newsletters/ff-97_summer_2012.pdf",
+          "item_code": "FF-97",
+          "category": "Corrections",
+          "language": "French"
+        },
+        {
+          "title": "Sharing From Behind the Walls - Fall 2008",
+          "url": "https://www.aa.org/sites/default/files/newsletters/f-97_fall_2008.pdf",
+          "item_code": "F-97",
+          "category": "Corrections",
+          "language": "English"
+        },
+        {
+          "title": "Sharing From Behind the Walls - Fall 2009",
+          "url": "https://www.aa.org/sites/default/files/newsletters/f-97_fall_2009.pdf",
+          "item_code": "F-97",
+          "category": "Corrections",
+          "language": "English"
+        },
+        {
+          "title": "Sharing From Behind the Walls - Fall 2010",
+          "url": "https://www.aa.org/sites/default/files/newsletters/f-97_fall_2010.pdf",
+          "item_code": "F-97",
+          "category": "Corrections",
+          "language": "English"
+        },
+        {
+          "title": "Sharing From Behind the Walls - Fall 2011",
+          "url": "https://www.aa.org/sites/default/files/newsletters/f-97_fall_2011.pdf",
+          "item_code": "F-97",
+          "category": "Corrections",
+          "language": "English"
+        },
+        {
+          "title": "Sharing From Behind the Walls - Fall 2012",
+          "url": "https://www.aa.org/sites/default/files/newsletters/f-97_fall_2012.pdf",
+          "item_code": "F-97",
+          "category": "Corrections",
+          "language": "English"
+        },
+        {
+          "title": "Sharing From Behind the Walls - Spring 2008",
+          "url": "https://www.aa.org/sites/default/files/newsletters/f-97_spring_2008.pdf",
+          "item_code": "F-97",
+          "category": "Corrections",
+          "language": "English"
+        },
+        {
+          "title": "Sharing From Behind the Walls - Spring 2009",
+          "url": "https://www.aa.org/sites/default/files/newsletters/f-97_spring_2009.pdf",
+          "item_code": "F-97",
+          "category": "Corrections",
+          "language": "English"
+        },
+        {
+          "title": "Sharing From Behind the Walls - Spring 2010",
+          "url": "https://www.aa.org/sites/default/files/newsletters/f-97_spring_2010.pdf",
+          "item_code": "F-97",
+          "category": "Corrections",
+          "language": "English"
+        },
+        {
+          "title": "Sharing From Behind the Walls - Spring 2011",
+          "url": "https://www.aa.org/sites/default/files/newsletters/f-97_spring_2011.pdf",
+          "item_code": "F-97",
+          "category": "Corrections",
+          "language": "English"
+        },
+        {
+          "title": "Sharing From Behind the Walls - Spring 2012",
+          "url": "https://www.aa.org/sites/default/files/newsletters/f-97_spring_2012.pdf",
+          "item_code": "F-97",
+          "category": "Corrections",
+          "language": "English"
+        },
+        {
+          "title": "Sharing From Behind the Walls - Summer 2008",
+          "url": "https://www.aa.org/sites/default/files/newsletters/f-97_summer_2008.pdf",
+          "item_code": "F-97",
+          "category": "Corrections",
+          "language": "English"
+        },
+        {
+          "title": "Sharing From Behind the Walls - Summer 2009",
+          "url": "https://www.aa.org/sites/default/files/newsletters/f-97_summer_2009.pdf",
+          "item_code": "F-97",
+          "category": "Corrections",
+          "language": "English"
+        },
+        {
+          "title": "Sharing From Behind the Walls - Summer 2010",
+          "url": "https://www.aa.org/sites/default/files/newsletters/f-97_summer_2010.pdf",
+          "item_code": "F-97",
+          "category": "Corrections",
+          "language": "English"
+        },
+        {
+          "title": "Sharing From Behind the Walls - Summer 2011",
+          "url": "https://www.aa.org/sites/default/files/newsletters/f-97_summer_2011.pdf",
+          "item_code": "F-97",
+          "category": "Corrections",
+          "language": "English"
+        },
+        {
+          "title": "Sharing From Behind the Walls - Summer 2012",
+          "url": "https://www.aa.org/sites/default/files/newsletters/f-97_summer_2012.pdf",
+          "item_code": "F-97",
+          "category": "Corrections",
+          "language": "English"
+        },
+        {
+          "title": "Sharing From Behind the Walls - Winter 2008",
+          "url": "https://www.aa.org/sites/default/files/newsletters/f-97_winter_2008.pdf",
+          "item_code": "F-97",
+          "category": "Corrections",
+          "language": "English"
+        },
+        {
+          "title": "Sharing From Behind the Walls - Winter 2009",
+          "url": "https://www.aa.org/sites/default/files/newsletters/f-97_winter_2009.pdf",
+          "item_code": "F-97",
+          "category": "Corrections",
+          "language": "English"
+        },
+        {
+          "title": "Sharing From Behind the Walls - Winter 2011",
+          "url": "https://www.aa.org/sites/default/files/newsletters/f-97_winter_2011.pdf",
+          "item_code": "F-97",
+          "category": "Corrections",
+          "language": "English"
+        },
+        {
+          "title": "About A.A. - About the Committee on Professional Relations\u2026",
+          "url": "https://www.aa.org/sites/default/files/newsletters/f-13_summer1972.pdf",
+          "item_code": "F-13",
+          "category": "Newsletter: About A.A.",
+          "language": "English"
+        },
+        {
+          "title": "About A.A. - This is No. 2 \u2026",
+          "url": "https://www.aa.org/sites/default/files/newsletters/f-13_fall1973.pdf",
+          "item_code": "F-13",
+          "category": "Newsletter: About A.A.",
+          "language": "English"
+        },
+        {
+          "title": "Box 4-5-9 - February-March 1993",
+          "url": "https://www.aa.org/sites/default/files/newsletters/fr_box459_feb-mar93.pdf",
+          "item_code": "",
+          "category": "Newsletter: Box 4-5-9",
+          "language": "French"
+        },
+        {
+          "title": "Box 4-5-9 - February-March 1993",
+          "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_feb-mar93.pdf",
+          "item_code": "",
+          "category": "Newsletter: Box 4-5-9",
+          "language": "Spanish"
+        },
+        {
+          "title": "Box 4-5-9 - February-March 1998",
+          "url": "https://www.aa.org/sites/default/files/newsletters/fr_box459_feb-mar98.pdf",
+          "item_code": "",
+          "category": "Newsletter: Box 4-5-9",
+          "language": "French"
+        },
+        {
+          "title": "Box 4-5-9 - September 2004",
+          "url": "https://www.aa.org/sites/default/files/newsletters/fr_box459augsept04.pdf",
+          "item_code": "",
+          "category": "Newsletter: Box 4-5-9",
+          "language": "French"
+        },
+        {
+          "title": "Box 459 - \"48,000 A.A.s Meet in Seattle\"",
+          "url": "https://www.aa.org/sites/default/files/newsletters/en_box459_aug-sept90.pdf",
+          "item_code": "",
+          "category": "Newsletter: Box 4-5-9",
+          "language": "English"
+        },
+        {
+          "title": "Box 459 - \"El Grupo Base: El Latido del Coraz\u00f3n de A.A.\" Nuevo Librillo del Grapevine",
+          "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_aug-sept93.pdf",
+          "item_code": "",
+          "category": "Newsletter: Box 4-5-9",
+          "language": "Spanish"
+        },
+        {
+          "title": "Box 459 - \"Espiritu de Sacrificio\" da el tono de la Conferencia de la Conferencia de Servicios Generales",
+          "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_april-may94.pdf",
+          "item_code": "",
+          "category": "Newsletter: Box 4-5-9",
+          "language": "Spanish"
+        },
+        {
+          "title": "Box 459 - \"Nueva apariencia\" para la literatura de A.A.",
+          "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_feb-mar89.pdf",
+          "item_code": "",
+          "category": "Newsletter: Box 4-5-9",
+          "language": "Spanish"
+        },
+        {
+          "title": "Box 459 - \"Transm\u00edtelo: hacia el Siglo XXI\" una celebraci\u00f3n de 65 a\u00f1os de libertad",
+          "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_aug-sept00.pdf",
+          "item_code": "",
+          "category": "Newsletter: Box 4-5-9",
+          "language": "Spanish"
+        },
+        {
+          "title": "Box 459 - ' L'esprit de sacrifice ' donne le ton \u00e0 la Conf\u00e9rence des Services g\u00e9n\u00e9raux",
+          "url": "https://www.aa.org/sites/default/files/newsletters/fr_box459_april-may94.pdf",
+          "item_code": "",
+          "category": "Newsletter: Box 4-5-9",
+          "language": "French"
+        },
+        {
+          "title": "Box 459 - 'A.A. Meeting' - in the Park, Past the Lua Lounge",
+          "url": "https://www.aa.org/sites/default/files/newsletters/1998_FebruaryMarch_Box459.pdf",
+          "item_code": "",
+          "category": "Newsletter: Box 4-5-9",
+          "language": "English"
+        },
+        {
+          "title": "Box 459 - 'Pass It On-Into the 21st Century' Celebrating 65 Years of Freedom",
+          "url": "https://www.aa.org/sites/default/files/newsletters/en_box459_aug-sept00.pdf",
+          "item_code": "",
+          "category": "Newsletter: Box 4-5-9",
+          "language": "English"
+        },
+        {
+          "title": "Box 459 - 'Reuni\u00f3n de A.A.' en el parque, justo detr\u00e1s del Lua Lounge",
+          "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_feb-mar98.pdf",
+          "item_code": "",
+          "category": "Newsletter: Box 4-5-9",
+          "language": "Spanish"
+        },
+        {
+          "title": "Box 459 - 'Spirit of Sacrifice' Sets the Tone of the General Service Conference",
+          "url": "https://www.aa.org/sites/default/files/newsletters/en_box459_april-may94.pdf",
+          "item_code": "",
+          "category": "Newsletter: Box 4-5-9",
+          "language": "English"
+        },
+        {
+          "title": "Box 459 - 13 Reunion de Servicio Mundial: Volver a lo b\u00e1sico",
+          "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_feb-mar95.pdf",
+          "item_code": "",
+          "category": "Newsletter: Box 4-5-9",
+          "language": "Spanish"
+        },
+        {
+          "title": "Box 459 - 13th World Service Meeting Delegates Plug In to Unity",
+          "url": "https://www.aa.org/sites/default/files/newsletters/en_box459_feb-mar95.pdf",
+          "item_code": "",
+          "category": "Newsletter: Box 4-5-9",
+          "language": "English"
+        },
+        {
+          "title": "Box 459 - 15 Reuni\u00f3n de Servicio Mundial",
+          "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_feb-mar99_0.pdf",
+          "item_code": "",
+          "category": "Newsletter: Box 4-5-9",
+          "language": "Spanish"
+        },
+        {
+          "title": "Box 459 - 15th World Service Meeting",
+          "url": "https://www.aa.org/sites/default/files/newsletters/en_box459_feb-mar99.pdf",
+          "item_code": "",
+          "category": "Newsletter: Box 4-5-9",
+          "language": "English"
+        },
+        {
+          "title": "Box 459 - 1992 Membership Survey Form Gets a Facelift",
+          "url": "https://www.aa.org/sites/default/files/newsletters/en_box459_feb-mar92.pdf",
+          "item_code": "",
+          "category": "Newsletter: Box 4-5-9",
+          "language": "English"
+        }
+      ],
+      "removed": [
+        {
+          "title": "03. Introduction - (p. 14)",
+          "url": "https://www.aa.org/sites/default/files/2022-01/en_tt_intro.pdf",
+          "item_code": "",
+          "category": "Big Book, Steps & Traditions",
+          "language": "English"
+        },
+        {
+          "title": "03. PART II - They Stopped in Time - (pp. 277-431)",
+          "url": "https://www.aa.org/sites/default/files/2021-11/en_bigbook_personalstories_partII.pdf",
+          "item_code": "",
+          "category": "Big Book, Steps & Traditions",
+          "language": "English"
+        },
+        {
+          "title": "07. Working With Others - (pp. 89-103)",
+          "url": "https://www.aa.org/sites/default/files/2021-11/en_bigbook_chapt7.pdf",
+          "item_code": "",
+          "category": "Big Book, Steps & Traditions",
+          "language": "English"
+        },
+        {
+          "title": "08. Tradition Eight - (pp. 168 - 173)",
+          "url": "https://www.aa.org/sites/default/files/2022-01/en_tradition8.pdf",
+          "item_code": "",
+          "category": "Big Book, Steps & Traditions",
+          "language": "English"
+        },
+        {
+          "title": "24 El Informe Final de la Reuni\u00f3n de Servicio Mundial",
+          "url": "https://aaws.widen.net/content/tdcimgxayn/pdf/sf-150_24th_wsm_final_report_online.pdf",
+          "item_code": "SF-150",
+          "category": "World Service Meeting",
+          "language": "Spanish"
+        },
+        {
+          "title": "24th Alcoholics Anonymous World Service Meeting - Final Report",
+          "url": "https://aaws.widen.net/content/f4b78dzjfx/pdf/f-150_24th_wsm_final_report_online.pdf",
+          "item_code": "F-150",
+          "category": "World Service Meeting",
+          "language": "English"
+        },
+        {
+          "title": "25.\u00aa Reuni\u00f3n de Servicio Mundial - Reporte Final",
+          "url": "https://aaws.widen.net/content/siaygobfx8/pdf/sf-150_25th_wsm_final_report_online.pdf",
+          "item_code": "SF-150",
+          "category": "World Service Meeting",
+          "language": "Spanish"
+        },
+        {
+          "title": "25th Alcoholics Anonymous World Service Meeting - Final Report",
+          "url": "https://aaws.widen.net/content/4svyaeppvo/pdf/f-150_25th_wsm_final_report_online.pdf",
+          "item_code": "F-150",
+          "category": "World Service Meeting",
+          "language": "English"
+        },
+        {
+          "title": "Feuillet",
+          "url": "https://www.aa.org/sites/default/files/literature/FR-2026-Pacific-RF-Flyer-3.pdf",
+          "item_code": "",
+          "category": "Regional Forums",
+          "language": "French"
+        },
+        {
+          "title": "Flyer",
+          "url": "https://www.aa.org/sites/default/files/literature/2026-Pacific-RF-Flyer-3.pdf",
+          "item_code": "",
+          "category": "Regional Forums",
+          "language": "English"
+        },
+        {
+          "title": "Les AA pour l\u2019alcoolique plus \u00e2g\u00e9",
+          "url": "https://aaws.widen.net/content/2ltxxi9hy4/pdf/fb-28_aa_older_alcoholic_large_online.pdf",
+          "item_code": "FB-28",
+          "category": "Members & Outreach",
+          "language": "French"
+        },
+        {
+          "title": "Volante",
+          "url": "https://www.aa.org/sites/default/files/literature/SP-2026-Pacific-RF-Flyer-3.pdf",
+          "item_code": "",
+          "category": "Regional Forums",
+          "language": "Spanish"
+        }
+      ],
+      "revised": []
+    },
     {
       "generated_utc": "2026-10-29T22:42:37Z",
       "total": 2167,
@@ -3528,17 +4514,6 @@
     },
     {
       "generated_utc": "2026-10-12T05:30:37Z",
-      "total": 2924,
-      "first_run": false,
-      "added_count": 0,
-      "removed_count": 0,
-      "revised_count": 0,
-      "added": [],
-      "removed": [],
-      "revised": []
-    },
-    {
-      "generated_utc": "2026-10-11T05:16:04Z",
       "total": 2924,
       "first_run": false,
       "added_count": 0,
