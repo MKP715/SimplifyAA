@@ -1,16 +1,91 @@
 {
   "latest": {
-    "generated_utc": "2026-11-01T05:34:34Z",
-    "total": 2495,
+    "generated_utc": "2026-11-02T15:26:33Z",
+    "total": 2498,
     "first_run": false,
-    "added_count": 0,
+    "added_count": 3,
     "removed_count": 0,
-    "revised_count": 0,
-    "added": [],
+    "revised_count": 1,
+    "added": [
+      {
+        "title": "Mensaje del gerente general de la OSG",
+        "url": "https://www.aa.org/sites/default/files/literature/SP_Gratitude_Month_November_2026.pdf",
+        "item_code": "",
+        "category": "Flyers & Announcements",
+        "language": "Spanish"
+      },
+      {
+        "title": "Message du directeur g\u00e9n\u00e9ral du BSG",
+        "url": "https://www.aa.org/sites/default/files/literature/FR_Gratitude_Month_November_2026.pdf",
+        "item_code": "",
+        "category": "Flyers & Announcements",
+        "language": "French"
+      },
+      {
+        "title": "Message from the General Manager at GSO",
+        "url": "https://www.aa.org/sites/default/files/literature/Gratitude_Month_November_2026.pdf",
+        "item_code": "",
+        "category": "Flyers & Announcements",
+        "language": "English"
+      }
+    ],
     "removed": [],
-    "revised": []
+    "revised": [
+      {
+        "title": "Carrying the Message into Correctional Facilities",
+        "url": "https://aaws.widen.net/content/hldp4cm8zf/pdf/f-5_carrying_message_into_correctional_facilities_online.pdf",
+        "item_code": "F-5",
+        "category": "Corrections",
+        "language": "English",
+        "previous_modified": "2026-10-27",
+        "last_modified": "2026-11-02"
+      }
+    ]
   },
   "runs": [
+    {
+      "generated_utc": "2026-11-02T15:26:33Z",
+      "total": 2498,
+      "first_run": false,
+      "added_count": 3,
+      "removed_count": 0,
+      "revised_count": 1,
+      "added": [
+        {
+          "title": "Mensaje del gerente general de la OSG",
+          "url": "https://www.aa.org/sites/default/files/literature/SP_Gratitude_Month_November_2026.pdf",
+          "item_code": "",
+          "category": "Flyers & Announcements",
+          "language": "Spanish"
+        },
+        {
+          "title": "Message du directeur g\u00e9n\u00e9ral du BSG",
+          "url": "https://www.aa.org/sites/default/files/literature/FR_Gratitude_Month_November_2026.pdf",
+          "item_code": "",
+          "category": "Flyers & Announcements",
+          "language": "French"
+        },
+        {
+          "title": "Message from the General Manager at GSO",
+          "url": "https://www.aa.org/sites/default/files/literature/Gratitude_Month_November_2026.pdf",
+          "item_code": "",
+          "category": "Flyers & Announcements",
+          "language": "English"
+        }
+      ],
+      "removed": [],
+      "revised": [
+        {
+          "title": "Carrying the Message into Correctional Facilities",
+          "url": "https://aaws.widen.net/content/hldp4cm8zf/pdf/f-5_carrying_message_into_correctional_facilities_online.pdf",
+          "item_code": "F-5",
+          "category": "Corrections",
+          "language": "English",
+          "previous_modified": "2026-10-27",
+          "last_modified": "2026-11-02"
+        }
+      ]
+    },
     {
       "generated_utc": "2026-11-01T05:34:34Z",
       "total": 2495,
@@ -4003,17 +4078,6 @@
           "language": "English"
         }
       ],
-      "removed": [],
-      "revised": []
-    },
-    {
-      "generated_utc": "2026-10-13T14:02:36Z",
-      "total": 2924,
-      "first_run": false,
-      "added_count": 0,
-      "removed_count": 0,
-      "revised_count": 0,
-      "added": [],
       "removed": [],
       "revised": []
     }

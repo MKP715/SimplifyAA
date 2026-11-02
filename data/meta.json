@@ -1,17 +1,17 @@
 {
-  "generated_utc": "2026-11-01T05:34:34Z",
-  "generated_date": "November 01, 2026",
+  "generated_utc": "2026-11-02T15:26:33Z",
+  "generated_date": "November 02, 2026",
   "source": "https://www.aa.org",
-  "total_pdfs": 2495,
-  "pages_crawled": 5455,
+  "total_pdfs": 2498,
+  "pages_crawled": 5453,
   "broken_links": 29,
-  "total_bytes": 2330667985,
+  "total_bytes": 2331523310,
   "categories": {
     "Newsletter: Box 4-5-9": 601,
     "Corrections": 237,
     "Big Book, Steps & Traditions": 231,
     "Newsletter: About A.A.": 200,
-    "Flyers & Announcements": 168,
+    "Flyers & Announcements": 171,
     "Regional Forums": 100,
     "Pamphlets & Booklets": 96,
     "Public Information": 92,
@@ -50,7 +50,7 @@
     "Newsletters": 1036,
     "Carrying the Message": 420,
     "Literature": 350,
-    "Forms & Catalogs": 210,
+    "Forms & Catalogs": 213,
     "Conference & Events": 134,
     "Service Structure": 79,
     "For Members": 74,
@@ -61,13 +61,13 @@
     "Archives & History": 26
   },
   "languages": {
-    "English": 934,
-    "Spanish": 794,
-    "French": 767
+    "English": 935,
+    "Spanish": 795,
+    "French": 768
   },
   "topics": {
     "Newsletter": 730,
-    "Flyer / Poster": 313,
+    "Flyer / Poster": 316,
     "Form / Application": 228,
     "Report": 173,
     "Twelve Traditions": 136,
@@ -104,11 +104,11 @@
     "Family": 7,
     "Military": 3
   },
-  "translation_groups": 722,
-  "translated_documents": 2138,
-  "added_since_last_run": 0,
+  "translation_groups": 723,
+  "translated_documents": 2141,
+  "added_since_last_run": 3,
   "removed_since_last_run": 0,
-  "revised_since_last_run": 0,
+  "revised_since_last_run": 1,
   "item_code_families": {
     "Forms, Catalogs & Order Blanks": 744,
     "Pamphlets & Booklets": 182,
@@ -121,13 +121,13 @@
     "Newsletters & Bulletins": 1
   },
   "http": {
-    "http_ok": 7984,
+    "http_ok": 7985,
     "http_403": 10,
     "http_404": 12,
     "http_fail": 5
   },
   "pdf_hosts_seen": {
-    "www.aa.org": 5476,
+    "www.aa.org": 5488,
     "aaws.widen.net": 2960,
     "www.aagrapevine.org": 6
   },
