@@ -1,26 +1,27 @@
 {
   "latest": {
-    "generated_utc": "2026-11-06T23:00:05Z",
+    "generated_utc": "2026-11-08T05:34:46Z",
     "total": 2501,
     "first_run": false,
     "added_count": 0,
     "removed_count": 0,
-    "revised_count": 1,
+    "revised_count": 0,
     "added": [],
     "removed": [],
-    "revised": [
-      {
-        "title": "Inside A.A. - Understanding the Fellowship and its Services",
-        "url": "https://aaws.widen.net/content/pi33ouwayt/pdf/p-18_inside_aa_online.pdf",
-        "item_code": "P-18",
-        "category": "Pamphlets & Booklets",
-        "language": "English",
-        "previous_modified": "2024-02-01",
-        "last_modified": "2026-11-06"
-      }
-    ]
+    "revised": []
   },
   "runs": [
+    {
+      "generated_utc": "2026-11-08T05:34:46Z",
+      "total": 2501,
+      "first_run": false,
+      "added_count": 0,
+      "removed_count": 0,
+      "revised_count": 0,
+      "added": [],
+      "removed": [],
+      "revised": []
+    },
     {
       "generated_utc": "2026-11-06T23:00:05Z",
       "total": 2501,
@@ -4058,17 +4059,6 @@
     },
     {
       "generated_utc": "2026-10-19T04:14:18Z",
-      "total": 2929,
-      "first_run": false,
-      "added_count": 0,
-      "removed_count": 0,
-      "revised_count": 0,
-      "added": [],
-      "removed": [],
-      "revised": []
-    },
-    {
-      "generated_utc": "2026-10-18T04:04:21Z",
       "total": 2929,
       "first_run": false,
       "added_count": 0,
