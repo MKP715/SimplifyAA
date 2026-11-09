@@ -1,6 +1,6 @@
 {
   "latest": {
-    "generated_utc": "2026-11-08T05:34:46Z",
+    "generated_utc": "2026-11-09T05:46:08Z",
     "total": 2501,
     "first_run": false,
     "added_count": 0,
@@ -11,6 +11,17 @@
     "revised": []
   },
   "runs": [
+    {
+      "generated_utc": "2026-11-09T05:46:08Z",
+      "total": 2501,
+      "first_run": false,
+      "added_count": 0,
+      "removed_count": 0,
+      "revised_count": 0,
+      "added": [],
+      "removed": [],
+      "revised": []
+    },
     {
       "generated_utc": "2026-11-08T05:34:46Z",
       "total": 2501,
@@ -4055,17 +4066,6 @@
           "language": "Spanish"
         }
       ],
-      "revised": []
-    },
-    {
-      "generated_utc": "2026-10-19T04:14:18Z",
-      "total": 2929,
-      "first_run": false,
-      "added_count": 0,
-      "removed_count": 0,
-      "revised_count": 0,
-      "added": [],
-      "removed": [],
       "revised": []
     }
   ]
