@@ -1,65 +1,79 @@
 {
   "latest": {
-    "generated_utc": "2026-11-10T14:42:44Z",
+    "generated_utc": "2026-11-10T23:08:31Z",
     "total": 2501,
     "first_run": false,
-    "added_count": 2,
-    "removed_count": 2,
-    "revised_count": 2,
+    "added_count": 1,
+    "removed_count": 1,
+    "revised_count": 1,
     "added": [
       {
-        "title": "Le Parrainage dans le Cadre des Trois H\u00e9ritages des AA",
-        "url": "https://aaws.widen.net/content/ye0ms8yuue/pdf/smff-243_sponsorship_within_aa_three_legacies.pdf",
-        "item_code": "SMFF-243",
+        "title": "El apadrinamiento en los tres legados de AA",
+        "url": "https://aaws.widen.net/content/qihn3vlkj9/pdf/SMFS-243_Sponsorship_Within_AA_Three_Legacies.pdf",
+        "item_code": "SMFS-243",
         "category": "Sponsorship",
-        "language": "French"
-      },
-      {
-        "title": "Sponsorship Within AA's Three Legacies",
-        "url": "https://aaws.widen.net/content/msknmo2s5p/pdf/smf-243_sponsorship_within_aa_three_legacies.pdf",
-        "item_code": "SMF-243",
-        "category": "Sponsorship",
-        "language": "English"
+        "language": "Spanish"
       }
     ],
     "removed": [
       {
-        "title": "Le Parrainage dans le Cadre des Trois H\u00e9ritages des AA",
-        "url": "https://aaws.widen.net/content/ye0ms8yuue/pdf/smf-240fr_sponsorship_within_aa_three_legacies.pdf",
-        "item_code": "SMF-240",
+        "title": "El apadrinamiento en los tres legados de AA",
+        "url": "https://aaws.widen.net/content/xrjzcuelyg/pdf/smfs-240_sponsorship_within_aa_three_legacies.pdf",
+        "item_code": "SMFS-240",
         "category": "Sponsorship",
-        "language": "French"
-      },
-      {
-        "title": "Sponsorship Within AA's Three Legacies",
-        "url": "https://aaws.widen.net/content/msknmo2s5p/pdf/smf-240_sponsorship_within_aa_three_legacies.pdf",
-        "item_code": "SMF-240",
-        "category": "Sponsorship",
-        "language": "English"
+        "language": "Spanish"
       }
     ],
     "revised": [
       {
-        "title": "Gu\u00edas de AA acerca de comit\u00e9s de Tratamiento",
-        "url": "https://aaws.widen.net/content/a9ijkvep7j/pdf/smg-14_treatment_online.pdf",
-        "item_code": "SMG-14",
-        "category": "Treatment & Accessibilities",
+        "title": "C\u00f3mo cooperan los miembros de AA con los profesionales",
+        "url": "https://aaws.widen.net/content/i43b2djh4v/pdf/sp-29_how_aa_members_cooperate_w_professionals_online.pdf",
+        "item_code": "SP-29",
+        "category": "Pamphlets & Booklets",
         "language": "Spanish",
-        "previous_modified": "2024-02-13",
-        "last_modified": "2026-11-09"
-      },
-      {
-        "title": "Carrying the Message Behind These Walls",
-        "url": "https://aaws.widen.net/content/sshboqwoxu/pdf/f-108_carrying_the_message_behind_these_walls_online.pdf",
-        "item_code": "F-108",
-        "category": "Forms, Catalogs & Order Blanks",
-        "language": "English",
-        "previous_modified": "2025-06-18",
-        "last_modified": "2026-11-09"
+        "previous_modified": "2025-11-05",
+        "last_modified": "2026-11-10"
       }
     ]
   },
   "runs": [
+    {
+      "generated_utc": "2026-11-10T23:08:31Z",
+      "total": 2501,
+      "first_run": false,
+      "added_count": 1,
+      "removed_count": 1,
+      "revised_count": 1,
+      "added": [
+        {
+          "title": "El apadrinamiento en los tres legados de AA",
+          "url": "https://aaws.widen.net/content/qihn3vlkj9/pdf/SMFS-243_Sponsorship_Within_AA_Three_Legacies.pdf",
+          "item_code": "SMFS-243",
+          "category": "Sponsorship",
+          "language": "Spanish"
+        }
+      ],
+      "removed": [
+        {
+          "title": "El apadrinamiento en los tres legados de AA",
+          "url": "https://aaws.widen.net/content/xrjzcuelyg/pdf/smfs-240_sponsorship_within_aa_three_legacies.pdf",
+          "item_code": "SMFS-240",
+          "category": "Sponsorship",
+          "language": "Spanish"
+        }
+      ],
+      "revised": [
+        {
+          "title": "C\u00f3mo cooperan los miembros de AA con los profesionales",
+          "url": "https://aaws.widen.net/content/i43b2djh4v/pdf/sp-29_how_aa_members_cooperate_w_professionals_online.pdf",
+          "item_code": "SP-29",
+          "category": "Pamphlets & Booklets",
+          "language": "Spanish",
+          "previous_modified": "2025-11-05",
+          "last_modified": "2026-11-10"
+        }
+      ]
+    },
     {
       "generated_utc": "2026-11-10T14:42:44Z",
       "total": 2501,
@@ -3725,17 +3739,6 @@
           "last_modified": "2026-10-21"
         }
       ]
-    },
-    {
-      "generated_utc": "2026-10-21T04:17:27Z",
-      "total": 2798,
-      "first_run": false,
-      "added_count": 0,
-      "removed_count": 0,
-      "revised_count": 0,
-      "added": [],
-      "removed": [],
-      "revised": []
     }
   ]
 }
