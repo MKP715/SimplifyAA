@@ -1,11 +1,11 @@
 {
-  "generated_utc": "2026-11-13T06:05:37Z",
-  "generated_date": "November 13, 2026",
+  "generated_utc": "2026-11-14T13:20:31Z",
+  "generated_date": "November 14, 2026",
   "source": "https://www.aa.org",
   "total_pdfs": 2501,
-  "pages_crawled": 5464,
+  "pages_crawled": 5461,
   "broken_links": 29,
-  "total_bytes": 2333595959,
+  "total_bytes": 2333093708,
   "categories": {
     "Newsletter: Box 4-5-9": 601,
     "Corrections": 237,
@@ -104,30 +104,30 @@
     "Family": 7,
     "Military": 3
   },
-  "translation_groups": 724,
-  "translated_documents": 2144,
-  "added_since_last_run": 0,
-  "removed_since_last_run": 0,
+  "translation_groups": 723,
+  "translated_documents": 2142,
+  "added_since_last_run": 2,
+  "removed_since_last_run": 2,
   "revised_since_last_run": 0,
   "item_code_families": {
     "Forms, Catalogs & Order Blanks": 744,
     "Pamphlets & Booklets": 182,
     "Service Material": 136,
     "A.A. Guidelines": 63,
-    "Books & Big Book": 30,
+    "Books & Big Book": 32,
     "Committee Workbooks": 21,
     "Displays & Wallet Cards": 9,
     "Conference & Forum Materials": 2,
     "Newsletters & Bulletins": 1
   },
   "http": {
-    "http_ok": 7999,
+    "http_ok": 7996,
     "http_403": 10,
     "http_404": 12,
     "http_fail": 5
   },
   "pdf_hosts_seen": {
-    "www.aa.org": 5606,
+    "www.aa.org": 5600,
     "aaws.widen.net": 2968,
     "www.aagrapevine.org": 6
   },
