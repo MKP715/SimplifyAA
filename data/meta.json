@@ -1,6 +1,6 @@
 {
-  "generated_utc": "2026-11-14T13:20:31Z",
-  "generated_date": "November 14, 2026",
+  "generated_utc": "2026-11-15T13:48:44Z",
+  "generated_date": "November 15, 2026",
   "source": "https://www.aa.org",
   "total_pdfs": 2501,
   "pages_crawled": 5461,
@@ -106,8 +106,8 @@
   },
   "translation_groups": 723,
   "translated_documents": 2142,
-  "added_since_last_run": 2,
-  "removed_since_last_run": 2,
+  "added_since_last_run": 0,
+  "removed_since_last_run": 0,
   "revised_since_last_run": 0,
   "item_code_families": {
     "Forms, Catalogs & Order Blanks": 744,

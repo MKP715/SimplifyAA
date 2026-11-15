@@ -1,46 +1,27 @@
 {
   "latest": {
-    "generated_utc": "2026-11-14T13:20:31Z",
+    "generated_utc": "2026-11-15T13:48:44Z",
     "total": 2501,
     "first_run": false,
-    "added_count": 2,
-    "removed_count": 2,
+    "added_count": 0,
+    "removed_count": 0,
     "revised_count": 0,
-    "added": [
-      {
-        "title": "08. Huiti\u00e8me Tradition (Pages 190 \u00e0 196)",
-        "url": "https://www.aa.org/sites/default/files/2026-11/24_FB-2_Trad_Eight_pp_194-201.pdf",
-        "item_code": "FB-2",
-        "category": "Big Book, Steps & Traditions",
-        "language": "French"
-      },
-      {
-        "title": "08. Octava Tradici\u00f3n (P\u00e1ginas 165-170)",
-        "url": "https://www.aa.org/sites/default/files/2026-11/24_SB-15_Trad_Eight_pp_165-170.pdf",
-        "item_code": "SB-15",
-        "category": "Big Book, Steps & Traditions",
-        "language": "Spanish"
-      }
-    ],
-    "removed": [
-      {
-        "title": "08. Huiti\u00e8me Tradition (Pages 190 \u00e0 196)",
-        "url": "https://www.aa.org/sites/default/files/2021-11/fr_tradition8.pdf",
-        "item_code": "",
-        "category": "Big Book, Steps & Traditions",
-        "language": "French"
-      },
-      {
-        "title": "08. Octava Tradici\u00f3n (P\u00e1ginas 165-170)",
-        "url": "https://www.aa.org/sites/default/files/2022-02/sp_tradition8.pdf",
-        "item_code": "",
-        "category": "Big Book, Steps & Traditions",
-        "language": "Spanish"
-      }
-    ],
+    "added": [],
+    "removed": [],
     "revised": []
   },
   "runs": [
+    {
+      "generated_utc": "2026-11-15T13:48:44Z",
+      "total": 2501,
+      "first_run": false,
+      "added_count": 0,
+      "removed_count": 0,
+      "revised_count": 0,
+      "added": [],
+      "removed": [],
+      "revised": []
+    },
     {
       "generated_utc": "2026-11-14T13:20:31Z",
       "total": 2501,
@@ -2856,33 +2837,6 @@
           "last_modified": "2026-10-23"
         }
       ]
-    },
-    {
-      "generated_utc": "2026-10-22T21:30:34Z",
-      "total": 2934,
-      "first_run": false,
-      "added_count": 1,
-      "removed_count": 1,
-      "revised_count": 0,
-      "added": [
-        {
-          "title": "Lignes de conduite des AA - Participation des groupes en ligne",
-          "url": "https://aaws.widen.net/content/zfxuqiy4tu/pdf/fmg-26_participation_of_online_groups.pdf",
-          "item_code": "FMG-26",
-          "category": "Anonymity, Internet & Online Groups",
-          "language": "French"
-        }
-      ],
-      "removed": [
-        {
-          "title": "Lignes de conduite des AA - Participation des groupes en ligne",
-          "url": "https://aaws.widen.net/content/zfxuqiy4tu/pdf/FMG-26_Participation_of_Online_Groups.pdf",
-          "item_code": "FMG-26",
-          "category": "Anonymity, Internet & Online Groups",
-          "language": "French"
-        }
-      ],
-      "revised": []
     }
   ]
 }
