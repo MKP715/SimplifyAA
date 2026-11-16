@@ -1,17 +1,17 @@
 {
-  "generated_utc": "2026-11-15T13:48:44Z",
-  "generated_date": "November 15, 2026",
+  "generated_utc": "2026-11-16T15:28:07Z",
+  "generated_date": "November 16, 2026",
   "source": "https://www.aa.org",
-  "total_pdfs": 2501,
-  "pages_crawled": 5461,
+  "total_pdfs": 2504,
+  "pages_crawled": 5459,
   "broken_links": 29,
-  "total_bytes": 2333093708,
+  "total_bytes": 2333868275,
   "categories": {
     "Newsletter: Box 4-5-9": 601,
     "Corrections": 237,
     "Big Book, Steps & Traditions": 231,
     "Newsletter: About A.A.": 200,
-    "Flyers & Announcements": 171,
+    "Flyers & Announcements": 174,
     "Regional Forums": 100,
     "Pamphlets & Booklets": 96,
     "Public Information": 92,
@@ -50,7 +50,7 @@
     "Newsletters": 1039,
     "Carrying the Message": 420,
     "Literature": 350,
-    "Forms & Catalogs": 213,
+    "Forms & Catalogs": 216,
     "Conference & Events": 134,
     "Service Structure": 79,
     "For Members": 74,
@@ -61,14 +61,14 @@
     "Archives & History": 26
   },
   "languages": {
-    "English": 936,
-    "Spanish": 796,
-    "French": 769
+    "English": 937,
+    "Spanish": 797,
+    "French": 770
   },
   "topics": {
     "Newsletter": 730,
-    "Flyer / Poster": 316,
-    "Form / Application": 228,
+    "Flyer / Poster": 319,
+    "Form / Application": 229,
     "Report": 173,
     "Twelve Traditions": 136,
     "Workbook / Kit": 115,
@@ -104,9 +104,9 @@
     "Family": 7,
     "Military": 3
   },
-  "translation_groups": 723,
-  "translated_documents": 2142,
-  "added_since_last_run": 0,
+  "translation_groups": 724,
+  "translated_documents": 2145,
+  "added_since_last_run": 3,
   "removed_since_last_run": 0,
   "revised_since_last_run": 0,
   "item_code_families": {
@@ -121,13 +121,13 @@
     "Newsletters & Bulletins": 1
   },
   "http": {
-    "http_ok": 7996,
+    "http_ok": 7997,
     "http_403": 10,
     "http_404": 12,
     "http_fail": 5
   },
   "pdf_hosts_seen": {
-    "www.aa.org": 5600,
+    "www.aa.org": 5598,
     "aaws.widen.net": 2968,
     "www.aagrapevine.org": 6
   },
