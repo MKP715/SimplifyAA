@@ -1,11 +1,11 @@
 {
-  "generated_utc": "2026-11-17T01:51:18Z",
-  "generated_date": "November 17, 2026",
+  "generated_utc": "2026-11-18T00:53:43Z",
+  "generated_date": "November 18, 2026",
   "source": "https://www.aa.org",
   "total_pdfs": 2504,
   "pages_crawled": 5459,
   "broken_links": 29,
-  "total_bytes": 2334056349,
+  "total_bytes": 2336356749,
   "categories": {
     "Newsletter: Box 4-5-9": 601,
     "Corrections": 237,
@@ -106,9 +106,9 @@
   },
   "translation_groups": 724,
   "translated_documents": 2145,
-  "added_since_last_run": 4,
-  "removed_since_last_run": 4,
-  "revised_since_last_run": 0,
+  "added_since_last_run": 0,
+  "removed_since_last_run": 0,
+  "revised_since_last_run": 2,
   "item_code_families": {
     "Forms, Catalogs & Order Blanks": 744,
     "Pamphlets & Booklets": 182,

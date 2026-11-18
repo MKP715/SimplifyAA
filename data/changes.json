@@ -1,74 +1,65 @@
 {
   "latest": {
-    "generated_utc": "2026-11-17T01:51:18Z",
+    "generated_utc": "2026-11-18T00:53:43Z",
     "total": 2504,
     "first_run": false,
-    "added_count": 4,
-    "removed_count": 4,
-    "revised_count": 0,
-    "added": [
+    "added_count": 0,
+    "removed_count": 0,
+    "revised_count": 2,
+    "added": [],
+    "removed": [],
+    "revised": [
       {
-        "title": "03. Introducci\u00f3n (P\u00e1gina 13)",
-        "url": "https://www.aa.org/sites/default/files/2026-11/03_SB-15_FM_Introduction_p_13.pdf",
-        "item_code": "SB-15",
-        "category": "Big Book, Steps & Traditions",
-        "language": "Spanish"
+        "title": "\u00bfEs AA para usted?",
+        "url": "https://aaws.widen.net/content/denapn3pkr/pdf/sp-3_is_aa_for_you_online.pdf",
+        "item_code": "SP-3",
+        "category": "Pamphlets & Booklets",
+        "language": "Spanish",
+        "previous_modified": "2025-11-04",
+        "last_modified": "2026-11-17"
       },
       {
-        "title": "Everything AA App Update",
-        "url": "https://www.aa.org/sites/default/files/literature/EAA_App_December_Release_V2.pdf",
-        "item_code": "",
-        "category": "Flyers & Announcements",
-        "language": "English"
-      },
-      {
-        "title": "Mise \u00e0 jour de l\u2019application Everything AA",
-        "url": "https://www.aa.org/sites/default/files/literature/FR_EAA_App_December_Release_V2.pdf",
-        "item_code": "",
-        "category": "Flyers & Announcements",
-        "language": "French"
-      },
-      {
-        "title": "Novedades de la aplicaci\u00f3n Everything AA",
-        "url": "https://www.aa.org/sites/default/files/literature/SP_EAA_App_December_Release_V2.pdf",
-        "item_code": "",
-        "category": "Flyers & Announcements",
-        "language": "Spanish"
+        "title": "Carrying the Message Behind These Walls",
+        "url": "https://aaws.widen.net/content/sshboqwoxu/pdf/f-108_carrying_the_message_behind_these_walls_online.pdf",
+        "item_code": "F-108",
+        "category": "Forms, Catalogs & Order Blanks",
+        "language": "English",
+        "previous_modified": "2026-11-09",
+        "last_modified": "2026-11-17"
       }
-    ],
-    "removed": [
-      {
-        "title": "03. Introducci\u00f3n (P\u00e1gina 13)",
-        "url": "https://www.aa.org/sites/default/files/2022-02/sp_tt_intro.pdf",
-        "item_code": "",
-        "category": "Big Book, Steps & Traditions",
-        "language": "Spanish"
-      },
-      {
-        "title": "Everything AA App Update",
-        "url": "https://www.aa.org/sites/default/files/literature/EAA_App_December_Release_5.1.pdf",
-        "item_code": "",
-        "category": "Flyers & Announcements",
-        "language": "English"
-      },
-      {
-        "title": "Mise \u00e0 jour de l\u2019application Everything AA",
-        "url": "https://www.aa.org/sites/default/files/literature/FR_EAA_App_December_Release_5.1.pdf",
-        "item_code": "",
-        "category": "Flyers & Announcements",
-        "language": "French"
-      },
-      {
-        "title": "Novedades de la aplicaci\u00f3n Everything AA",
-        "url": "https://www.aa.org/sites/default/files/literature/SP_EAA_App_December_Release_5.1.pdf",
-        "item_code": "",
-        "category": "Flyers & Announcements",
-        "language": "Spanish"
-      }
-    ],
-    "revised": []
+    ]
   },
   "runs": [
+    {
+      "generated_utc": "2026-11-18T00:53:43Z",
+      "total": 2504,
+      "first_run": false,
+      "added_count": 0,
+      "removed_count": 0,
+      "revised_count": 2,
+      "added": [],
+      "removed": [],
+      "revised": [
+        {
+          "title": "\u00bfEs AA para usted?",
+          "url": "https://aaws.widen.net/content/denapn3pkr/pdf/sp-3_is_aa_for_you_online.pdf",
+          "item_code": "SP-3",
+          "category": "Pamphlets & Booklets",
+          "language": "Spanish",
+          "previous_modified": "2025-11-04",
+          "last_modified": "2026-11-17"
+        },
+        {
+          "title": "Carrying the Message Behind These Walls",
+          "url": "https://aaws.widen.net/content/sshboqwoxu/pdf/f-108_carrying_the_message_behind_these_walls_online.pdf",
+          "item_code": "F-108",
+          "category": "Forms, Catalogs & Order Blanks",
+          "language": "English",
+          "previous_modified": "2026-11-09",
+          "last_modified": "2026-11-17"
+        }
+      ]
+    },
     {
       "generated_utc": "2026-11-17T01:51:18Z",
       "total": 2504,
@@ -2494,17 +2485,6 @@
     },
     {
       "generated_utc": "2026-10-25T11:07:48Z",
-      "total": 2811,
-      "first_run": false,
-      "added_count": 0,
-      "removed_count": 0,
-      "revised_count": 0,
-      "added": [],
-      "removed": [],
-      "revised": []
-    },
-    {
-      "generated_utc": "2026-10-24T04:10:06Z",
       "total": 2811,
       "first_run": false,
       "added_count": 0,
