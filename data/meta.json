@@ -1,15 +1,15 @@
 {
-  "generated_utc": "2026-11-19T15:37:57Z",
-  "generated_date": "November 19, 2026",
+  "generated_utc": "2026-11-20T00:33:48Z",
+  "generated_date": "November 20, 2026",
   "source": "https://www.aa.org",
-  "total_pdfs": 2369,
-  "pages_crawled": 5319,
+  "total_pdfs": 2404,
+  "pages_crawled": 5458,
   "broken_links": 29,
-  "total_bytes": 2125340180,
+  "total_bytes": 2131727528,
   "categories": {
     "Newsletter: Box 4-5-9": 502,
+    "Corrections": 237,
     "Big Book, Steps & Traditions": 231,
-    "Corrections": 202,
     "Newsletter: About A.A.": 200,
     "Flyers & Announcements": 174,
     "Regional Forums": 100,
@@ -48,7 +48,7 @@
   },
   "sections": {
     "Newsletters": 940,
-    "Carrying the Message": 385,
+    "Carrying the Message": 420,
     "Literature": 350,
     "Forms & Catalogs": 216,
     "Conference & Events": 133,
@@ -62,8 +62,8 @@
   },
   "languages": {
     "English": 922,
-    "French": 753,
-    "Spanish": 694
+    "French": 770,
+    "Spanish": 712
   },
   "topics": {
     "Newsletter": 630,
@@ -104,13 +104,13 @@
     "Family": 7,
     "Military": 3
   },
-  "translation_groups": 692,
-  "translated_documents": 1980,
-  "added_since_last_run": 0,
-  "removed_since_last_run": 135,
+  "translation_groups": 710,
+  "translated_documents": 2033,
+  "added_since_last_run": 35,
+  "removed_since_last_run": 0,
   "revised_since_last_run": 0,
   "item_code_families": {
-    "Forms, Catalogs & Order Blanks": 709,
+    "Forms, Catalogs & Order Blanks": 744,
     "Pamphlets & Booklets": 182,
     "Service Material": 136,
     "A.A. Guidelines": 63,
@@ -121,13 +121,13 @@
     "Newsletters & Bulletins": 1
   },
   "http": {
-    "http_ok": 7722,
+    "http_ok": 7896,
     "http_403": 10,
     "http_404": 12,
     "http_fail": 5
   },
   "pdf_hosts_seen": {
-    "www.aa.org": 4986,
+    "www.aa.org": 4864,
     "aaws.widen.net": 2968,
     "www.aagrapevine.org": 6
   },

@@ -1,437 +1,519 @@
 {
   "latest": {
-    "generated_utc": "2026-11-19T15:37:57Z",
-    "total": 2369,
+    "generated_utc": "2026-11-20T00:33:48Z",
+    "total": 2404,
     "first_run": false,
-    "added_count": 0,
-    "removed_count": 135,
+    "added_count": 35,
+    "removed_count": 0,
     "revised_count": 0,
-    "added": [],
-    "removed": [
+    "added": [
       {
-        "title": "Box 4-5-9 - February-March 1993",
-        "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_feb-mar93.pdf",
-        "item_code": "",
-        "category": "Newsletter: Box 4-5-9",
+        "title": "Compartiendo desde detr\u00e1s de los muros - Invierno 2008",
+        "url": "https://www.aa.org/sites/default/files/newsletters/sf-97_winter_2008.pdf",
+        "item_code": "SF-97",
+        "category": "Corrections",
         "language": "Spanish"
       },
       {
-        "title": "Box 459 - \"El Grupo Base: El Latido del Coraz\u00f3n de A.A.\" Nuevo Librillo del Grapevine",
-        "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_aug-sept93.pdf",
-        "item_code": "",
-        "category": "Newsletter: Box 4-5-9",
+        "title": "Compartiendo desde detr\u00e1s de los muros - Invierno 2011",
+        "url": "https://www.aa.org/sites/default/files/newsletters/sf-97_winter_2011.pdf",
+        "item_code": "SF-97",
+        "category": "Corrections",
         "language": "Spanish"
       },
       {
-        "title": "Box 459 - \"Espiritu de Sacrificio\" da el tono de la Conferencia de la Conferencia de Servicios Generales",
-        "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_april-may94.pdf",
-        "item_code": "",
-        "category": "Newsletter: Box 4-5-9",
+        "title": "Compartiendo desde detr\u00e1s de los muros - Oto\u00f1o 2008",
+        "url": "https://www.aa.org/sites/default/files/newsletters/sf-97_fall_2008.pdf",
+        "item_code": "SF-97",
+        "category": "Corrections",
         "language": "Spanish"
       },
       {
-        "title": "Box 459 - \"Nueva apariencia\" para la literatura de A.A.",
-        "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_feb-mar89.pdf",
-        "item_code": "",
-        "category": "Newsletter: Box 4-5-9",
+        "title": "Compartiendo desde detr\u00e1s de los muros - Oto\u00f1o 2009",
+        "url": "https://www.aa.org/sites/default/files/newsletters/sf-97_fall_2009.pdf",
+        "item_code": "SF-97",
+        "category": "Corrections",
         "language": "Spanish"
       },
       {
-        "title": "Box 459 - \"Transm\u00edtelo: hacia el Siglo XXI\" una celebraci\u00f3n de 65 a\u00f1os de libertad",
-        "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_aug-sept00.pdf",
-        "item_code": "",
-        "category": "Newsletter: Box 4-5-9",
+        "title": "Compartiendo desde detr\u00e1s de los muros - Oto\u00f1o 2010",
+        "url": "https://www.aa.org/sites/default/files/newsletters/sf-97_fall_2010.pdf",
+        "item_code": "SF-97",
+        "category": "Corrections",
         "language": "Spanish"
       },
       {
-        "title": "Box 459 - 'Reuni\u00f3n de A.A.' en el parque, justo detr\u00e1s del Lua Lounge",
-        "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_feb-mar98.pdf",
-        "item_code": "",
-        "category": "Newsletter: Box 4-5-9",
+        "title": "Compartiendo desde detr\u00e1s de los muros - Oto\u00f1o 2011",
+        "url": "https://www.aa.org/sites/default/files/newsletters/sf-97_fall_2011.pdf",
+        "item_code": "SF-97",
+        "category": "Corrections",
         "language": "Spanish"
       },
       {
-        "title": "Box 459 - 13 Reunion de Servicio Mundial: Volver a lo b\u00e1sico",
-        "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_feb-mar95.pdf",
-        "item_code": "",
-        "category": "Newsletter: Box 4-5-9",
+        "title": "Compartiendo desde detr\u00e1s de los muros - Oto\u00f1o 2012",
+        "url": "https://www.aa.org/sites/default/files/newsletters/sf-97_fall_2012.pdf",
+        "item_code": "SF-97",
+        "category": "Corrections",
         "language": "Spanish"
       },
       {
-        "title": "Box 459 - 15 Reuni\u00f3n de Servicio Mundial",
-        "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_feb-mar99_0.pdf",
-        "item_code": "",
-        "category": "Newsletter: Box 4-5-9",
+        "title": "Compartiendo desde detr\u00e1s de los muros - Primavera 2008",
+        "url": "https://www.aa.org/sites/default/files/newsletters/sf-97_spring_2008.pdf",
+        "item_code": "SF-97",
+        "category": "Corrections",
         "language": "Spanish"
       },
       {
-        "title": "Box 459 - 41 Conferencia de Servicios Generales \u2014 \"El Apadrinamiento: Gratitud en Acci\u00f3n\"",
-        "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_june-july91.pdf",
-        "item_code": "",
-        "category": "Newsletter: Box 4-5-9",
+        "title": "Compartiendo desde detr\u00e1s de los muros - Primavera 2009",
+        "url": "https://www.aa.org/sites/default/files/newsletters/sf-97_spring_2009.pdf",
+        "item_code": "SF-97",
+        "category": "Corrections",
         "language": "Spanish"
       },
       {
-        "title": "Box 459 - 43\u2019 Conferencia de Servicios Generales \"A.A. Hace su Inventario o - la Estructura de la Conferencia de Servicios Generales\"",
-        "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_june-july93.pdf",
-        "item_code": "",
-        "category": "Newsletter: Box 4-5-9",
+        "title": "Compartiendo desde detr\u00e1s de los muros - Primavera 2009",
+        "url": "https://www.aa.org/sites/default/files/newsletters/sf-97_winter_2009.pdf",
+        "item_code": "SF-97",
+        "category": "Corrections",
         "language": "Spanish"
       },
       {
-        "title": "Box 459 - 44a Conferencia de Servicios Generales \"El Esp\u00edritu de Sacrificio\"",
-        "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_june-july94.pdf",
-        "item_code": "",
-        "category": "Newsletter: Box 4-5-9",
+        "title": "Compartiendo desde detr\u00e1s de los muros - Primavera 2010",
+        "url": "https://www.aa.org/sites/default/files/newsletters/sf-97_spring_2010.pdf",
+        "item_code": "SF-97",
+        "category": "Corrections",
         "language": "Spanish"
       },
       {
-        "title": "Box 459 - 48,000 A.A. se re\u00fanen en Seattle",
-        "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_aug-sept90.pdf",
-        "item_code": "",
-        "category": "Newsletter: Box 4-5-9",
+        "title": "Compartiendo desde detr\u00e1s de los muros - Primavera 2011",
+        "url": "https://www.aa.org/sites/default/files/newsletters/sf-97_spring_2011.pdf",
+        "item_code": "SF-97",
+        "category": "Corrections",
         "language": "Spanish"
       },
       {
-        "title": "Box 459 - 50a Conferencia de Servicios Generales \"Confiar nuestro futuro a los principios de A.A.\"",
-        "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_june-july00.pdf",
-        "item_code": "",
-        "category": "Newsletter: Box 4-5-9",
+        "title": "Compartiendo desde detr\u00e1s de los muros - Primavera 2012",
+        "url": "https://www.aa.org/sites/default/files/newsletters/sf-97_spring_2012.pdf",
+        "item_code": "SF-97",
+        "category": "Corrections",
         "language": "Spanish"
       },
       {
-        "title": "Box 459 - 51a Conferencia de Servicios Generales \"Amor y Servicio\"",
-        "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_june-july01.pdf",
-        "item_code": "",
-        "category": "Newsletter: Box 4-5-9",
+        "title": "Compartiendo desde detr\u00e1s de los muros - Verano 2008",
+        "url": "https://www.aa.org/sites/default/files/newsletters/sf-97_summer_2008.pdf",
+        "item_code": "SF-97",
+        "category": "Corrections",
         "language": "Spanish"
       },
       {
-        "title": "Box 459 - 52\u00aa Conferencia de Servicios Generales \u201cCompartiendo los Pasos, las Tradiciones y los Conceptos\u201d",
-        "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_june-july02.pdf",
-        "item_code": "",
-        "category": "Newsletter: Box 4-5-9",
+        "title": "Compartiendo desde detr\u00e1s de los muros - Verano 2009",
+        "url": "https://www.aa.org/sites/default/files/newsletters/sf-97_summer_2009.pdf",
+        "item_code": "SF-97",
+        "category": "Corrections",
         "language": "Spanish"
       },
       {
-        "title": "Box 459 - 56,000 A.A. celebran el 60 aniversario de A.A.",
-        "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_aug-sept95.pdf",
-        "item_code": "",
-        "category": "Newsletter: Box 4-5-9",
+        "title": "Compartiendo desde detr\u00e1s de los muros - Verano 2010",
+        "url": "https://www.aa.org/sites/default/files/newsletters/sf-97_summer_2010.pdf",
+        "item_code": "SF-97",
+        "category": "Corrections",
         "language": "Spanish"
       },
       {
-        "title": "Box 459 - 57 a\u00f1os - d\u00eda a d\u00eda",
-        "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_oct-nov99.pdf",
-        "item_code": "",
-        "category": "Newsletter: Box 4-5-9",
+        "title": "Compartiendo desde detr\u00e1s de los muros - Verano 2011",
+        "url": "https://www.aa.org/sites/default/files/newsletters/sf-97_summer_2011.pdf",
+        "item_code": "SF-97",
+        "category": "Corrections",
         "language": "Spanish"
       },
       {
-        "title": "Box 459 - A.A. Llega a la Edad de la [Computadora]",
-        "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_aug-sept87.pdf",
-        "item_code": "",
-        "category": "Newsletter: Box 4-5-9",
+        "title": "Compartiendo desde detr\u00e1s de los muros - Verano 2012",
+        "url": "https://www.aa.org/sites/default/files/newsletters/sf-97_summer_2012.pdf",
+        "item_code": "SF-97",
+        "category": "Corrections",
         "language": "Spanish"
       },
       {
-        "title": "Box 459 - Comit\u00e9s de custodios preparan el terreno para la Conferencia",
-        "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_april-may89.pdf",
-        "item_code": "",
-        "category": "Newsletter: Box 4-5-9",
-        "language": "Spanish"
+        "title": "Partages Derri\u00e8re les murs - Automne 2008",
+        "url": "https://www.aa.org/sites/default/files/newsletters/ff-97_fall_2008.pdf",
+        "item_code": "FF-97",
+        "category": "Corrections",
+        "language": "French"
       },
       {
-        "title": "Box 459 - Confinada a casa \u2014 pero no sola ni lejos de A.A.",
-        "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_april-may02_1.pdf",
-        "item_code": "",
-        "category": "Newsletter: Box 4-5-9",
-        "language": "Spanish"
+        "title": "Partages Derri\u00e8re les murs - Automne 2009",
+        "url": "https://www.aa.org/sites/default/files/newsletters/ff-97_fall_2009.pdf",
+        "item_code": "FF-97",
+        "category": "Corrections",
+        "language": "French"
       },
       {
-        "title": "Box 459 - Convenci\u00f3n de 1990: Nos Veremos en Seattle",
-        "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_oct-nov86.pdf",
-        "item_code": "",
-        "category": "Newsletter: Box 4-5-9",
-        "language": "Spanish"
+        "title": "Partages Derri\u00e8re les murs - Automne 2010",
+        "url": "https://www.aa.org/sites/default/files/newsletters/ff-97_fall_2010.pdf",
+        "item_code": "FF-97",
+        "category": "Corrections",
+        "language": "French"
       },
       {
-        "title": "Box 459 - Convenci\u00f3n Internacional de 1995 Preguntas m\u00e1s frecuentes",
-        "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_feb-mar94_0.pdf",
-        "item_code": "",
-        "category": "Newsletter: Box 4-5-9",
-        "language": "Spanish"
+        "title": "Partages Derri\u00e8re les murs - Automne 2011",
+        "url": "https://www.aa.org/sites/default/files/newsletters/ff-97_fall_2011.pdf",
+        "item_code": "FF-97",
+        "category": "Corrections",
+        "language": "French"
       },
       {
-        "title": "Box 459 - Cuarta Edici\u00f3n del Libro Grande: reflejo de la diversidad de la Comunidad hoy en d\u00eda",
-        "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_oct-nov01.pdf",
-        "item_code": "",
-        "category": "Newsletter: Box 4-5-9",
-        "language": "Spanish"
+        "title": "Partages Derri\u00e8re les murs - Automne 2012",
+        "url": "https://www.aa.org/sites/default/files/newsletters/ff-97_fall_2012.pdf",
+        "item_code": "FF-97",
+        "category": "Corrections",
+        "language": "French"
       },
       {
-        "title": "Box 459 - C\u00edrculo de sobriedad cada vez m\u00e1s amplios caracterizan la Convenci\u00f3n Nativoamericana",
-        "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_aug-sept98.pdf",
-        "item_code": "",
-        "category": "Newsletter: Box 4-5-9",
-        "language": "Spanish"
+        "title": "Partages Derri\u00e8re les murs - Hiver 2008",
+        "url": "https://www.aa.org/sites/default/files/newsletters/ff-97_winter_2008.pdf",
+        "item_code": "FF-97",
+        "category": "Corrections",
+        "language": "French"
       },
       {
-        "title": "Box 459 - C\u00f3mo se origin\u00f3 el primer distrito de habla hispana de L.A.",
-        "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_aug-sept02.pdf",
-        "item_code": "",
-        "category": "Newsletter: Box 4-5-9",
-        "language": "Spanish"
+        "title": "Partages Derri\u00e8re les murs - Hiver 2009",
+        "url": "https://www.aa.org/sites/default/files/newsletters/ff-97_winter_2009.pdf",
+        "item_code": "FF-97",
+        "category": "Corrections",
+        "language": "French"
       },
       {
-        "title": "Box 459 - Edici\u00f3n Navide\u00f1a 1988",
-        "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_holiday88.pdf",
-        "item_code": "",
-        "category": "Newsletter: Box 4-5-9",
-        "language": "Spanish"
+        "title": "Partages Derri\u00e8re les murs - Hiver 2011",
+        "url": "https://www.aa.org/sites/default/files/newsletters/ff-97_winter_2011.pdf",
+        "item_code": "FF-97",
+        "category": "Corrections",
+        "language": "French"
       },
       {
-        "title": "Box 459 - Edici\u00f3n Navide\u00f1a 1989",
-        "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_holiday89.pdf",
-        "item_code": "",
-        "category": "Newsletter: Box 4-5-9",
-        "language": "Spanish"
+        "title": "Partages Derri\u00e8re les murs - Printemps 2008",
+        "url": "https://www.aa.org/sites/default/files/newsletters/ff-97_spring_2008.pdf",
+        "item_code": "FF-97",
+        "category": "Corrections",
+        "language": "French"
       },
       {
-        "title": "Box 459 - Edici\u00f3n Navide\u00f1a 1991",
-        "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_holiday91.pdf",
-        "item_code": "",
-        "category": "Newsletter: Box 4-5-9",
-        "language": "Spanish"
+        "title": "Partages Derri\u00e8re les murs - Printemps 2009",
+        "url": "https://www.aa.org/sites/default/files/newsletters/ff-97_spring_2009.pdf",
+        "item_code": "FF-97",
+        "category": "Corrections",
+        "language": "French"
       },
       {
-        "title": "Box 459 - Edici\u00f3n Navide\u00f1a 1992",
-        "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_holiday92.pdf",
-        "item_code": "",
-        "category": "Newsletter: Box 4-5-9",
-        "language": "Spanish"
+        "title": "Partages Derri\u00e8re les murs - Printemps 2010",
+        "url": "https://www.aa.org/sites/default/files/newsletters/ff-97_spring_2010.pdf",
+        "item_code": "FF-97",
+        "category": "Corrections",
+        "language": "French"
       },
       {
-        "title": "Box 459 - Edici\u00f3n Navide\u00f1a 1993",
-        "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_holiday93.pdf",
-        "item_code": "",
-        "category": "Newsletter: Box 4-5-9",
-        "language": "Spanish"
+        "title": "Partages Derri\u00e8re les murs - Printemps 2011",
+        "url": "https://www.aa.org/sites/default/files/newsletters/ff-97_spring_2011.pdf",
+        "item_code": "FF-97",
+        "category": "Corrections",
+        "language": "French"
       },
       {
-        "title": "Box 459 - Edici\u00f3n Navide\u00f1a 1994",
-        "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_holiday94.pdf",
-        "item_code": "",
-        "category": "Newsletter: Box 4-5-9",
-        "language": "Spanish"
+        "title": "Partages Derri\u00e8re les murs - Printemps 2012",
+        "url": "https://www.aa.org/sites/default/files/newsletters/ff-97_spring_2012.pdf",
+        "item_code": "FF-97",
+        "category": "Corrections",
+        "language": "French"
       },
       {
-        "title": "Box 459 - Edici\u00f3n Navide\u00f1a 1995",
-        "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_holiday95.pdf",
-        "item_code": "",
-        "category": "Newsletter: Box 4-5-9",
-        "language": "Spanish"
+        "title": "Partages Derri\u00e8re les murs - \u00c9t\u00e9 2008",
+        "url": "https://www.aa.org/sites/default/files/newsletters/ff-97_summer_2008.pdf",
+        "item_code": "FF-97",
+        "category": "Corrections",
+        "language": "French"
       },
       {
-        "title": "Box 459 - Edici\u00f3n Navide\u00f1a 1996",
-        "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_holiday96.pdf",
-        "item_code": "",
-        "category": "Newsletter: Box 4-5-9",
-        "language": "Spanish"
+        "title": "Partages Derri\u00e8re les murs - \u00c9t\u00e9 2009",
+        "url": "https://www.aa.org/sites/default/files/newsletters/ff-97_summer_2009.pdf",
+        "item_code": "FF-97",
+        "category": "Corrections",
+        "language": "French"
       },
       {
-        "title": "Box 459 - Edici\u00f3n Navide\u00f1a 1998",
-        "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_holiday98.pdf",
-        "item_code": "",
-        "category": "Newsletter: Box 4-5-9",
-        "language": "Spanish"
+        "title": "Partages Derri\u00e8re les murs - \u00c9t\u00e9 2011",
+        "url": "https://www.aa.org/sites/default/files/newsletters/ff-97_summer_2011.pdf",
+        "item_code": "FF-97",
+        "category": "Corrections",
+        "language": "French"
       },
       {
-        "title": "Box 459 - Edici\u00f3n Navide\u00f1a 1999",
-        "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_holiday99.pdf",
-        "item_code": "",
-        "category": "Newsletter: Box 4-5-9",
-        "language": "Spanish"
-      },
-      {
-        "title": "Box 459 - Edici\u00f3n Navide\u00f1a 2001",
-        "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_holiday01.pdf",
-        "item_code": "",
-        "category": "Newsletter: Box 4-5-9",
-        "language": "Spanish"
-      },
-      {
-        "title": "Box 459 - Edici\u00f3n Navide\u00f1a 2002",
-        "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_holiday02.pdf",
-        "item_code": "",
-        "category": "Newsletter: Box 4-5-9",
-        "language": "Spanish"
-      },
-      {
-        "title": "Box 459 - Edici\u00f3n Navide\u00f1a 2003",
-        "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_holiday03.pdf",
-        "item_code": "",
-        "category": "Newsletter: Box 4-5-9",
-        "language": "Spanish"
-      },
-      {
-        "title": "Box 459 - Edici\u00f3n Navide\u00f1a 2004",
-        "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_holiday04.pdf",
-        "item_code": "",
-        "category": "Newsletter: Box 4-5-9",
-        "language": "Spanish"
-      },
-      {
-        "title": "Box 459 - El anonimato-la humildad en acci\u00f3n",
-        "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_aug-sept96.pdf",
-        "item_code": "",
-        "category": "Newsletter: Box 4-5-9",
-        "language": "Spanish"
-      },
-      {
-        "title": "Box 459 - El apadrinamiento es una calle de doble direcci\u00f3n",
-        "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_april-may98.pdf",
-        "item_code": "",
-        "category": "Newsletter: Box 4-5-9",
-        "language": "Spanish"
-      },
-      {
-        "title": "Box 459 - El grupo base: el coraz\u00f3n de A.A.",
-        "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_feb-mar90.pdf",
-        "item_code": "",
-        "category": "Newsletter: Box 4-5-9",
-        "language": "Spanish"
-      },
-      {
-        "title": "Box 459 - El Libro Grande cumple 50 a\u00f1os como \"padrino\" m\u00c6s eficaz de A.A.",
-        "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_aug-sept89.pdf",
-        "item_code": "",
-        "category": "Newsletter: Box 4-5-9",
-        "language": "Spanish"
-      },
-      {
-        "title": "Box 459 - El mensaje de A.A. de recuperaci\u00f3n sigue difundi\u00e9ndose por todo el mundo",
-        "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_oct-nov03.pdf",
-        "item_code": "",
-        "category": "Newsletter: Box 4-5-9",
-        "language": "Spanish"
-      },
-      {
-        "title": "Box 459 - El mensaje de A.A. sin fronteras: la Reuni\u00f3n de Servicio Mundial",
-        "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_feb-mar03.pdf",
-        "item_code": "",
-        "category": "Newsletter: Box 4-5-9",
-        "language": "Spanish"
-      },
-      {
-        "title": "Box 459 - El Mes de Gratitud puede durar todo el a\u00f1o",
-        "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_oct-nov96.pdf",
-        "item_code": "",
-        "category": "Newsletter: Box 4-5-9",
-        "language": "Spanish"
-      },
-      {
-        "title": "Box 459 - El Papel de la Literatura de A.A.: A la hora de la verdad, reinventen lo b\u00e1sico",
-        "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_aug-sept94.pdf",
-        "item_code": "",
-        "category": "Newsletter: Box 4-5-9",
-        "language": "Spanish"
-      },
-      {
-        "title": "Box 459 - El trabajo de la Conferencia de Servicios Generales se hace durante todo el a\u00f1o",
-        "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_april-may97.pdf",
-        "item_code": "",
-        "category": "Newsletter: Box 4-5-9",
-        "language": "Spanish"
-      },
-      {
-        "title": "Box 459 - El trabajo de la Conferencia se hace durante todo el a\u00f1o",
-        "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_april-may92.pdf",
-        "item_code": "",
-        "category": "Newsletter: Box 4-5-9",
-        "language": "Spanish"
-      },
-      {
-        "title": "Box 459 - En A.A. - Noviembre es el Mes de Gratitud",
-        "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_oct-nov94.pdf",
-        "item_code": "",
-        "category": "Newsletter: Box 4-5-9",
-        "language": "Spanish"
-      },
-      {
-        "title": "Box 459 - En Tokyo, un alcoh\u00f3lico ahora puede hablar con otro en espa\u00f1ol",
-        "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_feb-mar02.pdf",
-        "item_code": "",
-        "category": "Newsletter: Box 4-5-9",
-        "language": "Spanish"
-      },
-      {
-        "title": "Box 459 - Encuesta de 1986 Confirma lo Previsto",
-        "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_oct-nov87.pdf",
-        "item_code": "",
-        "category": "Newsletter: Box 4-5-9",
-        "language": "Spanish"
-      },
-      {
-        "title": "Box 459 - Es hora de hacer la rotaci\u00f3n en la G.S.O.",
-        "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_aug-sept99.pdf",
-        "item_code": "",
-        "category": "Newsletter: Box 4-5-9",
-        "language": "Spanish"
-      },
-      {
-        "title": "Box 459 - Formulario de encuesta para 1992 cambia de apariencia",
-        "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_feb-mar92.pdf",
-        "item_code": "",
-        "category": "Newsletter: Box 4-5-9",
-        "language": "Spanish"
-      },
-      {
-        "title": "Box 459 - Gratitud - desde las Rep\u00fablicas Rusas",
-        "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_oct-nov95.pdf",
-        "item_code": "",
-        "category": "Newsletter: Box 4-5-9",
-        "language": "Spanish"
-      },
-      {
-        "title": "Box 459 - Hacer A.A. accesible para el alcoh\u00f3lico con necesidades especiales",
-        "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_oct-nov91.pdf",
-        "item_code": "",
-        "category": "Newsletter: Box 4-5-9",
-        "language": "Spanish"
-      },
-      {
-        "title": "Box 459 - Informa a tu grupo acerca del secreto mejor guardado de A.A. \u2014 Box 4-5-9",
-        "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_oct-nov02.pdf",
-        "item_code": "",
-        "category": "Newsletter: Box 4-5-9",
-        "language": "Spanish"
-      },
-      {
-        "title": "Box 459 - La 37a Conferencia de Servicios Generales - \"La S\u00e9ptima Tradici\u00f3n - Un Punto Crucial\"",
-        "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_june-july87.pdf",
-        "item_code": "",
-        "category": "Newsletter: Box 4-5-9",
-        "language": "Spanish"
-      },
-      {
-        "title": "Box 459 - La 38a Conferencia - \"Unicidad de prop\u00f3sito\"",
-        "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_april-may88.pdf",
-        "item_code": "",
-        "category": "Newsletter: Box 4-5-9",
-        "language": "Spanish"
-      },
-      {
-        "title": "Box 459 - La 38a Conferencia de Servicios Generales",
-        "url": "https://www.aa.org/sites/default/files/newsletters/sp_box459_june-july88.pdf",
-        "item_code": "",
-        "category": "Newsletter: Box 4-5-9",
-        "language": "Spanish"
+        "title": "Partages Derri\u00e8re les murs - \u00c9t\u00e9 2012",
+        "url": "https://www.aa.org/sites/default/files/newsletters/ff-97_summer_2012.pdf",
+        "item_code": "FF-97",
+        "category": "Corrections",
+        "language": "French"
       }
     ],
+    "removed": [],
     "revised": []
   },
   "runs": [
+    {
+      "generated_utc": "2026-11-20T00:33:48Z",
+      "total": 2404,
+      "first_run": false,
+      "added_count": 35,
+      "removed_count": 0,
+      "revised_count": 0,
+      "added": [
+        {
+          "title": "Compartiendo desde detr\u00e1s de los muros - Invierno 2008",
+          "url": "https://www.aa.org/sites/default/files/newsletters/sf-97_winter_2008.pdf",
+          "item_code": "SF-97",
+          "category": "Corrections",
+          "language": "Spanish"
+        },
+        {
+          "title": "Compartiendo desde detr\u00e1s de los muros - Invierno 2011",
+          "url": "https://www.aa.org/sites/default/files/newsletters/sf-97_winter_2011.pdf",
+          "item_code": "SF-97",
+          "category": "Corrections",
+          "language": "Spanish"
+        },
+        {
+          "title": "Compartiendo desde detr\u00e1s de los muros - Oto\u00f1o 2008",
+          "url": "https://www.aa.org/sites/default/files/newsletters/sf-97_fall_2008.pdf",
+          "item_code": "SF-97",
+          "category": "Corrections",
+          "language": "Spanish"
+        },
+        {
+          "title": "Compartiendo desde detr\u00e1s de los muros - Oto\u00f1o 2009",
+          "url": "https://www.aa.org/sites/default/files/newsletters/sf-97_fall_2009.pdf",
+          "item_code": "SF-97",
+          "category": "Corrections",
+          "language": "Spanish"
+        },
+        {
+          "title": "Compartiendo desde detr\u00e1s de los muros - Oto\u00f1o 2010",
+          "url": "https://www.aa.org/sites/default/files/newsletters/sf-97_fall_2010.pdf",
+          "item_code": "SF-97",
+          "category": "Corrections",
+          "language": "Spanish"
+        },
+        {
+          "title": "Compartiendo desde detr\u00e1s de los muros - Oto\u00f1o 2011",
+          "url": "https://www.aa.org/sites/default/files/newsletters/sf-97_fall_2011.pdf",
+          "item_code": "SF-97",
+          "category": "Corrections",
+          "language": "Spanish"
+        },
+        {
+          "title": "Compartiendo desde detr\u00e1s de los muros - Oto\u00f1o 2012",
+          "url": "https://www.aa.org/sites/default/files/newsletters/sf-97_fall_2012.pdf",
+          "item_code": "SF-97",
+          "category": "Corrections",
+          "language": "Spanish"
+        },
+        {
+          "title": "Compartiendo desde detr\u00e1s de los muros - Primavera 2008",
+          "url": "https://www.aa.org/sites/default/files/newsletters/sf-97_spring_2008.pdf",
+          "item_code": "SF-97",
+          "category": "Corrections",
+          "language": "Spanish"
+        },
+        {
+          "title": "Compartiendo desde detr\u00e1s de los muros - Primavera 2009",
+          "url": "https://www.aa.org/sites/default/files/newsletters/sf-97_spring_2009.pdf",
+          "item_code": "SF-97",
+          "category": "Corrections",
+          "language": "Spanish"
+        },
+        {
+          "title": "Compartiendo desde detr\u00e1s de los muros - Primavera 2009",
+          "url": "https://www.aa.org/sites/default/files/newsletters/sf-97_winter_2009.pdf",
+          "item_code": "SF-97",
+          "category": "Corrections",
+          "language": "Spanish"
+        },
+        {
+          "title": "Compartiendo desde detr\u00e1s de los muros - Primavera 2010",
+          "url": "https://www.aa.org/sites/default/files/newsletters/sf-97_spring_2010.pdf",
+          "item_code": "SF-97",
+          "category": "Corrections",
+          "language": "Spanish"
+        },
+        {
+          "title": "Compartiendo desde detr\u00e1s de los muros - Primavera 2011",
+          "url": "https://www.aa.org/sites/default/files/newsletters/sf-97_spring_2011.pdf",
+          "item_code": "SF-97",
+          "category": "Corrections",
+          "language": "Spanish"
+        },
+        {
+          "title": "Compartiendo desde detr\u00e1s de los muros - Primavera 2012",
+          "url": "https://www.aa.org/sites/default/files/newsletters/sf-97_spring_2012.pdf",
+          "item_code": "SF-97",
+          "category": "Corrections",
+          "language": "Spanish"
+        },
+        {
+          "title": "Compartiendo desde detr\u00e1s de los muros - Verano 2008",
+          "url": "https://www.aa.org/sites/default/files/newsletters/sf-97_summer_2008.pdf",
+          "item_code": "SF-97",
+          "category": "Corrections",
+          "language": "Spanish"
+        },
+        {
+          "title": "Compartiendo desde detr\u00e1s de los muros - Verano 2009",
+          "url": "https://www.aa.org/sites/default/files/newsletters/sf-97_summer_2009.pdf",
+          "item_code": "SF-97",
+          "category": "Corrections",
+          "language": "Spanish"
+        },
+        {
+          "title": "Compartiendo desde detr\u00e1s de los muros - Verano 2010",
+          "url": "https://www.aa.org/sites/default/files/newsletters/sf-97_summer_2010.pdf",
+          "item_code": "SF-97",
+          "category": "Corrections",
+          "language": "Spanish"
+        },
+        {
+          "title": "Compartiendo desde detr\u00e1s de los muros - Verano 2011",
+          "url": "https://www.aa.org/sites/default/files/newsletters/sf-97_summer_2011.pdf",
+          "item_code": "SF-97",
+          "category": "Corrections",
+          "language": "Spanish"
+        },
+        {
+          "title": "Compartiendo desde detr\u00e1s de los muros - Verano 2012",
+          "url": "https://www.aa.org/sites/default/files/newsletters/sf-97_summer_2012.pdf",
+          "item_code": "SF-97",
+          "category": "Corrections",
+          "language": "Spanish"
+        },
+        {
+          "title": "Partages Derri\u00e8re les murs - Automne 2008",
+          "url": "https://www.aa.org/sites/default/files/newsletters/ff-97_fall_2008.pdf",
+          "item_code": "FF-97",
+          "category": "Corrections",
+          "language": "French"
+        },
+        {
+          "title": "Partages Derri\u00e8re les murs - Automne 2009",
+          "url": "https://www.aa.org/sites/default/files/newsletters/ff-97_fall_2009.pdf",
+          "item_code": "FF-97",
+          "category": "Corrections",
+          "language": "French"
+        },
+        {
+          "title": "Partages Derri\u00e8re les murs - Automne 2010",
+          "url": "https://www.aa.org/sites/default/files/newsletters/ff-97_fall_2010.pdf",
+          "item_code": "FF-97",
+          "category": "Corrections",
+          "language": "French"
+        },
+        {
+          "title": "Partages Derri\u00e8re les murs - Automne 2011",
+          "url": "https://www.aa.org/sites/default/files/newsletters/ff-97_fall_2011.pdf",
+          "item_code": "FF-97",
+          "category": "Corrections",
+          "language": "French"
+        },
+        {
+          "title": "Partages Derri\u00e8re les murs - Automne 2012",
+          "url": "https://www.aa.org/sites/default/files/newsletters/ff-97_fall_2012.pdf",
+          "item_code": "FF-97",
+          "category": "Corrections",
+          "language": "French"
+        },
+        {
+          "title": "Partages Derri\u00e8re les murs - Hiver 2008",
+          "url": "https://www.aa.org/sites/default/files/newsletters/ff-97_winter_2008.pdf",
+          "item_code": "FF-97",
+          "category": "Corrections",
+          "language": "French"
+        },
+        {
+          "title": "Partages Derri\u00e8re les murs - Hiver 2009",
+          "url": "https://www.aa.org/sites/default/files/newsletters/ff-97_winter_2009.pdf",
+          "item_code": "FF-97",
+          "category": "Corrections",
+          "language": "French"
+        },
+        {
+          "title": "Partages Derri\u00e8re les murs - Hiver 2011",
+          "url": "https://www.aa.org/sites/default/files/newsletters/ff-97_winter_2011.pdf",
+          "item_code": "FF-97",
+          "category": "Corrections",
+          "language": "French"
+        },
+        {
+          "title": "Partages Derri\u00e8re les murs - Printemps 2008",
+          "url": "https://www.aa.org/sites/default/files/newsletters/ff-97_spring_2008.pdf",
+          "item_code": "FF-97",
+          "category": "Corrections",
+          "language": "French"
+        },
+        {
+          "title": "Partages Derri\u00e8re les murs - Printemps 2009",
+          "url": "https://www.aa.org/sites/default/files/newsletters/ff-97_spring_2009.pdf",
+          "item_code": "FF-97",
+          "category": "Corrections",
+          "language": "French"
+        },
+        {
+          "title": "Partages Derri\u00e8re les murs - Printemps 2010",
+          "url": "https://www.aa.org/sites/default/files/newsletters/ff-97_spring_2010.pdf",
+          "item_code": "FF-97",
+          "category": "Corrections",
+          "language": "French"
+        },
+        {
+          "title": "Partages Derri\u00e8re les murs - Printemps 2011",
+          "url": "https://www.aa.org/sites/default/files/newsletters/ff-97_spring_2011.pdf",
+          "item_code": "FF-97",
+          "category": "Corrections",
+          "language": "French"
+        },
+        {
+          "title": "Partages Derri\u00e8re les murs - Printemps 2012",
+          "url": "https://www.aa.org/sites/default/files/newsletters/ff-97_spring_2012.pdf",
+          "item_code": "FF-97",
+          "category": "Corrections",
+          "language": "French"
+        },
+        {
+          "title": "Partages Derri\u00e8re les murs - \u00c9t\u00e9 2008",
+          "url": "https://www.aa.org/sites/default/files/newsletters/ff-97_summer_2008.pdf",
+          "item_code": "FF-97",
+          "category": "Corrections",
+          "language": "French"
+        },
+        {
+          "title": "Partages Derri\u00e8re les murs - \u00c9t\u00e9 2009",
+          "url": "https://www.aa.org/sites/default/files/newsletters/ff-97_summer_2009.pdf",
+          "item_code": "FF-97",
+          "category": "Corrections",
+          "language": "French"
+        },
+        {
+          "title": "Partages Derri\u00e8re les murs - \u00c9t\u00e9 2011",
+          "url": "https://www.aa.org/sites/default/files/newsletters/ff-97_summer_2011.pdf",
+          "item_code": "FF-97",
+          "category": "Corrections",
+          "language": "French"
+        },
+        {
+          "title": "Partages Derri\u00e8re les murs - \u00c9t\u00e9 2012",
+          "url": "https://www.aa.org/sites/default/files/newsletters/ff-97_summer_2012.pdf",
+          "item_code": "FF-97",
+          "category": "Corrections",
+          "language": "French"
+        }
+      ],
+      "removed": [],
+      "revised": []
+    },
     {
       "generated_utc": "2026-11-19T15:37:57Z",
       "total": 2369,
@@ -3305,17 +3387,6 @@
           "last_modified": "2026-10-26"
         }
       ]
-    },
-    {
-      "generated_utc": "2026-10-26T12:42:59Z",
-      "total": 2811,
-      "first_run": false,
-      "added_count": 0,
-      "removed_count": 0,
-      "revised_count": 0,
-      "added": [],
-      "removed": [],
-      "revised": []
     }
   ]
 }
