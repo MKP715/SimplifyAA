@@ -1,35 +1,633 @@
 {
   "latest": {
-    "generated_utc": "2026-11-24T09:26:13Z",
-    "total": 2388,
+    "generated_utc": "2026-11-24T22:17:19Z",
+    "total": 2391,
     "first_run": false,
-    "added_count": 0,
-    "removed_count": 0,
-    "revised_count": 2,
-    "added": [],
-    "removed": [],
-    "revised": [
+    "added_count": 21,
+    "removed_count": 18,
+    "revised_count": 3,
+    "added": [
       {
-        "title": "Manuel des Archives",
-        "url": "https://aaws.widen.net/content/lpzuzunskm/pdf/fm-44i_archives_workbook_online.pdf",
-        "item_code": "FM-44I",
-        "category": "Archives & A.A. History",
-        "language": "French",
-        "previous_modified": "2026-03-10",
-        "last_modified": "2026-11-23"
+        "title": "Sharing From Behind the Walls - Fall 2008",
+        "url": "https://www.aa.org/sites/default/files/newsletters/f-97_fall_2008.pdf",
+        "item_code": "F-97",
+        "category": "Corrections",
+        "language": "English"
       },
       {
-        "title": "Le Tr\u00e9sorier du Groupe AA",
-        "url": "https://aaws.widen.net/content/p5qhi358py/pdf/ff-96_the_aa_group_treasurer_online.pdf",
-        "item_code": "FF-96",
-        "category": "Finance & Self-Support",
-        "language": "French",
-        "previous_modified": "2026-09-28",
-        "last_modified": "2026-11-23"
+        "title": "Sharing From Behind the Walls - Fall 2009",
+        "url": "https://www.aa.org/sites/default/files/newsletters/f-97_fall_2009.pdf",
+        "item_code": "F-97",
+        "category": "Corrections",
+        "language": "English"
+      },
+      {
+        "title": "Sharing From Behind the Walls - Fall 2010",
+        "url": "https://www.aa.org/sites/default/files/newsletters/f-97_fall_2010.pdf",
+        "item_code": "F-97",
+        "category": "Corrections",
+        "language": "English"
+      },
+      {
+        "title": "Sharing From Behind the Walls - Fall 2011",
+        "url": "https://www.aa.org/sites/default/files/newsletters/f-97_fall_2011.pdf",
+        "item_code": "F-97",
+        "category": "Corrections",
+        "language": "English"
+      },
+      {
+        "title": "Sharing From Behind the Walls - Fall 2012",
+        "url": "https://www.aa.org/sites/default/files/newsletters/f-97_fall_2012.pdf",
+        "item_code": "F-97",
+        "category": "Corrections",
+        "language": "English"
+      },
+      {
+        "title": "Sharing From Behind the Walls - Spring 2008",
+        "url": "https://www.aa.org/sites/default/files/newsletters/f-97_spring_2008.pdf",
+        "item_code": "F-97",
+        "category": "Corrections",
+        "language": "English"
+      },
+      {
+        "title": "Sharing From Behind the Walls - Spring 2009",
+        "url": "https://www.aa.org/sites/default/files/newsletters/f-97_spring_2009.pdf",
+        "item_code": "F-97",
+        "category": "Corrections",
+        "language": "English"
+      },
+      {
+        "title": "Sharing From Behind the Walls - Spring 2010",
+        "url": "https://www.aa.org/sites/default/files/newsletters/f-97_spring_2010.pdf",
+        "item_code": "F-97",
+        "category": "Corrections",
+        "language": "English"
+      },
+      {
+        "title": "Sharing From Behind the Walls - Spring 2011",
+        "url": "https://www.aa.org/sites/default/files/newsletters/f-97_spring_2011.pdf",
+        "item_code": "F-97",
+        "category": "Corrections",
+        "language": "English"
+      },
+      {
+        "title": "Sharing From Behind the Walls - Spring 2012",
+        "url": "https://www.aa.org/sites/default/files/newsletters/f-97_spring_2012.pdf",
+        "item_code": "F-97",
+        "category": "Corrections",
+        "language": "English"
+      },
+      {
+        "title": "Sharing From Behind the Walls - Summer 2008",
+        "url": "https://www.aa.org/sites/default/files/newsletters/f-97_summer_2008.pdf",
+        "item_code": "F-97",
+        "category": "Corrections",
+        "language": "English"
+      },
+      {
+        "title": "Sharing From Behind the Walls - Summer 2009",
+        "url": "https://www.aa.org/sites/default/files/newsletters/f-97_summer_2009.pdf",
+        "item_code": "F-97",
+        "category": "Corrections",
+        "language": "English"
+      },
+      {
+        "title": "Sharing From Behind the Walls - Summer 2011",
+        "url": "https://www.aa.org/sites/default/files/newsletters/f-97_summer_2011.pdf",
+        "item_code": "F-97",
+        "category": "Corrections",
+        "language": "English"
+      },
+      {
+        "title": "Sharing From Behind the Walls - Summer 2012",
+        "url": "https://www.aa.org/sites/default/files/newsletters/f-97_summer_2012.pdf",
+        "item_code": "F-97",
+        "category": "Corrections",
+        "language": "English"
+      },
+      {
+        "title": "Sharing From Behind the Walls - Winter 2008",
+        "url": "https://www.aa.org/sites/default/files/newsletters/f-97_winter_2008.pdf",
+        "item_code": "F-97",
+        "category": "Corrections",
+        "language": "English"
+      },
+      {
+        "title": "Sharing From Behind the Walls - Winter 2009",
+        "url": "https://www.aa.org/sites/default/files/newsletters/f-97_winter_2009.pdf",
+        "item_code": "F-97",
+        "category": "Corrections",
+        "language": "English"
+      },
+      {
+        "title": "Sharing From Behind the Walls - Winter 2011",
+        "url": "https://www.aa.org/sites/default/files/newsletters/f-97_winter_2011.pdf",
+        "item_code": "F-97",
+        "category": "Corrections",
+        "language": "English"
+      },
+      {
+        "title": "Les AA pour l\u2019alcoolique plus \u00e2g\u00e9",
+        "url": "https://aaws.widen.net/content/2ltxxi9hy4/pdf/fb-28_aa_older_alcoholic_large_online.pdf",
+        "item_code": "FB-28",
+        "category": "Members & Outreach",
+        "language": "French"
+      },
+      {
+        "title": "2026 Forum Territorial de l\u2019est du Canada",
+        "url": "https://www.aa.org/sites/default/files/literature/FR_2026-EasternCanRF-ForumReport-FINAL.pdf",
+        "item_code": "",
+        "category": "Regional Forums",
+        "language": "French"
+      },
+      {
+        "title": "Regional Forum Report 2026 Eastern Canada",
+        "url": "https://www.aa.org/sites/default/files/literature/EN-2026-EasternCanada-Final-ForumReport-FINAL-1.pdf",
+        "item_code": "",
+        "category": "Regional Forums",
+        "language": "English"
+      },
+      {
+        "title": "Regional Forum Report 2026 Western Canada",
+        "url": "https://www.aa.org/sites/default/files/literature/2026-Western-Canada-Regional-Forum-Final-Report.pdf",
+        "item_code": "",
+        "category": "Regional Forums",
+        "language": "English"
+      }
+    ],
+    "removed": [
+      {
+        "title": "Markings - Excerpts From \"The Archives\" At The International Convention, Seattle - Part 2",
+        "url": "https://www.aa.org/sites/default/files/newsletters/marking_1991_1.pdf",
+        "item_code": "",
+        "category": "Conventions & Events",
+        "language": "English"
+      },
+      {
+        "title": "Partages Derri\u00e8re les murs - Automne 2008",
+        "url": "https://www.aa.org/sites/default/files/newsletters/ff-97_fall_2008.pdf",
+        "item_code": "FF-97",
+        "category": "Corrections",
+        "language": "French"
+      },
+      {
+        "title": "Partages Derri\u00e8re les murs - Automne 2009",
+        "url": "https://www.aa.org/sites/default/files/newsletters/ff-97_fall_2009.pdf",
+        "item_code": "FF-97",
+        "category": "Corrections",
+        "language": "French"
+      },
+      {
+        "title": "Partages Derri\u00e8re les murs - Automne 2010",
+        "url": "https://www.aa.org/sites/default/files/newsletters/ff-97_fall_2010.pdf",
+        "item_code": "FF-97",
+        "category": "Corrections",
+        "language": "French"
+      },
+      {
+        "title": "Partages Derri\u00e8re les murs - Automne 2011",
+        "url": "https://www.aa.org/sites/default/files/newsletters/ff-97_fall_2011.pdf",
+        "item_code": "FF-97",
+        "category": "Corrections",
+        "language": "French"
+      },
+      {
+        "title": "Partages Derri\u00e8re les murs - Automne 2012",
+        "url": "https://www.aa.org/sites/default/files/newsletters/ff-97_fall_2012.pdf",
+        "item_code": "FF-97",
+        "category": "Corrections",
+        "language": "French"
+      },
+      {
+        "title": "Partages Derri\u00e8re les murs - Hiver 2008",
+        "url": "https://www.aa.org/sites/default/files/newsletters/ff-97_winter_2008.pdf",
+        "item_code": "FF-97",
+        "category": "Corrections",
+        "language": "French"
+      },
+      {
+        "title": "Partages Derri\u00e8re les murs - Hiver 2009",
+        "url": "https://www.aa.org/sites/default/files/newsletters/ff-97_winter_2009.pdf",
+        "item_code": "FF-97",
+        "category": "Corrections",
+        "language": "French"
+      },
+      {
+        "title": "Partages Derri\u00e8re les murs - Hiver 2011",
+        "url": "https://www.aa.org/sites/default/files/newsletters/ff-97_winter_2011.pdf",
+        "item_code": "FF-97",
+        "category": "Corrections",
+        "language": "French"
+      },
+      {
+        "title": "Partages Derri\u00e8re les murs - Printemps 2008",
+        "url": "https://www.aa.org/sites/default/files/newsletters/ff-97_spring_2008.pdf",
+        "item_code": "FF-97",
+        "category": "Corrections",
+        "language": "French"
+      },
+      {
+        "title": "Partages Derri\u00e8re les murs - Printemps 2009",
+        "url": "https://www.aa.org/sites/default/files/newsletters/ff-97_spring_2009.pdf",
+        "item_code": "FF-97",
+        "category": "Corrections",
+        "language": "French"
+      },
+      {
+        "title": "Partages Derri\u00e8re les murs - Printemps 2010",
+        "url": "https://www.aa.org/sites/default/files/newsletters/ff-97_spring_2010.pdf",
+        "item_code": "FF-97",
+        "category": "Corrections",
+        "language": "French"
+      },
+      {
+        "title": "Partages Derri\u00e8re les murs - Printemps 2011",
+        "url": "https://www.aa.org/sites/default/files/newsletters/ff-97_spring_2011.pdf",
+        "item_code": "FF-97",
+        "category": "Corrections",
+        "language": "French"
+      },
+      {
+        "title": "Partages Derri\u00e8re les murs - Printemps 2012",
+        "url": "https://www.aa.org/sites/default/files/newsletters/ff-97_spring_2012.pdf",
+        "item_code": "FF-97",
+        "category": "Corrections",
+        "language": "French"
+      },
+      {
+        "title": "Partages Derri\u00e8re les murs - \u00c9t\u00e9 2008",
+        "url": "https://www.aa.org/sites/default/files/newsletters/ff-97_summer_2008.pdf",
+        "item_code": "FF-97",
+        "category": "Corrections",
+        "language": "French"
+      },
+      {
+        "title": "Partages Derri\u00e8re les murs - \u00c9t\u00e9 2009",
+        "url": "https://www.aa.org/sites/default/files/newsletters/ff-97_summer_2009.pdf",
+        "item_code": "FF-97",
+        "category": "Corrections",
+        "language": "French"
+      },
+      {
+        "title": "Partages Derri\u00e8re les murs - \u00c9t\u00e9 2011",
+        "url": "https://www.aa.org/sites/default/files/newsletters/ff-97_summer_2011.pdf",
+        "item_code": "FF-97",
+        "category": "Corrections",
+        "language": "French"
+      },
+      {
+        "title": "Partages Derri\u00e8re les murs - \u00c9t\u00e9 2012",
+        "url": "https://www.aa.org/sites/default/files/newsletters/ff-97_summer_2012.pdf",
+        "item_code": "FF-97",
+        "category": "Corrections",
+        "language": "French"
+      }
+    ],
+    "revised": [
+      {
+        "title": "The \"God\" Word: Agnostic and Atheist Members in A.A.",
+        "url": "https://aaws.widen.net/content/0wcxerrekw/pdf/p-86_the_god_word_online.pdf",
+        "item_code": "P-86",
+        "category": "Members & Outreach",
+        "language": "English",
+        "previous_modified": "2025-06-12",
+        "last_modified": "2026-11-24"
+      },
+      {
+        "title": "Many Paths to Spirituality",
+        "url": "https://aaws.widen.net/content/muxgbjsqa1/pdf/p-84_many_paths_to_spirituality_online.pdf",
+        "item_code": "P-84",
+        "category": "Pamphlets & Booklets",
+        "language": "English",
+        "previous_modified": "2025-09-04",
+        "last_modified": "2026-11-24"
+      },
+      {
+        "title": "A.A. as a Resource for the Health Care Professional",
+        "url": "https://aaws.widen.net/content/tsrr4le7e4/pdf/p-23_aa_resource_hcp_online.pdf",
+        "item_code": "P-23",
+        "category": "Cooperation with the Professional Community",
+        "language": "English",
+        "previous_modified": "2025-06-12",
+        "last_modified": "2026-11-24"
       }
     ]
   },
   "runs": [
+    {
+      "generated_utc": "2026-11-24T22:17:19Z",
+      "total": 2391,
+      "first_run": false,
+      "added_count": 21,
+      "removed_count": 18,
+      "revised_count": 3,
+      "added": [
+        {
+          "title": "Sharing From Behind the Walls - Fall 2008",
+          "url": "https://www.aa.org/sites/default/files/newsletters/f-97_fall_2008.pdf",
+          "item_code": "F-97",
+          "category": "Corrections",
+          "language": "English"
+        },
+        {
+          "title": "Sharing From Behind the Walls - Fall 2009",
+          "url": "https://www.aa.org/sites/default/files/newsletters/f-97_fall_2009.pdf",
+          "item_code": "F-97",
+          "category": "Corrections",
+          "language": "English"
+        },
+        {
+          "title": "Sharing From Behind the Walls - Fall 2010",
+          "url": "https://www.aa.org/sites/default/files/newsletters/f-97_fall_2010.pdf",
+          "item_code": "F-97",
+          "category": "Corrections",
+          "language": "English"
+        },
+        {
+          "title": "Sharing From Behind the Walls - Fall 2011",
+          "url": "https://www.aa.org/sites/default/files/newsletters/f-97_fall_2011.pdf",
+          "item_code": "F-97",
+          "category": "Corrections",
+          "language": "English"
+        },
+        {
+          "title": "Sharing From Behind the Walls - Fall 2012",
+          "url": "https://www.aa.org/sites/default/files/newsletters/f-97_fall_2012.pdf",
+          "item_code": "F-97",
+          "category": "Corrections",
+          "language": "English"
+        },
+        {
+          "title": "Sharing From Behind the Walls - Spring 2008",
+          "url": "https://www.aa.org/sites/default/files/newsletters/f-97_spring_2008.pdf",
+          "item_code": "F-97",
+          "category": "Corrections",
+          "language": "English"
+        },
+        {
+          "title": "Sharing From Behind the Walls - Spring 2009",
+          "url": "https://www.aa.org/sites/default/files/newsletters/f-97_spring_2009.pdf",
+          "item_code": "F-97",
+          "category": "Corrections",
+          "language": "English"
+        },
+        {
+          "title": "Sharing From Behind the Walls - Spring 2010",
+          "url": "https://www.aa.org/sites/default/files/newsletters/f-97_spring_2010.pdf",
+          "item_code": "F-97",
+          "category": "Corrections",
+          "language": "English"
+        },
+        {
+          "title": "Sharing From Behind the Walls - Spring 2011",
+          "url": "https://www.aa.org/sites/default/files/newsletters/f-97_spring_2011.pdf",
+          "item_code": "F-97",
+          "category": "Corrections",
+          "language": "English"
+        },
+        {
+          "title": "Sharing From Behind the Walls - Spring 2012",
+          "url": "https://www.aa.org/sites/default/files/newsletters/f-97_spring_2012.pdf",
+          "item_code": "F-97",
+          "category": "Corrections",
+          "language": "English"
+        },
+        {
+          "title": "Sharing From Behind the Walls - Summer 2008",
+          "url": "https://www.aa.org/sites/default/files/newsletters/f-97_summer_2008.pdf",
+          "item_code": "F-97",
+          "category": "Corrections",
+          "language": "English"
+        },
+        {
+          "title": "Sharing From Behind the Walls - Summer 2009",
+          "url": "https://www.aa.org/sites/default/files/newsletters/f-97_summer_2009.pdf",
+          "item_code": "F-97",
+          "category": "Corrections",
+          "language": "English"
+        },
+        {
+          "title": "Sharing From Behind the Walls - Summer 2011",
+          "url": "https://www.aa.org/sites/default/files/newsletters/f-97_summer_2011.pdf",
+          "item_code": "F-97",
+          "category": "Corrections",
+          "language": "English"
+        },
+        {
+          "title": "Sharing From Behind the Walls - Summer 2012",
+          "url": "https://www.aa.org/sites/default/files/newsletters/f-97_summer_2012.pdf",
+          "item_code": "F-97",
+          "category": "Corrections",
+          "language": "English"
+        },
+        {
+          "title": "Sharing From Behind the Walls - Winter 2008",
+          "url": "https://www.aa.org/sites/default/files/newsletters/f-97_winter_2008.pdf",
+          "item_code": "F-97",
+          "category": "Corrections",
+          "language": "English"
+        },
+        {
+          "title": "Sharing From Behind the Walls - Winter 2009",
+          "url": "https://www.aa.org/sites/default/files/newsletters/f-97_winter_2009.pdf",
+          "item_code": "F-97",
+          "category": "Corrections",
+          "language": "English"
+        },
+        {
+          "title": "Sharing From Behind the Walls - Winter 2011",
+          "url": "https://www.aa.org/sites/default/files/newsletters/f-97_winter_2011.pdf",
+          "item_code": "F-97",
+          "category": "Corrections",
+          "language": "English"
+        },
+        {
+          "title": "Les AA pour l\u2019alcoolique plus \u00e2g\u00e9",
+          "url": "https://aaws.widen.net/content/2ltxxi9hy4/pdf/fb-28_aa_older_alcoholic_large_online.pdf",
+          "item_code": "FB-28",
+          "category": "Members & Outreach",
+          "language": "French"
+        },
+        {
+          "title": "2026 Forum Territorial de l\u2019est du Canada",
+          "url": "https://www.aa.org/sites/default/files/literature/FR_2026-EasternCanRF-ForumReport-FINAL.pdf",
+          "item_code": "",
+          "category": "Regional Forums",
+          "language": "French"
+        },
+        {
+          "title": "Regional Forum Report 2026 Eastern Canada",
+          "url": "https://www.aa.org/sites/default/files/literature/EN-2026-EasternCanada-Final-ForumReport-FINAL-1.pdf",
+          "item_code": "",
+          "category": "Regional Forums",
+          "language": "English"
+        },
+        {
+          "title": "Regional Forum Report 2026 Western Canada",
+          "url": "https://www.aa.org/sites/default/files/literature/2026-Western-Canada-Regional-Forum-Final-Report.pdf",
+          "item_code": "",
+          "category": "Regional Forums",
+          "language": "English"
+        }
+      ],
+      "removed": [
+        {
+          "title": "Markings - Excerpts From \"The Archives\" At The International Convention, Seattle - Part 2",
+          "url": "https://www.aa.org/sites/default/files/newsletters/marking_1991_1.pdf",
+          "item_code": "",
+          "category": "Conventions & Events",
+          "language": "English"
+        },
+        {
+          "title": "Partages Derri\u00e8re les murs - Automne 2008",
+          "url": "https://www.aa.org/sites/default/files/newsletters/ff-97_fall_2008.pdf",
+          "item_code": "FF-97",
+          "category": "Corrections",
+          "language": "French"
+        },
+        {
+          "title": "Partages Derri\u00e8re les murs - Automne 2009",
+          "url": "https://www.aa.org/sites/default/files/newsletters/ff-97_fall_2009.pdf",
+          "item_code": "FF-97",
+          "category": "Corrections",
+          "language": "French"
+        },
+        {
+          "title": "Partages Derri\u00e8re les murs - Automne 2010",
+          "url": "https://www.aa.org/sites/default/files/newsletters/ff-97_fall_2010.pdf",
+          "item_code": "FF-97",
+          "category": "Corrections",
+          "language": "French"
+        },
+        {
+          "title": "Partages Derri\u00e8re les murs - Automne 2011",
+          "url": "https://www.aa.org/sites/default/files/newsletters/ff-97_fall_2011.pdf",
+          "item_code": "FF-97",
+          "category": "Corrections",
+          "language": "French"
+        },
+        {
+          "title": "Partages Derri\u00e8re les murs - Automne 2012",
+          "url": "https://www.aa.org/sites/default/files/newsletters/ff-97_fall_2012.pdf",
+          "item_code": "FF-97",
+          "category": "Corrections",
+          "language": "French"
+        },
+        {
+          "title": "Partages Derri\u00e8re les murs - Hiver 2008",
+          "url": "https://www.aa.org/sites/default/files/newsletters/ff-97_winter_2008.pdf",
+          "item_code": "FF-97",
+          "category": "Corrections",
+          "language": "French"
+        },
+        {
+          "title": "Partages Derri\u00e8re les murs - Hiver 2009",
+          "url": "https://www.aa.org/sites/default/files/newsletters/ff-97_winter_2009.pdf",
+          "item_code": "FF-97",
+          "category": "Corrections",
+          "language": "French"
+        },
+        {
+          "title": "Partages Derri\u00e8re les murs - Hiver 2011",
+          "url": "https://www.aa.org/sites/default/files/newsletters/ff-97_winter_2011.pdf",
+          "item_code": "FF-97",
+          "category": "Corrections",
+          "language": "French"
+        },
+        {
+          "title": "Partages Derri\u00e8re les murs - Printemps 2008",
+          "url": "https://www.aa.org/sites/default/files/newsletters/ff-97_spring_2008.pdf",
+          "item_code": "FF-97",
+          "category": "Corrections",
+          "language": "French"
+        },
+        {
+          "title": "Partages Derri\u00e8re les murs - Printemps 2009",
+          "url": "https://www.aa.org/sites/default/files/newsletters/ff-97_spring_2009.pdf",
+          "item_code": "FF-97",
+          "category": "Corrections",
+          "language": "French"
+        },
+        {
+          "title": "Partages Derri\u00e8re les murs - Printemps 2010",
+          "url": "https://www.aa.org/sites/default/files/newsletters/ff-97_spring_2010.pdf",
+          "item_code": "FF-97",
+          "category": "Corrections",
+          "language": "French"
+        },
+        {
+          "title": "Partages Derri\u00e8re les murs - Printemps 2011",
+          "url": "https://www.aa.org/sites/default/files/newsletters/ff-97_spring_2011.pdf",
+          "item_code": "FF-97",
+          "category": "Corrections",
+          "language": "French"
+        },
+        {
+          "title": "Partages Derri\u00e8re les murs - Printemps 2012",
+          "url": "https://www.aa.org/sites/default/files/newsletters/ff-97_spring_2012.pdf",
+          "item_code": "FF-97",
+          "category": "Corrections",
+          "language": "French"
+        },
+        {
+          "title": "Partages Derri\u00e8re les murs - \u00c9t\u00e9 2008",
+          "url": "https://www.aa.org/sites/default/files/newsletters/ff-97_summer_2008.pdf",
+          "item_code": "FF-97",
+          "category": "Corrections",
+          "language": "French"
+        },
+        {
+          "title": "Partages Derri\u00e8re les murs - \u00c9t\u00e9 2009",
+          "url": "https://www.aa.org/sites/default/files/newsletters/ff-97_summer_2009.pdf",
+          "item_code": "FF-97",
+          "category": "Corrections",
+          "language": "French"
+        },
+        {
+          "title": "Partages Derri\u00e8re les murs - \u00c9t\u00e9 2011",
+          "url": "https://www.aa.org/sites/default/files/newsletters/ff-97_summer_2011.pdf",
+          "item_code": "FF-97",
+          "category": "Corrections",
+          "language": "French"
+        },
+        {
+          "title": "Partages Derri\u00e8re les murs - \u00c9t\u00e9 2012",
+          "url": "https://www.aa.org/sites/default/files/newsletters/ff-97_summer_2012.pdf",
+          "item_code": "FF-97",
+          "category": "Corrections",
+          "language": "French"
+        }
+      ],
+      "revised": [
+        {
+          "title": "The \"God\" Word: Agnostic and Atheist Members in A.A.",
+          "url": "https://aaws.widen.net/content/0wcxerrekw/pdf/p-86_the_god_word_online.pdf",
+          "item_code": "P-86",
+          "category": "Members & Outreach",
+          "language": "English",
+          "previous_modified": "2025-06-12",
+          "last_modified": "2026-11-24"
+        },
+        {
+          "title": "Many Paths to Spirituality",
+          "url": "https://aaws.widen.net/content/muxgbjsqa1/pdf/p-84_many_paths_to_spirituality_online.pdf",
+          "item_code": "P-84",
+          "category": "Pamphlets & Booklets",
+          "language": "English",
+          "previous_modified": "2025-09-04",
+          "last_modified": "2026-11-24"
+        },
+        {
+          "title": "A.A. as a Resource for the Health Care Professional",
+          "url": "https://aaws.widen.net/content/tsrr4le7e4/pdf/p-23_aa_resource_hcp_online.pdf",
+          "item_code": "P-23",
+          "category": "Cooperation with the Professional Community",
+          "language": "English",
+          "previous_modified": "2025-06-12",
+          "last_modified": "2026-11-24"
+        }
+      ]
+    },
     {
       "generated_utc": "2026-11-24T09:26:13Z",
       "total": 2388,
@@ -2305,17 +2903,6 @@
           "last_modified": "2026-11-02"
         }
       ]
-    },
-    {
-      "generated_utc": "2026-11-01T05:34:34Z",
-      "total": 2495,
-      "first_run": false,
-      "added_count": 0,
-      "removed_count": 0,
-      "revised_count": 0,
-      "added": [],
-      "removed": [],
-      "revised": []
     }
   ]
 }
