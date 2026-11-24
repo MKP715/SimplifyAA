@@ -1,11 +1,11 @@
 {
-  "generated_utc": "2026-11-23T06:59:51Z",
-  "generated_date": "November 23, 2026",
+  "generated_utc": "2026-11-24T09:26:13Z",
+  "generated_date": "November 24, 2026",
   "source": "https://www.aa.org",
   "total_pdfs": 2388,
   "pages_crawled": 5458,
   "broken_links": 29,
-  "total_bytes": 2131866385,
+  "total_bytes": 2145277671,
   "categories": {
     "Newsletter: Box 4-5-9": 502,
     "Big Book, Steps & Traditions": 231,
@@ -108,7 +108,7 @@
   "translated_documents": 2016,
   "added_since_last_run": 0,
   "removed_since_last_run": 0,
-  "revised_since_last_run": 0,
+  "revised_since_last_run": 2,
   "item_code_families": {
     "Forms, Catalogs & Order Blanks": 727,
     "Pamphlets & Booklets": 182,
